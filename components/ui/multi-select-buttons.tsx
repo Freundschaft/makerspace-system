@@ -32,7 +32,7 @@ export function MultiSelectButtons({
   }
 
   return (
-    <div className={cn("grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3", className)}>
+    <div className={cn("grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3", className)}>
       {options.map((option) => (
         <button
           key={option.value}
@@ -46,7 +46,7 @@ export function MultiSelectButtons({
           )}
         >
           {option.image && (
-            <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48">
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40">
               <Image
                 src={option.image}
                 alt={option.label}
