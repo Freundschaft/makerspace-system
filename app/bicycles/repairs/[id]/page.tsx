@@ -4,15 +4,13 @@ import { RepairDetails } from "./repair-details"
 import { BackButton } from "@/components/BackButton"
 
 interface PageProps {
-  params: {
-    id: string
-  }
+  params: Promise<{ id: string }>
 }
 
 export default async function RepairDetailsPage({ params }: PageProps) {
   const repair = await prisma.bicycleRepair.findUnique({
     where: {
-      id: params.id
+      id: (await params).id
     },
     include: {
       partsUsed: {
