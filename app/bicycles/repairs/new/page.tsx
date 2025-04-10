@@ -10,8 +10,8 @@ export default async function NewRepairPage() {
   })
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-2xl font-bold mb-6">New Bicycle Repair</h1>
+    <div className="container mx-auto px-4 py-6 sm:py-10">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">New Bicycle Repair</h1>
       <RepairForm problemTypes={problemTypes} />
     </div>
   )

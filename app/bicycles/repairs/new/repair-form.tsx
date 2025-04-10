@@ -96,13 +96,13 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
         <FormField
           control={form.control}
           name="problemTypes"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Problem Types</FormLabel>
+              <FormLabel className="text-sm sm:text-base">Problem Types</FormLabel>
               <FormControl>
                 <MultiSelectButtons
                   options={problemTypes.map(type => ({
@@ -114,7 +114,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
                   onChange={field.onChange}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs sm:text-sm">
                 Select all applicable problem types
               </FormDescription>
               <FormMessage />
@@ -127,15 +127,15 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel className="text-sm sm:text-base">Description</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Detailed description of the problem..."
-                  className="min-h-[100px]"
+                  className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs sm:text-sm">
                 Provide a detailed description of the problem
               </FormDescription>
               <FormMessage />
@@ -148,11 +148,15 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="ownerPhone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Owner Phone</FormLabel>
+              <FormLabel className="text-sm sm:text-base">Owner Phone</FormLabel>
               <FormControl>
-                <Input placeholder="+1234567890" {...field} />
+                <Input 
+                  placeholder="+1234567890" 
+                  className="text-sm sm:text-base"
+                  {...field} 
+                />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs sm:text-sm">
                 Contact number of the bicycle owner
               </FormDescription>
               <FormMessage />
@@ -165,10 +169,10 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Status</FormLabel>
+              <FormLabel className="text-sm sm:text-base">Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="text-sm sm:text-base">
                     <SelectValue placeholder="Select a status" />
                   </SelectTrigger>
                 </FormControl>
@@ -181,7 +185,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
                   <SelectItem value="CANCELLED">Cancelled</SelectItem>
                 </SelectContent>
               </Select>
-              <FormDescription>
+              <FormDescription className="text-xs sm:text-sm">
                 Current status of the repair
               </FormDescription>
               <FormMessage />
@@ -189,7 +193,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting}>
+        <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
           {isSubmitting ? "Creating..." : "Create Repair"}
         </Button>
       </form>
