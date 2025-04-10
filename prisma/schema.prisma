@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id       String     @id @default(uuid())
+  email    String?
+  googleId String     @unique
+  role     String?
+  enabled  Boolean?
+}
+
+model BicycleRepair {
+  id              String    @id @default(uuid())
+  problemType     String
+  description     String    @db.Text
+  receivedDate    DateTime
+  repairedDate    DateTime?
+  pickupDate      DateTime?
+  ownerPhone      String
+  status          RepairStatus @default(PENDING)
+  partsUsed       RepairPart[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Part {
+  id          String    @id @default(uuid())
+  name        String
+  description String?   @db.Text
+  quantity    Int
+  repairs     RepairPart[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model RepairPart {
+  id              String    @id @default(uuid())
+  repair          BicycleRepair @relation(fields: [repairId], references: [id])
+  repairId        String
+  part            Part      @relation(fields: [partId], references: [id])
+  partId          String
+  quantity        Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([repairId, partId])
+}
+
+enum RepairStatus {
+  PENDING
+  IN_PROGRESS
+  WAITING_FOR_PARTS
+  COMPLETED
+  PICKED_UP
+  CANCELLED
+}
