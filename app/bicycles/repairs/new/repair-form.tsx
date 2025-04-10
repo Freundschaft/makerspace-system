@@ -24,22 +24,42 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 
-const formSchema = z.object({
-  problemType: z.string().min(1, "Problem type is required"),
-  description: z.string().min(1, "Description is required"),
-  ownerPhone: z.string().min(1, "Owner phone is required"),
-  status: z.enum(["PENDING", "IN_PROGRESS", "WAITING_FOR_PARTS", "COMPLETED", "PICKED_UP", "CANCELLED"]),
-})
+// Define the ProblemType interface
+interface ProblemType {
+  id: string
+  value: string
+  label: string
+  image: string
+}
 
-export function RepairForm() {
+// Define the form props interface
+interface RepairFormProps {
+  problemTypes: ProblemType[]
+}
+
+// Create a dynamic schema based on the problem types
+const createFormSchema = (problemTypes: ProblemType[]) => {
+  return z.object({
+    problemTypes: z.array(z.string()).min(1, "Select at least one problem type"),
+    description: z.string().min(1, "Description is required"),
+    ownerPhone: z.string().min(1, "Owner phone is required"),
+    status: z.enum(["PENDING", "IN_PROGRESS", "WAITING_FOR_PARTS", "COMPLETED", "PICKED_UP", "CANCELLED"]),
+  })
+}
+
+export function RepairForm({ problemTypes }: RepairFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  
+  // Create the form schema dynamically based on the provided problem types
+  const formSchema = createFormSchema(problemTypes)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      problemType: "",
+      problemTypes: [],
       description: "",
       ownerPhone: "",
       status: "PENDING",
@@ -79,15 +99,23 @@ export function RepairForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="problemType"
+          name="problemTypes"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Problem Type</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>Problem Types</FormLabel>
               <FormControl>
-                <Input placeholder="e.g., Flat tire, Brake issues" {...field} />
+                <MultiSelectButtons
+                  options={problemTypes.map(type => ({
+                    value: type.value,
+                    label: type.label,
+                    image: type.image
+                  }))}
+                  selectedValues={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormDescription>
-                Briefly describe the type of problem
+                Select all applicable problem types
               </FormDescription>
               <FormMessage />
             </FormItem>

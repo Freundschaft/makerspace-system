@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model ProblemType
+ * 
+ */
+export type ProblemType = $Result.DefaultSelection<Prisma.$ProblemTypePayload>
+/**
  * Model BicycleRepair
  * 
  */
@@ -189,6 +194,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.problemType`: Exposes CRUD operations for the **ProblemType** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProblemTypes
+    * const problemTypes = await prisma.problemType.findMany()
+    * ```
+    */
+  get problemType(): Prisma.ProblemTypeDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.bicycleRepair`: Exposes CRUD operations for the **BicycleRepair** model.
@@ -660,6 +675,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    ProblemType: 'ProblemType',
     BicycleRepair: 'BicycleRepair',
     Part: 'Part',
     RepairPart: 'RepairPart'
@@ -681,7 +697,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "bicycleRepair" | "part" | "repairPart"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -748,6 +764,72 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProblemType: {
+        payload: Prisma.$ProblemTypePayload<ExtArgs>
+        fields: Prisma.ProblemTypeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProblemTypeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProblemTypeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          findFirst: {
+            args: Prisma.ProblemTypeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProblemTypeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          findMany: {
+            args: Prisma.ProblemTypeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>[]
+          }
+          create: {
+            args: Prisma.ProblemTypeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          createMany: {
+            args: Prisma.ProblemTypeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProblemTypeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          update: {
+            args: Prisma.ProblemTypeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProblemTypeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProblemTypeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProblemTypeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProblemTypePayload>
+          }
+          aggregate: {
+            args: Prisma.ProblemTypeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProblemType>
+          }
+          groupBy: {
+            args: Prisma.ProblemTypeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProblemTypeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProblemTypeCountArgs<ExtArgs>
+            result: $Utils.Optional<ProblemTypeCountAggregateOutputType> | number
           }
         }
       }
@@ -1034,6 +1116,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    problemType?: ProblemTypeOmit
     bicycleRepair?: BicycleRepairOmit
     part?: PartOmit
     repairPart?: RepairPartOmit
@@ -2075,6 +2158,899 @@ export namespace Prisma {
 
 
   /**
+   * Model ProblemType
+   */
+
+  export type AggregateProblemType = {
+    _count: ProblemTypeCountAggregateOutputType | null
+    _min: ProblemTypeMinAggregateOutputType | null
+    _max: ProblemTypeMaxAggregateOutputType | null
+  }
+
+  export type ProblemTypeMinAggregateOutputType = {
+    id: string | null
+    value: string | null
+    label: string | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProblemTypeMaxAggregateOutputType = {
+    id: string | null
+    value: string | null
+    label: string | null
+    image: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProblemTypeCountAggregateOutputType = {
+    id: number
+    value: number
+    label: number
+    image: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProblemTypeMinAggregateInputType = {
+    id?: true
+    value?: true
+    label?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProblemTypeMaxAggregateInputType = {
+    id?: true
+    value?: true
+    label?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProblemTypeCountAggregateInputType = {
+    id?: true
+    value?: true
+    label?: true
+    image?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProblemTypeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProblemType to aggregate.
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProblemTypes to fetch.
+     */
+    orderBy?: ProblemTypeOrderByWithRelationInput | ProblemTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProblemTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProblemTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProblemTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProblemTypes
+    **/
+    _count?: true | ProblemTypeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProblemTypeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProblemTypeMaxAggregateInputType
+  }
+
+  export type GetProblemTypeAggregateType<T extends ProblemTypeAggregateArgs> = {
+        [P in keyof T & keyof AggregateProblemType]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProblemType[P]>
+      : GetScalarType<T[P], AggregateProblemType[P]>
+  }
+
+
+
+
+  export type ProblemTypeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProblemTypeWhereInput
+    orderBy?: ProblemTypeOrderByWithAggregationInput | ProblemTypeOrderByWithAggregationInput[]
+    by: ProblemTypeScalarFieldEnum[] | ProblemTypeScalarFieldEnum
+    having?: ProblemTypeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProblemTypeCountAggregateInputType | true
+    _min?: ProblemTypeMinAggregateInputType
+    _max?: ProblemTypeMaxAggregateInputType
+  }
+
+  export type ProblemTypeGroupByOutputType = {
+    id: string
+    value: string
+    label: string
+    image: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ProblemTypeCountAggregateOutputType | null
+    _min: ProblemTypeMinAggregateOutputType | null
+    _max: ProblemTypeMaxAggregateOutputType | null
+  }
+
+  type GetProblemTypeGroupByPayload<T extends ProblemTypeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProblemTypeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProblemTypeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProblemTypeGroupByOutputType[P]>
+            : GetScalarType<T[P], ProblemTypeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProblemTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+    label?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["problemType"]>
+
+
+
+  export type ProblemTypeSelectScalar = {
+    id?: boolean
+    value?: boolean
+    label?: boolean
+    image?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProblemTypeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value" | "label" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["problemType"]>
+
+  export type $ProblemTypePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProblemType"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      value: string
+      label: string
+      image: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["problemType"]>
+    composites: {}
+  }
+
+  type ProblemTypeGetPayload<S extends boolean | null | undefined | ProblemTypeDefaultArgs> = $Result.GetResult<Prisma.$ProblemTypePayload, S>
+
+  type ProblemTypeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProblemTypeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProblemTypeCountAggregateInputType | true
+    }
+
+  export interface ProblemTypeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProblemType'], meta: { name: 'ProblemType' } }
+    /**
+     * Find zero or one ProblemType that matches the filter.
+     * @param {ProblemTypeFindUniqueArgs} args - Arguments to find a ProblemType
+     * @example
+     * // Get one ProblemType
+     * const problemType = await prisma.problemType.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProblemTypeFindUniqueArgs>(args: SelectSubset<T, ProblemTypeFindUniqueArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProblemType that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProblemTypeFindUniqueOrThrowArgs} args - Arguments to find a ProblemType
+     * @example
+     * // Get one ProblemType
+     * const problemType = await prisma.problemType.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProblemTypeFindUniqueOrThrowArgs>(args: SelectSubset<T, ProblemTypeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProblemType that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeFindFirstArgs} args - Arguments to find a ProblemType
+     * @example
+     * // Get one ProblemType
+     * const problemType = await prisma.problemType.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProblemTypeFindFirstArgs>(args?: SelectSubset<T, ProblemTypeFindFirstArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProblemType that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeFindFirstOrThrowArgs} args - Arguments to find a ProblemType
+     * @example
+     * // Get one ProblemType
+     * const problemType = await prisma.problemType.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProblemTypeFindFirstOrThrowArgs>(args?: SelectSubset<T, ProblemTypeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProblemTypes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProblemTypes
+     * const problemTypes = await prisma.problemType.findMany()
+     * 
+     * // Get first 10 ProblemTypes
+     * const problemTypes = await prisma.problemType.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const problemTypeWithIdOnly = await prisma.problemType.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProblemTypeFindManyArgs>(args?: SelectSubset<T, ProblemTypeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProblemType.
+     * @param {ProblemTypeCreateArgs} args - Arguments to create a ProblemType.
+     * @example
+     * // Create one ProblemType
+     * const ProblemType = await prisma.problemType.create({
+     *   data: {
+     *     // ... data to create a ProblemType
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProblemTypeCreateArgs>(args: SelectSubset<T, ProblemTypeCreateArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProblemTypes.
+     * @param {ProblemTypeCreateManyArgs} args - Arguments to create many ProblemTypes.
+     * @example
+     * // Create many ProblemTypes
+     * const problemType = await prisma.problemType.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProblemTypeCreateManyArgs>(args?: SelectSubset<T, ProblemTypeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProblemType.
+     * @param {ProblemTypeDeleteArgs} args - Arguments to delete one ProblemType.
+     * @example
+     * // Delete one ProblemType
+     * const ProblemType = await prisma.problemType.delete({
+     *   where: {
+     *     // ... filter to delete one ProblemType
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProblemTypeDeleteArgs>(args: SelectSubset<T, ProblemTypeDeleteArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProblemType.
+     * @param {ProblemTypeUpdateArgs} args - Arguments to update one ProblemType.
+     * @example
+     * // Update one ProblemType
+     * const problemType = await prisma.problemType.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProblemTypeUpdateArgs>(args: SelectSubset<T, ProblemTypeUpdateArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProblemTypes.
+     * @param {ProblemTypeDeleteManyArgs} args - Arguments to filter ProblemTypes to delete.
+     * @example
+     * // Delete a few ProblemTypes
+     * const { count } = await prisma.problemType.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProblemTypeDeleteManyArgs>(args?: SelectSubset<T, ProblemTypeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProblemTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProblemTypes
+     * const problemType = await prisma.problemType.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProblemTypeUpdateManyArgs>(args: SelectSubset<T, ProblemTypeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProblemType.
+     * @param {ProblemTypeUpsertArgs} args - Arguments to update or create a ProblemType.
+     * @example
+     * // Update or create a ProblemType
+     * const problemType = await prisma.problemType.upsert({
+     *   create: {
+     *     // ... data to create a ProblemType
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProblemType we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProblemTypeUpsertArgs>(args: SelectSubset<T, ProblemTypeUpsertArgs<ExtArgs>>): Prisma__ProblemTypeClient<$Result.GetResult<Prisma.$ProblemTypePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProblemTypes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeCountArgs} args - Arguments to filter ProblemTypes to count.
+     * @example
+     * // Count the number of ProblemTypes
+     * const count = await prisma.problemType.count({
+     *   where: {
+     *     // ... the filter for the ProblemTypes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProblemTypeCountArgs>(
+      args?: Subset<T, ProblemTypeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProblemTypeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProblemType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProblemTypeAggregateArgs>(args: Subset<T, ProblemTypeAggregateArgs>): Prisma.PrismaPromise<GetProblemTypeAggregateType<T>>
+
+    /**
+     * Group by ProblemType.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProblemTypeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProblemTypeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProblemTypeGroupByArgs['orderBy'] }
+        : { orderBy?: ProblemTypeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProblemTypeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProblemTypeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProblemType model
+   */
+  readonly fields: ProblemTypeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProblemType.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProblemTypeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProblemType model
+   */
+  interface ProblemTypeFieldRefs {
+    readonly id: FieldRef<"ProblemType", 'String'>
+    readonly value: FieldRef<"ProblemType", 'String'>
+    readonly label: FieldRef<"ProblemType", 'String'>
+    readonly image: FieldRef<"ProblemType", 'String'>
+    readonly createdAt: FieldRef<"ProblemType", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProblemType", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProblemType findUnique
+   */
+  export type ProblemTypeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter, which ProblemType to fetch.
+     */
+    where: ProblemTypeWhereUniqueInput
+  }
+
+  /**
+   * ProblemType findUniqueOrThrow
+   */
+  export type ProblemTypeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter, which ProblemType to fetch.
+     */
+    where: ProblemTypeWhereUniqueInput
+  }
+
+  /**
+   * ProblemType findFirst
+   */
+  export type ProblemTypeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter, which ProblemType to fetch.
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProblemTypes to fetch.
+     */
+    orderBy?: ProblemTypeOrderByWithRelationInput | ProblemTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProblemTypes.
+     */
+    cursor?: ProblemTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProblemTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProblemTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProblemTypes.
+     */
+    distinct?: ProblemTypeScalarFieldEnum | ProblemTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ProblemType findFirstOrThrow
+   */
+  export type ProblemTypeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter, which ProblemType to fetch.
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProblemTypes to fetch.
+     */
+    orderBy?: ProblemTypeOrderByWithRelationInput | ProblemTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProblemTypes.
+     */
+    cursor?: ProblemTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProblemTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProblemTypes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProblemTypes.
+     */
+    distinct?: ProblemTypeScalarFieldEnum | ProblemTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ProblemType findMany
+   */
+  export type ProblemTypeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter, which ProblemTypes to fetch.
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProblemTypes to fetch.
+     */
+    orderBy?: ProblemTypeOrderByWithRelationInput | ProblemTypeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProblemTypes.
+     */
+    cursor?: ProblemTypeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProblemTypes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProblemTypes.
+     */
+    skip?: number
+    distinct?: ProblemTypeScalarFieldEnum | ProblemTypeScalarFieldEnum[]
+  }
+
+  /**
+   * ProblemType create
+   */
+  export type ProblemTypeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ProblemType.
+     */
+    data: XOR<ProblemTypeCreateInput, ProblemTypeUncheckedCreateInput>
+  }
+
+  /**
+   * ProblemType createMany
+   */
+  export type ProblemTypeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProblemTypes.
+     */
+    data: ProblemTypeCreateManyInput | ProblemTypeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProblemType update
+   */
+  export type ProblemTypeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ProblemType.
+     */
+    data: XOR<ProblemTypeUpdateInput, ProblemTypeUncheckedUpdateInput>
+    /**
+     * Choose, which ProblemType to update.
+     */
+    where: ProblemTypeWhereUniqueInput
+  }
+
+  /**
+   * ProblemType updateMany
+   */
+  export type ProblemTypeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProblemTypes.
+     */
+    data: XOR<ProblemTypeUpdateManyMutationInput, ProblemTypeUncheckedUpdateManyInput>
+    /**
+     * Filter which ProblemTypes to update
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * Limit how many ProblemTypes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProblemType upsert
+   */
+  export type ProblemTypeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ProblemType to update in case it exists.
+     */
+    where: ProblemTypeWhereUniqueInput
+    /**
+     * In case the ProblemType found by the `where` argument doesn't exist, create a new ProblemType with this data.
+     */
+    create: XOR<ProblemTypeCreateInput, ProblemTypeUncheckedCreateInput>
+    /**
+     * In case the ProblemType was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProblemTypeUpdateInput, ProblemTypeUncheckedUpdateInput>
+  }
+
+  /**
+   * ProblemType delete
+   */
+  export type ProblemTypeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+    /**
+     * Filter which ProblemType to delete.
+     */
+    where: ProblemTypeWhereUniqueInput
+  }
+
+  /**
+   * ProblemType deleteMany
+   */
+  export type ProblemTypeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProblemTypes to delete
+     */
+    where?: ProblemTypeWhereInput
+    /**
+     * Limit how many ProblemTypes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProblemType without action
+   */
+  export type ProblemTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProblemType
+     */
+    select?: ProblemTypeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProblemType
+     */
+    omit?: ProblemTypeOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model BicycleRepair
    */
 
@@ -2086,7 +3062,7 @@ export namespace Prisma {
 
   export type BicycleRepairMinAggregateOutputType = {
     id: string | null
-    problemType: string | null
+    problemTypes: string | null
     description: string | null
     receivedDate: Date | null
     repairedDate: Date | null
@@ -2099,7 +3075,7 @@ export namespace Prisma {
 
   export type BicycleRepairMaxAggregateOutputType = {
     id: string | null
-    problemType: string | null
+    problemTypes: string | null
     description: string | null
     receivedDate: Date | null
     repairedDate: Date | null
@@ -2112,7 +3088,7 @@ export namespace Prisma {
 
   export type BicycleRepairCountAggregateOutputType = {
     id: number
-    problemType: number
+    problemTypes: number
     description: number
     receivedDate: number
     repairedDate: number
@@ -2127,7 +3103,7 @@ export namespace Prisma {
 
   export type BicycleRepairMinAggregateInputType = {
     id?: true
-    problemType?: true
+    problemTypes?: true
     description?: true
     receivedDate?: true
     repairedDate?: true
@@ -2140,7 +3116,7 @@ export namespace Prisma {
 
   export type BicycleRepairMaxAggregateInputType = {
     id?: true
-    problemType?: true
+    problemTypes?: true
     description?: true
     receivedDate?: true
     repairedDate?: true
@@ -2153,7 +3129,7 @@ export namespace Prisma {
 
   export type BicycleRepairCountAggregateInputType = {
     id?: true
-    problemType?: true
+    problemTypes?: true
     description?: true
     receivedDate?: true
     repairedDate?: true
@@ -2239,7 +3215,7 @@ export namespace Prisma {
 
   export type BicycleRepairGroupByOutputType = {
     id: string
-    problemType: string
+    problemTypes: string
     description: string
     receivedDate: Date
     repairedDate: Date | null
@@ -2269,7 +3245,7 @@ export namespace Prisma {
 
   export type BicycleRepairSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    problemType?: boolean
+    problemTypes?: boolean
     description?: boolean
     receivedDate?: boolean
     repairedDate?: boolean
@@ -2286,7 +3262,7 @@ export namespace Prisma {
 
   export type BicycleRepairSelectScalar = {
     id?: boolean
-    problemType?: boolean
+    problemTypes?: boolean
     description?: boolean
     receivedDate?: boolean
     repairedDate?: boolean
@@ -2297,7 +3273,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BicycleRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "problemType" | "description" | "receivedDate" | "repairedDate" | "pickupDate" | "ownerPhone" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRepair"]>
+  export type BicycleRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "problemTypes" | "description" | "receivedDate" | "repairedDate" | "pickupDate" | "ownerPhone" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRepair"]>
   export type BicycleRepairInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     partsUsed?: boolean | BicycleRepair$partsUsedArgs<ExtArgs>
     _count?: boolean | BicycleRepairCountOutputTypeDefaultArgs<ExtArgs>
@@ -2310,7 +3286,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      problemType: string
+      problemTypes: string
       description: string
       receivedDate: Date
       repairedDate: Date | null
@@ -2690,7 +3666,7 @@ export namespace Prisma {
    */
   interface BicycleRepairFieldRefs {
     readonly id: FieldRef<"BicycleRepair", 'String'>
-    readonly problemType: FieldRef<"BicycleRepair", 'String'>
+    readonly problemTypes: FieldRef<"BicycleRepair", 'String'>
     readonly description: FieldRef<"BicycleRepair", 'String'>
     readonly receivedDate: FieldRef<"BicycleRepair", 'DateTime'>
     readonly repairedDate: FieldRef<"BicycleRepair", 'DateTime'>
@@ -5087,9 +6063,21 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ProblemTypeScalarFieldEnum: {
+    id: 'id',
+    value: 'value',
+    label: 'label',
+    image: 'image',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProblemTypeScalarFieldEnum = (typeof ProblemTypeScalarFieldEnum)[keyof typeof ProblemTypeScalarFieldEnum]
+
+
   export const BicycleRepairScalarFieldEnum: {
     id: 'id',
-    problemType: 'problemType',
+    problemTypes: 'problemTypes',
     description: 'description',
     receivedDate: 'receivedDate',
     repairedDate: 'repairedDate',
@@ -5153,9 +6141,19 @@ export namespace Prisma {
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
 
+  export const ProblemTypeOrderByRelevanceFieldEnum: {
+    id: 'id',
+    value: 'value',
+    label: 'label',
+    image: 'image'
+  };
+
+  export type ProblemTypeOrderByRelevanceFieldEnum = (typeof ProblemTypeOrderByRelevanceFieldEnum)[keyof typeof ProblemTypeOrderByRelevanceFieldEnum]
+
+
   export const BicycleRepairOrderByRelevanceFieldEnum: {
     id: 'id',
-    problemType: 'problemType',
+    problemTypes: 'problemTypes',
     description: 'description',
     ownerPhone: 'ownerPhone'
   };
@@ -5284,12 +6282,70 @@ export namespace Prisma {
     enabled?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
   }
 
+  export type ProblemTypeWhereInput = {
+    AND?: ProblemTypeWhereInput | ProblemTypeWhereInput[]
+    OR?: ProblemTypeWhereInput[]
+    NOT?: ProblemTypeWhereInput | ProblemTypeWhereInput[]
+    id?: StringFilter<"ProblemType"> | string
+    value?: StringFilter<"ProblemType"> | string
+    label?: StringFilter<"ProblemType"> | string
+    image?: StringFilter<"ProblemType"> | string
+    createdAt?: DateTimeFilter<"ProblemType"> | Date | string
+    updatedAt?: DateTimeFilter<"ProblemType"> | Date | string
+  }
+
+  export type ProblemTypeOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    label?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: ProblemTypeOrderByRelevanceInput
+  }
+
+  export type ProblemTypeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    value?: string
+    AND?: ProblemTypeWhereInput | ProblemTypeWhereInput[]
+    OR?: ProblemTypeWhereInput[]
+    NOT?: ProblemTypeWhereInput | ProblemTypeWhereInput[]
+    label?: StringFilter<"ProblemType"> | string
+    image?: StringFilter<"ProblemType"> | string
+    createdAt?: DateTimeFilter<"ProblemType"> | Date | string
+    updatedAt?: DateTimeFilter<"ProblemType"> | Date | string
+  }, "id" | "value">
+
+  export type ProblemTypeOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrder
+    label?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProblemTypeCountOrderByAggregateInput
+    _max?: ProblemTypeMaxOrderByAggregateInput
+    _min?: ProblemTypeMinOrderByAggregateInput
+  }
+
+  export type ProblemTypeScalarWhereWithAggregatesInput = {
+    AND?: ProblemTypeScalarWhereWithAggregatesInput | ProblemTypeScalarWhereWithAggregatesInput[]
+    OR?: ProblemTypeScalarWhereWithAggregatesInput[]
+    NOT?: ProblemTypeScalarWhereWithAggregatesInput | ProblemTypeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProblemType"> | string
+    value?: StringWithAggregatesFilter<"ProblemType"> | string
+    label?: StringWithAggregatesFilter<"ProblemType"> | string
+    image?: StringWithAggregatesFilter<"ProblemType"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ProblemType"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProblemType"> | Date | string
+  }
+
   export type BicycleRepairWhereInput = {
     AND?: BicycleRepairWhereInput | BicycleRepairWhereInput[]
     OR?: BicycleRepairWhereInput[]
     NOT?: BicycleRepairWhereInput | BicycleRepairWhereInput[]
     id?: StringFilter<"BicycleRepair"> | string
-    problemType?: StringFilter<"BicycleRepair"> | string
+    problemTypes?: StringFilter<"BicycleRepair"> | string
     description?: StringFilter<"BicycleRepair"> | string
     receivedDate?: DateTimeFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
@@ -5303,7 +6359,7 @@ export namespace Prisma {
 
   export type BicycleRepairOrderByWithRelationInput = {
     id?: SortOrder
-    problemType?: SortOrder
+    problemTypes?: SortOrder
     description?: SortOrder
     receivedDate?: SortOrder
     repairedDate?: SortOrderInput | SortOrder
@@ -5321,7 +6377,7 @@ export namespace Prisma {
     AND?: BicycleRepairWhereInput | BicycleRepairWhereInput[]
     OR?: BicycleRepairWhereInput[]
     NOT?: BicycleRepairWhereInput | BicycleRepairWhereInput[]
-    problemType?: StringFilter<"BicycleRepair"> | string
+    problemTypes?: StringFilter<"BicycleRepair"> | string
     description?: StringFilter<"BicycleRepair"> | string
     receivedDate?: DateTimeFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
@@ -5335,7 +6391,7 @@ export namespace Prisma {
 
   export type BicycleRepairOrderByWithAggregationInput = {
     id?: SortOrder
-    problemType?: SortOrder
+    problemTypes?: SortOrder
     description?: SortOrder
     receivedDate?: SortOrder
     repairedDate?: SortOrderInput | SortOrder
@@ -5354,7 +6410,7 @@ export namespace Prisma {
     OR?: BicycleRepairScalarWhereWithAggregatesInput[]
     NOT?: BicycleRepairScalarWhereWithAggregatesInput | BicycleRepairScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"BicycleRepair"> | string
-    problemType?: StringWithAggregatesFilter<"BicycleRepair"> | string
+    problemTypes?: StringWithAggregatesFilter<"BicycleRepair"> | string
     description?: StringWithAggregatesFilter<"BicycleRepair"> | string
     receivedDate?: DateTimeWithAggregatesFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableWithAggregatesFilter<"BicycleRepair"> | Date | string | null
@@ -5551,9 +6607,72 @@ export namespace Prisma {
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
+  export type ProblemTypeCreateInput = {
+    id?: string
+    value: string
+    label: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProblemTypeUncheckedCreateInput = {
+    id?: string
+    value: string
+    label: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProblemTypeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProblemTypeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProblemTypeCreateManyInput = {
+    id?: string
+    value: string
+    label: string
+    image: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProblemTypeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProblemTypeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BicycleRepairCreateInput = {
     id?: string
-    problemType: string
+    problemTypes?: string
     description: string
     receivedDate: Date | string
     repairedDate?: Date | string | null
@@ -5567,7 +6686,7 @@ export namespace Prisma {
 
   export type BicycleRepairUncheckedCreateInput = {
     id?: string
-    problemType: string
+    problemTypes?: string
     description: string
     receivedDate: Date | string
     repairedDate?: Date | string | null
@@ -5581,7 +6700,7 @@ export namespace Prisma {
 
   export type BicycleRepairUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5595,7 +6714,7 @@ export namespace Prisma {
 
   export type BicycleRepairUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5609,7 +6728,7 @@ export namespace Prisma {
 
   export type BicycleRepairCreateManyInput = {
     id?: string
-    problemType: string
+    problemTypes?: string
     description: string
     receivedDate: Date | string
     repairedDate?: Date | string | null
@@ -5622,7 +6741,7 @@ export namespace Prisma {
 
   export type BicycleRepairUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5635,7 +6754,7 @@ export namespace Prisma {
 
   export type BicycleRepairUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5899,6 +7018,53 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type ProblemTypeOrderByRelevanceInput = {
+    fields: ProblemTypeOrderByRelevanceFieldEnum | ProblemTypeOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ProblemTypeCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    label?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProblemTypeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    label?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProblemTypeMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+    label?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -5935,7 +7101,7 @@ export namespace Prisma {
 
   export type BicycleRepairCountOrderByAggregateInput = {
     id?: SortOrder
-    problemType?: SortOrder
+    problemTypes?: SortOrder
     description?: SortOrder
     receivedDate?: SortOrder
     repairedDate?: SortOrder
@@ -5948,7 +7114,7 @@ export namespace Prisma {
 
   export type BicycleRepairMaxOrderByAggregateInput = {
     id?: SortOrder
-    problemType?: SortOrder
+    problemTypes?: SortOrder
     description?: SortOrder
     receivedDate?: SortOrder
     repairedDate?: SortOrder
@@ -5961,7 +7127,7 @@ export namespace Prisma {
 
   export type BicycleRepairMinOrderByAggregateInput = {
     id?: SortOrder
-    problemType?: SortOrder
+    problemTypes?: SortOrder
     description?: SortOrder
     receivedDate?: SortOrder
     repairedDate?: SortOrder
@@ -5970,20 +7136,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6146,6 +7298,10 @@ export namespace Prisma {
     set?: boolean | null
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type RepairPartCreateNestedManyWithoutRepairInput = {
     create?: XOR<RepairPartCreateWithoutRepairInput, RepairPartUncheckedCreateWithoutRepairInput> | RepairPartCreateWithoutRepairInput[] | RepairPartUncheckedCreateWithoutRepairInput[]
     connectOrCreate?: RepairPartCreateOrConnectWithoutRepairInput | RepairPartCreateOrConnectWithoutRepairInput[]
@@ -6158,10 +7314,6 @@ export namespace Prisma {
     connectOrCreate?: RepairPartCreateOrConnectWithoutRepairInput | RepairPartCreateOrConnectWithoutRepairInput[]
     createMany?: RepairPartCreateManyRepairInputEnvelope
     connect?: RepairPartWhereUniqueInput | RepairPartWhereUniqueInput[]
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -6390,6 +7542,20 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | null
@@ -6406,20 +7572,6 @@ export namespace Prisma {
     in?: $Enums.RepairStatus[]
     notIn?: $Enums.RepairStatus[]
     not?: NestedEnumRepairStatusFilter<$PrismaModel> | $Enums.RepairStatus
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6571,7 +7723,7 @@ export namespace Prisma {
 
   export type BicycleRepairCreateWithoutPartsUsedInput = {
     id?: string
-    problemType: string
+    problemTypes?: string
     description: string
     receivedDate: Date | string
     repairedDate?: Date | string | null
@@ -6584,7 +7736,7 @@ export namespace Prisma {
 
   export type BicycleRepairUncheckedCreateWithoutPartsUsedInput = {
     id?: string
-    problemType: string
+    problemTypes?: string
     description: string
     receivedDate: Date | string
     repairedDate?: Date | string | null
@@ -6636,7 +7788,7 @@ export namespace Prisma {
 
   export type BicycleRepairUpdateWithoutPartsUsedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -6649,7 +7801,7 @@ export namespace Prisma {
 
   export type BicycleRepairUncheckedUpdateWithoutPartsUsedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    problemType?: StringFieldUpdateOperationsInput | string
+    problemTypes?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

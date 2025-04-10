@@ -125,9 +125,18 @@ exports.Prisma.UserScalarFieldEnum = {
   enabled: 'enabled'
 };
 
+exports.Prisma.ProblemTypeScalarFieldEnum = {
+  id: 'id',
+  value: 'value',
+  label: 'label',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BicycleRepairScalarFieldEnum = {
   id: 'id',
-  problemType: 'problemType',
+  problemTypes: 'problemTypes',
   description: 'description',
   receivedDate: 'receivedDate',
   repairedDate: 'repairedDate',
@@ -173,9 +182,16 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   role: 'role'
 };
 
+exports.Prisma.ProblemTypeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  value: 'value',
+  label: 'label',
+  image: 'image'
+};
+
 exports.Prisma.BicycleRepairOrderByRelevanceFieldEnum = {
   id: 'id',
-  problemType: 'problemType',
+  problemTypes: 'problemTypes',
   description: 'description',
   ownerPhone: 'ownerPhone'
 };
@@ -202,6 +218,7 @@ exports.RepairStatus = exports.$Enums.RepairStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  ProblemType: 'ProblemType',
   BicycleRepair: 'BicycleRepair',
   Part: 'Part',
   RepairPart: 'RepairPart'

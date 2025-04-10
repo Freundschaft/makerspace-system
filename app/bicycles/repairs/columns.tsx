@@ -4,9 +4,22 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 
+const problemTypeLabels: Record<string, string> = {
+  FLAT_TIRE: "Flat Tire",
+  BRAKE_ISSUES: "Brake Issues",
+  CHAIN_ISSUES: "Chain Issues",
+  GEAR_ISSUES: "Gear Issues",
+  WHEEL_ALIGNMENT: "Wheel Alignment",
+  FRAME_DAMAGE: "Frame Damage",
+  SADDLE_ISSUES: "Saddle Issues",
+  HANDLEBAR_ISSUES: "Handlebar Issues",
+  PEDAL_ISSUES: "Pedal Issues",
+  OTHER: "Other",
+}
+
 export type Repair = {
   id: string
-  problemType: string
+  problemTypes: string
   description: string
   receivedDate: Date
   repairedDate: Date | null
@@ -23,8 +36,20 @@ export type Repair = {
 
 export const columns: ColumnDef<Repair>[] = [
   {
-    accessorKey: "problemType",
-    header: "Problem Type",
+    accessorKey: "problemTypes",
+    header: "Problem Types",
+    cell: ({ row }) => {
+      const types = JSON.parse(row.getValue("problemTypes") as string) as string[]
+      return (
+        <div className="flex flex-wrap gap-1">
+          {types.map((type) => (
+            <Badge key={type} variant="outline">
+              {problemTypeLabels[type] || type}
+            </Badge>
+          ))}
+        </div>
+      )
+    },
   },
   {
     accessorKey: "ownerPhone",
