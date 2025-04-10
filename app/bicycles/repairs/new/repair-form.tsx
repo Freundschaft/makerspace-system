@@ -25,6 +25,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
+import { FileUpload } from "@/components/ui/file-upload"
 
 // Define the ProblemType interface
 interface ProblemType {
@@ -46,6 +47,7 @@ const createFormSchema = (problemTypes: ProblemType[]) => {
     description: z.string().min(1, "Description is required"),
     ownerPhone: z.string().min(1, "Owner phone is required"),
     status: z.enum(["PENDING", "IN_PROGRESS", "WAITING_FOR_PARTS", "COMPLETED", "PICKED_UP", "CANCELLED"]),
+    photoPath: z.string().optional(),
   })
 }
 
@@ -63,6 +65,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
       description: "",
       ownerPhone: "",
       status: "PENDING",
+      photoPath: "",
     },
   })
 
@@ -116,6 +119,27 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
                 Select all applicable problem types
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="photoPath"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">Bicycle Photo</FormLabel>
+              <FormControl>
+                <FileUpload
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                Upload a photo of the bicycle (optional)
               </FormDescription>
               <FormMessage />
             </FormItem>
