@@ -75,8 +75,8 @@ export function FileUpload({
       return filePath;
     }
     
-    // Otherwise, use our file retrieval endpoint
-    return `/api/files${filePath}`;
+    // Otherwise, use the file server URL from environment variable
+    return `${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${filePath}`;
   };
 
   return (

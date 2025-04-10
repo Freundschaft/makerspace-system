@@ -101,7 +101,7 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
             </CardHeader>
             <CardContent>
               <img 
-                src={repair.photoPath} 
+                src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`} 
                 alt="Bicycle" 
                 className="max-w-full h-auto rounded-lg"
               />

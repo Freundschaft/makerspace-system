@@ -48,7 +48,7 @@ export const columns: ColumnDef<Repair>[] = [
           {photoPath ? (
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
               <img 
-                src={`/api/files/${photoPath}`} 
+                src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`} 
                 alt="Bicycle repair" 
                 className="object-cover w-full h-full"
               />
