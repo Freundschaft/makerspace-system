@@ -23,6 +23,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { format } from "date-fns"
+import Image from "next/image"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -51,6 +55,93 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  // Function to render a card for mobile view
+  const renderMobileCard = (row: any) => {
+    const cells = row.getVisibleCells()
+    
+    // Find the status cell to get the status value
+    const statusCell = cells.find((cell: any) => cell.column.id === "status")
+    const status = statusCell ? statusCell.getValue() : null
+    
+    // Find the photoPath cell
+    const photoPathCell = cells.find((cell: any) => cell.column.id === "photoPath")
+    const photoPath = photoPathCell ? photoPathCell.getValue() : null
+    
+    return (
+      <Card key={row.id} className="mb-4">
+        <CardHeader className="pb-2">
+          <div className="flex justify-between items-start">
+            <CardTitle className="text-base">
+              {status ? (
+                <Badge variant={
+                  status === 'COMPLETED' ? 'default' :
+                  status === 'IN_PROGRESS' ? 'default' :
+                  status === 'WAITING_FOR_PARTS' ? 'secondary' :
+                  status === 'PICKED_UP' ? 'secondary' :
+                  status === 'CANCELLED' ? 'destructive' :
+                  'outline'
+                }>
+                  {status.replace('_', ' ')}
+                </Badge>
+              ) : null}
+            </CardTitle>
+            <div className="text-sm text-muted-foreground">
+              {cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue() ? 
+                format(new Date(cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue()), "MMM d, yyyy") : 
+                null}
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {photoPath && (
+            <div className="mb-4 relative w-full h-48 rounded-md overflow-hidden">
+              <Image 
+                src={`/api/files/${photoPath}`} 
+                alt="Bicycle repair" 
+                fill 
+                unoptimized 
+                className="object-cover"
+              />
+            </div>
+          )}
+          <div className="space-y-2">
+            {cells.map((cell: any) => {
+              // Skip status, receivedDate, and photoPath as they're already handled
+              if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
+                return null
+              }
+              
+              // Special handling for problem types
+              if (cell.column.id === "problemTypes") {
+                return (
+                  <div key={cell.id} className="flex flex-wrap gap-1">
+                    {JSON.parse(cell.getValue() as string).map((type: string) => (
+                      <Badge key={type} variant="outline">
+                        {type}
+                      </Badge>
+                    ))}
+                  </div>
+                )
+              }
+              
+              // Skip empty values
+              if (!cell.getValue()) {
+                return null
+              }
+              
+              return (
+                <div key={cell.id} className="flex justify-between">
+                  <span className="font-medium">{cell.column.columnDef.header as string}:</span>
+                  <span>{cell.getValue() as string}</span>
+                </div>
+              )
+            })}
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <div>
       <div className="flex items-center py-4">
@@ -60,10 +151,21 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("problemTypes")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full sm:max-w-sm"
         />
       </div>
-      <div className="rounded-md border">
+      
+      {/* Mobile Card View */}
+      <div className="block sm:hidden">
+        {table.getRowModel().rows?.length ? (
+          table.getRowModel().rows.map((row) => renderMobileCard(row))
+        ) : (
+          <div className="text-center py-8">No results.</div>
+        )}
+      </div>
+      
+      {/* Desktop Table View */}
+      <div className="hidden sm:block rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -113,6 +215,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button
           variant="outline"

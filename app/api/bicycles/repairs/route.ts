@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { problemTypes, description, ownerPhone, status, receivedDate } = body
+    const { problemTypes, description, ownerPhone, status, receivedDate, photoPath } = body
 
     const repair = await prisma.bicycleRepair.create({
       data: {
@@ -13,6 +13,7 @@ export async function POST(request: Request) {
         ownerPhone,
         status,
         receivedDate: new Date(receivedDate),
+        photoPath,
       },
     })
 

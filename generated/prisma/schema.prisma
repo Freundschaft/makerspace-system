@@ -42,6 +42,7 @@ model BicycleRepair {
   pickupDate   DateTime?
   ownerPhone   String
   status       RepairStatus @default(PENDING)
+  photoPath    String?      @db.Text
   partsUsed    RepairPart[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt

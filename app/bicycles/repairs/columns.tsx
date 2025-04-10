@@ -26,6 +26,7 @@ export type Repair = {
   pickupDate: Date | null
   ownerPhone: string
   status: 'PENDING' | 'IN_PROGRESS' | 'WAITING_FOR_PARTS' | 'COMPLETED' | 'PICKED_UP' | 'CANCELLED'
+  photoPath: string | null
   partsUsed: {
     part: {
       name: string
@@ -35,6 +36,22 @@ export type Repair = {
 }
 
 export const columns: ColumnDef<Repair>[] = [
+  {
+    accessorKey: "photoPath",
+    header: "Photo",
+    cell: ({ row }) => {
+      const photoPath = row.getValue("photoPath") as string | null
+      return photoPath ? (
+        <div className="w-10 h-10 relative rounded-md overflow-hidden">
+          <img 
+            src={`/api/files/${photoPath}`} 
+            alt="Bicycle repair" 
+            className="object-cover w-full h-full"
+          />
+        </div>
+      ) : null
+    },
+  },
   {
     accessorKey: "problemTypes",
     header: "Problem Types",
