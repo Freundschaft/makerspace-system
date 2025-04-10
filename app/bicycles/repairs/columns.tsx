@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
+import Link from "next/link"
 
 const problemTypeLabels: Record<string, string> = {
   FLAT_TIRE: "Flat Tire",
@@ -41,15 +42,20 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Photo",
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
-      return photoPath ? (
-        <div className="w-10 h-10 relative rounded-md overflow-hidden">
-          <img 
-            src={`/api/files/${photoPath}`} 
-            alt="Bicycle repair" 
-            className="object-cover w-full h-full"
-          />
-        </div>
-      ) : null
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {photoPath ? (
+            <div className="w-10 h-10 relative rounded-md overflow-hidden">
+              <img 
+                src={`/api/files/${photoPath}`} 
+                alt="Bicycle repair" 
+                className="object-cover w-full h-full"
+              />
+            </div>
+          ) : null}
+        </Link>
+      )
     },
   },
   {
@@ -57,27 +63,43 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Problem Types",
     cell: ({ row }) => {
       const types = JSON.parse(row.getValue("problemTypes") as string) as string[]
+      const id = row.original.id
       return (
-        <div className="flex flex-wrap gap-1">
-          {types.map((type) => (
-            <Badge key={type} variant="outline">
-              {problemTypeLabels[type] || type}
-            </Badge>
-          ))}
-        </div>
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          <div className="flex flex-wrap gap-1">
+            {types.map((type) => (
+              <Badge key={type} variant="outline">
+                {problemTypeLabels[type] || type}
+              </Badge>
+            ))}
+          </div>
+        </Link>
       )
     },
   },
   {
     accessorKey: "ownerPhone",
     header: "Owner Phone",
+    cell: ({ row }) => {
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {row.getValue("ownerPhone")}
+        </Link>
+      )
+    },
   },
   {
     accessorKey: "receivedDate",
     header: "Received",
     cell: ({ row }) => {
       const date = row.getValue("receivedDate") as Date
-      return format(date, "PPP")
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {format(date, "PPP")}
+        </Link>
+      )
     },
   },
   {
@@ -85,7 +107,12 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Repaired",
     cell: ({ row }) => {
       const date = row.getValue("repairedDate") as Date | null
-      return date ? format(date, "PPP") : "-"
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {date ? format(date, "PPP") : "-"}
+        </Link>
+      )
     },
   },
   {
@@ -93,7 +120,12 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Picked Up",
     cell: ({ row }) => {
       const date = row.getValue("pickupDate") as Date | null
-      return date ? format(date, "PPP") : "-"
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {date ? format(date, "PPP") : "-"}
+        </Link>
+      )
     },
   },
   {
@@ -101,17 +133,20 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.getValue("status") as string
+      const id = row.original.id
       return (
-        <Badge variant={
-          status === 'COMPLETED' ? 'default' :
-          status === 'IN_PROGRESS' ? 'default' :
-          status === 'WAITING_FOR_PARTS' ? 'secondary' :
-          status === 'PICKED_UP' ? 'secondary' :
-          status === 'CANCELLED' ? 'destructive' :
-          'outline'
-        }>
-          {status.replace('_', ' ')}
-        </Badge>
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          <Badge variant={
+            status === 'COMPLETED' ? 'default' :
+            status === 'IN_PROGRESS' ? 'default' :
+            status === 'WAITING_FOR_PARTS' ? 'secondary' :
+            status === 'PICKED_UP' ? 'secondary' :
+            status === 'CANCELLED' ? 'destructive' :
+            'outline'
+          }>
+            {status.replace('_', ' ')}
+          </Badge>
+        </Link>
       )
     },
   },
@@ -120,7 +155,12 @@ export const columns: ColumnDef<Repair>[] = [
     header: "Parts Used",
     cell: ({ row }) => {
       const parts = row.getValue("partsUsed") as Repair['partsUsed']
-      return parts.map(p => `${p.part.name} (${p.quantity})`).join(", ") || "-"
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {parts.map(p => `${p.part.name} (${p.quantity})`).join(", ") || "-"}
+        </Link>
+      )
     },
   },
 ] 

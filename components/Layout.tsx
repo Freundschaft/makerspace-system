@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Header } from "./Header"
 import { Sidebar } from "./Sidebar"
+import { Button } from "./ui/button"
+import { Menu } from "lucide-react"
 
 interface LayoutProps {
   children: React.ReactNode
