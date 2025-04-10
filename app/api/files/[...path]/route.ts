@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import ftp from "basic-ftp";
+import * as ftp from "basic-ftp";
 import { getToken } from "next-auth/jwt";
 import { Readable } from "stream";
 import { Writable } from "stream";
