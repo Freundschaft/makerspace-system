@@ -130,6 +130,7 @@ exports.Prisma.ProblemTypeScalarFieldEnum = {
   value: 'value',
   label: 'label',
   image: 'image',
+  index: 'index',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

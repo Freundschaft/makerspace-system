@@ -16,52 +16,62 @@ async function main() {
       { 
         value: "FLAT_TIRE", 
         label: "Flat Tire",
-        image: "/images/problems/flat-tire.svg"
+        image: "/images/problems/flat-tire.svg",
+        index: 1
       },
       { 
         value: "BRAKE_ISSUES", 
         label: "Brake Issues",
-        image: "/images/problems/brake-issues.svg"
+        image: "/images/problems/brake-issues.svg",
+        index: 2
       },
       { 
         value: "CHAIN_ISSUES", 
         label: "Chain Issues",
-        image: "/images/problems/chain-issues.svg"
+        image: "/images/problems/chain-issues.svg",
+        index: 3
       },
       { 
         value: "GEAR_ISSUES", 
         label: "Gear Issues",
-        image: "/images/problems/gear-issues.svg"
+        image: "/images/problems/gear-issues.svg",
+        index: 4
       },
       { 
         value: "WHEEL_ALIGNMENT", 
         label: "Wheel Alignment",
-        image: "/images/problems/wheel-alignment.svg"
+        image: "/images/problems/wheel-alignment.svg",
+        index: 5
       },
       { 
         value: "FRAME_DAMAGE", 
         label: "Frame Damage",
-        image: "/images/problems/frame-damage.svg"
+        image: "/images/problems/frame-damage.svg",
+        index: 6
       },
       { 
         value: "SADDLE_ISSUES", 
         label: "Saddle Issues",
-        image: "/images/problems/saddle-issues.svg"
+        image: "/images/problems/saddle-issues.svg",
+        index: 7
       },
       { 
         value: "HANDLEBAR_ISSUES", 
         label: "Handlebar Issues",
-        image: "/images/problems/handlebar-issues.svg"
+        image: "/images/problems/handlebar-issues.svg",
+        index: 8
       },
       { 
         value: "PEDAL_ISSUES", 
         label: "Pedal Issues",
-        image: "/images/problems/pedal-issues.svg"
+        image: "/images/problems/pedal-issues.svg",
+        index: 9
       },
       { 
         value: "OTHER", 
         label: "Other",
-        image: "/images/problems/other.svg"
+        image: "/images/problems/other.svg",
+        index: 10
       },
     ]
 

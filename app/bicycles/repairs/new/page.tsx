@@ -5,7 +5,7 @@ export default async function NewRepairPage() {
   // Fetch problem types from the database
   const problemTypes = await prisma.problemType.findMany({
     orderBy: {
-      label: 'asc'
+      index: 'asc'
     }
   })
 
