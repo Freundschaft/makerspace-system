@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,10 +12,12 @@ import { CalendarIcon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
+import SignatureCanvas from "react-signature-canvas"
 
 export default function NewBicycleRentalPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const signatureRef = useRef<SignatureCanvas>(null)
   const [formData, setFormData] = useState({
     renterName: "",
     renterPhone: "",
@@ -37,17 +39,27 @@ export default function NewBicycleRentalPage() {
     }
   }
 
+  const handleClearSignature = () => {
+    signatureRef.current?.clear()
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     try {
+      // Get signature data
+      const signatureData = signatureRef.current?.toDataURL() || null
+
       const response = await fetch("/api/bicycles/rentals", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          signature: signatureData,
+        }),
       })
 
       if (!response.ok) {
@@ -181,6 +193,41 @@ export default function NewBicycleRentalPage() {
                 onChange={handleChange}
                 rows={3}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Rental Agreement</Label>
+              <div className="border rounded-md p-4 bg-muted/30 text-sm">
+                <p className="mb-2 font-medium">By signing below, I agree to the following terms:</p>
+                <ol className="list-decimal pl-5 space-y-1">
+                  <li>I will return the bicycle in the same condition as received, normal wear and tear excepted.</li>
+                  <li>I am responsible for any damage or loss during the rental period.</li>
+                  <li>I will return the bicycle by the agreed return date or contact the rental office for an extension.</li>
+                  <li>I understand that late returns may result in additional charges.</li>
+                  <li>I will use the bicycle safely and in accordance with local traffic laws.</li>
+                  <li>I confirm that all information provided in this rental form is accurate.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Signature *</Label>
+              <div className="border rounded-md p-2">
+                <SignatureCanvas
+                  ref={signatureRef}
+                  canvasProps={{
+                    className: "w-full h-40 border rounded-md",
+                  }}
+                />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleClearSignature}
+                className="mt-2"
+              >
+                Clear Signature
+              </Button>
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">

@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   Bike,
   Settings,
+  ClipboardList,
 } from "lucide-react"
 import { ScrollArea } from "./ui/scroll-area"
 
@@ -21,6 +22,11 @@ const navigation = [
     name: "Bicycles",
     href: "/bicycles/repairs",
     icon: Bike,
+  },
+  {
+    name: "Rentals",
+    href: "/bicycles/rentals",
+    icon: ClipboardList,
   },
   {
     name: "Settings",

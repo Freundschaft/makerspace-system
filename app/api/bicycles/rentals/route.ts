@@ -55,11 +55,11 @@ export async function POST(request: NextRequest) {
     const result = await prisma.$executeRaw`
       INSERT INTO BicycleRental (
         id, renterName, renterPhone, renterEmail, bicycleId, 
-        startDate, endDate, notes, status, createdAt, updatedAt
+        startDate, endDate, notes, signature, status, createdAt, updatedAt
       )
       VALUES (
         UUID(), ${body.renterName}, ${body.renterPhone}, ${body.renterEmail || null}, ${body.bicycleId},
-        ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, 'ACTIVE',
+        ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, ${body.signature || null}, 'ACTIVE',
         NOW(), NOW()
       )
     `
