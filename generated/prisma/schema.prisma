@@ -79,3 +79,25 @@ enum RepairStatus {
   PICKED_UP
   CANCELLED
 }
+
+enum RentalStatus {
+  ACTIVE
+  RETURNED
+  OVERDUE
+  CANCELLED
+}
+
+model BicycleRental {
+  id               String       @id @default(uuid())
+  renterName       String
+  renterPhone      String
+  renterEmail      String?
+  bicycleId        String
+  startDate        DateTime
+  endDate          DateTime
+  actualReturnDate DateTime?
+  status           RentalStatus @default(ACTIVE)
+  notes            String?      @db.Text
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}

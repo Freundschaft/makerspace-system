@@ -38,6 +38,11 @@ export type Part = $Result.DefaultSelection<Prisma.$PartPayload>
  * 
  */
 export type RepairPart = $Result.DefaultSelection<Prisma.$RepairPartPayload>
+/**
+ * Model BicycleRental
+ * 
+ */
+export type BicycleRental = $Result.DefaultSelection<Prisma.$BicycleRentalPayload>
 
 /**
  * Enums
@@ -54,11 +59,25 @@ export namespace $Enums {
 
 export type RepairStatus = (typeof RepairStatus)[keyof typeof RepairStatus]
 
+
+export const RentalStatus: {
+  ACTIVE: 'ACTIVE',
+  RETURNED: 'RETURNED',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED'
+};
+
+export type RentalStatus = (typeof RentalStatus)[keyof typeof RentalStatus]
+
 }
 
 export type RepairStatus = $Enums.RepairStatus
 
 export const RepairStatus: typeof $Enums.RepairStatus
+
+export type RentalStatus = $Enums.RentalStatus
+
+export const RentalStatus: typeof $Enums.RentalStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -234,6 +253,16 @@ export class PrismaClient<
     * ```
     */
   get repairPart(): Prisma.RepairPartDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bicycleRental`: Exposes CRUD operations for the **BicycleRental** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BicycleRentals
+    * const bicycleRentals = await prisma.bicycleRental.findMany()
+    * ```
+    */
+  get bicycleRental(): Prisma.BicycleRentalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -678,7 +707,8 @@ export namespace Prisma {
     ProblemType: 'ProblemType',
     BicycleRepair: 'BicycleRepair',
     Part: 'Part',
-    RepairPart: 'RepairPart'
+    RepairPart: 'RepairPart',
+    BicycleRental: 'BicycleRental'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -697,7 +727,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1031,6 +1061,72 @@ export namespace Prisma {
           }
         }
       }
+      BicycleRental: {
+        payload: Prisma.$BicycleRentalPayload<ExtArgs>
+        fields: Prisma.BicycleRentalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BicycleRentalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BicycleRentalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          findFirst: {
+            args: Prisma.BicycleRentalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BicycleRentalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          findMany: {
+            args: Prisma.BicycleRentalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>[]
+          }
+          create: {
+            args: Prisma.BicycleRentalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          createMany: {
+            args: Prisma.BicycleRentalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BicycleRentalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          update: {
+            args: Prisma.BicycleRentalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          deleteMany: {
+            args: Prisma.BicycleRentalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BicycleRentalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BicycleRentalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BicycleRentalPayload>
+          }
+          aggregate: {
+            args: Prisma.BicycleRentalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBicycleRental>
+          }
+          groupBy: {
+            args: Prisma.BicycleRentalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BicycleRentalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BicycleRentalCountArgs<ExtArgs>
+            result: $Utils.Optional<BicycleRentalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1120,6 +1216,7 @@ export namespace Prisma {
     bicycleRepair?: BicycleRepairOmit
     part?: PartOmit
     repairPart?: RepairPartOmit
+    bicycleRental?: BicycleRentalOmit
   }
 
   /* Types for Logging */
@@ -6095,6 +6192,965 @@ export namespace Prisma {
 
 
   /**
+   * Model BicycleRental
+   */
+
+  export type AggregateBicycleRental = {
+    _count: BicycleRentalCountAggregateOutputType | null
+    _min: BicycleRentalMinAggregateOutputType | null
+    _max: BicycleRentalMaxAggregateOutputType | null
+  }
+
+  export type BicycleRentalMinAggregateOutputType = {
+    id: string | null
+    renterName: string | null
+    renterPhone: string | null
+    renterEmail: string | null
+    bicycleId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    actualReturnDate: Date | null
+    status: $Enums.RentalStatus | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BicycleRentalMaxAggregateOutputType = {
+    id: string | null
+    renterName: string | null
+    renterPhone: string | null
+    renterEmail: string | null
+    bicycleId: string | null
+    startDate: Date | null
+    endDate: Date | null
+    actualReturnDate: Date | null
+    status: $Enums.RentalStatus | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BicycleRentalCountAggregateOutputType = {
+    id: number
+    renterName: number
+    renterPhone: number
+    renterEmail: number
+    bicycleId: number
+    startDate: number
+    endDate: number
+    actualReturnDate: number
+    status: number
+    notes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BicycleRentalMinAggregateInputType = {
+    id?: true
+    renterName?: true
+    renterPhone?: true
+    renterEmail?: true
+    bicycleId?: true
+    startDate?: true
+    endDate?: true
+    actualReturnDate?: true
+    status?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BicycleRentalMaxAggregateInputType = {
+    id?: true
+    renterName?: true
+    renterPhone?: true
+    renterEmail?: true
+    bicycleId?: true
+    startDate?: true
+    endDate?: true
+    actualReturnDate?: true
+    status?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BicycleRentalCountAggregateInputType = {
+    id?: true
+    renterName?: true
+    renterPhone?: true
+    renterEmail?: true
+    bicycleId?: true
+    startDate?: true
+    endDate?: true
+    actualReturnDate?: true
+    status?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BicycleRentalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BicycleRental to aggregate.
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BicycleRentals to fetch.
+     */
+    orderBy?: BicycleRentalOrderByWithRelationInput | BicycleRentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BicycleRentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BicycleRentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BicycleRentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BicycleRentals
+    **/
+    _count?: true | BicycleRentalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BicycleRentalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BicycleRentalMaxAggregateInputType
+  }
+
+  export type GetBicycleRentalAggregateType<T extends BicycleRentalAggregateArgs> = {
+        [P in keyof T & keyof AggregateBicycleRental]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBicycleRental[P]>
+      : GetScalarType<T[P], AggregateBicycleRental[P]>
+  }
+
+
+
+
+  export type BicycleRentalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BicycleRentalWhereInput
+    orderBy?: BicycleRentalOrderByWithAggregationInput | BicycleRentalOrderByWithAggregationInput[]
+    by: BicycleRentalScalarFieldEnum[] | BicycleRentalScalarFieldEnum
+    having?: BicycleRentalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BicycleRentalCountAggregateInputType | true
+    _min?: BicycleRentalMinAggregateInputType
+    _max?: BicycleRentalMaxAggregateInputType
+  }
+
+  export type BicycleRentalGroupByOutputType = {
+    id: string
+    renterName: string
+    renterPhone: string
+    renterEmail: string | null
+    bicycleId: string
+    startDate: Date
+    endDate: Date
+    actualReturnDate: Date | null
+    status: $Enums.RentalStatus
+    notes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BicycleRentalCountAggregateOutputType | null
+    _min: BicycleRentalMinAggregateOutputType | null
+    _max: BicycleRentalMaxAggregateOutputType | null
+  }
+
+  type GetBicycleRentalGroupByPayload<T extends BicycleRentalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BicycleRentalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BicycleRentalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BicycleRentalGroupByOutputType[P]>
+            : GetScalarType<T[P], BicycleRentalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BicycleRentalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    renterName?: boolean
+    renterPhone?: boolean
+    renterEmail?: boolean
+    bicycleId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    actualReturnDate?: boolean
+    status?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["bicycleRental"]>
+
+
+
+  export type BicycleRentalSelectScalar = {
+    id?: boolean
+    renterName?: boolean
+    renterPhone?: boolean
+    renterEmail?: boolean
+    bicycleId?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    actualReturnDate?: boolean
+    status?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
+
+  export type $BicycleRentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BicycleRental"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      renterName: string
+      renterPhone: string
+      renterEmail: string | null
+      bicycleId: string
+      startDate: Date
+      endDate: Date
+      actualReturnDate: Date | null
+      status: $Enums.RentalStatus
+      notes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["bicycleRental"]>
+    composites: {}
+  }
+
+  type BicycleRentalGetPayload<S extends boolean | null | undefined | BicycleRentalDefaultArgs> = $Result.GetResult<Prisma.$BicycleRentalPayload, S>
+
+  type BicycleRentalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BicycleRentalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BicycleRentalCountAggregateInputType | true
+    }
+
+  export interface BicycleRentalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BicycleRental'], meta: { name: 'BicycleRental' } }
+    /**
+     * Find zero or one BicycleRental that matches the filter.
+     * @param {BicycleRentalFindUniqueArgs} args - Arguments to find a BicycleRental
+     * @example
+     * // Get one BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BicycleRentalFindUniqueArgs>(args: SelectSubset<T, BicycleRentalFindUniqueArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BicycleRental that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BicycleRentalFindUniqueOrThrowArgs} args - Arguments to find a BicycleRental
+     * @example
+     * // Get one BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BicycleRentalFindUniqueOrThrowArgs>(args: SelectSubset<T, BicycleRentalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BicycleRental that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalFindFirstArgs} args - Arguments to find a BicycleRental
+     * @example
+     * // Get one BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BicycleRentalFindFirstArgs>(args?: SelectSubset<T, BicycleRentalFindFirstArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BicycleRental that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalFindFirstOrThrowArgs} args - Arguments to find a BicycleRental
+     * @example
+     * // Get one BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BicycleRentalFindFirstOrThrowArgs>(args?: SelectSubset<T, BicycleRentalFindFirstOrThrowArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BicycleRentals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BicycleRentals
+     * const bicycleRentals = await prisma.bicycleRental.findMany()
+     * 
+     * // Get first 10 BicycleRentals
+     * const bicycleRentals = await prisma.bicycleRental.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bicycleRentalWithIdOnly = await prisma.bicycleRental.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BicycleRentalFindManyArgs>(args?: SelectSubset<T, BicycleRentalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BicycleRental.
+     * @param {BicycleRentalCreateArgs} args - Arguments to create a BicycleRental.
+     * @example
+     * // Create one BicycleRental
+     * const BicycleRental = await prisma.bicycleRental.create({
+     *   data: {
+     *     // ... data to create a BicycleRental
+     *   }
+     * })
+     * 
+     */
+    create<T extends BicycleRentalCreateArgs>(args: SelectSubset<T, BicycleRentalCreateArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BicycleRentals.
+     * @param {BicycleRentalCreateManyArgs} args - Arguments to create many BicycleRentals.
+     * @example
+     * // Create many BicycleRentals
+     * const bicycleRental = await prisma.bicycleRental.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BicycleRentalCreateManyArgs>(args?: SelectSubset<T, BicycleRentalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BicycleRental.
+     * @param {BicycleRentalDeleteArgs} args - Arguments to delete one BicycleRental.
+     * @example
+     * // Delete one BicycleRental
+     * const BicycleRental = await prisma.bicycleRental.delete({
+     *   where: {
+     *     // ... filter to delete one BicycleRental
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BicycleRentalDeleteArgs>(args: SelectSubset<T, BicycleRentalDeleteArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BicycleRental.
+     * @param {BicycleRentalUpdateArgs} args - Arguments to update one BicycleRental.
+     * @example
+     * // Update one BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BicycleRentalUpdateArgs>(args: SelectSubset<T, BicycleRentalUpdateArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BicycleRentals.
+     * @param {BicycleRentalDeleteManyArgs} args - Arguments to filter BicycleRentals to delete.
+     * @example
+     * // Delete a few BicycleRentals
+     * const { count } = await prisma.bicycleRental.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BicycleRentalDeleteManyArgs>(args?: SelectSubset<T, BicycleRentalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BicycleRentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BicycleRentals
+     * const bicycleRental = await prisma.bicycleRental.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BicycleRentalUpdateManyArgs>(args: SelectSubset<T, BicycleRentalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BicycleRental.
+     * @param {BicycleRentalUpsertArgs} args - Arguments to update or create a BicycleRental.
+     * @example
+     * // Update or create a BicycleRental
+     * const bicycleRental = await prisma.bicycleRental.upsert({
+     *   create: {
+     *     // ... data to create a BicycleRental
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BicycleRental we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BicycleRentalUpsertArgs>(args: SelectSubset<T, BicycleRentalUpsertArgs<ExtArgs>>): Prisma__BicycleRentalClient<$Result.GetResult<Prisma.$BicycleRentalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BicycleRentals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalCountArgs} args - Arguments to filter BicycleRentals to count.
+     * @example
+     * // Count the number of BicycleRentals
+     * const count = await prisma.bicycleRental.count({
+     *   where: {
+     *     // ... the filter for the BicycleRentals we want to count
+     *   }
+     * })
+    **/
+    count<T extends BicycleRentalCountArgs>(
+      args?: Subset<T, BicycleRentalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BicycleRentalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BicycleRental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BicycleRentalAggregateArgs>(args: Subset<T, BicycleRentalAggregateArgs>): Prisma.PrismaPromise<GetBicycleRentalAggregateType<T>>
+
+    /**
+     * Group by BicycleRental.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BicycleRentalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BicycleRentalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BicycleRentalGroupByArgs['orderBy'] }
+        : { orderBy?: BicycleRentalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BicycleRentalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBicycleRentalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BicycleRental model
+   */
+  readonly fields: BicycleRentalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BicycleRental.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BicycleRentalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BicycleRental model
+   */
+  interface BicycleRentalFieldRefs {
+    readonly id: FieldRef<"BicycleRental", 'String'>
+    readonly renterName: FieldRef<"BicycleRental", 'String'>
+    readonly renterPhone: FieldRef<"BicycleRental", 'String'>
+    readonly renterEmail: FieldRef<"BicycleRental", 'String'>
+    readonly bicycleId: FieldRef<"BicycleRental", 'String'>
+    readonly startDate: FieldRef<"BicycleRental", 'DateTime'>
+    readonly endDate: FieldRef<"BicycleRental", 'DateTime'>
+    readonly actualReturnDate: FieldRef<"BicycleRental", 'DateTime'>
+    readonly status: FieldRef<"BicycleRental", 'RentalStatus'>
+    readonly notes: FieldRef<"BicycleRental", 'String'>
+    readonly createdAt: FieldRef<"BicycleRental", 'DateTime'>
+    readonly updatedAt: FieldRef<"BicycleRental", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BicycleRental findUnique
+   */
+  export type BicycleRentalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter, which BicycleRental to fetch.
+     */
+    where: BicycleRentalWhereUniqueInput
+  }
+
+  /**
+   * BicycleRental findUniqueOrThrow
+   */
+  export type BicycleRentalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter, which BicycleRental to fetch.
+     */
+    where: BicycleRentalWhereUniqueInput
+  }
+
+  /**
+   * BicycleRental findFirst
+   */
+  export type BicycleRentalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter, which BicycleRental to fetch.
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BicycleRentals to fetch.
+     */
+    orderBy?: BicycleRentalOrderByWithRelationInput | BicycleRentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BicycleRentals.
+     */
+    cursor?: BicycleRentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BicycleRentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BicycleRentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BicycleRentals.
+     */
+    distinct?: BicycleRentalScalarFieldEnum | BicycleRentalScalarFieldEnum[]
+  }
+
+  /**
+   * BicycleRental findFirstOrThrow
+   */
+  export type BicycleRentalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter, which BicycleRental to fetch.
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BicycleRentals to fetch.
+     */
+    orderBy?: BicycleRentalOrderByWithRelationInput | BicycleRentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BicycleRentals.
+     */
+    cursor?: BicycleRentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BicycleRentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BicycleRentals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BicycleRentals.
+     */
+    distinct?: BicycleRentalScalarFieldEnum | BicycleRentalScalarFieldEnum[]
+  }
+
+  /**
+   * BicycleRental findMany
+   */
+  export type BicycleRentalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter, which BicycleRentals to fetch.
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BicycleRentals to fetch.
+     */
+    orderBy?: BicycleRentalOrderByWithRelationInput | BicycleRentalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BicycleRentals.
+     */
+    cursor?: BicycleRentalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BicycleRentals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BicycleRentals.
+     */
+    skip?: number
+    distinct?: BicycleRentalScalarFieldEnum | BicycleRentalScalarFieldEnum[]
+  }
+
+  /**
+   * BicycleRental create
+   */
+  export type BicycleRentalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * The data needed to create a BicycleRental.
+     */
+    data: XOR<BicycleRentalCreateInput, BicycleRentalUncheckedCreateInput>
+  }
+
+  /**
+   * BicycleRental createMany
+   */
+  export type BicycleRentalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BicycleRentals.
+     */
+    data: BicycleRentalCreateManyInput | BicycleRentalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BicycleRental update
+   */
+  export type BicycleRentalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * The data needed to update a BicycleRental.
+     */
+    data: XOR<BicycleRentalUpdateInput, BicycleRentalUncheckedUpdateInput>
+    /**
+     * Choose, which BicycleRental to update.
+     */
+    where: BicycleRentalWhereUniqueInput
+  }
+
+  /**
+   * BicycleRental updateMany
+   */
+  export type BicycleRentalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BicycleRentals.
+     */
+    data: XOR<BicycleRentalUpdateManyMutationInput, BicycleRentalUncheckedUpdateManyInput>
+    /**
+     * Filter which BicycleRentals to update
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * Limit how many BicycleRentals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BicycleRental upsert
+   */
+  export type BicycleRentalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * The filter to search for the BicycleRental to update in case it exists.
+     */
+    where: BicycleRentalWhereUniqueInput
+    /**
+     * In case the BicycleRental found by the `where` argument doesn't exist, create a new BicycleRental with this data.
+     */
+    create: XOR<BicycleRentalCreateInput, BicycleRentalUncheckedCreateInput>
+    /**
+     * In case the BicycleRental was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BicycleRentalUpdateInput, BicycleRentalUncheckedUpdateInput>
+  }
+
+  /**
+   * BicycleRental delete
+   */
+  export type BicycleRentalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+    /**
+     * Filter which BicycleRental to delete.
+     */
+    where: BicycleRentalWhereUniqueInput
+  }
+
+  /**
+   * BicycleRental deleteMany
+   */
+  export type BicycleRentalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BicycleRentals to delete
+     */
+    where?: BicycleRentalWhereInput
+    /**
+     * Limit how many BicycleRentals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BicycleRental without action
+   */
+  export type BicycleRentalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BicycleRental
+     */
+    select?: BicycleRentalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BicycleRental
+     */
+    omit?: BicycleRentalOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6173,6 +7229,24 @@ export namespace Prisma {
   export type RepairPartScalarFieldEnum = (typeof RepairPartScalarFieldEnum)[keyof typeof RepairPartScalarFieldEnum]
 
 
+  export const BicycleRentalScalarFieldEnum: {
+    id: 'id',
+    renterName: 'renterName',
+    renterPhone: 'renterPhone',
+    renterEmail: 'renterEmail',
+    bicycleId: 'bicycleId',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    actualReturnDate: 'actualReturnDate',
+    status: 'status',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BicycleRentalScalarFieldEnum = (typeof BicycleRentalScalarFieldEnum)[keyof typeof BicycleRentalScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -6238,6 +7312,18 @@ export namespace Prisma {
   export type RepairPartOrderByRelevanceFieldEnum = (typeof RepairPartOrderByRelevanceFieldEnum)[keyof typeof RepairPartOrderByRelevanceFieldEnum]
 
 
+  export const BicycleRentalOrderByRelevanceFieldEnum: {
+    id: 'id',
+    renterName: 'renterName',
+    renterPhone: 'renterPhone',
+    renterEmail: 'renterEmail',
+    bicycleId: 'bicycleId',
+    notes: 'notes'
+  };
+
+  export type BicycleRentalOrderByRelevanceFieldEnum = (typeof BicycleRentalOrderByRelevanceFieldEnum)[keyof typeof BicycleRentalOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -6275,6 +7361,13 @@ export namespace Prisma {
    * Reference to a field of type 'RepairStatus'
    */
   export type EnumRepairStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RepairStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RentalStatus'
+   */
+  export type EnumRentalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RentalStatus'>
     
 
 
@@ -6620,6 +7713,94 @@ export namespace Prisma {
     quantity?: IntWithAggregatesFilter<"RepairPart"> | number
     createdAt?: DateTimeWithAggregatesFilter<"RepairPart"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RepairPart"> | Date | string
+  }
+
+  export type BicycleRentalWhereInput = {
+    AND?: BicycleRentalWhereInput | BicycleRentalWhereInput[]
+    OR?: BicycleRentalWhereInput[]
+    NOT?: BicycleRentalWhereInput | BicycleRentalWhereInput[]
+    id?: StringFilter<"BicycleRental"> | string
+    renterName?: StringFilter<"BicycleRental"> | string
+    renterPhone?: StringFilter<"BicycleRental"> | string
+    renterEmail?: StringNullableFilter<"BicycleRental"> | string | null
+    bicycleId?: StringFilter<"BicycleRental"> | string
+    startDate?: DateTimeFilter<"BicycleRental"> | Date | string
+    endDate?: DateTimeFilter<"BicycleRental"> | Date | string
+    actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
+    status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
+    notes?: StringNullableFilter<"BicycleRental"> | string | null
+    createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
+    updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
+  }
+
+  export type BicycleRentalOrderByWithRelationInput = {
+    id?: SortOrder
+    renterName?: SortOrder
+    renterPhone?: SortOrder
+    renterEmail?: SortOrderInput | SortOrder
+    bicycleId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualReturnDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _relevance?: BicycleRentalOrderByRelevanceInput
+  }
+
+  export type BicycleRentalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BicycleRentalWhereInput | BicycleRentalWhereInput[]
+    OR?: BicycleRentalWhereInput[]
+    NOT?: BicycleRentalWhereInput | BicycleRentalWhereInput[]
+    renterName?: StringFilter<"BicycleRental"> | string
+    renterPhone?: StringFilter<"BicycleRental"> | string
+    renterEmail?: StringNullableFilter<"BicycleRental"> | string | null
+    bicycleId?: StringFilter<"BicycleRental"> | string
+    startDate?: DateTimeFilter<"BicycleRental"> | Date | string
+    endDate?: DateTimeFilter<"BicycleRental"> | Date | string
+    actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
+    status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
+    notes?: StringNullableFilter<"BicycleRental"> | string | null
+    createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
+    updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
+  }, "id">
+
+  export type BicycleRentalOrderByWithAggregationInput = {
+    id?: SortOrder
+    renterName?: SortOrder
+    renterPhone?: SortOrder
+    renterEmail?: SortOrderInput | SortOrder
+    bicycleId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualReturnDate?: SortOrderInput | SortOrder
+    status?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BicycleRentalCountOrderByAggregateInput
+    _max?: BicycleRentalMaxOrderByAggregateInput
+    _min?: BicycleRentalMinOrderByAggregateInput
+  }
+
+  export type BicycleRentalScalarWhereWithAggregatesInput = {
+    AND?: BicycleRentalScalarWhereWithAggregatesInput | BicycleRentalScalarWhereWithAggregatesInput[]
+    OR?: BicycleRentalScalarWhereWithAggregatesInput[]
+    NOT?: BicycleRentalScalarWhereWithAggregatesInput | BicycleRentalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BicycleRental"> | string
+    renterName?: StringWithAggregatesFilter<"BicycleRental"> | string
+    renterPhone?: StringWithAggregatesFilter<"BicycleRental"> | string
+    renterEmail?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
+    bicycleId?: StringWithAggregatesFilter<"BicycleRental"> | string
+    startDate?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
+    actualReturnDate?: DateTimeNullableWithAggregatesFilter<"BicycleRental"> | Date | string | null
+    status?: EnumRentalStatusWithAggregatesFilter<"BicycleRental"> | $Enums.RentalStatus
+    notes?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -6974,6 +8155,111 @@ export namespace Prisma {
     repairId?: StringFieldUpdateOperationsInput | string
     partId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BicycleRentalCreateInput = {
+    id?: string
+    renterName: string
+    renterPhone: string
+    renterEmail?: string | null
+    bicycleId: string
+    startDate: Date | string
+    endDate: Date | string
+    actualReturnDate?: Date | string | null
+    status?: $Enums.RentalStatus
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BicycleRentalUncheckedCreateInput = {
+    id?: string
+    renterName: string
+    renterPhone: string
+    renterEmail?: string | null
+    bicycleId: string
+    startDate: Date | string
+    endDate: Date | string
+    actualReturnDate?: Date | string | null
+    status?: $Enums.RentalStatus
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BicycleRentalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterName?: StringFieldUpdateOperationsInput | string
+    renterPhone?: StringFieldUpdateOperationsInput | string
+    renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    bicycleId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BicycleRentalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterName?: StringFieldUpdateOperationsInput | string
+    renterPhone?: StringFieldUpdateOperationsInput | string
+    renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    bicycleId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BicycleRentalCreateManyInput = {
+    id?: string
+    renterName: string
+    renterPhone: string
+    renterEmail?: string | null
+    bicycleId: string
+    startDate: Date | string
+    endDate: Date | string
+    actualReturnDate?: Date | string | null
+    status?: $Enums.RentalStatus
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BicycleRentalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterName?: StringFieldUpdateOperationsInput | string
+    renterPhone?: StringFieldUpdateOperationsInput | string
+    renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    bicycleId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BicycleRentalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    renterName?: StringFieldUpdateOperationsInput | string
+    renterPhone?: StringFieldUpdateOperationsInput | string
+    renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    bicycleId?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7385,6 +8671,74 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
+  export type EnumRentalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalStatus | EnumRentalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalStatus[]
+    notIn?: $Enums.RentalStatus[]
+    not?: NestedEnumRentalStatusFilter<$PrismaModel> | $Enums.RentalStatus
+  }
+
+  export type BicycleRentalOrderByRelevanceInput = {
+    fields: BicycleRentalOrderByRelevanceFieldEnum | BicycleRentalOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type BicycleRentalCountOrderByAggregateInput = {
+    id?: SortOrder
+    renterName?: SortOrder
+    renterPhone?: SortOrder
+    renterEmail?: SortOrder
+    bicycleId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualReturnDate?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BicycleRentalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    renterName?: SortOrder
+    renterPhone?: SortOrder
+    renterEmail?: SortOrder
+    bicycleId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualReturnDate?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BicycleRentalMinOrderByAggregateInput = {
+    id?: SortOrder
+    renterName?: SortOrder
+    renterPhone?: SortOrder
+    renterEmail?: SortOrder
+    bicycleId?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    actualReturnDate?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumRentalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalStatus | EnumRentalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalStatus[]
+    notIn?: $Enums.RentalStatus[]
+    not?: NestedEnumRentalStatusWithAggregatesFilter<$PrismaModel> | $Enums.RentalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRentalStatusFilter<$PrismaModel>
+    _max?: NestedEnumRentalStatusFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -7527,6 +8881,10 @@ export namespace Prisma {
     upsert?: PartUpsertWithoutRepairsInput
     connect?: PartWhereUniqueInput
     update?: XOR<XOR<PartUpdateToOneWithWhereWithoutRepairsInput, PartUpdateWithoutRepairsInput>, PartUncheckedUpdateWithoutRepairsInput>
+  }
+
+  export type EnumRentalStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RentalStatus
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7722,6 +9080,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRepairStatusFilter<$PrismaModel>
     _max?: NestedEnumRepairStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRentalStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalStatus | EnumRentalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalStatus[]
+    notIn?: $Enums.RentalStatus[]
+    not?: NestedEnumRentalStatusFilter<$PrismaModel> | $Enums.RentalStatus
+  }
+
+  export type NestedEnumRentalStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RentalStatus | EnumRentalStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RentalStatus[]
+    notIn?: $Enums.RentalStatus[]
+    not?: NestedEnumRentalStatusWithAggregatesFilter<$PrismaModel> | $Enums.RentalStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRentalStatusFilter<$PrismaModel>
+    _max?: NestedEnumRentalStatusFilter<$PrismaModel>
   }
 
   export type RepairPartCreateWithoutRepairInput = {

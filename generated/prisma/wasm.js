@@ -167,6 +167,21 @@ exports.Prisma.RepairPartScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BicycleRentalScalarFieldEnum = {
+  id: 'id',
+  renterName: 'renterName',
+  renterPhone: 'renterPhone',
+  renterEmail: 'renterEmail',
+  bicycleId: 'bicycleId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  actualReturnDate: 'actualReturnDate',
+  status: 'status',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -210,6 +225,15 @@ exports.Prisma.RepairPartOrderByRelevanceFieldEnum = {
   repairId: 'repairId',
   partId: 'partId'
 };
+
+exports.Prisma.BicycleRentalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  renterName: 'renterName',
+  renterPhone: 'renterPhone',
+  renterEmail: 'renterEmail',
+  bicycleId: 'bicycleId',
+  notes: 'notes'
+};
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
@@ -219,12 +243,20 @@ exports.RepairStatus = exports.$Enums.RepairStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.RentalStatus = exports.$Enums.RentalStatus = {
+  ACTIVE: 'ACTIVE',
+  RETURNED: 'RETURNED',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
   BicycleRepair: 'BicycleRepair',
   Part: 'Part',
-  RepairPart: 'RepairPart'
+  RepairPart: 'RepairPart',
+  BicycleRental: 'BicycleRental'
 };
 
 /**
