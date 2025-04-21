@@ -8,7 +8,7 @@ import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { Check, X } from "lucide-react"
+import { Check, X, Wrench } from "lucide-react"
 
 const problemTypeLabels: Record<string, string> = {
   FLAT_TIRE: "Flat Tire",
@@ -395,6 +395,27 @@ export const columns: ColumnDef<Repair>[] = [
         <Link href={`/bicycles/repairs/${id}`} className="block">
           {parts.map(p => `${p.part.name} (${p.quantity})`).join(", ") || "-"}
         </Link>
+      )
+    },
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const id = row.original.id
+      
+      return (
+        <Button 
+          variant="outline" 
+          size="sm" 
+          asChild
+          className="flex items-center gap-1"
+        >
+          <Link href={`/bicycles/repairs/${id}/repair`}>
+            <Wrench className="h-4 w-4" />
+            <span>Repair</span>
+          </Link>
+        </Button>
       )
     },
   },
