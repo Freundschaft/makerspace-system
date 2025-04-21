@@ -103,3 +103,27 @@ model BicycleRental {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 }
+
+enum TeamMemberStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model TeamMember {
+  id           String          @id @default(uuid())
+  familyName   String
+  givenNames   String
+  nationality  String
+  photoPath    String?         @db.Text
+  status       TeamMemberStatus @default(ACTIVE)
+  startDate    DateTime
+  endDate      DateTime?
+  department   String
+  email        String          @unique
+  phone        String
+  homeAddress  String?         @db.Text
+  dateOfBirth  DateTime
+  legalStatus  String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+}

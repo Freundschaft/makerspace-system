@@ -183,6 +183,25 @@ exports.Prisma.BicycleRentalScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TeamMemberScalarFieldEnum = {
+  id: 'id',
+  familyName: 'familyName',
+  givenNames: 'givenNames',
+  nationality: 'nationality',
+  photoPath: 'photoPath',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  department: 'department',
+  email: 'email',
+  phone: 'phone',
+  homeAddress: 'homeAddress',
+  dateOfBirth: 'dateOfBirth',
+  legalStatus: 'legalStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -236,6 +255,19 @@ exports.Prisma.BicycleRentalOrderByRelevanceFieldEnum = {
   notes: 'notes',
   signature: 'signature'
 };
+
+exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
+  id: 'id',
+  familyName: 'familyName',
+  givenNames: 'givenNames',
+  nationality: 'nationality',
+  photoPath: 'photoPath',
+  department: 'department',
+  email: 'email',
+  phone: 'phone',
+  homeAddress: 'homeAddress',
+  legalStatus: 'legalStatus'
+};
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
@@ -252,13 +284,19 @@ exports.RentalStatus = exports.$Enums.RentalStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.TeamMemberStatus = exports.$Enums.TeamMemberStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
   BicycleRepair: 'BicycleRepair',
   Part: 'Part',
   RepairPart: 'RepairPart',
-  BicycleRental: 'BicycleRental'
+  BicycleRental: 'BicycleRental',
+  TeamMember: 'TeamMember'
 };
 
 /**
