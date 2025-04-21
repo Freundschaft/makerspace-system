@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getToken } from "next-auth/jwt"
+import { GoogleWorkspaceService } from "@/app/services/google-workspace"
 
 // GET /api/team - Get all team members
 export async function GET(request: NextRequest) {
@@ -14,10 +15,12 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const teamMembers = await prisma.$queryRaw`
-      SELECT * FROM TeamMember
-      ORDER BY familyName, givenNames
-    `
+    const teamMembers = await prisma.teamMember.findMany({
+      orderBy: [
+        { familyName: 'asc' },
+        { givenNames: 'asc' },
+      ],
+    })
 
     return NextResponse.json(teamMembers)
   } catch (error) {
@@ -52,33 +55,39 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create the team member using raw SQL
-    const result = await prisma.$executeRaw`
-      INSERT INTO TeamMember (
-        id, familyName, givenNames, nationality, photoPath, 
-        status, startDate, endDate, department, email, 
-        phone, homeAddress, dateOfBirth, legalStatus, 
-        createdAt, updatedAt
-      )
-      VALUES (
-        UUID(), ${body.familyName}, ${body.givenNames}, ${body.nationality}, ${body.photoPath || null},
-        ${body.status || 'ACTIVE'}, ${new Date(body.startDate)}, ${body.endDate ? new Date(body.endDate) : null},
-        ${body.department}, ${body.email}, ${body.phone}, ${body.homeAddress || null},
-        ${new Date(body.dateOfBirth)}, ${body.legalStatus}, NOW(), NOW()
-      )
-    `
+    // Create the team member in our database
+    const teamMember = await prisma.teamMember.create({
+      data: {
+        familyName: body.familyName,
+        givenNames: body.givenNames,
+        nationality: body.nationality,
+        photoPath: body.photoPath,
+        status: body.status,
+        startDate: new Date(body.startDate),
+        endDate: body.endDate ? new Date(body.endDate) : null,
+        department: body.department,
+        email: body.email,
+        phone: body.phone,
+        homeAddress: body.homeAddress,
+        dateOfBirth: new Date(body.dateOfBirth),
+        legalStatus: body.legalStatus,
+      },
+    })
 
-    // Get the newly created team member
-    const newTeamMember = await prisma.$queryRaw`
-      SELECT * FROM TeamMember
-      WHERE familyName = ${body.familyName}
-      AND givenNames = ${body.givenNames}
-      AND email = ${body.email}
-      ORDER BY createdAt DESC
-      LIMIT 1
-    ` as any[]
+    // Create the user in Google Workspace
+    try {
+      const googleWorkspace = await GoogleWorkspaceService.getInstance()
+      await googleWorkspace.createUser(teamMember)
+    } catch (googleError) {
+      console.error("Error creating Google Workspace user:", googleError)
+      // If Google Workspace creation fails, delete the team member from our database
+      await prisma.teamMember.delete({
+        where: { id: teamMember.id },
+      })
+      throw googleError
+    }
 
-    return NextResponse.json(newTeamMember[0], { status: 201 })
+    return NextResponse.json(teamMember, { status: 201 })
   } catch (error) {
     console.error("Error creating team member:", error)
     return NextResponse.json(
