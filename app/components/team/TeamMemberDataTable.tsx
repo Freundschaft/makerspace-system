@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { TeamMember } from "@prisma/client"
+import { TeamMember } from "@/app/team/columns"
 import { format } from "date-fns"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -44,7 +44,10 @@ export function TeamMemberDataTable({
             <TableRow key={member.id}>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src={member.photoPath || undefined} />
+                  <AvatarImage 
+                    src={member.photoPath ? `data:image/jpeg;base64,${member.photoPath}` : undefined} 
+                    alt={`${member.givenNames} ${member.familyName}`}
+                  />
                   <AvatarFallback>
                     {member.givenNames[0]}
                     {member.familyName[0]}

@@ -160,8 +160,18 @@ export class GoogleWorkspaceService {
         auth: this.authClient,
         userKey: email,
       });
-      return response.data.photoData || null;
+      
+      // Convert web-safe base64 to standard base64
+      const photoData = response.data.photoData;
+      if (!photoData) return null;
+      
+      // Replace web-safe characters with standard base64 characters
+      return photoData.replace(/-/g, '+').replace(/_/g, '/');
     } catch (error) {
+      if ((error as any).code === 404) {
+        // User has no photo, which is fine
+        return null;
+      }
       console.error(`Error fetching photo for user ${email}:`, error);
       return null;
     }
@@ -190,6 +200,7 @@ export class GoogleWorkspaceService {
         console.log('Google User Photo Data:', {
           email: googleUser.primaryEmail,
           hasPhoto: !!photoPath,
+          photoLength: photoPath ? photoPath.length : 0,
         });
 
         const teamMemberData = {
