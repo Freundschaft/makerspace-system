@@ -178,6 +178,7 @@ exports.Prisma.BicycleRentalScalarFieldEnum = {
   actualReturnDate: 'actualReturnDate',
   status: 'status',
   notes: 'notes',
+  signature: 'signature',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -232,7 +233,8 @@ exports.Prisma.BicycleRentalOrderByRelevanceFieldEnum = {
   renterPhone: 'renterPhone',
   renterEmail: 'renterEmail',
   bicycleId: 'bicycleId',
-  notes: 'notes'
+  notes: 'notes',
+  signature: 'signature'
 };
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',

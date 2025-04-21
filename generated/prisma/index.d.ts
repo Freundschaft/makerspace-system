@@ -6212,6 +6212,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus | null
     notes: string | null
+    signature: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6227,6 +6228,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus | null
     notes: string | null
+    signature: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6242,6 +6244,7 @@ export namespace Prisma {
     actualReturnDate: number
     status: number
     notes: number
+    signature: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6259,6 +6262,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    signature?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6274,6 +6278,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    signature?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6289,6 +6294,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    signature?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6377,6 +6383,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus
     notes: string | null
+    signature: string | null
     createdAt: Date
     updatedAt: Date
     _count: BicycleRentalCountAggregateOutputType | null
@@ -6409,6 +6416,7 @@ export namespace Prisma {
     actualReturnDate?: boolean
     status?: boolean
     notes?: boolean
+    signature?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["bicycleRental"]>
@@ -6426,11 +6434,12 @@ export namespace Prisma {
     actualReturnDate?: boolean
     status?: boolean
     notes?: boolean
+    signature?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
+  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "signature" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
 
   export type $BicycleRentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BicycleRental"
@@ -6446,6 +6455,7 @@ export namespace Prisma {
       actualReturnDate: Date | null
       status: $Enums.RentalStatus
       notes: string | null
+      signature: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["bicycleRental"]>
@@ -6827,6 +6837,7 @@ export namespace Prisma {
     readonly actualReturnDate: FieldRef<"BicycleRental", 'DateTime'>
     readonly status: FieldRef<"BicycleRental", 'RentalStatus'>
     readonly notes: FieldRef<"BicycleRental", 'String'>
+    readonly signature: FieldRef<"BicycleRental", 'String'>
     readonly createdAt: FieldRef<"BicycleRental", 'DateTime'>
     readonly updatedAt: FieldRef<"BicycleRental", 'DateTime'>
   }
@@ -7240,6 +7251,7 @@ export namespace Prisma {
     actualReturnDate: 'actualReturnDate',
     status: 'status',
     notes: 'notes',
+    signature: 'signature',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7318,7 +7330,8 @@ export namespace Prisma {
     renterPhone: 'renterPhone',
     renterEmail: 'renterEmail',
     bicycleId: 'bicycleId',
-    notes: 'notes'
+    notes: 'notes',
+    signature: 'signature'
   };
 
   export type BicycleRentalOrderByRelevanceFieldEnum = (typeof BicycleRentalOrderByRelevanceFieldEnum)[keyof typeof BicycleRentalOrderByRelevanceFieldEnum]
@@ -7729,6 +7742,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableFilter<"BicycleRental"> | string | null
+    signature?: StringNullableFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
   }
@@ -7744,6 +7758,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrderInput | SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    signature?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: BicycleRentalOrderByRelevanceInput
@@ -7763,6 +7778,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableFilter<"BicycleRental"> | string | null
+    signature?: StringNullableFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
   }, "id">
@@ -7778,6 +7794,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrderInput | SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    signature?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BicycleRentalCountOrderByAggregateInput
@@ -7799,6 +7816,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableWithAggregatesFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusWithAggregatesFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
+    signature?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
   }
@@ -8170,6 +8188,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8185,6 +8204,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8200,6 +8220,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8215,6 +8236,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8230,6 +8252,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8245,6 +8268,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8260,6 +8284,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8695,6 +8720,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8710,6 +8736,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8725,6 +8752,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
