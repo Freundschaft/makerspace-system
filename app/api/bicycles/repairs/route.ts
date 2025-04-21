@@ -25,4 +25,29 @@ export async function POST(request: Request) {
       { status: 500 }
     )
   }
+}
+
+export async function GET() {
+  try {
+    const repairs = await prisma.bicycleRepair.findMany({
+      include: {
+        partsUsed: {
+          include: {
+            part: true
+          }
+        }
+      },
+      orderBy: {
+        receivedDate: 'desc'
+      }
+    })
+
+    return NextResponse.json(repairs)
+  } catch (error) {
+    console.error("Error fetching repairs:", error)
+    return NextResponse.json(
+      { error: "Failed to fetch repairs" },
+      { status: 500 }
+    )
+  }
 } 
