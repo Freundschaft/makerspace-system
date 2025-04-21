@@ -153,6 +153,20 @@ export class GoogleWorkspaceService {
     }
   }
 
+  // Get user's photo from Google Workspace
+  private async getUserPhoto(email: string): Promise<string | null> {
+    try {
+      const response = await admin.users.photos.get({
+        auth: this.authClient,
+        userKey: email,
+      });
+      return response.data.photoData || null;
+    } catch (error) {
+      console.error(`Error fetching photo for user ${email}:`, error);
+      return null;
+    }
+  }
+
   // Sync all team members with Google Workspace
   async syncAllUsers(teamMembers: TeamMember[]) {
     try {
@@ -161,6 +175,7 @@ export class GoogleWorkspaceService {
         auth: this.authClient,
         domain: process.env.GOOGLE_WORKSPACE_DOMAIN,
         maxResults: 500,
+        projection: 'full', // This ensures we get all user fields including photo
       });
 
       const googleUsers = response.data.users || [];
@@ -170,12 +185,19 @@ export class GoogleWorkspaceService {
       for (const googleUser of googleUsers) {
         if (!googleUser.primaryEmail) continue;
 
+        // Get user's photo if available
+        const photoPath = await this.getUserPhoto(googleUser.primaryEmail);
+        console.log('Google User Photo Data:', {
+          email: googleUser.primaryEmail,
+          hasPhoto: !!photoPath,
+        });
+
         const teamMemberData = {
           email: googleUser.primaryEmail,
           familyName: googleUser.name?.familyName || '',
           givenNames: googleUser.name?.givenName || '',
           nationality: '', // Not available in Google Workspace
-          photoPath: null,
+          photoPath: photoPath,
           status: googleUser.suspended ? TeamMemberStatus.INACTIVE : TeamMemberStatus.ACTIVE,
           startDate: new Date(), // Not available in Google Workspace
           endDate: null,

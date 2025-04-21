@@ -31,7 +31,10 @@ export const columns: ColumnDef<TeamMember>[] = [
       const name = `${row.original.givenNames} ${row.original.familyName}`
       return (
         <Avatar>
-          <AvatarImage src={photoPath || undefined} alt={name} />
+          <AvatarImage 
+            src={photoPath ? `data:image/jpeg;base64,${photoPath}` : undefined} 
+            alt={name} 
+          />
           <AvatarFallback>{name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
         </Avatar>
       )
