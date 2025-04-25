@@ -5,8 +5,8 @@ import { getToken } from "next-auth/jwt"
 // DELETE /api/team/[id] - Delete a team member
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
   try {
     // Check authentication
     const token = await getToken({ req: request })
@@ -17,7 +17,7 @@ export async function DELETE(
       )
     }
 
-    const { id } = params
+    const { id } = await params
 
     // Delete the team member
     await prisma.teamMember.delete({
