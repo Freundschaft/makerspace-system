@@ -11,6 +11,7 @@ import {
   ClipboardList,
   Users,
   Smartphone,
+  Hammer,
 } from "lucide-react"
 import { ScrollArea } from "./ui/scroll-area"
 
@@ -39,6 +40,11 @@ const navigation = [
     name: "Electronics",
     href: "/electronics/repairs",
     icon: Smartphone,
+  },
+  {
+    name: "Carpentry",
+    href: "/carpentry/projects",
+    icon: Hammer,
   },
   {
     name: "Settings",

@@ -220,6 +220,28 @@ exports.Prisma.ElectronicsRepairScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CarpentryProjectScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  acceptedBy: 'acceptedBy',
+  customerType: 'customerType',
+  organizationName: 'organizationName',
+  customerName: 'customerName',
+  phoneNumber: 'phoneNumber',
+  gender: 'gender',
+  orderType: 'orderType',
+  timeNeeded: 'timeNeeded',
+  itemToRepair: 'itemToRepair',
+  problemDescription: 'problemDescription',
+  projectDescription: 'projectDescription',
+  materialCosts: 'materialCosts',
+  paidByCustomer: 'paidByCustomer',
+  photoPath: 'photoPath',
+  assignedToId: 'assignedToId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -296,6 +318,19 @@ exports.Prisma.ElectronicsRepairOrderByRelevanceFieldEnum = {
   notes: 'notes',
   photoPath: 'photoPath',
   repairerId: 'repairerId'
+};
+
+exports.Prisma.CarpentryProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  acceptedBy: 'acceptedBy',
+  organizationName: 'organizationName',
+  customerName: 'customerName',
+  phoneNumber: 'phoneNumber',
+  itemToRepair: 'itemToRepair',
+  problemDescription: 'problemDescription',
+  projectDescription: 'projectDescription',
+  photoPath: 'photoPath',
+  assignedToId: 'assignedToId'
 };
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
@@ -383,6 +418,23 @@ exports.ElectronicsRepairStatus = exports.$Enums.ElectronicsRepairStatus = {
   NO_WAY_TO_FIX: 'NO_WAY_TO_FIX'
 };
 
+exports.CarpentryCustomerType = exports.$Enums.CarpentryCustomerType = {
+  PRIVATE_PERSON: 'PRIVATE_PERSON',
+  ORGANIZATION: 'ORGANIZATION',
+  BARBERSHOP: 'BARBERSHOP',
+  HOUSE: 'HOUSE'
+};
+
+exports.CarpentryGender = exports.$Enums.CarpentryGender = {
+  FEMALE: 'FEMALE',
+  MALE: 'MALE'
+};
+
+exports.CarpentryOrderType = exports.$Enums.CarpentryOrderType = {
+  REPAIR_ORDER: 'REPAIR_ORDER',
+  PROJECT: 'PROJECT'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -391,7 +443,8 @@ exports.Prisma.ModelName = {
   RepairPart: 'RepairPart',
   BicycleRental: 'BicycleRental',
   TeamMember: 'TeamMember',
-  ElectronicsRepair: 'ElectronicsRepair'
+  ElectronicsRepair: 'ElectronicsRepair',
+  CarpentryProject: 'CarpentryProject'
 };
 
 /**

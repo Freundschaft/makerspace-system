@@ -53,6 +53,11 @@ export type TeamMember = $Result.DefaultSelection<Prisma.$TeamMemberPayload>
  * 
  */
 export type ElectronicsRepair = $Result.DefaultSelection<Prisma.$ElectronicsRepairPayload>
+/**
+ * Model CarpentryProject
+ * 
+ */
+export type CarpentryProject = $Result.DefaultSelection<Prisma.$CarpentryProjectPayload>
 
 /**
  * Enums
@@ -158,6 +163,32 @@ export const ElectronicsCategory: {
 
 export type ElectronicsCategory = (typeof ElectronicsCategory)[keyof typeof ElectronicsCategory]
 
+
+export const CarpentryCustomerType: {
+  PRIVATE_PERSON: 'PRIVATE_PERSON',
+  ORGANIZATION: 'ORGANIZATION',
+  BARBERSHOP: 'BARBERSHOP',
+  HOUSE: 'HOUSE'
+};
+
+export type CarpentryCustomerType = (typeof CarpentryCustomerType)[keyof typeof CarpentryCustomerType]
+
+
+export const CarpentryOrderType: {
+  REPAIR_ORDER: 'REPAIR_ORDER',
+  PROJECT: 'PROJECT'
+};
+
+export type CarpentryOrderType = (typeof CarpentryOrderType)[keyof typeof CarpentryOrderType]
+
+
+export const CarpentryGender: {
+  FEMALE: 'FEMALE',
+  MALE: 'MALE'
+};
+
+export type CarpentryGender = (typeof CarpentryGender)[keyof typeof CarpentryGender]
+
 }
 
 export type RepairStatus = $Enums.RepairStatus
@@ -179,6 +210,18 @@ export const ElectronicsRepairStatus: typeof $Enums.ElectronicsRepairStatus
 export type ElectronicsCategory = $Enums.ElectronicsCategory
 
 export const ElectronicsCategory: typeof $Enums.ElectronicsCategory
+
+export type CarpentryCustomerType = $Enums.CarpentryCustomerType
+
+export const CarpentryCustomerType: typeof $Enums.CarpentryCustomerType
+
+export type CarpentryOrderType = $Enums.CarpentryOrderType
+
+export const CarpentryOrderType: typeof $Enums.CarpentryOrderType
+
+export type CarpentryGender = $Enums.CarpentryGender
+
+export const CarpentryGender: typeof $Enums.CarpentryGender
 
 /**
  * ##  Prisma Client ʲˢ
@@ -384,6 +427,16 @@ export class PrismaClient<
     * ```
     */
   get electronicsRepair(): Prisma.ElectronicsRepairDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.carpentryProject`: Exposes CRUD operations for the **CarpentryProject** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CarpentryProjects
+    * const carpentryProjects = await prisma.carpentryProject.findMany()
+    * ```
+    */
+  get carpentryProject(): Prisma.CarpentryProjectDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -831,7 +884,8 @@ export namespace Prisma {
     RepairPart: 'RepairPart',
     BicycleRental: 'BicycleRental',
     TeamMember: 'TeamMember',
-    ElectronicsRepair: 'ElectronicsRepair'
+    ElectronicsRepair: 'ElectronicsRepair',
+    CarpentryProject: 'CarpentryProject'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -850,7 +904,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "electronicsRepair"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "electronicsRepair" | "carpentryProject"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1382,6 +1436,72 @@ export namespace Prisma {
           }
         }
       }
+      CarpentryProject: {
+        payload: Prisma.$CarpentryProjectPayload<ExtArgs>
+        fields: Prisma.CarpentryProjectFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CarpentryProjectFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CarpentryProjectFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          findFirst: {
+            args: Prisma.CarpentryProjectFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CarpentryProjectFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          findMany: {
+            args: Prisma.CarpentryProjectFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>[]
+          }
+          create: {
+            args: Prisma.CarpentryProjectCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          createMany: {
+            args: Prisma.CarpentryProjectCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CarpentryProjectDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          update: {
+            args: Prisma.CarpentryProjectUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          deleteMany: {
+            args: Prisma.CarpentryProjectDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CarpentryProjectUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CarpentryProjectUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CarpentryProjectPayload>
+          }
+          aggregate: {
+            args: Prisma.CarpentryProjectAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCarpentryProject>
+          }
+          groupBy: {
+            args: Prisma.CarpentryProjectGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CarpentryProjectGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CarpentryProjectCountArgs<ExtArgs>
+            result: $Utils.Optional<CarpentryProjectCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1474,6 +1594,7 @@ export namespace Prisma {
     bicycleRental?: BicycleRentalOmit
     teamMember?: TeamMemberOmit
     electronicsRepair?: ElectronicsRepairOmit
+    carpentryProject?: CarpentryProjectOmit
   }
 
   /* Types for Logging */
@@ -1569,10 +1690,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     electronicsRepairs: number
+    carpentryProjects: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     electronicsRepairs?: boolean | UserCountOutputTypeCountElectronicsRepairsArgs
+    carpentryProjects?: boolean | UserCountOutputTypeCountCarpentryProjectsArgs
   }
 
   // Custom InputTypes
@@ -1591,6 +1714,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountElectronicsRepairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ElectronicsRepairWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCarpentryProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarpentryProjectWhereInput
   }
 
 
@@ -1825,6 +1955,7 @@ export namespace Prisma {
     role?: boolean
     enabled?: boolean
     electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
+    carpentryProjects?: boolean | User$carpentryProjectsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1841,6 +1972,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "googleId" | "role" | "enabled", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
+    carpentryProjects?: boolean | User$carpentryProjectsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1848,6 +1980,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       electronicsRepairs: Prisma.$ElectronicsRepairPayload<ExtArgs>[]
+      carpentryProjects: Prisma.$CarpentryProjectPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2196,6 +2329,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     electronicsRepairs<T extends User$electronicsRepairsArgs<ExtArgs> = {}>(args?: Subset<T, User$electronicsRepairsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    carpentryProjects<T extends User$carpentryProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$carpentryProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2594,6 +2728,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ElectronicsRepairScalarFieldEnum | ElectronicsRepairScalarFieldEnum[]
+  }
+
+  /**
+   * User.carpentryProjects
+   */
+  export type User$carpentryProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    where?: CarpentryProjectWhereInput
+    orderBy?: CarpentryProjectOrderByWithRelationInput | CarpentryProjectOrderByWithRelationInput[]
+    cursor?: CarpentryProjectWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CarpentryProjectScalarFieldEnum | CarpentryProjectScalarFieldEnum[]
   }
 
   /**
@@ -9618,6 +9776,1146 @@ export namespace Prisma {
 
 
   /**
+   * Model CarpentryProject
+   */
+
+  export type AggregateCarpentryProject = {
+    _count: CarpentryProjectCountAggregateOutputType | null
+    _avg: CarpentryProjectAvgAggregateOutputType | null
+    _sum: CarpentryProjectSumAggregateOutputType | null
+    _min: CarpentryProjectMinAggregateOutputType | null
+    _max: CarpentryProjectMaxAggregateOutputType | null
+  }
+
+  export type CarpentryProjectAvgAggregateOutputType = {
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+  }
+
+  export type CarpentryProjectSumAggregateOutputType = {
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+  }
+
+  export type CarpentryProjectMinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    acceptedBy: string | null
+    customerType: $Enums.CarpentryCustomerType | null
+    organizationName: string | null
+    customerName: string | null
+    phoneNumber: string | null
+    gender: $Enums.CarpentryGender | null
+    orderType: $Enums.CarpentryOrderType | null
+    timeNeeded: number | null
+    itemToRepair: string | null
+    problemDescription: string | null
+    projectDescription: string | null
+    materialCosts: Decimal | null
+    paidByCustomer: boolean | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarpentryProjectMaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    acceptedBy: string | null
+    customerType: $Enums.CarpentryCustomerType | null
+    organizationName: string | null
+    customerName: string | null
+    phoneNumber: string | null
+    gender: $Enums.CarpentryGender | null
+    orderType: $Enums.CarpentryOrderType | null
+    timeNeeded: number | null
+    itemToRepair: string | null
+    problemDescription: string | null
+    projectDescription: string | null
+    materialCosts: Decimal | null
+    paidByCustomer: boolean | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CarpentryProjectCountAggregateOutputType = {
+    id: number
+    date: number
+    acceptedBy: number
+    customerType: number
+    organizationName: number
+    customerName: number
+    phoneNumber: number
+    gender: number
+    orderType: number
+    timeNeeded: number
+    itemToRepair: number
+    problemDescription: number
+    projectDescription: number
+    materialCosts: number
+    paidByCustomer: number
+    photoPath: number
+    assignedToId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CarpentryProjectAvgAggregateInputType = {
+    timeNeeded?: true
+    materialCosts?: true
+  }
+
+  export type CarpentryProjectSumAggregateInputType = {
+    timeNeeded?: true
+    materialCosts?: true
+  }
+
+  export type CarpentryProjectMinAggregateInputType = {
+    id?: true
+    date?: true
+    acceptedBy?: true
+    customerType?: true
+    organizationName?: true
+    customerName?: true
+    phoneNumber?: true
+    gender?: true
+    orderType?: true
+    timeNeeded?: true
+    itemToRepair?: true
+    problemDescription?: true
+    projectDescription?: true
+    materialCosts?: true
+    paidByCustomer?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CarpentryProjectMaxAggregateInputType = {
+    id?: true
+    date?: true
+    acceptedBy?: true
+    customerType?: true
+    organizationName?: true
+    customerName?: true
+    phoneNumber?: true
+    gender?: true
+    orderType?: true
+    timeNeeded?: true
+    itemToRepair?: true
+    problemDescription?: true
+    projectDescription?: true
+    materialCosts?: true
+    paidByCustomer?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CarpentryProjectCountAggregateInputType = {
+    id?: true
+    date?: true
+    acceptedBy?: true
+    customerType?: true
+    organizationName?: true
+    customerName?: true
+    phoneNumber?: true
+    gender?: true
+    orderType?: true
+    timeNeeded?: true
+    itemToRepair?: true
+    problemDescription?: true
+    projectDescription?: true
+    materialCosts?: true
+    paidByCustomer?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CarpentryProjectAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarpentryProject to aggregate.
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpentryProjects to fetch.
+     */
+    orderBy?: CarpentryProjectOrderByWithRelationInput | CarpentryProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CarpentryProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpentryProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpentryProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CarpentryProjects
+    **/
+    _count?: true | CarpentryProjectCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CarpentryProjectAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CarpentryProjectSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CarpentryProjectMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CarpentryProjectMaxAggregateInputType
+  }
+
+  export type GetCarpentryProjectAggregateType<T extends CarpentryProjectAggregateArgs> = {
+        [P in keyof T & keyof AggregateCarpentryProject]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCarpentryProject[P]>
+      : GetScalarType<T[P], AggregateCarpentryProject[P]>
+  }
+
+
+
+
+  export type CarpentryProjectGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CarpentryProjectWhereInput
+    orderBy?: CarpentryProjectOrderByWithAggregationInput | CarpentryProjectOrderByWithAggregationInput[]
+    by: CarpentryProjectScalarFieldEnum[] | CarpentryProjectScalarFieldEnum
+    having?: CarpentryProjectScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CarpentryProjectCountAggregateInputType | true
+    _avg?: CarpentryProjectAvgAggregateInputType
+    _sum?: CarpentryProjectSumAggregateInputType
+    _min?: CarpentryProjectMinAggregateInputType
+    _max?: CarpentryProjectMaxAggregateInputType
+  }
+
+  export type CarpentryProjectGroupByOutputType = {
+    id: string
+    date: Date
+    acceptedBy: string | null
+    customerType: $Enums.CarpentryCustomerType | null
+    organizationName: string | null
+    customerName: string | null
+    phoneNumber: string | null
+    gender: $Enums.CarpentryGender | null
+    orderType: $Enums.CarpentryOrderType | null
+    timeNeeded: number | null
+    itemToRepair: string | null
+    problemDescription: string | null
+    projectDescription: string | null
+    materialCosts: Decimal | null
+    paidByCustomer: boolean | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CarpentryProjectCountAggregateOutputType | null
+    _avg: CarpentryProjectAvgAggregateOutputType | null
+    _sum: CarpentryProjectSumAggregateOutputType | null
+    _min: CarpentryProjectMinAggregateOutputType | null
+    _max: CarpentryProjectMaxAggregateOutputType | null
+  }
+
+  type GetCarpentryProjectGroupByPayload<T extends CarpentryProjectGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CarpentryProjectGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CarpentryProjectGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CarpentryProjectGroupByOutputType[P]>
+            : GetScalarType<T[P], CarpentryProjectGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CarpentryProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    acceptedBy?: boolean
+    customerType?: boolean
+    organizationName?: boolean
+    customerName?: boolean
+    phoneNumber?: boolean
+    gender?: boolean
+    orderType?: boolean
+    timeNeeded?: boolean
+    itemToRepair?: boolean
+    problemDescription?: boolean
+    projectDescription?: boolean
+    materialCosts?: boolean
+    paidByCustomer?: boolean
+    photoPath?: boolean
+    assignedToId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedTo?: boolean | CarpentryProject$assignedToArgs<ExtArgs>
+  }, ExtArgs["result"]["carpentryProject"]>
+
+
+
+  export type CarpentryProjectSelectScalar = {
+    id?: boolean
+    date?: boolean
+    acceptedBy?: boolean
+    customerType?: boolean
+    organizationName?: boolean
+    customerName?: boolean
+    phoneNumber?: boolean
+    gender?: boolean
+    orderType?: boolean
+    timeNeeded?: boolean
+    itemToRepair?: boolean
+    problemDescription?: boolean
+    projectDescription?: boolean
+    materialCosts?: boolean
+    paidByCustomer?: boolean
+    photoPath?: boolean
+    assignedToId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CarpentryProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "acceptedBy" | "customerType" | "organizationName" | "customerName" | "phoneNumber" | "gender" | "orderType" | "timeNeeded" | "itemToRepair" | "problemDescription" | "projectDescription" | "materialCosts" | "paidByCustomer" | "photoPath" | "assignedToId" | "createdAt" | "updatedAt", ExtArgs["result"]["carpentryProject"]>
+  export type CarpentryProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assignedTo?: boolean | CarpentryProject$assignedToArgs<ExtArgs>
+  }
+
+  export type $CarpentryProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CarpentryProject"
+    objects: {
+      assignedTo: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      acceptedBy: string | null
+      customerType: $Enums.CarpentryCustomerType | null
+      organizationName: string | null
+      customerName: string | null
+      phoneNumber: string | null
+      gender: $Enums.CarpentryGender | null
+      orderType: $Enums.CarpentryOrderType | null
+      timeNeeded: number | null
+      itemToRepair: string | null
+      problemDescription: string | null
+      projectDescription: string | null
+      materialCosts: Prisma.Decimal | null
+      paidByCustomer: boolean | null
+      photoPath: string | null
+      assignedToId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["carpentryProject"]>
+    composites: {}
+  }
+
+  type CarpentryProjectGetPayload<S extends boolean | null | undefined | CarpentryProjectDefaultArgs> = $Result.GetResult<Prisma.$CarpentryProjectPayload, S>
+
+  type CarpentryProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CarpentryProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CarpentryProjectCountAggregateInputType | true
+    }
+
+  export interface CarpentryProjectDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CarpentryProject'], meta: { name: 'CarpentryProject' } }
+    /**
+     * Find zero or one CarpentryProject that matches the filter.
+     * @param {CarpentryProjectFindUniqueArgs} args - Arguments to find a CarpentryProject
+     * @example
+     * // Get one CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CarpentryProjectFindUniqueArgs>(args: SelectSubset<T, CarpentryProjectFindUniqueArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CarpentryProject that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CarpentryProjectFindUniqueOrThrowArgs} args - Arguments to find a CarpentryProject
+     * @example
+     * // Get one CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CarpentryProjectFindUniqueOrThrowArgs>(args: SelectSubset<T, CarpentryProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CarpentryProject that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectFindFirstArgs} args - Arguments to find a CarpentryProject
+     * @example
+     * // Get one CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CarpentryProjectFindFirstArgs>(args?: SelectSubset<T, CarpentryProjectFindFirstArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CarpentryProject that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectFindFirstOrThrowArgs} args - Arguments to find a CarpentryProject
+     * @example
+     * // Get one CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CarpentryProjectFindFirstOrThrowArgs>(args?: SelectSubset<T, CarpentryProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CarpentryProjects that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CarpentryProjects
+     * const carpentryProjects = await prisma.carpentryProject.findMany()
+     * 
+     * // Get first 10 CarpentryProjects
+     * const carpentryProjects = await prisma.carpentryProject.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const carpentryProjectWithIdOnly = await prisma.carpentryProject.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CarpentryProjectFindManyArgs>(args?: SelectSubset<T, CarpentryProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CarpentryProject.
+     * @param {CarpentryProjectCreateArgs} args - Arguments to create a CarpentryProject.
+     * @example
+     * // Create one CarpentryProject
+     * const CarpentryProject = await prisma.carpentryProject.create({
+     *   data: {
+     *     // ... data to create a CarpentryProject
+     *   }
+     * })
+     * 
+     */
+    create<T extends CarpentryProjectCreateArgs>(args: SelectSubset<T, CarpentryProjectCreateArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CarpentryProjects.
+     * @param {CarpentryProjectCreateManyArgs} args - Arguments to create many CarpentryProjects.
+     * @example
+     * // Create many CarpentryProjects
+     * const carpentryProject = await prisma.carpentryProject.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CarpentryProjectCreateManyArgs>(args?: SelectSubset<T, CarpentryProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a CarpentryProject.
+     * @param {CarpentryProjectDeleteArgs} args - Arguments to delete one CarpentryProject.
+     * @example
+     * // Delete one CarpentryProject
+     * const CarpentryProject = await prisma.carpentryProject.delete({
+     *   where: {
+     *     // ... filter to delete one CarpentryProject
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CarpentryProjectDeleteArgs>(args: SelectSubset<T, CarpentryProjectDeleteArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CarpentryProject.
+     * @param {CarpentryProjectUpdateArgs} args - Arguments to update one CarpentryProject.
+     * @example
+     * // Update one CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CarpentryProjectUpdateArgs>(args: SelectSubset<T, CarpentryProjectUpdateArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CarpentryProjects.
+     * @param {CarpentryProjectDeleteManyArgs} args - Arguments to filter CarpentryProjects to delete.
+     * @example
+     * // Delete a few CarpentryProjects
+     * const { count } = await prisma.carpentryProject.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CarpentryProjectDeleteManyArgs>(args?: SelectSubset<T, CarpentryProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CarpentryProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CarpentryProjects
+     * const carpentryProject = await prisma.carpentryProject.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CarpentryProjectUpdateManyArgs>(args: SelectSubset<T, CarpentryProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CarpentryProject.
+     * @param {CarpentryProjectUpsertArgs} args - Arguments to update or create a CarpentryProject.
+     * @example
+     * // Update or create a CarpentryProject
+     * const carpentryProject = await prisma.carpentryProject.upsert({
+     *   create: {
+     *     // ... data to create a CarpentryProject
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CarpentryProject we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CarpentryProjectUpsertArgs>(args: SelectSubset<T, CarpentryProjectUpsertArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CarpentryProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectCountArgs} args - Arguments to filter CarpentryProjects to count.
+     * @example
+     * // Count the number of CarpentryProjects
+     * const count = await prisma.carpentryProject.count({
+     *   where: {
+     *     // ... the filter for the CarpentryProjects we want to count
+     *   }
+     * })
+    **/
+    count<T extends CarpentryProjectCountArgs>(
+      args?: Subset<T, CarpentryProjectCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CarpentryProjectCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CarpentryProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CarpentryProjectAggregateArgs>(args: Subset<T, CarpentryProjectAggregateArgs>): Prisma.PrismaPromise<GetCarpentryProjectAggregateType<T>>
+
+    /**
+     * Group by CarpentryProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CarpentryProjectGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CarpentryProjectGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CarpentryProjectGroupByArgs['orderBy'] }
+        : { orderBy?: CarpentryProjectGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CarpentryProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCarpentryProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CarpentryProject model
+   */
+  readonly fields: CarpentryProjectFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CarpentryProject.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CarpentryProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assignedTo<T extends CarpentryProject$assignedToArgs<ExtArgs> = {}>(args?: Subset<T, CarpentryProject$assignedToArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CarpentryProject model
+   */
+  interface CarpentryProjectFieldRefs {
+    readonly id: FieldRef<"CarpentryProject", 'String'>
+    readonly date: FieldRef<"CarpentryProject", 'DateTime'>
+    readonly acceptedBy: FieldRef<"CarpentryProject", 'String'>
+    readonly customerType: FieldRef<"CarpentryProject", 'CarpentryCustomerType'>
+    readonly organizationName: FieldRef<"CarpentryProject", 'String'>
+    readonly customerName: FieldRef<"CarpentryProject", 'String'>
+    readonly phoneNumber: FieldRef<"CarpentryProject", 'String'>
+    readonly gender: FieldRef<"CarpentryProject", 'CarpentryGender'>
+    readonly orderType: FieldRef<"CarpentryProject", 'CarpentryOrderType'>
+    readonly timeNeeded: FieldRef<"CarpentryProject", 'Int'>
+    readonly itemToRepair: FieldRef<"CarpentryProject", 'String'>
+    readonly problemDescription: FieldRef<"CarpentryProject", 'String'>
+    readonly projectDescription: FieldRef<"CarpentryProject", 'String'>
+    readonly materialCosts: FieldRef<"CarpentryProject", 'Decimal'>
+    readonly paidByCustomer: FieldRef<"CarpentryProject", 'Boolean'>
+    readonly photoPath: FieldRef<"CarpentryProject", 'String'>
+    readonly assignedToId: FieldRef<"CarpentryProject", 'String'>
+    readonly createdAt: FieldRef<"CarpentryProject", 'DateTime'>
+    readonly updatedAt: FieldRef<"CarpentryProject", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CarpentryProject findUnique
+   */
+  export type CarpentryProjectFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpentryProject to fetch.
+     */
+    where: CarpentryProjectWhereUniqueInput
+  }
+
+  /**
+   * CarpentryProject findUniqueOrThrow
+   */
+  export type CarpentryProjectFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpentryProject to fetch.
+     */
+    where: CarpentryProjectWhereUniqueInput
+  }
+
+  /**
+   * CarpentryProject findFirst
+   */
+  export type CarpentryProjectFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpentryProject to fetch.
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpentryProjects to fetch.
+     */
+    orderBy?: CarpentryProjectOrderByWithRelationInput | CarpentryProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarpentryProjects.
+     */
+    cursor?: CarpentryProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpentryProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpentryProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarpentryProjects.
+     */
+    distinct?: CarpentryProjectScalarFieldEnum | CarpentryProjectScalarFieldEnum[]
+  }
+
+  /**
+   * CarpentryProject findFirstOrThrow
+   */
+  export type CarpentryProjectFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpentryProject to fetch.
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpentryProjects to fetch.
+     */
+    orderBy?: CarpentryProjectOrderByWithRelationInput | CarpentryProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CarpentryProjects.
+     */
+    cursor?: CarpentryProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpentryProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpentryProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CarpentryProjects.
+     */
+    distinct?: CarpentryProjectScalarFieldEnum | CarpentryProjectScalarFieldEnum[]
+  }
+
+  /**
+   * CarpentryProject findMany
+   */
+  export type CarpentryProjectFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which CarpentryProjects to fetch.
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CarpentryProjects to fetch.
+     */
+    orderBy?: CarpentryProjectOrderByWithRelationInput | CarpentryProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CarpentryProjects.
+     */
+    cursor?: CarpentryProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CarpentryProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CarpentryProjects.
+     */
+    skip?: number
+    distinct?: CarpentryProjectScalarFieldEnum | CarpentryProjectScalarFieldEnum[]
+  }
+
+  /**
+   * CarpentryProject create
+   */
+  export type CarpentryProjectCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CarpentryProject.
+     */
+    data: XOR<CarpentryProjectCreateInput, CarpentryProjectUncheckedCreateInput>
+  }
+
+  /**
+   * CarpentryProject createMany
+   */
+  export type CarpentryProjectCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CarpentryProjects.
+     */
+    data: CarpentryProjectCreateManyInput | CarpentryProjectCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CarpentryProject update
+   */
+  export type CarpentryProjectUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CarpentryProject.
+     */
+    data: XOR<CarpentryProjectUpdateInput, CarpentryProjectUncheckedUpdateInput>
+    /**
+     * Choose, which CarpentryProject to update.
+     */
+    where: CarpentryProjectWhereUniqueInput
+  }
+
+  /**
+   * CarpentryProject updateMany
+   */
+  export type CarpentryProjectUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CarpentryProjects.
+     */
+    data: XOR<CarpentryProjectUpdateManyMutationInput, CarpentryProjectUncheckedUpdateManyInput>
+    /**
+     * Filter which CarpentryProjects to update
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * Limit how many CarpentryProjects to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CarpentryProject upsert
+   */
+  export type CarpentryProjectUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CarpentryProject to update in case it exists.
+     */
+    where: CarpentryProjectWhereUniqueInput
+    /**
+     * In case the CarpentryProject found by the `where` argument doesn't exist, create a new CarpentryProject with this data.
+     */
+    create: XOR<CarpentryProjectCreateInput, CarpentryProjectUncheckedCreateInput>
+    /**
+     * In case the CarpentryProject was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CarpentryProjectUpdateInput, CarpentryProjectUncheckedUpdateInput>
+  }
+
+  /**
+   * CarpentryProject delete
+   */
+  export type CarpentryProjectDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    /**
+     * Filter which CarpentryProject to delete.
+     */
+    where: CarpentryProjectWhereUniqueInput
+  }
+
+  /**
+   * CarpentryProject deleteMany
+   */
+  export type CarpentryProjectDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CarpentryProjects to delete
+     */
+    where?: CarpentryProjectWhereInput
+    /**
+     * Limit how many CarpentryProjects to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CarpentryProject.assignedTo
+   */
+  export type CarpentryProject$assignedToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * CarpentryProject without action
+   */
+  export type CarpentryProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9758,6 +11056,31 @@ export namespace Prisma {
   export type ElectronicsRepairScalarFieldEnum = (typeof ElectronicsRepairScalarFieldEnum)[keyof typeof ElectronicsRepairScalarFieldEnum]
 
 
+  export const CarpentryProjectScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    acceptedBy: 'acceptedBy',
+    customerType: 'customerType',
+    organizationName: 'organizationName',
+    customerName: 'customerName',
+    phoneNumber: 'phoneNumber',
+    gender: 'gender',
+    orderType: 'orderType',
+    timeNeeded: 'timeNeeded',
+    itemToRepair: 'itemToRepair',
+    problemDescription: 'problemDescription',
+    projectDescription: 'projectDescription',
+    materialCosts: 'materialCosts',
+    paidByCustomer: 'paidByCustomer',
+    photoPath: 'photoPath',
+    assignedToId: 'assignedToId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CarpentryProjectScalarFieldEnum = (typeof CarpentryProjectScalarFieldEnum)[keyof typeof CarpentryProjectScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -9866,6 +11189,22 @@ export namespace Prisma {
   export type ElectronicsRepairOrderByRelevanceFieldEnum = (typeof ElectronicsRepairOrderByRelevanceFieldEnum)[keyof typeof ElectronicsRepairOrderByRelevanceFieldEnum]
 
 
+  export const CarpentryProjectOrderByRelevanceFieldEnum: {
+    id: 'id',
+    acceptedBy: 'acceptedBy',
+    organizationName: 'organizationName',
+    customerName: 'customerName',
+    phoneNumber: 'phoneNumber',
+    itemToRepair: 'itemToRepair',
+    problemDescription: 'problemDescription',
+    projectDescription: 'projectDescription',
+    photoPath: 'photoPath',
+    assignedToId: 'assignedToId'
+  };
+
+  export type CarpentryProjectOrderByRelevanceFieldEnum = (typeof CarpentryProjectOrderByRelevanceFieldEnum)[keyof typeof CarpentryProjectOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -9935,6 +11274,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'CarpentryCustomerType'
+   */
+  export type EnumCarpentryCustomerTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarpentryCustomerType'>
+    
+
+
+  /**
+   * Reference to a field of type 'CarpentryGender'
+   */
+  export type EnumCarpentryGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarpentryGender'>
+    
+
+
+  /**
+   * Reference to a field of type 'CarpentryOrderType'
+   */
+  export type EnumCarpentryOrderTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CarpentryOrderType'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -9954,6 +11321,7 @@ export namespace Prisma {
     role?: StringNullableFilter<"User"> | string | null
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
+    carpentryProjects?: CarpentryProjectListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9963,6 +11331,7 @@ export namespace Prisma {
     role?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
     electronicsRepairs?: ElectronicsRepairOrderByRelationAggregateInput
+    carpentryProjects?: CarpentryProjectOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -9976,6 +11345,7 @@ export namespace Prisma {
     role?: StringNullableFilter<"User"> | string | null
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
+    carpentryProjects?: CarpentryProjectListRelationFilter
   }, "id" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -10590,6 +11960,134 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ElectronicsRepair"> | Date | string
   }
 
+  export type CarpentryProjectWhereInput = {
+    AND?: CarpentryProjectWhereInput | CarpentryProjectWhereInput[]
+    OR?: CarpentryProjectWhereInput[]
+    NOT?: CarpentryProjectWhereInput | CarpentryProjectWhereInput[]
+    id?: StringFilter<"CarpentryProject"> | string
+    date?: DateTimeFilter<"CarpentryProject"> | Date | string
+    acceptedBy?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerType?: EnumCarpentryCustomerTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryCustomerType | null
+    organizationName?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerName?: StringNullableFilter<"CarpentryProject"> | string | null
+    phoneNumber?: StringNullableFilter<"CarpentryProject"> | string | null
+    gender?: EnumCarpentryGenderNullableFilter<"CarpentryProject"> | $Enums.CarpentryGender | null
+    orderType?: EnumCarpentryOrderTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryOrderType | null
+    timeNeeded?: IntNullableFilter<"CarpentryProject"> | number | null
+    itemToRepair?: StringNullableFilter<"CarpentryProject"> | string | null
+    problemDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    projectDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    materialCosts?: DecimalNullableFilter<"CarpentryProject"> | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: BoolNullableFilter<"CarpentryProject"> | boolean | null
+    photoPath?: StringNullableFilter<"CarpentryProject"> | string | null
+    assignedToId?: StringNullableFilter<"CarpentryProject"> | string | null
+    createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+    updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+    assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type CarpentryProjectOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    acceptedBy?: SortOrderInput | SortOrder
+    customerType?: SortOrderInput | SortOrder
+    organizationName?: SortOrderInput | SortOrder
+    customerName?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    orderType?: SortOrderInput | SortOrder
+    timeNeeded?: SortOrderInput | SortOrder
+    itemToRepair?: SortOrderInput | SortOrder
+    problemDescription?: SortOrderInput | SortOrder
+    projectDescription?: SortOrderInput | SortOrder
+    materialCosts?: SortOrderInput | SortOrder
+    paidByCustomer?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    assignedToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedTo?: UserOrderByWithRelationInput
+    _relevance?: CarpentryProjectOrderByRelevanceInput
+  }
+
+  export type CarpentryProjectWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CarpentryProjectWhereInput | CarpentryProjectWhereInput[]
+    OR?: CarpentryProjectWhereInput[]
+    NOT?: CarpentryProjectWhereInput | CarpentryProjectWhereInput[]
+    date?: DateTimeFilter<"CarpentryProject"> | Date | string
+    acceptedBy?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerType?: EnumCarpentryCustomerTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryCustomerType | null
+    organizationName?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerName?: StringNullableFilter<"CarpentryProject"> | string | null
+    phoneNumber?: StringNullableFilter<"CarpentryProject"> | string | null
+    gender?: EnumCarpentryGenderNullableFilter<"CarpentryProject"> | $Enums.CarpentryGender | null
+    orderType?: EnumCarpentryOrderTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryOrderType | null
+    timeNeeded?: IntNullableFilter<"CarpentryProject"> | number | null
+    itemToRepair?: StringNullableFilter<"CarpentryProject"> | string | null
+    problemDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    projectDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    materialCosts?: DecimalNullableFilter<"CarpentryProject"> | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: BoolNullableFilter<"CarpentryProject"> | boolean | null
+    photoPath?: StringNullableFilter<"CarpentryProject"> | string | null
+    assignedToId?: StringNullableFilter<"CarpentryProject"> | string | null
+    createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+    updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+    assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type CarpentryProjectOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    acceptedBy?: SortOrderInput | SortOrder
+    customerType?: SortOrderInput | SortOrder
+    organizationName?: SortOrderInput | SortOrder
+    customerName?: SortOrderInput | SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    gender?: SortOrderInput | SortOrder
+    orderType?: SortOrderInput | SortOrder
+    timeNeeded?: SortOrderInput | SortOrder
+    itemToRepair?: SortOrderInput | SortOrder
+    problemDescription?: SortOrderInput | SortOrder
+    projectDescription?: SortOrderInput | SortOrder
+    materialCosts?: SortOrderInput | SortOrder
+    paidByCustomer?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    assignedToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CarpentryProjectCountOrderByAggregateInput
+    _avg?: CarpentryProjectAvgOrderByAggregateInput
+    _max?: CarpentryProjectMaxOrderByAggregateInput
+    _min?: CarpentryProjectMinOrderByAggregateInput
+    _sum?: CarpentryProjectSumOrderByAggregateInput
+  }
+
+  export type CarpentryProjectScalarWhereWithAggregatesInput = {
+    AND?: CarpentryProjectScalarWhereWithAggregatesInput | CarpentryProjectScalarWhereWithAggregatesInput[]
+    OR?: CarpentryProjectScalarWhereWithAggregatesInput[]
+    NOT?: CarpentryProjectScalarWhereWithAggregatesInput | CarpentryProjectScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CarpentryProject"> | string
+    date?: DateTimeWithAggregatesFilter<"CarpentryProject"> | Date | string
+    acceptedBy?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    customerType?: EnumCarpentryCustomerTypeNullableWithAggregatesFilter<"CarpentryProject"> | $Enums.CarpentryCustomerType | null
+    organizationName?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    customerName?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    phoneNumber?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    gender?: EnumCarpentryGenderNullableWithAggregatesFilter<"CarpentryProject"> | $Enums.CarpentryGender | null
+    orderType?: EnumCarpentryOrderTypeNullableWithAggregatesFilter<"CarpentryProject"> | $Enums.CarpentryOrderType | null
+    timeNeeded?: IntNullableWithAggregatesFilter<"CarpentryProject"> | number | null
+    itemToRepair?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    problemDescription?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    projectDescription?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    materialCosts?: DecimalNullableWithAggregatesFilter<"CarpentryProject"> | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: BoolNullableWithAggregatesFilter<"CarpentryProject"> | boolean | null
+    photoPath?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    assignedToId?: StringNullableWithAggregatesFilter<"CarpentryProject"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CarpentryProject"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CarpentryProject"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email?: string | null
@@ -10597,6 +12095,7 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10606,6 +12105,7 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
   }
 
   export type UserUpdateInput = {
@@ -10615,6 +12115,7 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10624,6 +12125,7 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11318,6 +12820,159 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CarpentryProjectCreateInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: UserCreateNestedOneWithoutCarpentryProjectsInput
+  }
+
+  export type CarpentryProjectUncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: UserUpdateOneWithoutCarpentryProjectsNestedInput
+  }
+
+  export type CarpentryProjectUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpentryProjectCreateManyInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpentryProjectUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -11359,12 +13014,22 @@ export namespace Prisma {
     none?: ElectronicsRepairWhereInput
   }
 
+  export type CarpentryProjectListRelationFilter = {
+    every?: CarpentryProjectWhereInput
+    some?: CarpentryProjectWhereInput
+    none?: CarpentryProjectWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type ElectronicsRepairOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CarpentryProjectOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11993,6 +13658,193 @@ export namespace Prisma {
     _max?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
   }
 
+  export type EnumCarpentryCustomerTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryCustomerType | EnumCarpentryCustomerTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryCustomerType[] | null
+    notIn?: $Enums.CarpentryCustomerType[] | null
+    not?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel> | $Enums.CarpentryCustomerType | null
+  }
+
+  export type EnumCarpentryGenderNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryGender | EnumCarpentryGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryGender[] | null
+    notIn?: $Enums.CarpentryGender[] | null
+    not?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel> | $Enums.CarpentryGender | null
+  }
+
+  export type EnumCarpentryOrderTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryOrderType | EnumCarpentryOrderTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryOrderType[] | null
+    notIn?: $Enums.CarpentryOrderType[] | null
+    not?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel> | $Enums.CarpentryOrderType | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type CarpentryProjectOrderByRelevanceInput = {
+    fields: CarpentryProjectOrderByRelevanceFieldEnum | CarpentryProjectOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CarpentryProjectCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    acceptedBy?: SortOrder
+    customerType?: SortOrder
+    organizationName?: SortOrder
+    customerName?: SortOrder
+    phoneNumber?: SortOrder
+    gender?: SortOrder
+    orderType?: SortOrder
+    timeNeeded?: SortOrder
+    itemToRepair?: SortOrder
+    problemDescription?: SortOrder
+    projectDescription?: SortOrder
+    materialCosts?: SortOrder
+    paidByCustomer?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpentryProjectAvgOrderByAggregateInput = {
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+  }
+
+  export type CarpentryProjectMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    acceptedBy?: SortOrder
+    customerType?: SortOrder
+    organizationName?: SortOrder
+    customerName?: SortOrder
+    phoneNumber?: SortOrder
+    gender?: SortOrder
+    orderType?: SortOrder
+    timeNeeded?: SortOrder
+    itemToRepair?: SortOrder
+    problemDescription?: SortOrder
+    projectDescription?: SortOrder
+    materialCosts?: SortOrder
+    paidByCustomer?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpentryProjectMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    acceptedBy?: SortOrder
+    customerType?: SortOrder
+    organizationName?: SortOrder
+    customerName?: SortOrder
+    phoneNumber?: SortOrder
+    gender?: SortOrder
+    orderType?: SortOrder
+    timeNeeded?: SortOrder
+    itemToRepair?: SortOrder
+    problemDescription?: SortOrder
+    projectDescription?: SortOrder
+    materialCosts?: SortOrder
+    paidByCustomer?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CarpentryProjectSumOrderByAggregateInput = {
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+  }
+
+  export type EnumCarpentryCustomerTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryCustomerType | EnumCarpentryCustomerTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryCustomerType[] | null
+    notIn?: $Enums.CarpentryCustomerType[] | null
+    not?: NestedEnumCarpentryCustomerTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryCustomerType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumCarpentryGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryGender | EnumCarpentryGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryGender[] | null
+    notIn?: $Enums.CarpentryGender[] | null
+    not?: NestedEnumCarpentryGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryGender | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel>
+  }
+
+  export type EnumCarpentryOrderTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryOrderType | EnumCarpentryOrderTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryOrderType[] | null
+    notIn?: $Enums.CarpentryOrderType[] | null
+    not?: NestedEnumCarpentryOrderTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryOrderType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
   export type ElectronicsRepairCreateNestedManyWithoutRepairerInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -12000,11 +13852,25 @@ export namespace Prisma {
     connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
   }
 
+  export type CarpentryProjectCreateNestedManyWithoutAssignedToInput = {
+    create?: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput> | CarpentryProjectCreateWithoutAssignedToInput[] | CarpentryProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutAssignedToInput | CarpentryProjectCreateOrConnectWithoutAssignedToInput[]
+    createMany?: CarpentryProjectCreateManyAssignedToInputEnvelope
+    connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+  }
+
   export type ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
     createMany?: ElectronicsRepairCreateManyRepairerInputEnvelope
     connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+  }
+
+  export type CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput = {
+    create?: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput> | CarpentryProjectCreateWithoutAssignedToInput[] | CarpentryProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutAssignedToInput | CarpentryProjectCreateOrConnectWithoutAssignedToInput[]
+    createMany?: CarpentryProjectCreateManyAssignedToInputEnvelope
+    connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12033,6 +13899,20 @@ export namespace Prisma {
     deleteMany?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
   }
 
+  export type CarpentryProjectUpdateManyWithoutAssignedToNestedInput = {
+    create?: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput> | CarpentryProjectCreateWithoutAssignedToInput[] | CarpentryProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutAssignedToInput | CarpentryProjectCreateOrConnectWithoutAssignedToInput[]
+    upsert?: CarpentryProjectUpsertWithWhereUniqueWithoutAssignedToInput | CarpentryProjectUpsertWithWhereUniqueWithoutAssignedToInput[]
+    createMany?: CarpentryProjectCreateManyAssignedToInputEnvelope
+    set?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    disconnect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    delete?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    update?: CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput | CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput[]
+    updateMany?: CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput | CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput[]
+    deleteMany?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
+  }
+
   export type ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -12045,6 +13925,20 @@ export namespace Prisma {
     update?: ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput | ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput[]
     updateMany?: ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput | ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput[]
     deleteMany?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
+  }
+
+  export type CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput = {
+    create?: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput> | CarpentryProjectCreateWithoutAssignedToInput[] | CarpentryProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutAssignedToInput | CarpentryProjectCreateOrConnectWithoutAssignedToInput[]
+    upsert?: CarpentryProjectUpsertWithWhereUniqueWithoutAssignedToInput | CarpentryProjectUpsertWithWhereUniqueWithoutAssignedToInput[]
+    createMany?: CarpentryProjectCreateManyAssignedToInputEnvelope
+    set?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    disconnect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    delete?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+    update?: CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput | CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput[]
+    updateMany?: CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput | CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput[]
+    deleteMany?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -12209,6 +14103,50 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutElectronicsRepairsInput, UserUpdateWithoutElectronicsRepairsInput>, UserUncheckedUpdateWithoutElectronicsRepairsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCarpentryProjectsInput = {
+    create?: XOR<UserCreateWithoutCarpentryProjectsInput, UserUncheckedCreateWithoutCarpentryProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCarpentryProjectsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CarpentryCustomerType | null
+  }
+
+  export type NullableEnumCarpentryGenderFieldUpdateOperationsInput = {
+    set?: $Enums.CarpentryGender | null
+  }
+
+  export type NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CarpentryOrderType | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type UserUpdateOneWithoutCarpentryProjectsNestedInput = {
+    create?: XOR<UserCreateWithoutCarpentryProjectsInput, UserUncheckedCreateWithoutCarpentryProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCarpentryProjectsInput
+    upsert?: UserUpsertWithoutCarpentryProjectsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCarpentryProjectsInput, UserUpdateWithoutCarpentryProjectsInput>, UserUncheckedUpdateWithoutCarpentryProjectsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -12474,6 +14412,111 @@ export namespace Prisma {
     _max?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryCustomerType | EnumCarpentryCustomerTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryCustomerType[] | null
+    notIn?: $Enums.CarpentryCustomerType[] | null
+    not?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel> | $Enums.CarpentryCustomerType | null
+  }
+
+  export type NestedEnumCarpentryGenderNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryGender | EnumCarpentryGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryGender[] | null
+    notIn?: $Enums.CarpentryGender[] | null
+    not?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel> | $Enums.CarpentryGender | null
+  }
+
+  export type NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryOrderType | EnumCarpentryOrderTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryOrderType[] | null
+    notIn?: $Enums.CarpentryOrderType[] | null
+    not?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel> | $Enums.CarpentryOrderType | null
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedEnumCarpentryCustomerTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryCustomerType | EnumCarpentryCustomerTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryCustomerType[] | null
+    notIn?: $Enums.CarpentryCustomerType[] | null
+    not?: NestedEnumCarpentryCustomerTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryCustomerType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryCustomerTypeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCarpentryGenderNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryGender | EnumCarpentryGenderFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryGender[] | null
+    notIn?: $Enums.CarpentryGender[] | null
+    not?: NestedEnumCarpentryGenderNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryGender | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryGenderNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCarpentryOrderTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CarpentryOrderType | EnumCarpentryOrderTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CarpentryOrderType[] | null
+    notIn?: $Enums.CarpentryOrderType[] | null
+    not?: NestedEnumCarpentryOrderTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CarpentryOrderType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCarpentryOrderTypeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
   export type ElectronicsRepairCreateWithoutRepairerInput = {
     id?: string
     repairId?: number
@@ -12518,6 +14561,58 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CarpentryProjectCreateWithoutAssignedToInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectUncheckedCreateWithoutAssignedToInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectCreateOrConnectWithoutAssignedToInput = {
+    where: CarpentryProjectWhereUniqueInput
+    create: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput>
+  }
+
+  export type CarpentryProjectCreateManyAssignedToInputEnvelope = {
+    data: CarpentryProjectCreateManyAssignedToInput | CarpentryProjectCreateManyAssignedToInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput = {
     where: ElectronicsRepairWhereUniqueInput
     update: XOR<ElectronicsRepairUpdateWithoutRepairerInput, ElectronicsRepairUncheckedUpdateWithoutRepairerInput>
@@ -12553,6 +14648,47 @@ export namespace Prisma {
     repairerId?: StringNullableFilter<"ElectronicsRepair"> | string | null
     createdAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
     updatedAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+  }
+
+  export type CarpentryProjectUpsertWithWhereUniqueWithoutAssignedToInput = {
+    where: CarpentryProjectWhereUniqueInput
+    update: XOR<CarpentryProjectUpdateWithoutAssignedToInput, CarpentryProjectUncheckedUpdateWithoutAssignedToInput>
+    create: XOR<CarpentryProjectCreateWithoutAssignedToInput, CarpentryProjectUncheckedCreateWithoutAssignedToInput>
+  }
+
+  export type CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput = {
+    where: CarpentryProjectWhereUniqueInput
+    data: XOR<CarpentryProjectUpdateWithoutAssignedToInput, CarpentryProjectUncheckedUpdateWithoutAssignedToInput>
+  }
+
+  export type CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput = {
+    where: CarpentryProjectScalarWhereInput
+    data: XOR<CarpentryProjectUpdateManyMutationInput, CarpentryProjectUncheckedUpdateManyWithoutAssignedToInput>
+  }
+
+  export type CarpentryProjectScalarWhereInput = {
+    AND?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
+    OR?: CarpentryProjectScalarWhereInput[]
+    NOT?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
+    id?: StringFilter<"CarpentryProject"> | string
+    date?: DateTimeFilter<"CarpentryProject"> | Date | string
+    acceptedBy?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerType?: EnumCarpentryCustomerTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryCustomerType | null
+    organizationName?: StringNullableFilter<"CarpentryProject"> | string | null
+    customerName?: StringNullableFilter<"CarpentryProject"> | string | null
+    phoneNumber?: StringNullableFilter<"CarpentryProject"> | string | null
+    gender?: EnumCarpentryGenderNullableFilter<"CarpentryProject"> | $Enums.CarpentryGender | null
+    orderType?: EnumCarpentryOrderTypeNullableFilter<"CarpentryProject"> | $Enums.CarpentryOrderType | null
+    timeNeeded?: IntNullableFilter<"CarpentryProject"> | number | null
+    itemToRepair?: StringNullableFilter<"CarpentryProject"> | string | null
+    problemDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    projectDescription?: StringNullableFilter<"CarpentryProject"> | string | null
+    materialCosts?: DecimalNullableFilter<"CarpentryProject"> | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: BoolNullableFilter<"CarpentryProject"> | boolean | null
+    photoPath?: StringNullableFilter<"CarpentryProject"> | string | null
+    assignedToId?: StringNullableFilter<"CarpentryProject"> | string | null
+    createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+    updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
   }
 
   export type RepairPartCreateWithoutRepairInput = {
@@ -12781,6 +14917,7 @@ export namespace Prisma {
     googleId: string
     role?: string | null
     enabled?: boolean | null
+    carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
   }
 
   export type UserUncheckedCreateWithoutElectronicsRepairsInput = {
@@ -12789,6 +14926,7 @@ export namespace Prisma {
     googleId: string
     role?: string | null
     enabled?: boolean | null
+    carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
   }
 
   export type UserCreateOrConnectWithoutElectronicsRepairsInput = {
@@ -12813,6 +14951,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
   }
 
   export type UserUncheckedUpdateWithoutElectronicsRepairsInput = {
@@ -12821,6 +14960,59 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+  }
+
+  export type UserCreateWithoutCarpentryProjectsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+  }
+
+  export type UserUncheckedCreateWithoutCarpentryProjectsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+  }
+
+  export type UserCreateOrConnectWithoutCarpentryProjectsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCarpentryProjectsInput, UserUncheckedCreateWithoutCarpentryProjectsInput>
+  }
+
+  export type UserUpsertWithoutCarpentryProjectsInput = {
+    update: XOR<UserUpdateWithoutCarpentryProjectsInput, UserUncheckedUpdateWithoutCarpentryProjectsInput>
+    create: XOR<UserCreateWithoutCarpentryProjectsInput, UserUncheckedCreateWithoutCarpentryProjectsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCarpentryProjectsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCarpentryProjectsInput, UserUncheckedUpdateWithoutCarpentryProjectsInput>
+  }
+
+  export type UserUpdateWithoutCarpentryProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCarpentryProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
   }
 
   export type ElectronicsRepairCreateManyRepairerInput = {
@@ -12836,6 +15028,27 @@ export namespace Prisma {
     notes?: string | null
     photoPath?: string | null
     createdDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectCreateManyAssignedToInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12886,6 +15099,69 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpentryProjectUpdateWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpentryProjectUncheckedUpdateWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CarpentryProjectUncheckedUpdateManyWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

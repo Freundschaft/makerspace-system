@@ -22,6 +22,7 @@ model User {
   role               String?
   enabled            Boolean?
   electronicsRepairs ElectronicsRepair[]
+  carpentryProjects  CarpentryProject[]
 }
 
 model ProblemType {
@@ -210,4 +211,44 @@ model ElectronicsRepair {
   repairer     User?                   @relation(fields: [repairerId], references: [id])
   createdAt    DateTime                @default(now())
   updatedAt    DateTime                @updatedAt
+}
+
+enum CarpentryCustomerType {
+  PRIVATE_PERSON
+  ORGANIZATION
+  BARBERSHOP
+  HOUSE
+}
+
+enum CarpentryOrderType {
+  REPAIR_ORDER
+  PROJECT
+}
+
+enum CarpentryGender {
+  FEMALE
+  MALE
+}
+
+model CarpentryProject {
+  id                 String                 @id @default(uuid())
+  date               DateTime
+  acceptedBy         String?
+  customerType       CarpentryCustomerType?
+  organizationName   String?                @db.Text
+  customerName       String?
+  phoneNumber        String?                @db.Text
+  gender             CarpentryGender?
+  orderType          CarpentryOrderType?
+  timeNeeded         Int?
+  itemToRepair       String?                @db.Text
+  problemDescription String?                @db.Text
+  projectDescription String?                @db.Text
+  materialCosts      Decimal?               @db.Decimal(10, 2)
+  paidByCustomer     Boolean?
+  photoPath          String?                @db.Text
+  assignedToId       String?
+  assignedTo         User?                  @relation(fields: [assignedToId], references: [id])
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
 }

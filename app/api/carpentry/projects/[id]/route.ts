@@ -16,27 +16,27 @@ export async function GET(
     }
 
     const { id } = await params;
-    const repair = await prisma.electronicsRepair.findUnique({
+    const project = await prisma.carpentryProject.findUnique({
       where: {
         id: id
       },
       include: {
-        repairer: true
+        assignedTo: true
       }
     })
 
-    if (!repair) {
+    if (!project) {
       return NextResponse.json(
-        { error: "Electronics repair not found" },
+        { error: "Carpentry project not found" },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(repair)
+    return NextResponse.json(project)
   } catch (error) {
-    console.error("Error fetching electronics repair:", error)
+    console.error("Error fetching carpentry project:", error)
     return NextResponse.json(
-      { error: "Failed to fetch electronics repair" },
+      { error: "Failed to fetch carpentry project" },
       { status: 500 }
     )
   }
@@ -58,44 +58,54 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json()
     const {
+      date,
+      acceptedBy,
+      customerType,
+      organizationName,
       customerName,
-      category,
-      item,
-      whatsapp,
-      serialNumber,
-      status,
-      repairable,
-      notes,
+      phoneNumber,
+      gender,
+      orderType,
+      timeNeeded,
+      itemToRepair,
+      problemDescription,
+      projectDescription,
+      materialCosts,
+      paidByCustomer,
       photoPath,
-      createdDate,
-      repairerId
+      assignedToId
     } = body
 
-    const repair = await prisma.electronicsRepair.update({
+    const project = await prisma.carpentryProject.update({
       where: { id },
       data: {
+        date: date ? new Date(date) : undefined,
+        acceptedBy,
+        customerType,
+        organizationName,
         customerName,
-        category,
-        item,
-        whatsapp,
-        serialNumber,
-        status,
-        repairable,
-        notes,
+        phoneNumber,
+        gender,
+        orderType,
+        timeNeeded: timeNeeded ? parseInt(timeNeeded) : null,
+        itemToRepair,
+        problemDescription,
+        projectDescription,
+        materialCosts,
+        paidByCustomer,
         photoPath,
-        createdDate: createdDate ? new Date(createdDate) : undefined,
-        repairerId
+        assignedToId
       },
       include: {
-        repairer: true
+        assignedTo: true
       }
     })
 
-    return NextResponse.json(repair)
+    return NextResponse.json(project)
   } catch (error) {
-    console.error("Error updating electronics repair:", error)
+    console.error("Error updating carpentry project:", error)
     return NextResponse.json(
-      { error: "Failed to update electronics repair" },
+      { error: "Failed to update carpentry project" },
       { status: 500 }
     )
   }
@@ -115,15 +125,15 @@ export async function DELETE(
     }
 
     const { id } = await params;
-    await prisma.electronicsRepair.delete({
+    await prisma.carpentryProject.delete({
       where: { id }
     })
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Error deleting electronics repair:", error)
+    console.error("Error deleting carpentry project:", error)
     return NextResponse.json(
-      { error: "Failed to delete electronics repair" },
+      { error: "Failed to delete carpentry project" },
       { status: 500 }
     )
   }
