@@ -48,6 +48,11 @@ export type BicycleRental = $Result.DefaultSelection<Prisma.$BicycleRentalPayloa
  * 
  */
 export type TeamMember = $Result.DefaultSelection<Prisma.$TeamMemberPayload>
+/**
+ * Model ElectronicsRepair
+ * 
+ */
+export type ElectronicsRepair = $Result.DefaultSelection<Prisma.$ElectronicsRepairPayload>
 
 /**
  * Enums
@@ -82,6 +87,77 @@ export const TeamMemberStatus: {
 
 export type TeamMemberStatus = (typeof TeamMemberStatus)[keyof typeof TeamMemberStatus]
 
+
+export const ElectronicsRepairStatus: {
+  UNCHECKED: 'UNCHECKED',
+  CHECKED: 'CHECKED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  READY_FOR_PICKUP: 'READY_FOR_PICKUP',
+  DONE: 'DONE',
+  PICKED_UP: 'PICKED_UP',
+  NO_WAY_TO_FIX: 'NO_WAY_TO_FIX'
+};
+
+export type ElectronicsRepairStatus = (typeof ElectronicsRepairStatus)[keyof typeof ElectronicsRepairStatus]
+
+
+export const ElectronicsCategory: {
+  PHONE: 'PHONE',
+  TABLET: 'TABLET',
+  HEADPHONES: 'HEADPHONES',
+  HEATER: 'HEATER',
+  SPEAKER: 'SPEAKER',
+  HAIR_CLIPPER: 'HAIR_CLIPPER',
+  COOLER: 'COOLER',
+  POWER_BANK: 'POWER_BANK',
+  KETTLE: 'KETTLE',
+  LAPTOP: 'LAPTOP',
+  MULTI_SOCKET: 'MULTI_SOCKET',
+  PIZZA_PAN_CABLE: 'PIZZA_PAN_CABLE',
+  PAN: 'PAN',
+  GLASSES: 'GLASSES',
+  AUX: 'AUX',
+  WATCH: 'WATCH',
+  ADAPTOR: 'ADAPTOR',
+  HANDSFREE: 'HANDSFREE',
+  CABLE: 'CABLE',
+  HAIR_CUTTER: 'HAIR_CUTTER',
+  HAIR_DRYER: 'HAIR_DRYER',
+  FAN: 'FAN',
+  PRINTER: 'PRINTER',
+  ELECTRONIC_CIGARETTE: 'ELECTRONIC_CIGARETTE',
+  STOVE: 'STOVE',
+  PIZZA_PAN: 'PIZZA_PAN',
+  WIRELESS: 'WIRELESS',
+  EAR_PAD: 'EAR_PAD',
+  SMART_WATCH: 'SMART_WATCH',
+  XBOX360: 'XBOX360',
+  TOASTER: 'TOASTER',
+  TAILOR_MACHINE: 'TAILOR_MACHINE',
+  BATTERY: 'BATTERY',
+  PHONE_CASE: 'PHONE_CASE',
+  BRACELET: 'BRACELET',
+  TESBIH: 'TESBIH',
+  HAND_MIXER: 'HAND_MIXER',
+  COMPUTER: 'COMPUTER',
+  SEWING_MACHINE: 'SEWING_MACHINE',
+  WATER_HEATER: 'WATER_HEATER',
+  PUMP: 'PUMP',
+  KEYBOARD: 'KEYBOARD',
+  PLUG: 'PLUG',
+  WATER_BOILER: 'WATER_BOILER',
+  THERAPY: 'THERAPY',
+  COFFEE_MAKER: 'COFFEE_MAKER',
+  KITCHEN: 'KITCHEN',
+  BOARD: 'BOARD',
+  MAT: 'MAT',
+  RADIO: 'RADIO',
+  VACUUM_CLEANER: 'VACUUM_CLEANER',
+  OTHER: 'OTHER'
+};
+
+export type ElectronicsCategory = (typeof ElectronicsCategory)[keyof typeof ElectronicsCategory]
+
 }
 
 export type RepairStatus = $Enums.RepairStatus
@@ -95,6 +171,14 @@ export const RentalStatus: typeof $Enums.RentalStatus
 export type TeamMemberStatus = $Enums.TeamMemberStatus
 
 export const TeamMemberStatus: typeof $Enums.TeamMemberStatus
+
+export type ElectronicsRepairStatus = $Enums.ElectronicsRepairStatus
+
+export const ElectronicsRepairStatus: typeof $Enums.ElectronicsRepairStatus
+
+export type ElectronicsCategory = $Enums.ElectronicsCategory
+
+export const ElectronicsCategory: typeof $Enums.ElectronicsCategory
 
 /**
  * ##  Prisma Client ʲˢ
@@ -290,6 +374,16 @@ export class PrismaClient<
     * ```
     */
   get teamMember(): Prisma.TeamMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.electronicsRepair`: Exposes CRUD operations for the **ElectronicsRepair** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ElectronicsRepairs
+    * const electronicsRepairs = await prisma.electronicsRepair.findMany()
+    * ```
+    */
+  get electronicsRepair(): Prisma.ElectronicsRepairDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -736,7 +830,8 @@ export namespace Prisma {
     Part: 'Part',
     RepairPart: 'RepairPart',
     BicycleRental: 'BicycleRental',
-    TeamMember: 'TeamMember'
+    TeamMember: 'TeamMember',
+    ElectronicsRepair: 'ElectronicsRepair'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -755,7 +850,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "electronicsRepair"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1221,6 +1316,72 @@ export namespace Prisma {
           }
         }
       }
+      ElectronicsRepair: {
+        payload: Prisma.$ElectronicsRepairPayload<ExtArgs>
+        fields: Prisma.ElectronicsRepairFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ElectronicsRepairFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ElectronicsRepairFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          findFirst: {
+            args: Prisma.ElectronicsRepairFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ElectronicsRepairFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          findMany: {
+            args: Prisma.ElectronicsRepairFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>[]
+          }
+          create: {
+            args: Prisma.ElectronicsRepairCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          createMany: {
+            args: Prisma.ElectronicsRepairCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ElectronicsRepairDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          update: {
+            args: Prisma.ElectronicsRepairUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          deleteMany: {
+            args: Prisma.ElectronicsRepairDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ElectronicsRepairUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ElectronicsRepairUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ElectronicsRepairPayload>
+          }
+          aggregate: {
+            args: Prisma.ElectronicsRepairAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateElectronicsRepair>
+          }
+          groupBy: {
+            args: Prisma.ElectronicsRepairGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ElectronicsRepairGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ElectronicsRepairCountArgs<ExtArgs>
+            result: $Utils.Optional<ElectronicsRepairCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1312,6 +1473,7 @@ export namespace Prisma {
     repairPart?: RepairPartOmit
     bicycleRental?: BicycleRentalOmit
     teamMember?: TeamMemberOmit
+    electronicsRepair?: ElectronicsRepairOmit
   }
 
   /* Types for Logging */
@@ -1399,6 +1561,37 @@ export namespace Prisma {
   /**
    * Count Types
    */
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    electronicsRepairs: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    electronicsRepairs?: boolean | UserCountOutputTypeCountElectronicsRepairsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountElectronicsRepairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElectronicsRepairWhereInput
+  }
 
 
   /**
@@ -1631,6 +1824,8 @@ export namespace Prisma {
     googleId?: boolean
     role?: boolean
     enabled?: boolean
+    electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
 
@@ -1644,10 +1839,16 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "googleId" | "role" | "enabled", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      electronicsRepairs: Prisma.$ElectronicsRepairPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string | null
@@ -1994,6 +2195,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    electronicsRepairs<T extends User$electronicsRepairsArgs<ExtArgs> = {}>(args?: Subset<T, User$electronicsRepairsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2045,6 +2247,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2063,6 +2269,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -2080,6 +2290,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -2129,6 +2343,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -2177,6 +2395,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -2220,6 +2442,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -2248,6 +2474,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2289,6 +2519,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2315,6 +2549,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -2335,6 +2573,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.electronicsRepairs
+   */
+  export type User$electronicsRepairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    where?: ElectronicsRepairWhereInput
+    orderBy?: ElectronicsRepairOrderByWithRelationInput | ElectronicsRepairOrderByWithRelationInput[]
+    cursor?: ElectronicsRepairWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ElectronicsRepairScalarFieldEnum | ElectronicsRepairScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2346,6 +2608,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -8260,6 +8526,1098 @@ export namespace Prisma {
 
 
   /**
+   * Model ElectronicsRepair
+   */
+
+  export type AggregateElectronicsRepair = {
+    _count: ElectronicsRepairCountAggregateOutputType | null
+    _avg: ElectronicsRepairAvgAggregateOutputType | null
+    _sum: ElectronicsRepairSumAggregateOutputType | null
+    _min: ElectronicsRepairMinAggregateOutputType | null
+    _max: ElectronicsRepairMaxAggregateOutputType | null
+  }
+
+  export type ElectronicsRepairAvgAggregateOutputType = {
+    repairId: number | null
+  }
+
+  export type ElectronicsRepairSumAggregateOutputType = {
+    repairId: number | null
+  }
+
+  export type ElectronicsRepairMinAggregateOutputType = {
+    id: string | null
+    repairId: number | null
+    customerName: string | null
+    category: $Enums.ElectronicsCategory | null
+    item: string | null
+    whatsapp: string | null
+    serialNumber: string | null
+    status: $Enums.ElectronicsRepairStatus | null
+    repairable: boolean | null
+    notes: string | null
+    photoPath: string | null
+    createdDate: Date | null
+    repairerId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ElectronicsRepairMaxAggregateOutputType = {
+    id: string | null
+    repairId: number | null
+    customerName: string | null
+    category: $Enums.ElectronicsCategory | null
+    item: string | null
+    whatsapp: string | null
+    serialNumber: string | null
+    status: $Enums.ElectronicsRepairStatus | null
+    repairable: boolean | null
+    notes: string | null
+    photoPath: string | null
+    createdDate: Date | null
+    repairerId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ElectronicsRepairCountAggregateOutputType = {
+    id: number
+    repairId: number
+    customerName: number
+    category: number
+    item: number
+    whatsapp: number
+    serialNumber: number
+    status: number
+    repairable: number
+    notes: number
+    photoPath: number
+    createdDate: number
+    repairerId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ElectronicsRepairAvgAggregateInputType = {
+    repairId?: true
+  }
+
+  export type ElectronicsRepairSumAggregateInputType = {
+    repairId?: true
+  }
+
+  export type ElectronicsRepairMinAggregateInputType = {
+    id?: true
+    repairId?: true
+    customerName?: true
+    category?: true
+    item?: true
+    whatsapp?: true
+    serialNumber?: true
+    status?: true
+    repairable?: true
+    notes?: true
+    photoPath?: true
+    createdDate?: true
+    repairerId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ElectronicsRepairMaxAggregateInputType = {
+    id?: true
+    repairId?: true
+    customerName?: true
+    category?: true
+    item?: true
+    whatsapp?: true
+    serialNumber?: true
+    status?: true
+    repairable?: true
+    notes?: true
+    photoPath?: true
+    createdDate?: true
+    repairerId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ElectronicsRepairCountAggregateInputType = {
+    id?: true
+    repairId?: true
+    customerName?: true
+    category?: true
+    item?: true
+    whatsapp?: true
+    serialNumber?: true
+    status?: true
+    repairable?: true
+    notes?: true
+    photoPath?: true
+    createdDate?: true
+    repairerId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ElectronicsRepairAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElectronicsRepair to aggregate.
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElectronicsRepairs to fetch.
+     */
+    orderBy?: ElectronicsRepairOrderByWithRelationInput | ElectronicsRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ElectronicsRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElectronicsRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElectronicsRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ElectronicsRepairs
+    **/
+    _count?: true | ElectronicsRepairCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ElectronicsRepairAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ElectronicsRepairSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ElectronicsRepairMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ElectronicsRepairMaxAggregateInputType
+  }
+
+  export type GetElectronicsRepairAggregateType<T extends ElectronicsRepairAggregateArgs> = {
+        [P in keyof T & keyof AggregateElectronicsRepair]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateElectronicsRepair[P]>
+      : GetScalarType<T[P], AggregateElectronicsRepair[P]>
+  }
+
+
+
+
+  export type ElectronicsRepairGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ElectronicsRepairWhereInput
+    orderBy?: ElectronicsRepairOrderByWithAggregationInput | ElectronicsRepairOrderByWithAggregationInput[]
+    by: ElectronicsRepairScalarFieldEnum[] | ElectronicsRepairScalarFieldEnum
+    having?: ElectronicsRepairScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ElectronicsRepairCountAggregateInputType | true
+    _avg?: ElectronicsRepairAvgAggregateInputType
+    _sum?: ElectronicsRepairSumAggregateInputType
+    _min?: ElectronicsRepairMinAggregateInputType
+    _max?: ElectronicsRepairMaxAggregateInputType
+  }
+
+  export type ElectronicsRepairGroupByOutputType = {
+    id: string
+    repairId: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item: string | null
+    whatsapp: string | null
+    serialNumber: string | null
+    status: $Enums.ElectronicsRepairStatus
+    repairable: boolean | null
+    notes: string | null
+    photoPath: string | null
+    createdDate: Date
+    repairerId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ElectronicsRepairCountAggregateOutputType | null
+    _avg: ElectronicsRepairAvgAggregateOutputType | null
+    _sum: ElectronicsRepairSumAggregateOutputType | null
+    _min: ElectronicsRepairMinAggregateOutputType | null
+    _max: ElectronicsRepairMaxAggregateOutputType | null
+  }
+
+  type GetElectronicsRepairGroupByPayload<T extends ElectronicsRepairGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ElectronicsRepairGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ElectronicsRepairGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ElectronicsRepairGroupByOutputType[P]>
+            : GetScalarType<T[P], ElectronicsRepairGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ElectronicsRepairSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repairId?: boolean
+    customerName?: boolean
+    category?: boolean
+    item?: boolean
+    whatsapp?: boolean
+    serialNumber?: boolean
+    status?: boolean
+    repairable?: boolean
+    notes?: boolean
+    photoPath?: boolean
+    createdDate?: boolean
+    repairerId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repairer?: boolean | ElectronicsRepair$repairerArgs<ExtArgs>
+  }, ExtArgs["result"]["electronicsRepair"]>
+
+
+
+  export type ElectronicsRepairSelectScalar = {
+    id?: boolean
+    repairId?: boolean
+    customerName?: boolean
+    category?: boolean
+    item?: boolean
+    whatsapp?: boolean
+    serialNumber?: boolean
+    status?: boolean
+    repairable?: boolean
+    notes?: boolean
+    photoPath?: boolean
+    createdDate?: boolean
+    repairerId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ElectronicsRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repairId" | "customerName" | "category" | "item" | "whatsapp" | "serialNumber" | "status" | "repairable" | "notes" | "photoPath" | "createdDate" | "repairerId" | "createdAt" | "updatedAt", ExtArgs["result"]["electronicsRepair"]>
+  export type ElectronicsRepairInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repairer?: boolean | ElectronicsRepair$repairerArgs<ExtArgs>
+  }
+
+  export type $ElectronicsRepairPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ElectronicsRepair"
+    objects: {
+      repairer: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repairId: number
+      customerName: string
+      category: $Enums.ElectronicsCategory
+      item: string | null
+      whatsapp: string | null
+      serialNumber: string | null
+      status: $Enums.ElectronicsRepairStatus
+      repairable: boolean | null
+      notes: string | null
+      photoPath: string | null
+      createdDate: Date
+      repairerId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["electronicsRepair"]>
+    composites: {}
+  }
+
+  type ElectronicsRepairGetPayload<S extends boolean | null | undefined | ElectronicsRepairDefaultArgs> = $Result.GetResult<Prisma.$ElectronicsRepairPayload, S>
+
+  type ElectronicsRepairCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ElectronicsRepairFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ElectronicsRepairCountAggregateInputType | true
+    }
+
+  export interface ElectronicsRepairDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ElectronicsRepair'], meta: { name: 'ElectronicsRepair' } }
+    /**
+     * Find zero or one ElectronicsRepair that matches the filter.
+     * @param {ElectronicsRepairFindUniqueArgs} args - Arguments to find a ElectronicsRepair
+     * @example
+     * // Get one ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ElectronicsRepairFindUniqueArgs>(args: SelectSubset<T, ElectronicsRepairFindUniqueArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ElectronicsRepair that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ElectronicsRepairFindUniqueOrThrowArgs} args - Arguments to find a ElectronicsRepair
+     * @example
+     * // Get one ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ElectronicsRepairFindUniqueOrThrowArgs>(args: SelectSubset<T, ElectronicsRepairFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ElectronicsRepair that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairFindFirstArgs} args - Arguments to find a ElectronicsRepair
+     * @example
+     * // Get one ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ElectronicsRepairFindFirstArgs>(args?: SelectSubset<T, ElectronicsRepairFindFirstArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ElectronicsRepair that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairFindFirstOrThrowArgs} args - Arguments to find a ElectronicsRepair
+     * @example
+     * // Get one ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ElectronicsRepairFindFirstOrThrowArgs>(args?: SelectSubset<T, ElectronicsRepairFindFirstOrThrowArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ElectronicsRepairs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ElectronicsRepairs
+     * const electronicsRepairs = await prisma.electronicsRepair.findMany()
+     * 
+     * // Get first 10 ElectronicsRepairs
+     * const electronicsRepairs = await prisma.electronicsRepair.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const electronicsRepairWithIdOnly = await prisma.electronicsRepair.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ElectronicsRepairFindManyArgs>(args?: SelectSubset<T, ElectronicsRepairFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ElectronicsRepair.
+     * @param {ElectronicsRepairCreateArgs} args - Arguments to create a ElectronicsRepair.
+     * @example
+     * // Create one ElectronicsRepair
+     * const ElectronicsRepair = await prisma.electronicsRepair.create({
+     *   data: {
+     *     // ... data to create a ElectronicsRepair
+     *   }
+     * })
+     * 
+     */
+    create<T extends ElectronicsRepairCreateArgs>(args: SelectSubset<T, ElectronicsRepairCreateArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ElectronicsRepairs.
+     * @param {ElectronicsRepairCreateManyArgs} args - Arguments to create many ElectronicsRepairs.
+     * @example
+     * // Create many ElectronicsRepairs
+     * const electronicsRepair = await prisma.electronicsRepair.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ElectronicsRepairCreateManyArgs>(args?: SelectSubset<T, ElectronicsRepairCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ElectronicsRepair.
+     * @param {ElectronicsRepairDeleteArgs} args - Arguments to delete one ElectronicsRepair.
+     * @example
+     * // Delete one ElectronicsRepair
+     * const ElectronicsRepair = await prisma.electronicsRepair.delete({
+     *   where: {
+     *     // ... filter to delete one ElectronicsRepair
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ElectronicsRepairDeleteArgs>(args: SelectSubset<T, ElectronicsRepairDeleteArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ElectronicsRepair.
+     * @param {ElectronicsRepairUpdateArgs} args - Arguments to update one ElectronicsRepair.
+     * @example
+     * // Update one ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ElectronicsRepairUpdateArgs>(args: SelectSubset<T, ElectronicsRepairUpdateArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ElectronicsRepairs.
+     * @param {ElectronicsRepairDeleteManyArgs} args - Arguments to filter ElectronicsRepairs to delete.
+     * @example
+     * // Delete a few ElectronicsRepairs
+     * const { count } = await prisma.electronicsRepair.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ElectronicsRepairDeleteManyArgs>(args?: SelectSubset<T, ElectronicsRepairDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ElectronicsRepairs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ElectronicsRepairs
+     * const electronicsRepair = await prisma.electronicsRepair.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ElectronicsRepairUpdateManyArgs>(args: SelectSubset<T, ElectronicsRepairUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ElectronicsRepair.
+     * @param {ElectronicsRepairUpsertArgs} args - Arguments to update or create a ElectronicsRepair.
+     * @example
+     * // Update or create a ElectronicsRepair
+     * const electronicsRepair = await prisma.electronicsRepair.upsert({
+     *   create: {
+     *     // ... data to create a ElectronicsRepair
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ElectronicsRepair we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ElectronicsRepairUpsertArgs>(args: SelectSubset<T, ElectronicsRepairUpsertArgs<ExtArgs>>): Prisma__ElectronicsRepairClient<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ElectronicsRepairs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairCountArgs} args - Arguments to filter ElectronicsRepairs to count.
+     * @example
+     * // Count the number of ElectronicsRepairs
+     * const count = await prisma.electronicsRepair.count({
+     *   where: {
+     *     // ... the filter for the ElectronicsRepairs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ElectronicsRepairCountArgs>(
+      args?: Subset<T, ElectronicsRepairCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ElectronicsRepairCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ElectronicsRepair.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ElectronicsRepairAggregateArgs>(args: Subset<T, ElectronicsRepairAggregateArgs>): Prisma.PrismaPromise<GetElectronicsRepairAggregateType<T>>
+
+    /**
+     * Group by ElectronicsRepair.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ElectronicsRepairGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ElectronicsRepairGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ElectronicsRepairGroupByArgs['orderBy'] }
+        : { orderBy?: ElectronicsRepairGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ElectronicsRepairGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetElectronicsRepairGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ElectronicsRepair model
+   */
+  readonly fields: ElectronicsRepairFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ElectronicsRepair.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ElectronicsRepairClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repairer<T extends ElectronicsRepair$repairerArgs<ExtArgs> = {}>(args?: Subset<T, ElectronicsRepair$repairerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ElectronicsRepair model
+   */
+  interface ElectronicsRepairFieldRefs {
+    readonly id: FieldRef<"ElectronicsRepair", 'String'>
+    readonly repairId: FieldRef<"ElectronicsRepair", 'Int'>
+    readonly customerName: FieldRef<"ElectronicsRepair", 'String'>
+    readonly category: FieldRef<"ElectronicsRepair", 'ElectronicsCategory'>
+    readonly item: FieldRef<"ElectronicsRepair", 'String'>
+    readonly whatsapp: FieldRef<"ElectronicsRepair", 'String'>
+    readonly serialNumber: FieldRef<"ElectronicsRepair", 'String'>
+    readonly status: FieldRef<"ElectronicsRepair", 'ElectronicsRepairStatus'>
+    readonly repairable: FieldRef<"ElectronicsRepair", 'Boolean'>
+    readonly notes: FieldRef<"ElectronicsRepair", 'String'>
+    readonly photoPath: FieldRef<"ElectronicsRepair", 'String'>
+    readonly createdDate: FieldRef<"ElectronicsRepair", 'DateTime'>
+    readonly repairerId: FieldRef<"ElectronicsRepair", 'String'>
+    readonly createdAt: FieldRef<"ElectronicsRepair", 'DateTime'>
+    readonly updatedAt: FieldRef<"ElectronicsRepair", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ElectronicsRepair findUnique
+   */
+  export type ElectronicsRepairFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ElectronicsRepair to fetch.
+     */
+    where: ElectronicsRepairWhereUniqueInput
+  }
+
+  /**
+   * ElectronicsRepair findUniqueOrThrow
+   */
+  export type ElectronicsRepairFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ElectronicsRepair to fetch.
+     */
+    where: ElectronicsRepairWhereUniqueInput
+  }
+
+  /**
+   * ElectronicsRepair findFirst
+   */
+  export type ElectronicsRepairFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ElectronicsRepair to fetch.
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElectronicsRepairs to fetch.
+     */
+    orderBy?: ElectronicsRepairOrderByWithRelationInput | ElectronicsRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElectronicsRepairs.
+     */
+    cursor?: ElectronicsRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElectronicsRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElectronicsRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElectronicsRepairs.
+     */
+    distinct?: ElectronicsRepairScalarFieldEnum | ElectronicsRepairScalarFieldEnum[]
+  }
+
+  /**
+   * ElectronicsRepair findFirstOrThrow
+   */
+  export type ElectronicsRepairFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ElectronicsRepair to fetch.
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElectronicsRepairs to fetch.
+     */
+    orderBy?: ElectronicsRepairOrderByWithRelationInput | ElectronicsRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ElectronicsRepairs.
+     */
+    cursor?: ElectronicsRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElectronicsRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElectronicsRepairs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ElectronicsRepairs.
+     */
+    distinct?: ElectronicsRepairScalarFieldEnum | ElectronicsRepairScalarFieldEnum[]
+  }
+
+  /**
+   * ElectronicsRepair findMany
+   */
+  export type ElectronicsRepairFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter, which ElectronicsRepairs to fetch.
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ElectronicsRepairs to fetch.
+     */
+    orderBy?: ElectronicsRepairOrderByWithRelationInput | ElectronicsRepairOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ElectronicsRepairs.
+     */
+    cursor?: ElectronicsRepairWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ElectronicsRepairs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ElectronicsRepairs.
+     */
+    skip?: number
+    distinct?: ElectronicsRepairScalarFieldEnum | ElectronicsRepairScalarFieldEnum[]
+  }
+
+  /**
+   * ElectronicsRepair create
+   */
+  export type ElectronicsRepairCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ElectronicsRepair.
+     */
+    data: XOR<ElectronicsRepairCreateInput, ElectronicsRepairUncheckedCreateInput>
+  }
+
+  /**
+   * ElectronicsRepair createMany
+   */
+  export type ElectronicsRepairCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ElectronicsRepairs.
+     */
+    data: ElectronicsRepairCreateManyInput | ElectronicsRepairCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ElectronicsRepair update
+   */
+  export type ElectronicsRepairUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ElectronicsRepair.
+     */
+    data: XOR<ElectronicsRepairUpdateInput, ElectronicsRepairUncheckedUpdateInput>
+    /**
+     * Choose, which ElectronicsRepair to update.
+     */
+    where: ElectronicsRepairWhereUniqueInput
+  }
+
+  /**
+   * ElectronicsRepair updateMany
+   */
+  export type ElectronicsRepairUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ElectronicsRepairs.
+     */
+    data: XOR<ElectronicsRepairUpdateManyMutationInput, ElectronicsRepairUncheckedUpdateManyInput>
+    /**
+     * Filter which ElectronicsRepairs to update
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * Limit how many ElectronicsRepairs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ElectronicsRepair upsert
+   */
+  export type ElectronicsRepairUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ElectronicsRepair to update in case it exists.
+     */
+    where: ElectronicsRepairWhereUniqueInput
+    /**
+     * In case the ElectronicsRepair found by the `where` argument doesn't exist, create a new ElectronicsRepair with this data.
+     */
+    create: XOR<ElectronicsRepairCreateInput, ElectronicsRepairUncheckedCreateInput>
+    /**
+     * In case the ElectronicsRepair was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ElectronicsRepairUpdateInput, ElectronicsRepairUncheckedUpdateInput>
+  }
+
+  /**
+   * ElectronicsRepair delete
+   */
+  export type ElectronicsRepairDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+    /**
+     * Filter which ElectronicsRepair to delete.
+     */
+    where: ElectronicsRepairWhereUniqueInput
+  }
+
+  /**
+   * ElectronicsRepair deleteMany
+   */
+  export type ElectronicsRepairDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ElectronicsRepairs to delete
+     */
+    where?: ElectronicsRepairWhereInput
+    /**
+     * Limit how many ElectronicsRepairs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ElectronicsRepair.repairer
+   */
+  export type ElectronicsRepair$repairerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * ElectronicsRepair without action
+   */
+  export type ElectronicsRepairDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ElectronicsRepair
+     */
+    select?: ElectronicsRepairSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ElectronicsRepair
+     */
+    omit?: ElectronicsRepairOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ElectronicsRepairInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8379,6 +9737,27 @@ export namespace Prisma {
   export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum]
 
 
+  export const ElectronicsRepairScalarFieldEnum: {
+    id: 'id',
+    repairId: 'repairId',
+    customerName: 'customerName',
+    category: 'category',
+    item: 'item',
+    whatsapp: 'whatsapp',
+    serialNumber: 'serialNumber',
+    status: 'status',
+    repairable: 'repairable',
+    notes: 'notes',
+    photoPath: 'photoPath',
+    createdDate: 'createdDate',
+    repairerId: 'repairerId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ElectronicsRepairScalarFieldEnum = (typeof ElectronicsRepairScalarFieldEnum)[keyof typeof ElectronicsRepairScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -8473,6 +9852,20 @@ export namespace Prisma {
   export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum]
 
 
+  export const ElectronicsRepairOrderByRelevanceFieldEnum: {
+    id: 'id',
+    customerName: 'customerName',
+    item: 'item',
+    whatsapp: 'whatsapp',
+    serialNumber: 'serialNumber',
+    notes: 'notes',
+    photoPath: 'photoPath',
+    repairerId: 'repairerId'
+  };
+
+  export type ElectronicsRepairOrderByRelevanceFieldEnum = (typeof ElectronicsRepairOrderByRelevanceFieldEnum)[keyof typeof ElectronicsRepairOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -8528,6 +9921,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ElectronicsCategory'
+   */
+  export type EnumElectronicsCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ElectronicsCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'ElectronicsRepairStatus'
+   */
+  export type EnumElectronicsRepairStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ElectronicsRepairStatus'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -8546,6 +9953,7 @@ export namespace Prisma {
     googleId?: StringFilter<"User"> | string
     role?: StringNullableFilter<"User"> | string | null
     enabled?: BoolNullableFilter<"User"> | boolean | null
+    electronicsRepairs?: ElectronicsRepairListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8554,6 +9962,7 @@ export namespace Prisma {
     googleId?: SortOrder
     role?: SortOrderInput | SortOrder
     enabled?: SortOrderInput | SortOrder
+    electronicsRepairs?: ElectronicsRepairOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -8566,6 +9975,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"User"> | string | null
     role?: StringNullableFilter<"User"> | string | null
     enabled?: BoolNullableFilter<"User"> | boolean | null
+    electronicsRepairs?: ElectronicsRepairListRelationFilter
   }, "id" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -9072,12 +10482,121 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   }
 
+  export type ElectronicsRepairWhereInput = {
+    AND?: ElectronicsRepairWhereInput | ElectronicsRepairWhereInput[]
+    OR?: ElectronicsRepairWhereInput[]
+    NOT?: ElectronicsRepairWhereInput | ElectronicsRepairWhereInput[]
+    id?: StringFilter<"ElectronicsRepair"> | string
+    repairId?: IntFilter<"ElectronicsRepair"> | number
+    customerName?: StringFilter<"ElectronicsRepair"> | string
+    category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
+    item?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    serialNumber?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    status?: EnumElectronicsRepairStatusFilter<"ElectronicsRepair"> | $Enums.ElectronicsRepairStatus
+    repairable?: BoolNullableFilter<"ElectronicsRepair"> | boolean | null
+    notes?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    photoPath?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdDate?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    repairerId?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    updatedAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    repairer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type ElectronicsRepairOrderByWithRelationInput = {
+    id?: SortOrder
+    repairId?: SortOrder
+    customerName?: SortOrder
+    category?: SortOrder
+    item?: SortOrderInput | SortOrder
+    whatsapp?: SortOrderInput | SortOrder
+    serialNumber?: SortOrderInput | SortOrder
+    status?: SortOrder
+    repairable?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    createdDate?: SortOrder
+    repairerId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repairer?: UserOrderByWithRelationInput
+    _relevance?: ElectronicsRepairOrderByRelevanceInput
+  }
+
+  export type ElectronicsRepairWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    repairId?: number
+    AND?: ElectronicsRepairWhereInput | ElectronicsRepairWhereInput[]
+    OR?: ElectronicsRepairWhereInput[]
+    NOT?: ElectronicsRepairWhereInput | ElectronicsRepairWhereInput[]
+    customerName?: StringFilter<"ElectronicsRepair"> | string
+    category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
+    item?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    serialNumber?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    status?: EnumElectronicsRepairStatusFilter<"ElectronicsRepair"> | $Enums.ElectronicsRepairStatus
+    repairable?: BoolNullableFilter<"ElectronicsRepair"> | boolean | null
+    notes?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    photoPath?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdDate?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    repairerId?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    updatedAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    repairer?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id" | "repairId">
+
+  export type ElectronicsRepairOrderByWithAggregationInput = {
+    id?: SortOrder
+    repairId?: SortOrder
+    customerName?: SortOrder
+    category?: SortOrder
+    item?: SortOrderInput | SortOrder
+    whatsapp?: SortOrderInput | SortOrder
+    serialNumber?: SortOrderInput | SortOrder
+    status?: SortOrder
+    repairable?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    createdDate?: SortOrder
+    repairerId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ElectronicsRepairCountOrderByAggregateInput
+    _avg?: ElectronicsRepairAvgOrderByAggregateInput
+    _max?: ElectronicsRepairMaxOrderByAggregateInput
+    _min?: ElectronicsRepairMinOrderByAggregateInput
+    _sum?: ElectronicsRepairSumOrderByAggregateInput
+  }
+
+  export type ElectronicsRepairScalarWhereWithAggregatesInput = {
+    AND?: ElectronicsRepairScalarWhereWithAggregatesInput | ElectronicsRepairScalarWhereWithAggregatesInput[]
+    OR?: ElectronicsRepairScalarWhereWithAggregatesInput[]
+    NOT?: ElectronicsRepairScalarWhereWithAggregatesInput | ElectronicsRepairScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ElectronicsRepair"> | string
+    repairId?: IntWithAggregatesFilter<"ElectronicsRepair"> | number
+    customerName?: StringWithAggregatesFilter<"ElectronicsRepair"> | string
+    category?: EnumElectronicsCategoryWithAggregatesFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
+    item?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    whatsapp?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    serialNumber?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    status?: EnumElectronicsRepairStatusWithAggregatesFilter<"ElectronicsRepair"> | $Enums.ElectronicsRepairStatus
+    repairable?: BoolNullableWithAggregatesFilter<"ElectronicsRepair"> | boolean | null
+    notes?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    photoPath?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    createdDate?: DateTimeWithAggregatesFilter<"ElectronicsRepair"> | Date | string
+    repairerId?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ElectronicsRepair"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ElectronicsRepair"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email?: string | null
     googleId: string
     role?: string | null
     enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9086,6 +10605,7 @@ export namespace Prisma {
     googleId: string
     role?: string | null
     enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
   }
 
   export type UserUpdateInput = {
@@ -9094,6 +10614,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9102,6 +10623,7 @@ export namespace Prisma {
     googleId?: StringFieldUpdateOperationsInput | string
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9673,6 +11195,129 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ElectronicsRepairCreateInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repairer?: UserCreateNestedOneWithoutElectronicsRepairsInput
+  }
+
+  export type ElectronicsRepairUncheckedCreateInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    repairerId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElectronicsRepairUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repairer?: UserUpdateOneWithoutElectronicsRepairsNestedInput
+  }
+
+  export type ElectronicsRepairUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repairId?: IntFieldUpdateOperationsInput | number
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    repairerId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElectronicsRepairCreateManyInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    repairerId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElectronicsRepairUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElectronicsRepairUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repairId?: IntFieldUpdateOperationsInput | number
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    repairerId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -9708,9 +11353,19 @@ export namespace Prisma {
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
+  export type ElectronicsRepairListRelationFilter = {
+    every?: ElectronicsRepairWhereInput
+    some?: ElectronicsRepairWhereInput
+    none?: ElectronicsRepairWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type ElectronicsRepairOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserOrderByRelevanceInput = {
@@ -10231,6 +11886,127 @@ export namespace Prisma {
     _max?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
   }
 
+  export type EnumElectronicsCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsCategory | EnumElectronicsCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsCategory[]
+    notIn?: $Enums.ElectronicsCategory[]
+    not?: NestedEnumElectronicsCategoryFilter<$PrismaModel> | $Enums.ElectronicsCategory
+  }
+
+  export type EnumElectronicsRepairStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsRepairStatus | EnumElectronicsRepairStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsRepairStatus[]
+    notIn?: $Enums.ElectronicsRepairStatus[]
+    not?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel> | $Enums.ElectronicsRepairStatus
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type ElectronicsRepairOrderByRelevanceInput = {
+    fields: ElectronicsRepairOrderByRelevanceFieldEnum | ElectronicsRepairOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ElectronicsRepairCountOrderByAggregateInput = {
+    id?: SortOrder
+    repairId?: SortOrder
+    customerName?: SortOrder
+    category?: SortOrder
+    item?: SortOrder
+    whatsapp?: SortOrder
+    serialNumber?: SortOrder
+    status?: SortOrder
+    repairable?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    createdDate?: SortOrder
+    repairerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElectronicsRepairAvgOrderByAggregateInput = {
+    repairId?: SortOrder
+  }
+
+  export type ElectronicsRepairMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repairId?: SortOrder
+    customerName?: SortOrder
+    category?: SortOrder
+    item?: SortOrder
+    whatsapp?: SortOrder
+    serialNumber?: SortOrder
+    status?: SortOrder
+    repairable?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    createdDate?: SortOrder
+    repairerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElectronicsRepairMinOrderByAggregateInput = {
+    id?: SortOrder
+    repairId?: SortOrder
+    customerName?: SortOrder
+    category?: SortOrder
+    item?: SortOrder
+    whatsapp?: SortOrder
+    serialNumber?: SortOrder
+    status?: SortOrder
+    repairable?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    createdDate?: SortOrder
+    repairerId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ElectronicsRepairSumOrderByAggregateInput = {
+    repairId?: SortOrder
+  }
+
+  export type EnumElectronicsCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsCategory | EnumElectronicsCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsCategory[]
+    notIn?: $Enums.ElectronicsCategory[]
+    not?: NestedEnumElectronicsCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ElectronicsCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumElectronicsCategoryFilter<$PrismaModel>
+    _max?: NestedEnumElectronicsCategoryFilter<$PrismaModel>
+  }
+
+  export type EnumElectronicsRepairStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsRepairStatus | EnumElectronicsRepairStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsRepairStatus[]
+    notIn?: $Enums.ElectronicsRepairStatus[]
+    not?: NestedEnumElectronicsRepairStatusWithAggregatesFilter<$PrismaModel> | $Enums.ElectronicsRepairStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
+    _max?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
+  }
+
+  export type ElectronicsRepairCreateNestedManyWithoutRepairerInput = {
+    create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
+    connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
+    createMany?: ElectronicsRepairCreateManyRepairerInputEnvelope
+    connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+  }
+
+  export type ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput = {
+    create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
+    connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
+    createMany?: ElectronicsRepairCreateManyRepairerInputEnvelope
+    connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -10241,6 +12017,34 @@ export namespace Prisma {
 
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
+  }
+
+  export type ElectronicsRepairUpdateManyWithoutRepairerNestedInput = {
+    create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
+    connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
+    upsert?: ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput | ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput[]
+    createMany?: ElectronicsRepairCreateManyRepairerInputEnvelope
+    set?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    disconnect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    delete?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    update?: ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput | ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput[]
+    updateMany?: ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput | ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput[]
+    deleteMany?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
+  }
+
+  export type ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput = {
+    create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
+    connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
+    upsert?: ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput | ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput[]
+    createMany?: ElectronicsRepairCreateManyRepairerInputEnvelope
+    set?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    disconnect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    delete?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    connect?: ElectronicsRepairWhereUniqueInput | ElectronicsRepairWhereUniqueInput[]
+    update?: ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput | ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput[]
+    updateMany?: ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput | ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput[]
+    deleteMany?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -10381,6 +12185,30 @@ export namespace Prisma {
 
   export type EnumTeamMemberStatusFieldUpdateOperationsInput = {
     set?: $Enums.TeamMemberStatus
+  }
+
+  export type UserCreateNestedOneWithoutElectronicsRepairsInput = {
+    create?: XOR<UserCreateWithoutElectronicsRepairsInput, UserUncheckedCreateWithoutElectronicsRepairsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutElectronicsRepairsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumElectronicsCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.ElectronicsCategory
+  }
+
+  export type EnumElectronicsRepairStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ElectronicsRepairStatus
+  }
+
+  export type UserUpdateOneWithoutElectronicsRepairsNestedInput = {
+    create?: XOR<UserCreateWithoutElectronicsRepairsInput, UserUncheckedCreateWithoutElectronicsRepairsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutElectronicsRepairsInput
+    upsert?: UserUpsertWithoutElectronicsRepairsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutElectronicsRepairsInput, UserUpdateWithoutElectronicsRepairsInput>, UserUncheckedUpdateWithoutElectronicsRepairsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10612,6 +12440,121 @@ export namespace Prisma {
     _max?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumElectronicsCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsCategory | EnumElectronicsCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsCategory[]
+    notIn?: $Enums.ElectronicsCategory[]
+    not?: NestedEnumElectronicsCategoryFilter<$PrismaModel> | $Enums.ElectronicsCategory
+  }
+
+  export type NestedEnumElectronicsRepairStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsRepairStatus | EnumElectronicsRepairStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsRepairStatus[]
+    notIn?: $Enums.ElectronicsRepairStatus[]
+    not?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel> | $Enums.ElectronicsRepairStatus
+  }
+
+  export type NestedEnumElectronicsCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsCategory | EnumElectronicsCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsCategory[]
+    notIn?: $Enums.ElectronicsCategory[]
+    not?: NestedEnumElectronicsCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ElectronicsCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumElectronicsCategoryFilter<$PrismaModel>
+    _max?: NestedEnumElectronicsCategoryFilter<$PrismaModel>
+  }
+
+  export type NestedEnumElectronicsRepairStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ElectronicsRepairStatus | EnumElectronicsRepairStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ElectronicsRepairStatus[]
+    notIn?: $Enums.ElectronicsRepairStatus[]
+    not?: NestedEnumElectronicsRepairStatusWithAggregatesFilter<$PrismaModel> | $Enums.ElectronicsRepairStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
+    _max?: NestedEnumElectronicsRepairStatusFilter<$PrismaModel>
+  }
+
+  export type ElectronicsRepairCreateWithoutRepairerInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElectronicsRepairUncheckedCreateWithoutRepairerInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElectronicsRepairCreateOrConnectWithoutRepairerInput = {
+    where: ElectronicsRepairWhereUniqueInput
+    create: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput>
+  }
+
+  export type ElectronicsRepairCreateManyRepairerInputEnvelope = {
+    data: ElectronicsRepairCreateManyRepairerInput | ElectronicsRepairCreateManyRepairerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput = {
+    where: ElectronicsRepairWhereUniqueInput
+    update: XOR<ElectronicsRepairUpdateWithoutRepairerInput, ElectronicsRepairUncheckedUpdateWithoutRepairerInput>
+    create: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput>
+  }
+
+  export type ElectronicsRepairUpdateWithWhereUniqueWithoutRepairerInput = {
+    where: ElectronicsRepairWhereUniqueInput
+    data: XOR<ElectronicsRepairUpdateWithoutRepairerInput, ElectronicsRepairUncheckedUpdateWithoutRepairerInput>
+  }
+
+  export type ElectronicsRepairUpdateManyWithWhereWithoutRepairerInput = {
+    where: ElectronicsRepairScalarWhereInput
+    data: XOR<ElectronicsRepairUpdateManyMutationInput, ElectronicsRepairUncheckedUpdateManyWithoutRepairerInput>
+  }
+
+  export type ElectronicsRepairScalarWhereInput = {
+    AND?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
+    OR?: ElectronicsRepairScalarWhereInput[]
+    NOT?: ElectronicsRepairScalarWhereInput | ElectronicsRepairScalarWhereInput[]
+    id?: StringFilter<"ElectronicsRepair"> | string
+    repairId?: IntFilter<"ElectronicsRepair"> | number
+    customerName?: StringFilter<"ElectronicsRepair"> | string
+    category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
+    item?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    serialNumber?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    status?: EnumElectronicsRepairStatusFilter<"ElectronicsRepair"> | $Enums.ElectronicsRepairStatus
+    repairable?: BoolNullableFilter<"ElectronicsRepair"> | boolean | null
+    notes?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    photoPath?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdDate?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    repairerId?: StringNullableFilter<"ElectronicsRepair"> | string | null
+    createdAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+    updatedAt?: DateTimeFilter<"ElectronicsRepair"> | Date | string
+  }
+
   export type RepairPartCreateWithoutRepairInput = {
     id?: string
     quantity: number
@@ -10828,6 +12771,121 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutElectronicsRepairsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+  }
+
+  export type UserUncheckedCreateWithoutElectronicsRepairsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+  }
+
+  export type UserCreateOrConnectWithoutElectronicsRepairsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutElectronicsRepairsInput, UserUncheckedCreateWithoutElectronicsRepairsInput>
+  }
+
+  export type UserUpsertWithoutElectronicsRepairsInput = {
+    update: XOR<UserUpdateWithoutElectronicsRepairsInput, UserUncheckedUpdateWithoutElectronicsRepairsInput>
+    create: XOR<UserCreateWithoutElectronicsRepairsInput, UserUncheckedCreateWithoutElectronicsRepairsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutElectronicsRepairsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutElectronicsRepairsInput, UserUncheckedUpdateWithoutElectronicsRepairsInput>
+  }
+
+  export type UserUpdateWithoutElectronicsRepairsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type UserUncheckedUpdateWithoutElectronicsRepairsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ElectronicsRepairCreateManyRepairerInput = {
+    id?: string
+    repairId?: number
+    customerName: string
+    category: $Enums.ElectronicsCategory
+    item?: string | null
+    whatsapp?: string | null
+    serialNumber?: string | null
+    status?: $Enums.ElectronicsRepairStatus
+    repairable?: boolean | null
+    notes?: string | null
+    photoPath?: string | null
+    createdDate?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ElectronicsRepairUpdateWithoutRepairerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElectronicsRepairUncheckedUpdateWithoutRepairerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repairId?: IntFieldUpdateOperationsInput | number
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ElectronicsRepairUncheckedUpdateManyWithoutRepairerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repairId?: IntFieldUpdateOperationsInput | number
+    customerName?: StringFieldUpdateOperationsInput | string
+    category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
+    item?: NullableStringFieldUpdateOperationsInput | string | null
+    whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
+    serialNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumElectronicsRepairStatusFieldUpdateOperationsInput | $Enums.ElectronicsRepairStatus
+    repairable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

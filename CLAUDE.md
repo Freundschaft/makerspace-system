@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-Next.js 15 App Router application for managing makerspace operations, including team directory, bicycle rentals, and bicycle repairs. Authentication is enforced via NextAuth with Google OAuth.
+Next.js 15 App Router application for managing makerspace operations, including team directory, bicycle rentals, bicycle repairs, and electronics repairs. Authentication is enforced via NextAuth with Google OAuth.
 
 ## Development Commands
 
@@ -33,8 +33,8 @@ Note: `generated/prisma` is auto-generated; never edit manually.
 - Prisma ORM with MySQL backend
 - Client singleton in `lib/prisma.ts` prevents hot-reload connection exhaustion
 - Generated client output: `generated/prisma` (via `prisma generate`)
-- Schema defines: `User`, `TeamMember`, `BicycleRepair`, `BicycleRental`, `Part`, `RepairPart`, `ProblemType`
-- Key enums: `RepairStatus`, `RentalStatus`, `TeamMemberStatus`
+- Schema defines: `User`, `TeamMember`, `BicycleRepair`, `BicycleRental`, `Part`, `RepairPart`, `ProblemType`, `ElectronicsRepair`
+- Key enums: `RepairStatus`, `RentalStatus`, `TeamMemberStatus`, `ElectronicsRepairStatus`, `ElectronicsCategory`
 
 ### Routing & Layout
 - Next.js App Router: routes in `app/`, API handlers in `app/api/`
@@ -54,7 +54,7 @@ Note: `generated/prisma` is auto-generated; never edit manually.
 ### File Uploads & Storage
 - File upload component: `components/ui/file-upload.tsx`
 - Files served via API route: `app/api/files/[...path]/route.ts`
-- Photo paths stored in database (e.g., `BicycleRepair.photoPath`, `TeamMember.photoPath`)
+- Photo paths stored in database (e.g., `BicycleRepair.photoPath`, `TeamMember.photoPath`, `ElectronicsRepair.photoPath`)
 - External file server URL configurable via `NEXT_PUBLIC_FILE_SERVER_URL` (defaults to `https://files.system.makerspace-lesvos.org`)
 
 ## Key Conventions
@@ -103,11 +103,21 @@ Optional:
 - Signature capture: `react-signature-canvas` integration
 - Status: ACTIVE → RETURNED (or OVERDUE/CANCELLED)
 
+### Electronics Repairs
+- Routes: `app/electronics/repairs/`
+- Model: `ElectronicsRepair` with auto-incrementing repair ID, customer info, device category (50+ types), status tracking
+- Categories: Phone, Laptop, Tablet, Heater, Fan, Speaker, Kitchen appliances, and many more (see `ElectronicsCategory` enum)
+- Optional fields: item description, WhatsApp contact, serial number, repairable checkbox, notes, photo, repairer assignment
+- Status flow: UNCHECKED → CHECKED → IN_PROGRESS → READY_FOR_PICKUP → DONE → PICKED_UP (or NO_WAY_TO_FIX)
+- Form: `app/electronics/repairs/new/repair-form.tsx` with category dropdown, device info, and photo upload
+- API: `app/api/electronics/repairs/route.ts` for CRUD operations
+- Repairer relation: Links to `User` model for tracking who repaired the device
+
 ## Testing Strategy
 Automated tests not yet implemented. Current validation approach:
 1. Run `npm run lint` to catch TypeScript and ESLint issues
 2. Run `npm run build` to verify production build succeeds
-3. Manual testing of flows: login, team CRUD, rental creation, repair intake
+3. Manual testing of flows: login, team CRUD, rental creation, bicycle repair intake, electronics repair intake
 4. Capture manual test steps in PR descriptions for reviewer replication
 
 When adding tests in the future, colocate `*.test.tsx` files beside features or under `__tests__/`.

@@ -16,11 +16,12 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(uuid())
-  email    String?
-  googleId String   @unique
-  role     String?
-  enabled  Boolean?
+  id                 String              @id @default(uuid())
+  email              String?
+  googleId           String              @unique
+  role               String?
+  enabled            Boolean?
+  electronicsRepairs ElectronicsRepair[]
 }
 
 model ProblemType {
@@ -125,4 +126,88 @@ model TeamMember {
   legalStatus String
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+}
+
+enum ElectronicsRepairStatus {
+  UNCHECKED
+  CHECKED
+  IN_PROGRESS
+  READY_FOR_PICKUP
+  DONE
+  PICKED_UP
+  NO_WAY_TO_FIX
+}
+
+enum ElectronicsCategory {
+  PHONE
+  TABLET
+  HEADPHONES
+  HEATER
+  SPEAKER
+  HAIR_CLIPPER
+  COOLER
+  POWER_BANK
+  KETTLE
+  LAPTOP
+  MULTI_SOCKET
+  PIZZA_PAN_CABLE
+  PAN
+  GLASSES
+  AUX
+  WATCH
+  ADAPTOR
+  HANDSFREE
+  CABLE
+  HAIR_CUTTER
+  HAIR_DRYER
+  FAN
+  PRINTER
+  ELECTRONIC_CIGARETTE
+  STOVE
+  PIZZA_PAN
+  WIRELESS
+  EAR_PAD
+  SMART_WATCH
+  XBOX360
+  TOASTER
+  TAILOR_MACHINE
+  BATTERY
+  PHONE_CASE
+  BRACELET
+  TESBIH
+  HAND_MIXER
+  COMPUTER
+  SEWING_MACHINE
+  WATER_HEATER
+  PUMP
+  KEYBOARD
+  PLUG
+  WATER_BOILER
+  THERAPY
+  COFFEE_MAKER
+  KITCHEN
+  BOARD
+  MAT
+  RADIO
+  VACUUM_CLEANER
+  OTHER
+}
+
+model ElectronicsRepair {
+  id           String                  @id @default(uuid())
+  repairId     Int                     @unique @default(autoincrement())
+  customerName String
+  category     ElectronicsCategory
+  item         String?
+  whatsapp     String?
+  serialNumber String?                 @db.Text
+  status       ElectronicsRepairStatus @default(UNCHECKED)
+  repairable   Boolean?
+  notes        String?                 @db.Text
+  photoPath    String?                 @db.Text
+  createdDate  DateTime                @default(now())
+  repairerId   String?
+  repairer     User?                   @relation(fields: [repairerId], references: [id])
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
 }

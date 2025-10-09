@@ -202,6 +202,24 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ElectronicsRepairScalarFieldEnum = {
+  id: 'id',
+  repairId: 'repairId',
+  customerName: 'customerName',
+  category: 'category',
+  item: 'item',
+  whatsapp: 'whatsapp',
+  serialNumber: 'serialNumber',
+  status: 'status',
+  repairable: 'repairable',
+  notes: 'notes',
+  photoPath: 'photoPath',
+  createdDate: 'createdDate',
+  repairerId: 'repairerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -268,6 +286,17 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
   homeAddress: 'homeAddress',
   legalStatus: 'legalStatus'
 };
+
+exports.Prisma.ElectronicsRepairOrderByRelevanceFieldEnum = {
+  id: 'id',
+  customerName: 'customerName',
+  item: 'item',
+  whatsapp: 'whatsapp',
+  serialNumber: 'serialNumber',
+  notes: 'notes',
+  photoPath: 'photoPath',
+  repairerId: 'repairerId'
+};
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
@@ -289,6 +318,71 @@ exports.TeamMemberStatus = exports.$Enums.TeamMemberStatus = {
   INACTIVE: 'INACTIVE'
 };
 
+exports.ElectronicsCategory = exports.$Enums.ElectronicsCategory = {
+  PHONE: 'PHONE',
+  TABLET: 'TABLET',
+  HEADPHONES: 'HEADPHONES',
+  HEATER: 'HEATER',
+  SPEAKER: 'SPEAKER',
+  HAIR_CLIPPER: 'HAIR_CLIPPER',
+  COOLER: 'COOLER',
+  POWER_BANK: 'POWER_BANK',
+  KETTLE: 'KETTLE',
+  LAPTOP: 'LAPTOP',
+  MULTI_SOCKET: 'MULTI_SOCKET',
+  PIZZA_PAN_CABLE: 'PIZZA_PAN_CABLE',
+  PAN: 'PAN',
+  GLASSES: 'GLASSES',
+  AUX: 'AUX',
+  WATCH: 'WATCH',
+  ADAPTOR: 'ADAPTOR',
+  HANDSFREE: 'HANDSFREE',
+  CABLE: 'CABLE',
+  HAIR_CUTTER: 'HAIR_CUTTER',
+  HAIR_DRYER: 'HAIR_DRYER',
+  FAN: 'FAN',
+  PRINTER: 'PRINTER',
+  ELECTRONIC_CIGARETTE: 'ELECTRONIC_CIGARETTE',
+  STOVE: 'STOVE',
+  PIZZA_PAN: 'PIZZA_PAN',
+  WIRELESS: 'WIRELESS',
+  EAR_PAD: 'EAR_PAD',
+  SMART_WATCH: 'SMART_WATCH',
+  XBOX360: 'XBOX360',
+  TOASTER: 'TOASTER',
+  TAILOR_MACHINE: 'TAILOR_MACHINE',
+  BATTERY: 'BATTERY',
+  PHONE_CASE: 'PHONE_CASE',
+  BRACELET: 'BRACELET',
+  TESBIH: 'TESBIH',
+  HAND_MIXER: 'HAND_MIXER',
+  COMPUTER: 'COMPUTER',
+  SEWING_MACHINE: 'SEWING_MACHINE',
+  WATER_HEATER: 'WATER_HEATER',
+  PUMP: 'PUMP',
+  KEYBOARD: 'KEYBOARD',
+  PLUG: 'PLUG',
+  WATER_BOILER: 'WATER_BOILER',
+  THERAPY: 'THERAPY',
+  COFFEE_MAKER: 'COFFEE_MAKER',
+  KITCHEN: 'KITCHEN',
+  BOARD: 'BOARD',
+  MAT: 'MAT',
+  RADIO: 'RADIO',
+  VACUUM_CLEANER: 'VACUUM_CLEANER',
+  OTHER: 'OTHER'
+};
+
+exports.ElectronicsRepairStatus = exports.$Enums.ElectronicsRepairStatus = {
+  UNCHECKED: 'UNCHECKED',
+  CHECKED: 'CHECKED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  READY_FOR_PICKUP: 'READY_FOR_PICKUP',
+  DONE: 'DONE',
+  PICKED_UP: 'PICKED_UP',
+  NO_WAY_TO_FIX: 'NO_WAY_TO_FIX'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -296,7 +390,8 @@ exports.Prisma.ModelName = {
   Part: 'Part',
   RepairPart: 'RepairPart',
   BicycleRental: 'BicycleRental',
-  TeamMember: 'TeamMember'
+  TeamMember: 'TeamMember',
+  ElectronicsRepair: 'ElectronicsRepair'
 };
 
 /**
