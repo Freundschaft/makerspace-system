@@ -55,6 +55,11 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  // Check if problemTypes column exists
+  const hasProblemTypesColumn = columns.some(
+    (col: any) => col.accessorKey === "problemTypes"
+  )
+
   // Function to render a card for mobile view
   const renderMobileCard = (row: any) => {
     const cells = row.getVisibleCells()
@@ -110,7 +115,7 @@ export function DataTable<TData, TValue>({
               if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
                 return null
               }
-              
+
               // Special handling for problem types
               if (cell.column.id === "problemTypes") {
                 return (
@@ -123,16 +128,30 @@ export function DataTable<TData, TValue>({
                   </div>
                 )
               }
-              
+
               // Skip empty values
               if (!cell.getValue()) {
                 return null
               }
-              
+
+              // Special handling for date columns (createdDate, repairedDate, pickupDate, etc.)
+              const value = cell.getValue()
+              let displayValue: string
+
+              if (value instanceof Date || cell.column.id.toLowerCase().includes('date')) {
+                try {
+                  displayValue = format(new Date(value), "MMM d, yyyy")
+                } catch {
+                  displayValue = String(value)
+                }
+              } else {
+                displayValue = String(value)
+              }
+
               return (
                 <div key={cell.id} className="flex justify-between">
                   <span className="font-medium">{cell.column.columnDef.header as string}:</span>
-                  <span>{cell.getValue() as string}</span>
+                  <span>{displayValue}</span>
                 </div>
               )
             })}
@@ -144,16 +163,18 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by problem type..."
-          value={(table.getColumn("problemTypes")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("problemTypes")?.setFilterValue(event.target.value)
-          }
-          className="w-full sm:max-w-sm"
-        />
-      </div>
+      {hasProblemTypesColumn && (
+        <div className="flex items-center py-4">
+          <Input
+            placeholder="Filter by problem type..."
+            value={(table.getColumn("problemTypes")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("problemTypes")?.setFilterValue(event.target.value)
+            }
+            className="w-full sm:max-w-sm"
+          />
+        </div>
+      )}
       
       {/* Mobile Card View */}
       <div className="block sm:hidden">

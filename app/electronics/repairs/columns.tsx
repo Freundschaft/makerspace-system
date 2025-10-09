@@ -218,7 +218,7 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
       const id = row.original.id
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
-          {format(date, "PPP")}
+          {format(new Date(date), "PPP")}
         </Link>
       )
     },
