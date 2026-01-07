@@ -33,7 +33,7 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 
 const formSchema = z.object({
-  date: z.date({ required_error: "Date is required" }),
+  date: z.date(),
   acceptedBy: z.string().optional(),
   customerType: z.enum([
     "PRIVATE_PERSON", "ORGANIZATION", "BARBERSHOP", "HOUSE"

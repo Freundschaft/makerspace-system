@@ -39,7 +39,7 @@ const formSchema = z.object({
     "HAND_MIXER", "COMPUTER", "SEWING_MACHINE", "WATER_HEATER", "PUMP",
     "KEYBOARD", "PLUG", "WATER_BOILER", "THERAPY", "COFFEE_MAKER", "KITCHEN",
     "BOARD", "MAT", "RADIO", "VACUUM_CLEANER", "OTHER"
-  ], { required_error: "Please select a category" }),
+  ]),
   item: z.string().optional(),
   whatsapp: z.string().optional(),
   serialNumber: z.string().optional(),
