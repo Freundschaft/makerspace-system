@@ -5,22 +5,28 @@ import { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const isAuthPage = request.nextUrl.pathname.startsWith("/login");
-  
+
   // If the user is authenticated and trying to access the login page,
-  // redirect them to the home page
+  // redirect them to the home page.
   if (isAuthPage) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
-    return NextResponse.next();
+
+    // If unauthenticated, bypass the login screen and go directly to Google OAuth.
+    const signInUrl = new URL("/api/auth/signin/google", request.url);
+    signInUrl.searchParams.set("callbackUrl", "/");
+    return NextResponse.redirect(signInUrl);
   }
-  
+
   // If the user is not authenticated and trying to access a protected page,
-  // redirect them to the login page
+  // redirect them directly to Google OAuth and preserve their original destination.
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const signInUrl = new URL("/api/auth/signin/google", request.url);
+    signInUrl.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(signInUrl);
   }
-  
+
   return NextResponse.next();
 }
 
@@ -37,4 +43,4 @@ export const config = {
      */
     "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
   ],
-}; 
+};
