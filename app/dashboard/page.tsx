@@ -1,29 +1,8 @@
-'use client';
+import { getServerSession } from "next-auth";
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export default async function Dashboard() {
+  const session = await getServerSession();
 
-export default function Dashboard() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  
-  // This is a client-side check, but the middleware will handle the redirect
-  // before this component even renders
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
-  
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-lg">Loading...</p>
-      </div>
-    );
-  }
-  
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">

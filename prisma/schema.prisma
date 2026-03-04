@@ -47,6 +47,9 @@ model BicycleRepair {
   partsUsed       RepairPart[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([receivedDate])
+  @@index([status, receivedDate])
 }
 
 model Part {
@@ -102,6 +105,9 @@ model BicycleRental {
   signature     String?      @db.Text
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+
+  @@index([startDate])
+  @@index([status, startDate])
 }
 
 enum TeamMemberStatus {
@@ -126,6 +132,8 @@ model TeamMember {
   legalStatus  String
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
+
+  @@index([familyName, givenNames])
 }
 
 enum ElectronicsRepairStatus {
@@ -210,6 +218,10 @@ model ElectronicsRepair {
   repairer     User?                    @relation(fields: [repairerId], references: [id])
   createdAt    DateTime                 @default(now())
   updatedAt    DateTime                 @updatedAt
+
+  @@index([createdDate])
+  @@index([status, createdDate])
+  @@index([repairerId])
 }
 
 enum CarpentryCustomerType {
@@ -250,5 +262,8 @@ model CarpentryProject {
   assignedTo        User?                   @relation(fields: [assignedToId], references: [id])
   createdAt         DateTime                @default(now())
   updatedAt         DateTime                @updatedAt
+
+  @@index([date])
+  @@index([assignedToId])
 }
 
