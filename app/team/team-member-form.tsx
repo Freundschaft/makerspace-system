@@ -256,7 +256,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-4 py-2 border rounded-md hover:bg-gray-50"
+          className="px-4 py-2 border rounded-md hover:bg-accent/20"
         >
           Cancel
         </button>
