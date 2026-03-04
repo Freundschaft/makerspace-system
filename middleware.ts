@@ -12,19 +12,15 @@ export async function middleware(request: NextRequest) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
-
-    // If unauthenticated, bypass the login screen and go directly to Google OAuth.
-    const signInUrl = new URL("/api/auth/signin/google", request.url);
-    signInUrl.searchParams.set("callbackUrl", "/");
-    return NextResponse.redirect(signInUrl);
+    return NextResponse.next();
   }
 
   // If the user is not authenticated and trying to access a protected page,
-  // redirect them directly to Google OAuth and preserve their original destination.
+  // redirect them to the login page, which will immediately trigger Google OAuth.
   if (!token) {
-    const signInUrl = new URL("/api/auth/signin/google", request.url);
-    signInUrl.searchParams.set("callbackUrl", request.url);
-    return NextResponse.redirect(signInUrl);
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("callbackUrl", request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
