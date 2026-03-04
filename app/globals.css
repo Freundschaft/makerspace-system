@@ -45,17 +45,17 @@
 
 :root {
   --radius: 0.625rem;
-  --background: #a7a8a9;
+  --background: #ffffff;
   --foreground: #020405;
-  --card: #b8b9ba;
+  --card: #ffffff;
   --card-foreground: #020405;
-  --popover: #b8b9ba;
+  --popover: #ffffff;
   --popover-foreground: #020405;
   --primary: #44503a;
   --primary-foreground: #f7f7f6;
   --secondary: #84b279;
   --secondary-foreground: #020405;
-  --muted: #c3c4c5;
+  --muted: #f2f4f1;
   --muted-foreground: #44503a;
   --accent: #f08809;
   --accent-foreground: #020405;
