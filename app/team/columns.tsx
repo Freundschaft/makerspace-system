@@ -1,9 +1,9 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { format } from "date-fns"
+
+type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
 export type TeamMember = {
   id: string
@@ -22,10 +22,11 @@ export type TeamMember = {
   legalStatus: string
 }
 
-export const columns: ColumnDef<TeamMember>[] = [
+export function getColumns(t: Translator): ColumnDef<TeamMember>[] {
+  return [
   {
     accessorKey: "photoPath",
-    header: "Photo",
+    header: t("team.table.photo", "Photo"),
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
       const name = `${row.original.givenNames} ${row.original.familyName}`
@@ -39,31 +40,31 @@ export const columns: ColumnDef<TeamMember>[] = [
   },
   {
     accessorKey: "familyName",
-    header: "Family Name",
+    header: t("team.form.familyName", "Family Name"),
   },
   {
     accessorKey: "givenNames",
-    header: "Given Names",
+    header: t("team.form.givenNames", "Given Names"),
   },
   {
     accessorKey: "nationality",
-    header: "Nationality",
+    header: t("team.form.nationality", "Nationality"),
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t("team.table.status", "Status"),
     cell: ({ row }) => {
       const status = row.getValue("status") as string
       return (
         <Badge variant={status === "ACTIVE" ? "default" : "secondary"}>
-          {status}
+          {status === "ACTIVE" ? t("common.active", "Active") : t("common.inactive", "Inactive")}
         </Badge>
       )
     },
   },
   {
     accessorKey: "startDate",
-    header: "Start Date",
+    header: t("team.table.startDate", "Start Date"),
     cell: ({ row }) => {
       const date = row.getValue("startDate") as Date
       return format(new Date(date), "PPP")
@@ -71,31 +72,31 @@ export const columns: ColumnDef<TeamMember>[] = [
   },
   {
     accessorKey: "endDate",
-    header: "End Date",
+    header: t("team.form.endDate", "End Date"),
     cell: ({ row }) => {
       const date = row.getValue("endDate") as Date | null
-      return date ? format(new Date(date), "PPP") : "-"
+      return date ? format(new Date(date), "PPP") : "—"
     },
   },
   {
     accessorKey: "department",
-    header: "Department",
+    header: t("team.table.department", "Department"),
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: t("team.table.email", "Email"),
   },
   {
     accessorKey: "phone",
-    header: "Phone",
+    header: t("team.table.phone", "Phone"),
   },
   {
     accessorKey: "homeAddress",
-    header: "Home Address",
+    header: t("team.form.homeAddress", "Home Address"),
   },
   {
     accessorKey: "dateOfBirth",
-    header: "Date of Birth",
+    header: t("team.form.dateOfBirth", "Date of Birth"),
     cell: ({ row }) => {
       const date = row.getValue("dateOfBirth") as Date
       return format(new Date(date), "PPP")
@@ -103,6 +104,7 @@ export const columns: ColumnDef<TeamMember>[] = [
   },
   {
     accessorKey: "legalStatus",
-    header: "Legal Status",
+    header: t("team.form.legalStatus", "Legal Status"),
   },
-] 
+]
+}

@@ -13,6 +13,7 @@ import { TeamMember } from "@/generated/prisma"
 import { format } from "date-fns"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { useI18n } from "@/app/components/I18nProvider"
 
 interface TeamMemberDataTableProps {
   data: TeamMember[]
@@ -41,19 +42,21 @@ export function TeamMemberDataTable({
   onEdit,
   onDelete,
 }: TeamMemberDataTableProps) {
+  const { t } = useI18n()
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Photo</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Department</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Start Date</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>{t("team.table.photo", "Photo")}</TableHead>
+            <TableHead>{t("team.table.name", "Name")}</TableHead>
+            <TableHead>{t("team.table.department", "Department")}</TableHead>
+            <TableHead>{t("team.table.email", "Email")}</TableHead>
+            <TableHead>{t("team.table.phone", "Phone")}</TableHead>
+            <TableHead>{t("team.table.status", "Status")}</TableHead>
+            <TableHead>{t("team.table.startDate", "Start Date")}</TableHead>
+            <TableHead>{t("team.table.actions", "Actions")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -78,7 +81,7 @@ export function TeamMemberDataTable({
                 <Badge
                   variant={member.status === "ACTIVE" ? "default" : "secondary"}
                 >
-                  {member.status}
+                  {member.status === "ACTIVE" ? t("common.active", "Active") : t("common.inactive", "Inactive")}
                 </Badge>
               </TableCell>
               <TableCell>
@@ -91,14 +94,14 @@ export function TeamMemberDataTable({
                     size="sm"
                     onClick={() => onEdit(member)}
                   >
-                    Edit
+                    {t("common.edit", "Edit")}
                   </Button>
                   <Button
                     variant="destructive"
                     size="sm"
                     onClick={() => onDelete(member)}
                   >
-                    Delete
+                    {t("common.delete", "Delete")}
                   </Button>
                 </div>
               </TableCell>

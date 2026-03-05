@@ -12,9 +12,11 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
+import { getServerI18n } from "@/lib/i18n/server";
 
 export default async function Dashboard() {
   const session = await getServerSession();
+  const { t } = await getServerI18n();
   const today = new Date().toLocaleDateString();
   const [
     teamMembersCount,
@@ -32,31 +34,31 @@ export default async function Dashboard() {
 
   const stats = [
     {
-      label: "Team Members",
+      label: t("dashboard.stats.teamMembers", "Team Members"),
       value: teamMembersCount,
       href: "/team",
       icon: Users,
     },
     {
-      label: "Bicycles",
+      label: t("dashboard.stats.bicycles", "Bicycles"),
       value: bicycleRepairsCount,
       href: "/bicycles/repairs",
       icon: Bike,
     },
     {
-      label: "Rentals",
+      label: t("dashboard.stats.rentals", "Rentals"),
       value: bicycleRentalsCount,
       href: "/bicycles/rentals",
       icon: ClipboardList,
     },
     {
-      label: "Electronics",
+      label: t("dashboard.stats.electronics", "Electronics"),
       value: electronicsRepairsCount,
       href: "/electronics/repairs",
       icon: Smartphone,
     },
     {
-      label: "Carpentry",
+      label: t("dashboard.stats.carpentry", "Carpentry"),
       value: carpentryProjectsCount,
       href: "/carpentry/projects",
       icon: Hammer,
@@ -70,19 +72,21 @@ export default async function Dashboard() {
           <div className="absolute -top-24 -right-20 h-56 w-56 rounded-full bg-accent/15 blur-3xl" />
           <div className="absolute -bottom-20 -left-12 h-44 w-44 rounded-full bg-secondary/20 blur-3xl" />
           <div className="relative">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Dashboard</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{t("dashboard.badge", "Dashboard")}</p>
             <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
-              Welcome back, {session?.user?.name ?? "Maker"}
+              {t("dashboard.welcome", "Welcome back, {name}", {
+                name: session?.user?.name ?? t("dashboard.fallbackName", "Maker"),
+              })}
             </h1>
             <p className="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">
-              Everything in one place: team operations, repair queues, and rental activity.
+              {t("dashboard.description", "Everything in one place: team operations, repair queues, and rental activity.")}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-2">
               <Button asChild>
-                <Link href="/bicycles/repairs/new">Create Repair</Link>
+                <Link href="/bicycles/repairs/new">{t("dashboard.createRepair", "Create Repair")}</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link href="/bicycles/rentals/new">Create Rental</Link>
+                <Link href="/bicycles/rentals/new">{t("dashboard.createRental", "Create Rental")}</Link>
               </Button>
             </div>
           </div>
@@ -101,7 +105,7 @@ export default async function Dashboard() {
             </div>
             <p className="mt-3 text-3xl font-bold">{stat.value}</p>
             <Button asChild variant="ghost" className="mt-2 h-auto p-0 text-sm text-primary">
-              <Link href={stat.href}>View details</Link>
+              <Link href={stat.href}>{t("dashboard.stats.viewDetails", "View details")}</Link>
             </Button>
           </article>
         ))}
@@ -110,32 +114,32 @@ export default async function Dashboard() {
       <section className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
         <article className="rounded-2xl border border-border/70 bg-card p-4 shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-muted-foreground">Activity</p>
+            <p className="text-sm font-medium text-muted-foreground">{t("dashboard.cards.activity", "Activity")}</p>
             <Activity className="h-4 w-4 text-accent" />
           </div>
-          <p className="mt-3 text-2xl font-bold">Live</p>
-          <p className="mt-1 text-xs text-muted-foreground">System is available and running.</p>
+          <p className="mt-3 text-2xl font-bold">{t("dashboard.cards.activityValue", "Live")}</p>
+          <p className="mt-1 text-xs text-muted-foreground">{t("dashboard.cards.activityHint", "System is available and running.")}</p>
         </article>
 
         <article className="rounded-2xl border border-border/70 bg-card p-4 shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-muted-foreground">Last Login</p>
+            <p className="text-sm font-medium text-muted-foreground">{t("dashboard.cards.lastLogin", "Last Login")}</p>
             <CalendarClock className="h-4 w-4 text-accent" />
           </div>
           <p className="mt-3 text-2xl font-bold">{today}</p>
-          <p className="mt-1 text-xs text-muted-foreground">Recent session date.</p>
+          <p className="mt-1 text-xs text-muted-foreground">{t("dashboard.cards.lastLoginHint", "Recent session date.")}</p>
         </article>
 
         <article className="rounded-2xl border border-border/70 bg-card p-4 shadow-sm">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-muted-foreground">Quick Access</p>
+            <p className="text-sm font-medium text-muted-foreground">{t("dashboard.cards.quickAccess", "Quick Access")}</p>
             <Settings className="h-4 w-4 text-accent" />
           </div>
           <div className="mt-3 flex items-center gap-2">
             <ClipboardList className="h-5 w-5 text-primary" />
-            <p className="text-sm font-semibold">Navigate to active work queues</p>
+            <p className="text-sm font-semibold">{t("dashboard.cards.quickAccessTitle", "Navigate to active work queues")}</p>
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">Use the sidebar to jump to each module.</p>
+          <p className="mt-1 text-xs text-muted-foreground">{t("dashboard.cards.quickAccessHint", "Use the sidebar to jump to each module.")}</p>
         </article>
       </section>
     </div>

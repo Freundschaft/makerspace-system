@@ -4,6 +4,8 @@ import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { Layout } from "@/components/Layout";
+import { getServerI18n } from "@/lib/i18n/server";
+import { I18nProvider } from "./components/I18nProvider";
 
 const cabin = Cabin({
   variable: "--font-geist-sans",
@@ -26,15 +28,19 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession();
+  const { locale, messages } = await getServerI18n();
+  const dir = locale === "ar" || locale === "fa" ? "rtl" : "ltr";
 
   return (
-    <html lang="en">
+    <html lang={locale} dir={dir}>
       <body
         className={`${cabin.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <SessionProvider session={session}>
-          <Layout>{children}</Layout>
-        </SessionProvider>
+        <I18nProvider locale={locale} messages={messages}>
+          <SessionProvider session={session}>
+            <Layout>{children}</Layout>
+          </SessionProvider>
+        </I18nProvider>
       </body>
     </html>
   );

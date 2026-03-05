@@ -31,6 +31,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
+import { useI18n } from "@/app/components/I18nProvider"
 
 const formSchema = z.object({
   date: z.date(),
@@ -54,6 +55,7 @@ const formSchema = z.object({
 
 export function CarpentryProjectForm() {
   const router = useRouter()
+  const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -86,7 +88,7 @@ export function CarpentryProjectForm() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to create carpentry project")
+        throw new Error(t("carpentry.new.errors.createFailed", "Failed to create carpentry project"))
       }
 
       router.push("/carpentry/projects")
@@ -106,7 +108,7 @@ export function CarpentryProjectForm() {
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel className="text-sm sm:text-base">Date</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.date", "Date")}</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -120,7 +122,7 @@ export function CarpentryProjectForm() {
                       {field.value ? (
                         format(field.value, "PPP")
                       ) : (
-                        <span>Pick a date</span>
+                        <span>{t("common.pickDate", "Pick a date")}</span>
                       )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -139,7 +141,7 @@ export function CarpentryProjectForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription className="text-xs sm:text-sm">
-                Date the order was received
+                {t("carpentry.new.help.date", "Date the order was received")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -151,16 +153,16 @@ export function CarpentryProjectForm() {
           name="acceptedBy"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Accepted By</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.acceptedBy", "Accepted By")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Team member who accepted the order"
+                  placeholder={t("carpentry.new.placeholders.acceptedBy", "Team member who accepted the order")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Name of the staff member (optional)
+                {t("carpentry.new.help.acceptedBy", "Name of the staff member (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -172,22 +174,22 @@ export function CarpentryProjectForm() {
           name="customerType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Customer Type</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.customerType", "Customer Type")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select customer type" />
+                    <SelectValue placeholder={t("carpentry.new.placeholders.customerType", "Select customer type")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="PRIVATE_PERSON">Private Person</SelectItem>
-                  <SelectItem value="ORGANIZATION">Organization</SelectItem>
-                  <SelectItem value="BARBERSHOP">Barbershop</SelectItem>
-                  <SelectItem value="HOUSE">House</SelectItem>
+                  <SelectItem value="PRIVATE_PERSON">{t("carpentry.customerTypes.PRIVATE_PERSON", "Private Person")}</SelectItem>
+                  <SelectItem value="ORGANIZATION">{t("carpentry.customerTypes.ORGANIZATION", "Organization")}</SelectItem>
+                  <SelectItem value="BARBERSHOP">{t("carpentry.customerTypes.BARBERSHOP", "Barbershop")}</SelectItem>
+                  <SelectItem value="HOUSE">{t("carpentry.customerTypes.HOUSE", "House")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Type of customer (optional)
+                {t("carpentry.new.help.customerType", "Type of customer (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -199,16 +201,16 @@ export function CarpentryProjectForm() {
           name="organizationName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Organization Name</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.organizationName", "Organization Name")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Name of NGO or organization"
+                  placeholder={t("carpentry.new.placeholders.organizationName", "Name of NGO or organization")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                If customer is an organization (optional)
+                {t("carpentry.new.help.organizationName", "If customer is an organization (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -220,16 +222,16 @@ export function CarpentryProjectForm() {
           name="customerName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Customer Name</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.customerName", "Customer Name")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Customer name"
+                  placeholder={t("carpentry.new.placeholders.customerName", "Customer name")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Individual customer name (optional)
+                {t("carpentry.new.help.customerName", "Individual customer name (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -241,16 +243,16 @@ export function CarpentryProjectForm() {
           name="phoneNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Phone Number</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.phoneNumber", "Phone Number")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="+1234567890"
+                  placeholder={t("common.phonePlaceholder", "+1234567890")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Contact number (optional)
+                {t("carpentry.new.help.phoneNumber", "Contact number (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -262,20 +264,20 @@ export function CarpentryProjectForm() {
           name="gender"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Gender</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.gender", "Gender")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select gender" />
+                    <SelectValue placeholder={t("carpentry.new.placeholders.gender", "Select gender")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="FEMALE">Female</SelectItem>
-                  <SelectItem value="MALE">Male</SelectItem>
+                  <SelectItem value="FEMALE">{t("carpentry.genders.FEMALE", "Female")}</SelectItem>
+                  <SelectItem value="MALE">{t("carpentry.genders.MALE", "Male")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Customer gender (optional)
+                {t("carpentry.new.help.gender", "Customer gender (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -287,20 +289,20 @@ export function CarpentryProjectForm() {
           name="orderType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Order Type</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.orderType", "Order Type")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select order type" />
+                    <SelectValue placeholder={t("carpentry.new.placeholders.orderType", "Select order type")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="REPAIR_ORDER">Repair Order</SelectItem>
-                  <SelectItem value="PROJECT">Project</SelectItem>
+                  <SelectItem value="REPAIR_ORDER">{t("carpentry.orderTypes.REPAIR_ORDER", "Repair Order")}</SelectItem>
+                  <SelectItem value="PROJECT">{t("carpentry.orderTypes.PROJECT", "Project")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Type of work to be done (optional)
+                {t("carpentry.new.help.orderType", "Type of work to be done (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -312,17 +314,17 @@ export function CarpentryProjectForm() {
           name="timeNeeded"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Time Needed (hours)</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.timeNeeded", "Time Needed (hours)")}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
-                  placeholder="Estimated hours"
+                  placeholder={t("carpentry.new.placeholders.timeNeeded", "Estimated hours")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Estimated time in hours (optional)
+                {t("carpentry.new.help.timeNeeded", "Estimated time in hours (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -334,16 +336,16 @@ export function CarpentryProjectForm() {
           name="itemToRepair"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Item to Repair</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.itemToRepair", "Item to Repair")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Description of item needing repair..."
+                  placeholder={t("carpentry.new.placeholders.itemToRepair", "Description of item needing repair...")}
                   className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                What needs to be repaired (optional)
+                {t("carpentry.new.help.itemToRepair", "What needs to be repaired (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -355,16 +357,16 @@ export function CarpentryProjectForm() {
           name="problemDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Problem Description</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.problemDescription", "Problem Description")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Describe the problem..."
+                  placeholder={t("carpentry.new.placeholders.problemDescription", "Describe the problem...")}
                   className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Details about the issue (optional)
+                {t("carpentry.new.help.problemDescription", "Details about the issue (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -376,16 +378,16 @@ export function CarpentryProjectForm() {
           name="projectDescription"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Project Description</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.projectDescription", "Project Description")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Describe the project..."
+                  placeholder={t("carpentry.new.placeholders.projectDescription", "Describe the project...")}
                   className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Overall project details (optional)
+                {t("carpentry.new.help.projectDescription", "Overall project details (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -397,18 +399,18 @@ export function CarpentryProjectForm() {
           name="materialCosts"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Material Costs (€)</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.materialCosts", "Material Costs (€)")}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="0.01"
-                  placeholder="0.00"
+                  placeholder={t("carpentry.new.placeholders.materialCosts", "0.00")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Cost of materials in euros (optional)
+                {t("carpentry.new.help.materialCosts", "Cost of materials in euros (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -428,10 +430,10 @@ export function CarpentryProjectForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="text-sm sm:text-base">
-                  Paid by Customer
+                  {t("carpentry.new.fields.paidByCustomer", "Paid by Customer")}
                 </FormLabel>
                 <FormDescription className="text-xs sm:text-sm">
-                  Check if materials were paid for by customer
+                  {t("carpentry.new.help.paidByCustomer", "Check if materials were paid for by customer")}
                 </FormDescription>
               </div>
             </FormItem>
@@ -443,7 +445,7 @@ export function CarpentryProjectForm() {
           name="photoPath"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Project Photo</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("carpentry.new.fields.photo", "Project Photo")}</FormLabel>
               <FormControl>
                 <FileUpload
                   value={field.value}
@@ -452,7 +454,7 @@ export function CarpentryProjectForm() {
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Upload a photo of the project (optional)
+                {t("carpentry.new.help.photo", "Upload a photo of the project (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -460,7 +462,7 @@ export function CarpentryProjectForm() {
         />
 
         <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? "Creating..." : "Create Project"}
+          {isSubmitting ? t("common.creating", "Creating...") : t("carpentry.new.actions.create", "Create Project")}
         </Button>
       </form>
     </Form>

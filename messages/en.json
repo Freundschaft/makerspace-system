@@ -1,0 +1,473 @@
+{
+  "shell": {
+    "brand": "Makerspace System",
+    "signOut": "Sign Out",
+    "exit": "Exit",
+    "workspace": "Workspace",
+    "operations": "Operations",
+    "nav": {
+      "dashboard": "Dashboard",
+      "team": "Team",
+      "bicycles": "Bicycles",
+      "rentals": "Rentals",
+      "electronics": "Electronics",
+      "carpentry": "Carpentry",
+      "settings": "Settings"
+    }
+  },
+  "auth": {
+    "redirecting": "Redirecting to Google sign-in..."
+  },
+  "common": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "status": "Status",
+    "reset": "Reset",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "create": "Create",
+    "update": "Update",
+    "edit": "Edit",
+    "delete": "Delete",
+    "photo": "Photo",
+    "phone": "Phone",
+    "description": "Description",
+    "notes": "Notes",
+    "pickDate": "Pick a date",
+    "creating": "Creating...",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "created": "Created",
+    "phonePlaceholder": "+1234567890",
+    "selectStatus": "Select a status",
+    "statuses": {
+      "pending": "Pending",
+      "inProgress": "In Progress",
+      "waitingForParts": "Waiting for Parts",
+      "completed": "Completed",
+      "pickedUp": "Picked Up",
+      "cancelled": "Cancelled",
+      "unchecked": "Unchecked",
+      "checked": "Checked",
+      "readyForPickup": "Ready for Pickup",
+      "done": "Done",
+      "noWayToFix": "No Way to Fix",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "WAITING_FOR_PARTS": "Waiting for Parts",
+      "COMPLETED": "Completed",
+      "PICKED_UP": "Picked Up",
+      "CANCELLED": "Cancelled",
+      "UNCHECKED": "Unchecked",
+      "CHECKED": "Checked",
+      "READY_FOR_PICKUP": "Ready for Pickup",
+      "DONE": "Done",
+      "NO_WAY_TO_FIX": "No Way to Fix"
+    },
+    "user": "User"
+  },
+  "tables": {
+    "noResults": "No results.",
+    "noResultsFound": "No results found.",
+    "previous": "Previous",
+    "next": "Next",
+    "selected": "selected",
+    "view": "View",
+    "toggleColumns": "Toggle columns",
+    "clearFilters": "Clear filters",
+    "filters": {
+      "problemType": "Filter by problem type...",
+      "renterName": "Filter by renter name..."
+    },
+    "pagination": {
+      "rowsSelected": "row(s) selected.",
+      "rowsPerPage": "Rows per page",
+      "page": "Page",
+      "of": "of",
+      "goFirst": "Go to first page",
+      "goPrevious": "Go to previous page",
+      "goNext": "Go to next page",
+      "goLast": "Go to last page"
+    }
+  },
+  "team": {
+    "list": {
+      "title": "Team Members",
+      "add": "Add Team Member"
+    },
+    "new": {
+      "title": "Add New Team Member"
+    },
+    "edit": {
+      "title": "Edit Team Member"
+    },
+    "confirmDelete": "Are you sure you want to delete this team member?",
+    "errors": {
+      "deleteFailed": "Failed to delete team member",
+      "missingId": "Missing team member id for edit",
+      "saveFailed": "Failed to save team member"
+    },
+    "table": {
+      "photo": "Photo",
+      "name": "Name",
+      "department": "Department",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status",
+      "startDate": "Start Date",
+      "actions": "Actions"
+    },
+    "form": {
+      "familyName": "Family Name",
+      "givenNames": "Given Names",
+      "nationality": "Nationality",
+      "photoUrl": "Photo URL",
+      "photoPreview": "Photo preview",
+      "photoPreviewAlt": "Team member preview",
+      "status": "Status",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "department": "Department",
+      "email": "Email",
+      "phone": "Phone",
+      "homeAddress": "Home Address",
+      "dateOfBirth": "Date of Birth",
+      "legalStatus": "Legal Status"
+    }
+  },
+  "modules": {
+    "repairs": {
+      "title": "Bicycle Repairs",
+      "new": "New Repair",
+      "newPageTitle": "New Bicycle Repair",
+      "detailsTitle": "Repair Details",
+      "total": "total repairs",
+      "errors": {
+        "createFailed": "Failed to create repair"
+      }
+    },
+    "rentals": {
+      "title": "Bicycle Rentals",
+      "new": "New Rental"
+    },
+    "electronics": {
+      "title": "Electronics Repairs",
+      "new": "New Repair"
+    },
+    "carpentry": {
+      "title": "Carpentry Projects",
+      "new": "New Project"
+    }
+  },
+  "dashboard": {
+    "badge": "Dashboard",
+    "welcome": "Welcome back, {name}",
+    "fallbackName": "Maker",
+    "description": "Everything in one place: team operations, repair queues, and rental activity.",
+    "createRepair": "Create Repair",
+    "createRental": "Create Rental",
+    "stats": {
+      "teamMembers": "Team Members",
+      "bicycles": "Bicycles",
+      "rentals": "Rentals",
+      "electronics": "Electronics",
+      "carpentry": "Carpentry",
+      "viewDetails": "View details"
+    },
+    "cards": {
+      "activity": "Activity",
+      "activityValue": "Live",
+      "activityHint": "System is available and running.",
+      "lastLogin": "Last Login",
+      "lastLoginHint": "Recent session date.",
+      "quickAccess": "Quick Access",
+      "quickAccessTitle": "Navigate to active work queues",
+      "quickAccessHint": "Use the sidebar to jump to each module."
+    }
+  },
+  "repairs": {
+    "details": {
+      "contactInfo": "Contact Information",
+      "contactInfoDesc": "Details about the bicycle owner",
+      "repairInfo": "Repair Information",
+      "repairInfoDesc": "Details about the repair",
+      "problemTypes": "Problem Types",
+      "receivedDate": "Received Date",
+      "repairedDate": "Repaired Date",
+      "pickupDate": "Pickup Date",
+      "bicyclePhoto": "Bicycle Photo",
+      "partsUsed": "Parts Used",
+      "part": "Part",
+      "quantity": "Quantity"
+    },
+    "form": {
+      "problemTypes": "Problem Types",
+      "problemTypesHelp": "Select all applicable problem types",
+      "bicyclePhoto": "Bicycle Photo",
+      "bicyclePhotoHelp": "Upload a photo of the bicycle (optional)",
+      "descriptionPlaceholder": "Detailed description of the problem...",
+      "descriptionHelp": "Provide a detailed description of the problem",
+      "ownerPhone": "Owner Phone",
+      "ownerPhoneHelp": "Contact number of the bicycle owner",
+      "statusHelp": "Current status of the repair",
+      "createRepair": "Create Repair"
+    }
+  },
+  "upload": {
+    "uploading": "Uploading...",
+    "cta": "Click to upload a photo",
+    "hint": "PNG, JPG, GIF up to 10MB",
+    "uploadedAlt": "Uploaded image",
+    "errors": {
+      "failed": "Failed to upload file"
+    }
+  },
+  "rentals": {
+    "new": {
+      "title": "New Bicycle Rental",
+      "description": "Create a new bicycle rental record",
+      "fields": {
+        "renterName": "Renter Name",
+        "renterPhone": "Phone Number",
+        "renterEmail": "Email (Optional)",
+        "bicycleId": "Bicycle ID",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "notes": "Notes (Optional)",
+        "signature": "Signature"
+      },
+      "agreement": {
+        "title": "Rental Agreement",
+        "intro": "By signing below, I agree to the following terms:",
+        "terms": {
+          "1": "I will return the bicycle in the same condition as received, normal wear and tear excepted.",
+          "2": "I am responsible for any damage or loss during the rental period.",
+          "3": "I will return the bicycle by the agreed return date or contact the rental office for an extension.",
+          "4": "I understand that late returns may result in additional charges.",
+          "5": "I will use the bicycle safely and in accordance with local traffic laws.",
+          "6": "I confirm that all information provided in this rental form is accurate."
+        }
+      },
+      "actions": {
+        "clearSignature": "Clear Signature",
+        "createRental": "Create Rental"
+      },
+      "errors": {
+        "createFailed": "Failed to create rental",
+        "tryAgain": "Failed to create rental. Please try again."
+      }
+    },
+    "statuses": {
+      "ACTIVE": "Active",
+      "RETURNED": "Returned",
+      "OVERDUE": "Overdue",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "electronics": {
+    "new": {
+      "pageTitle": "New Electronics Repair",
+      "fields": {
+        "customerName": "Customer Name",
+        "category": "Category",
+        "item": "Item Description",
+        "whatsapp": "WhatsApp",
+        "serialNumber": "Serial Number",
+        "photo": "Device Photo",
+        "repairable": "Repairable"
+      },
+      "placeholders": {
+        "customerName": "Enter customer name",
+        "category": "Select device category",
+        "item": "e.g. Samsung Galaxy S21, HP ProBook",
+        "serialNumber": "Serial or IMEI number",
+        "notes": "Describe the problem, parts needed, etc..."
+      },
+      "help": {
+        "customerName": "Name of the person requesting the repair",
+        "category": "Type of electronic device",
+        "item": "Brand, model, or specific description (optional)",
+        "whatsapp": "WhatsApp contact number (optional)",
+        "serialNumber": "Device serial number or barcode (optional)",
+        "photo": "Upload a photo of the device (optional)",
+        "notes": "Additional details about the repair (optional)",
+        "repairable": "Check if the device can be repaired",
+        "status": "Current status of the repair"
+      },
+      "actions": {
+        "create": "Create Repair"
+      },
+      "errors": {
+        "createFailed": "Failed to create electronics repair"
+      }
+    },
+    "details": {
+      "pageTitle": "Electronics Repair Details",
+      "customerInfo": "Customer Information",
+      "customerInfoDesc": "Contact details and device info",
+      "repairInfo": "Repair Information",
+      "repairInfoDesc": "Device and repair status",
+      "repairId": "Repair ID",
+      "customer": "Customer",
+      "item": "Item",
+      "notAssessed": "Not assessed",
+      "repairer": "Repairer",
+      "devicePhotoAlt": "Electronic device"
+    },
+    "categories": {
+      "PHONE": "Phone",
+      "TABLET": "Tablet",
+      "HEADPHONES": "Headphones",
+      "HEATER": "Heater",
+      "SPEAKER": "Speaker",
+      "HAIR_CLIPPER": "Hair Clipper",
+      "COOLER": "Cooler",
+      "POWER_BANK": "Power Bank",
+      "KETTLE": "Kettle",
+      "LAPTOP": "Laptop",
+      "MULTI_SOCKET": "Multi Socket",
+      "PIZZA_PAN_CABLE": "Pizza Pan Cable",
+      "PAN": "Pan",
+      "GLASSES": "Glasses",
+      "AUX": "Aux",
+      "WATCH": "Watch",
+      "ADAPTOR": "Adaptor",
+      "HANDSFREE": "Handsfree",
+      "CABLE": "Cable",
+      "HAIR_CUTTER": "Hair Cutter",
+      "HAIR_DRYER": "Hair Dryer",
+      "FAN": "Fan",
+      "PRINTER": "Printer",
+      "ELECTRONIC_CIGARETTE": "Electronic Cigarette",
+      "STOVE": "Stove",
+      "PIZZA_PAN": "Pizza Pan",
+      "WIRELESS": "Wireless",
+      "EAR_PAD": "Ear Pad",
+      "SMART_WATCH": "Smart Watch",
+      "XBOX360": "Xbox 360",
+      "TOASTER": "Toaster",
+      "TAILOR_MACHINE": "Tailor Machine",
+      "BATTERY": "Battery",
+      "PHONE_CASE": "Phone Case",
+      "BRACELET": "Bracelet",
+      "TESBIH": "Tesbih",
+      "HAND_MIXER": "Hand Mixer",
+      "COMPUTER": "Computer",
+      "SEWING_MACHINE": "Sewing Machine",
+      "WATER_HEATER": "Water Heater",
+      "PUMP": "Pump",
+      "KEYBOARD": "Keyboard",
+      "PLUG": "Plug",
+      "WATER_BOILER": "Water Boiler",
+      "THERAPY": "Therapy",
+      "COFFEE_MAKER": "Coffee Maker",
+      "KITCHEN": "Kitchen",
+      "BOARD": "Board",
+      "MAT": "Mat",
+      "RADIO": "Radio",
+      "VACUUM_CLEANER": "Vacuum Cleaner",
+      "OTHER": "Other"
+    }
+  },
+  "carpentry": {
+    "new": {
+      "pageTitle": "New Carpentry Project",
+      "fields": {
+        "date": "Date",
+        "acceptedBy": "Accepted By",
+        "customerType": "Customer Type",
+        "organizationName": "Organization Name",
+        "customerName": "Customer Name",
+        "phoneNumber": "Phone Number",
+        "gender": "Gender",
+        "orderType": "Order Type",
+        "timeNeeded": "Time Needed (hours)",
+        "itemToRepair": "Item to Repair",
+        "problemDescription": "Problem Description",
+        "projectDescription": "Project Description",
+        "materialCosts": "Material Costs (€)",
+        "paidByCustomer": "Paid by Customer",
+        "photo": "Project Photo"
+      },
+      "placeholders": {
+        "acceptedBy": "Team member who accepted the order",
+        "customerType": "Select customer type",
+        "organizationName": "Name of NGO or organization",
+        "customerName": "Customer name",
+        "gender": "Select gender",
+        "orderType": "Select order type",
+        "timeNeeded": "Estimated hours",
+        "itemToRepair": "Description of item needing repair...",
+        "problemDescription": "Describe the problem...",
+        "projectDescription": "Describe the project...",
+        "materialCosts": "0.00"
+      },
+      "help": {
+        "date": "Date the order was received",
+        "acceptedBy": "Name of the staff member (optional)",
+        "customerType": "Type of customer (optional)",
+        "organizationName": "If customer is an organization (optional)",
+        "customerName": "Individual customer name (optional)",
+        "phoneNumber": "Contact number (optional)",
+        "gender": "Customer gender (optional)",
+        "orderType": "Type of work to be done (optional)",
+        "timeNeeded": "Estimated time in hours (optional)",
+        "itemToRepair": "What needs to be repaired (optional)",
+        "problemDescription": "Details about the issue (optional)",
+        "projectDescription": "Overall project details (optional)",
+        "materialCosts": "Cost of materials in euros (optional)",
+        "paidByCustomer": "Check if materials were paid for by customer",
+        "photo": "Upload a photo of the project (optional)"
+      },
+      "actions": {
+        "create": "Create Project"
+      },
+      "errors": {
+        "createFailed": "Failed to create carpentry project"
+      }
+    },
+    "details": {
+      "pageTitle": "Carpentry Project Details",
+      "customerInfo": "Customer Information",
+      "customerInfoDesc": "Contact details",
+      "type": "Type",
+      "name": "Name",
+      "organization": "Organization",
+      "projectInfo": "Project Information",
+      "projectInfoDesc": "Work details and costs",
+      "timeNeeded": "Time Needed",
+      "hoursValue": "{value} hours",
+      "assignedTo": "Assigned To",
+      "photoAlt": "Carpentry project"
+    },
+    "customerTypes": {
+      "PRIVATE_PERSON": "Private Person",
+      "ORGANIZATION": "Organization",
+      "BARBERSHOP": "Barbershop",
+      "HOUSE": "House"
+    },
+    "orderTypes": {
+      "REPAIR_ORDER": "Repair Order",
+      "PROJECT": "Project"
+    },
+    "genders": {
+      "FEMALE": "Female",
+      "MALE": "Male"
+    }
+  },
+  "bicycles": {
+    "problemTypes": {
+      "FLAT_TIRE": "Flat Tire",
+      "BRAKE_ISSUES": "Brake Issues",
+      "CHAIN_ISSUES": "Chain Issues",
+      "GEAR_ISSUES": "Gear Issues",
+      "WHEEL_ALIGNMENT": "Wheel Alignment",
+      "FRAME_DAMAGE": "Frame Damage",
+      "SADDLE_ISSUES": "Saddle Issues",
+      "HANDLEBAR_ISSUES": "Handlebar Issues",
+      "PEDAL_ISSUES": "Pedal Issues",
+      "OTHER": "Other"
+    }
+  }
+}

@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
+import { useI18n } from "@/app/components/I18nProvider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,6 +17,7 @@ import SignatureCanvas from "react-signature-canvas"
 
 export default function NewBicycleRentalPage() {
   const router = useRouter()
+  const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const signatureRef = useRef<SignatureCanvas>(null)
   const [formData, setFormData] = useState({
@@ -63,14 +65,14 @@ export default function NewBicycleRentalPage() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to create rental")
+        throw new Error(t("rentals.new.errors.createFailed", "Failed to create rental"))
       }
 
       router.push("/bicycles/rentals")
       router.refresh()
     } catch (error) {
       console.error("Error creating rental:", error)
-      alert("Failed to create rental. Please try again.")
+      alert(t("rentals.new.errors.tryAgain", "Failed to create rental. Please try again."))
     } finally {
       setIsSubmitting(false)
     }
@@ -80,14 +82,14 @@ export default function NewBicycleRentalPage() {
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>New Bicycle Rental</CardTitle>
-          <CardDescription>Create a new bicycle rental record</CardDescription>
+          <CardTitle>{t("rentals.new.title", "New Bicycle Rental")}</CardTitle>
+          <CardDescription>{t("rentals.new.description", "Create a new bicycle rental record")}</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="renterName">Renter Name *</Label>
+                <Label htmlFor="renterName">{t("rentals.new.fields.renterName", "Renter Name")} *</Label>
                 <Input
                   id="renterName"
                   name="renterName"
@@ -97,7 +99,7 @@ export default function NewBicycleRentalPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="renterPhone">Phone Number *</Label>
+                <Label htmlFor="renterPhone">{t("rentals.new.fields.renterPhone", "Phone Number")} *</Label>
                 <Input
                   id="renterPhone"
                   name="renterPhone"
@@ -109,7 +111,7 @@ export default function NewBicycleRentalPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="renterEmail">Email (Optional)</Label>
+              <Label htmlFor="renterEmail">{t("rentals.new.fields.renterEmail", "Email (Optional)")}</Label>
               <Input
                 id="renterEmail"
                 name="renterEmail"
@@ -120,7 +122,7 @@ export default function NewBicycleRentalPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="bicycleId">Bicycle ID *</Label>
+              <Label htmlFor="bicycleId">{t("rentals.new.fields.bicycleId", "Bicycle ID")} *</Label>
               <Input
                 id="bicycleId"
                 name="bicycleId"
@@ -132,7 +134,7 @@ export default function NewBicycleRentalPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Start Date *</Label>
+                <Label>{t("rentals.new.fields.startDate", "Start Date")} *</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -143,7 +145,7 @@ export default function NewBicycleRentalPage() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.startDate ? format(formData.startDate, "PPP") : <span>Pick a date</span>}
+                      {formData.startDate ? format(formData.startDate, "PPP") : <span>{t("common.pickDate", "Pick a date")}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -158,7 +160,7 @@ export default function NewBicycleRentalPage() {
               </div>
 
               <div className="space-y-2">
-                <Label>End Date *</Label>
+                <Label>{t("rentals.new.fields.endDate", "End Date")} *</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -169,7 +171,7 @@ export default function NewBicycleRentalPage() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.endDate ? format(formData.endDate, "PPP") : <span>Pick a date</span>}
+                      {formData.endDate ? format(formData.endDate, "PPP") : <span>{t("common.pickDate", "Pick a date")}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -185,7 +187,7 @@ export default function NewBicycleRentalPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="notes">Notes (Optional)</Label>
+              <Label htmlFor="notes">{t("rentals.new.fields.notes", "Notes (Optional)")}</Label>
               <Textarea
                 id="notes"
                 name="notes"
@@ -196,22 +198,22 @@ export default function NewBicycleRentalPage() {
             </div>
 
             <div className="space-y-2">
-              <Label>Rental Agreement</Label>
+              <Label>{t("rentals.new.agreement.title", "Rental Agreement")}</Label>
               <div className="border rounded-md p-4 bg-muted/30 text-sm">
-                <p className="mb-2 font-medium">By signing below, I agree to the following terms:</p>
+                <p className="mb-2 font-medium">{t("rentals.new.agreement.intro", "By signing below, I agree to the following terms:")}</p>
                 <ol className="list-decimal pl-5 space-y-1">
-                  <li>I will return the bicycle in the same condition as received, normal wear and tear excepted.</li>
-                  <li>I am responsible for any damage or loss during the rental period.</li>
-                  <li>I will return the bicycle by the agreed return date or contact the rental office for an extension.</li>
-                  <li>I understand that late returns may result in additional charges.</li>
-                  <li>I will use the bicycle safely and in accordance with local traffic laws.</li>
-                  <li>I confirm that all information provided in this rental form is accurate.</li>
+                  <li>{t("rentals.new.agreement.terms.1", "I will return the bicycle in the same condition as received, normal wear and tear excepted.")}</li>
+                  <li>{t("rentals.new.agreement.terms.2", "I am responsible for any damage or loss during the rental period.")}</li>
+                  <li>{t("rentals.new.agreement.terms.3", "I will return the bicycle by the agreed return date or contact the rental office for an extension.")}</li>
+                  <li>{t("rentals.new.agreement.terms.4", "I understand that late returns may result in additional charges.")}</li>
+                  <li>{t("rentals.new.agreement.terms.5", "I will use the bicycle safely and in accordance with local traffic laws.")}</li>
+                  <li>{t("rentals.new.agreement.terms.6", "I confirm that all information provided in this rental form is accurate.")}</li>
                 </ol>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label>Signature *</Label>
+              <Label>{t("rentals.new.fields.signature", "Signature")} *</Label>
               <div className="border rounded-md p-2">
                 <SignatureCanvas
                   ref={signatureRef}
@@ -226,7 +228,7 @@ export default function NewBicycleRentalPage() {
                 onClick={handleClearSignature}
                 className="mt-2"
               >
-                Clear Signature
+                {t("rentals.new.actions.clearSignature", "Clear Signature")}
               </Button>
             </div>
           </CardContent>
@@ -236,10 +238,10 @@ export default function NewBicycleRentalPage() {
               variant="outline"
               onClick={() => router.push("/bicycles/rentals")}
             >
-              Cancel
+              {t("common.cancel", "Cancel")}
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Rental"}
+              {isSubmitting ? t("common.creating", "Creating...") : t("rentals.new.actions.createRental", "Create Rental")}
             </Button>
           </CardFooter>
         </form>

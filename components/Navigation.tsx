@@ -9,20 +9,24 @@ import {
   Bike,
   Settings,
 } from "lucide-react"
+import { useI18n } from "@/app/components/I18nProvider"
 
 const navigation = [
   {
-    name: "Dashboard",
+    key: "dashboard",
+    fallback: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: "Bicycles",
+    key: "bicycles",
+    fallback: "Bicycles",
     href: "/bicycles/repairs",
     icon: Bike,
   },
   {
-    name: "Settings",
+    key: "settings",
+    fallback: "Settings",
     href: "/settings",
     icon: Settings,
   },
@@ -30,6 +34,7 @@ const navigation = [
 
 export function Navigation() {
   const pathname = usePathname()
+  const { t } = useI18n()
 
   return (
     <nav className="flex flex-col space-y-1">
@@ -37,7 +42,7 @@ export function Navigation() {
         const isActive = pathname === item.href
         return (
           <Button
-            key={item.name}
+            key={item.key}
             variant={isActive ? "secondary" : "ghost"}
             className={cn(
               "w-full justify-start",
@@ -47,7 +52,7 @@ export function Navigation() {
           >
             <Link href={item.href}>
               <item.icon className="mr-2 h-4 w-4" />
-              {item.name}
+              {t(`shell.nav.${item.key}`, item.fallback)}
             </Link>
           </Button>
         )

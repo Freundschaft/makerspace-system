@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TeamMember } from './columns';
 import { format } from 'date-fns';
+import { useI18n } from '@/app/components/I18nProvider';
 
 interface TeamMemberFormProps {
   initialData?: TeamMember;
@@ -12,6 +13,7 @@ interface TeamMemberFormProps {
 
 export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
   const router = useRouter();
+  const { t } = useI18n();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<Partial<TeamMember>>(
     initialData || {
@@ -26,7 +28,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
     try {
       if (mode === 'edit' && !initialData?.id) {
-        throw new Error('Missing team member id for edit');
+        throw new Error(t('team.errors.missingId', 'Missing team member id for edit'));
       }
 
       const endpoint = mode === 'create' ? '/api/team' : `/api/team/${initialData?.id}`;
@@ -41,7 +43,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save team member');
+        throw new Error(t('team.errors.saveFailed', 'Failed to save team member'));
       }
 
       router.push('/team');
@@ -85,7 +87,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="familyName" className="block text-sm font-medium mb-1">
-            Family Name *
+            {t('team.form.familyName', 'Family Name')} *
           </label>
           <input
             type="text"
@@ -100,7 +102,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="givenNames" className="block text-sm font-medium mb-1">
-            Given Names *
+            {t('team.form.givenNames', 'Given Names')} *
           </label>
           <input
             type="text"
@@ -115,7 +117,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="nationality" className="block text-sm font-medium mb-1">
-            Nationality *
+            {t('team.form.nationality', 'Nationality')} *
           </label>
           <input
             type="text"
@@ -130,7 +132,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="photoPath" className="block text-sm font-medium mb-1">
-            Photo URL
+            {t('team.form.photoUrl', 'Photo URL')}
           </label>
           <input
             type="text"
@@ -142,10 +144,10 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
           />
           {photoPreviewSrc && (
             <div className="mt-3">
-              <p className="mb-2 text-xs text-muted-foreground">Photo preview</p>
+              <p className="mb-2 text-xs text-muted-foreground">{t('team.form.photoPreview', 'Photo preview')}</p>
               <img
                 src={photoPreviewSrc}
-                alt="Team member preview"
+                alt={t('team.form.photoPreviewAlt', 'Team member preview')}
                 className="h-28 w-28 rounded-md border object-cover"
               />
             </div>
@@ -154,7 +156,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="status" className="block text-sm font-medium mb-1">
-            Status *
+            {t('team.form.status', 'Status')} *
           </label>
           <select
             id="status"
@@ -164,14 +166,14 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
             required
             className="w-full p-2 border rounded-md"
           >
-            <option value="ACTIVE">Active</option>
-            <option value="INACTIVE">Inactive</option>
+            <option value="ACTIVE">{t('common.active', 'Active')}</option>
+            <option value="INACTIVE">{t('common.inactive', 'Inactive')}</option>
           </select>
         </div>
 
         <div>
           <label htmlFor="startDate" className="block text-sm font-medium mb-1">
-            Start Date *
+            {t('team.form.startDate', 'Start Date')} *
           </label>
           <input
             type="date"
@@ -186,7 +188,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="endDate" className="block text-sm font-medium mb-1">
-            End Date
+            {t('team.form.endDate', 'End Date')}
           </label>
           <input
             type="date"
@@ -200,7 +202,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="department" className="block text-sm font-medium mb-1">
-            Department *
+            {t('team.form.department', 'Department')} *
           </label>
           <input
             type="text"
@@ -215,7 +217,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1">
-            Email *
+            {t('team.form.email', 'Email')} *
           </label>
           <input
             type="email"
@@ -230,7 +232,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="phone" className="block text-sm font-medium mb-1">
-            Phone *
+            {t('team.form.phone', 'Phone')} *
           </label>
           <input
             type="tel"
@@ -245,7 +247,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="homeAddress" className="block text-sm font-medium mb-1">
-            Home Address
+            {t('team.form.homeAddress', 'Home Address')}
           </label>
           <input
             type="text"
@@ -259,7 +261,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="dateOfBirth" className="block text-sm font-medium mb-1">
-            Date of Birth *
+            {t('team.form.dateOfBirth', 'Date of Birth')} *
           </label>
           <input
             type="date"
@@ -274,7 +276,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="legalStatus" className="block text-sm font-medium mb-1">
-            Legal Status *
+            {t('team.form.legalStatus', 'Legal Status')} *
           </label>
           <input
             type="text"
@@ -294,14 +296,18 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
           onClick={() => router.back()}
           className="px-4 py-2 border rounded-md hover:bg-accent/20"
         >
-          Cancel
+          {t('common.cancel', 'Cancel')}
         </button>
         <button
           type="submit"
           disabled={loading}
           className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50"
         >
-          {loading ? 'Saving...' : mode === 'create' ? 'Create' : 'Update'}
+          {loading
+            ? t('common.saving', 'Saving...')
+            : mode === 'create'
+              ? t('common.create', 'Create')
+              : t('common.update', 'Update')}
         </button>
       </div>
     </form>

@@ -1,9 +1,9 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
+
+type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
 const customerTypeLabels: Record<string, string> = {
   PRIVATE_PERSON: "Private Person",
@@ -39,10 +39,11 @@ export type CarpentryProject = {
   } | null
 }
 
-export const columns: ColumnDef<CarpentryProject>[] = [
+export function getColumns(t: Translator): ColumnDef<CarpentryProject>[] {
+  return [
   {
     accessorKey: "date",
-    header: "Date",
+    header: t("carpentry.new.fields.date", "Date"),
     cell: ({ row }) => {
       const date = row.getValue("date") as Date
       const id = row.original.id
@@ -55,7 +56,7 @@ export const columns: ColumnDef<CarpentryProject>[] = [
   },
   {
     accessorKey: "photoPath",
-    header: "Photo",
+    header: t("common.photo", "Photo"),
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
       const id = row.original.id
@@ -65,7 +66,7 @@ export const columns: ColumnDef<CarpentryProject>[] = [
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
               <img
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`}
-                alt="Carpentry project"
+                alt={t("carpentry.details.photoAlt", "Carpentry project")}
                 className="object-cover w-full h-full"
               />
             </div>
@@ -76,21 +77,21 @@ export const columns: ColumnDef<CarpentryProject>[] = [
   },
   {
     accessorKey: "customerName",
-    header: "Customer",
+    header: t("electronics.details.customer", "Customer"),
     cell: ({ row }) => {
       const customerName = row.getValue("customerName") as string | null
       const organizationName = row.original.organizationName
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {customerName || organizationName || "-"}
+          {customerName || organizationName || "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "customerType",
-    header: "Customer Type",
+    header: t("carpentry.new.fields.customerType", "Customer Type"),
     cell: ({ row }) => {
       const customerType = row.getValue("customerType") as string | null
       const id = row.original.id
@@ -98,16 +99,16 @@ export const columns: ColumnDef<CarpentryProject>[] = [
         <Link href={`/carpentry/projects/${id}`} className="block">
           {customerType ? (
             <Badge variant="outline">
-              {customerTypeLabels[customerType] || customerType}
+              {t(`carpentry.customerTypes.${customerType}`, customerTypeLabels[customerType] || customerType)}
             </Badge>
-          ) : "-"}
+          ) : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "orderType",
-    header: "Order Type",
+    header: t("carpentry.new.fields.orderType", "Order Type"),
     cell: ({ row }) => {
       const orderType = row.getValue("orderType") as string | null
       const id = row.original.id
@@ -115,76 +116,77 @@ export const columns: ColumnDef<CarpentryProject>[] = [
         <Link href={`/carpentry/projects/${id}`} className="block">
           {orderType ? (
             <Badge variant={orderType === 'PROJECT' ? 'default' : 'secondary'}>
-              {orderTypeLabels[orderType] || orderType}
+              {t(`carpentry.orderTypes.${orderType}`, orderTypeLabels[orderType] || orderType)}
             </Badge>
-          ) : "-"}
+          ) : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "itemToRepair",
-    header: "Item",
+    header: t("carpentry.new.fields.itemToRepair", "Item to Repair"),
     cell: ({ row }) => {
       const item = row.getValue("itemToRepair") as string | null
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {item || "-"}
+          {item || "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "acceptedBy",
-    header: "Accepted By",
+    header: t("carpentry.new.fields.acceptedBy", "Accepted By"),
     cell: ({ row }) => {
       const acceptedBy = row.getValue("acceptedBy") as string | null
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {acceptedBy || "-"}
+          {acceptedBy || "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "timeNeeded",
-    header: "Time (hours)",
+    header: t("carpentry.new.fields.timeNeeded", "Time Needed (hours)"),
     cell: ({ row }) => {
       const time = row.getValue("timeNeeded") as number | null
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {time ? `${time}h` : "-"}
+          {time ? `${time}h` : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "materialCosts",
-    header: "Material Costs",
+    header: t("carpentry.new.fields.materialCosts", "Material Costs (€)"),
     cell: ({ row }) => {
       const costs = row.getValue("materialCosts") as number | null
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {costs ? `€${Number(costs).toFixed(2)}` : "-"}
+          {costs ? `€${Number(costs).toFixed(2)}` : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "paidByCustomer",
-    header: "Paid",
+    header: t("carpentry.new.fields.paidByCustomer", "Paid by Customer"),
     cell: ({ row }) => {
       const paid = row.getValue("paidByCustomer") as boolean | null
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
-          {paid === null ? "-" : paid ? "Yes" : "No"}
+          {paid === null ? "—" : paid ? t("common.yes", "Yes") : t("common.no", "No")}
         </Link>
       )
     },
   },
 ]
+}

@@ -3,8 +3,9 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Upload, X, Image as ImageIcon } from "lucide-react";
+import { X, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
+import { useI18n } from "@/app/components/I18nProvider";
 
 interface FileUploadProps {
   onChange: (filePath: string | null) => void;
@@ -21,6 +22,7 @@ export function FileUpload({
   disabled = false,
   directory = "bicycle-photos",
 }: FileUploadProps) {
+  const { t } = useI18n();
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,14 +49,14 @@ export function FileUpload({
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to upload file");
+        throw new Error(data.error || t("upload.errors.failed", "Failed to upload file"));
       }
 
       // Call the onChange handler with the file path
       onChange(data.filePath);
     } catch (err) {
       console.error("Upload error:", err);
-      setError(err instanceof Error ? err.message : "Failed to upload file");
+      setError(err instanceof Error ? err.message : t("upload.errors.failed", "Failed to upload file"));
       onChange(null);
     } finally {
       setIsUploading(false);
@@ -87,7 +89,7 @@ export function FileUpload({
             <div className="relative aspect-square w-full overflow-hidden rounded-lg">
               <Image
                 src={getImageUrl(value)}
-                alt="Uploaded image"
+                alt={t("upload.uploadedAlt", "Uploaded image")}
                 fill
                 className="object-cover"
               />
@@ -123,16 +125,16 @@ export function FileUpload({
             {isUploading ? (
               <div className="flex flex-col items-center justify-center">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                <p className="mt-2 text-sm text-muted-foreground">Uploading...</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("upload.uploading", "Uploading...")}</p>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center">
                 <ImageIcon className="h-8 w-8 text-muted-foreground" />
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Click to upload a photo
+                  {t("upload.cta", "Click to upload a photo")}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  PNG, JPG, GIF up to 10MB
+                  {t("upload.hint", "PNG, JPG, GIF up to 10MB")}
                 </p>
               </div>
             )}

@@ -27,6 +27,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Image from "next/image"
+import { useI18n } from "@/app/components/I18nProvider"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -39,6 +40,7 @@ export function DataTable<TData, TValue>({
   data,
   showPagination = true,
 }: DataTableProps<TData, TValue>) {
+  const { t } = useI18n()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -109,7 +111,7 @@ export function DataTable<TData, TValue>({
             <div className="mb-4 relative w-full h-48 rounded-md overflow-hidden">
               <Image 
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`} 
-                alt="Bicycle repair" 
+                alt={t("common.photo", "Photo")}
                 fill 
                 unoptimized 
                 className="object-cover"
@@ -173,7 +175,7 @@ export function DataTable<TData, TValue>({
       {hasProblemTypesColumn && (
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter by problem type..."
+            placeholder={t("tables.filters.problemType", "Filter by problem type...")}
             value={(table.getColumn("problemTypes")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("problemTypes")?.setFilterValue(event.target.value)
@@ -188,7 +190,7 @@ export function DataTable<TData, TValue>({
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => renderMobileCard(row))
         ) : (
-          <div className="text-center py-8">No results.</div>
+          <div className="text-center py-8">{t("tables.noResults", "No results.")}</div>
         )}
       </div>
       
@@ -236,7 +238,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("tables.noResults", "No results.")}
                 </TableCell>
               </TableRow>
             )}
@@ -252,7 +254,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {t("tables.previous", "Previous")}
           </Button>
           <Button
             variant="outline"
@@ -260,7 +262,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {t("tables.next", "Next")}
           </Button>
         </div>
       )}

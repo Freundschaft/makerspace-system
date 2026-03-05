@@ -1,0 +1,473 @@
+{
+  "shell": {
+    "brand": "Système Makerspace",
+    "signOut": "Se déconnecter",
+    "exit": "Quitter",
+    "workspace": "Espace de travail",
+    "operations": "Opérations",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "team": "Équipe",
+      "bicycles": "Vélos",
+      "rentals": "Locations",
+      "electronics": "Électronique",
+      "carpentry": "Menuiserie",
+      "settings": "Paramètres"
+    }
+  },
+  "auth": {
+    "redirecting": "Redirection vers la connexion Google..."
+  },
+  "common": {
+    "active": "Actif",
+    "inactive": "Inactif",
+    "status": "Statut",
+    "reset": "Réinitialiser",
+    "cancel": "Annuler",
+    "saving": "Enregistrement...",
+    "create": "Créer",
+    "update": "Mettre à jour",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "photo": "Photo",
+    "phone": "Téléphone",
+    "description": "Description",
+    "notes": "Notes",
+    "pickDate": "Choisir une date",
+    "creating": "Création...",
+    "close": "Fermer",
+    "yes": "Oui",
+    "no": "Non",
+    "created": "Créé",
+    "phonePlaceholder": "+1234567890",
+    "selectStatus": "Sélectionner un statut",
+    "statuses": {
+      "pending": "En attente",
+      "inProgress": "En cours",
+      "waitingForParts": "En attente de pièces",
+      "completed": "Terminé",
+      "pickedUp": "Récupéré",
+      "cancelled": "Annulé",
+      "unchecked": "Non vérifié",
+      "checked": "Vérifié",
+      "readyForPickup": "Prêt à récupérer",
+      "done": "Fait",
+      "noWayToFix": "Irréparable",
+      "PENDING": "En attente",
+      "IN_PROGRESS": "En cours",
+      "WAITING_FOR_PARTS": "En attente de pièces",
+      "COMPLETED": "Terminé",
+      "PICKED_UP": "Récupéré",
+      "CANCELLED": "Annulé",
+      "UNCHECKED": "Non vérifié",
+      "CHECKED": "Vérifié",
+      "READY_FOR_PICKUP": "Prêt à récupérer",
+      "DONE": "Fait",
+      "NO_WAY_TO_FIX": "Irréparable"
+    },
+    "user": "Utilisateur"
+  },
+  "tables": {
+    "noResults": "Aucun résultat.",
+    "noResultsFound": "Aucun résultat trouvé.",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "selected": "sélectionné(s)",
+    "view": "Affichage",
+    "toggleColumns": "Afficher/Masquer les colonnes",
+    "clearFilters": "Effacer les filtres",
+    "filters": {
+      "problemType": "Filtrer par type de problème...",
+      "renterName": "Filtrer par nom du locataire..."
+    },
+    "pagination": {
+      "rowsSelected": "ligne(s) sélectionnée(s).",
+      "rowsPerPage": "Lignes par page",
+      "page": "Page",
+      "of": "sur",
+      "goFirst": "Aller à la première page",
+      "goPrevious": "Aller à la page précédente",
+      "goNext": "Aller à la page suivante",
+      "goLast": "Aller à la dernière page"
+    }
+  },
+  "team": {
+    "list": {
+      "title": "Membres de l’équipe",
+      "add": "Ajouter un membre"
+    },
+    "new": {
+      "title": "Ajouter un nouveau membre"
+    },
+    "edit": {
+      "title": "Modifier le membre"
+    },
+    "confirmDelete": "Voulez-vous vraiment supprimer ce membre ?",
+    "errors": {
+      "deleteFailed": "Échec de la suppression du membre",
+      "missingId": "Identifiant du membre manquant pour la modification",
+      "saveFailed": "Échec de l’enregistrement du membre"
+    },
+    "table": {
+      "photo": "Photo",
+      "name": "Nom",
+      "department": "Département",
+      "email": "Email",
+      "phone": "Téléphone",
+      "status": "Statut",
+      "startDate": "Date de début",
+      "actions": "Actions"
+    },
+    "form": {
+      "familyName": "Nom de famille",
+      "givenNames": "Prénom(s)",
+      "nationality": "Nationalité",
+      "photoUrl": "URL de la photo",
+      "photoPreview": "Aperçu de la photo",
+      "photoPreviewAlt": "Aperçu du membre",
+      "status": "Statut",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "department": "Département",
+      "email": "Email",
+      "phone": "Téléphone",
+      "homeAddress": "Adresse",
+      "dateOfBirth": "Date de naissance",
+      "legalStatus": "Statut légal"
+    }
+  },
+  "modules": {
+    "repairs": {
+      "title": "Réparations vélos",
+      "new": "Nouvelle réparation",
+      "newPageTitle": "Nouvelle réparation vélo",
+      "detailsTitle": "Détails de la réparation",
+      "total": "réparations au total",
+      "errors": {
+        "createFailed": "Échec de création de réparation"
+      }
+    },
+    "rentals": {
+      "title": "Locations de vélos",
+      "new": "Nouvelle location"
+    },
+    "electronics": {
+      "title": "Réparations électroniques",
+      "new": "Nouvelle réparation"
+    },
+    "carpentry": {
+      "title": "Projets menuiserie",
+      "new": "Nouveau projet"
+    }
+  },
+  "dashboard": {
+    "badge": "Tableau de bord",
+    "welcome": "Bon retour, {name}",
+    "fallbackName": "Membre",
+    "description": "Tout au même endroit : équipe, files de réparation et activité des locations.",
+    "createRepair": "Créer une réparation",
+    "createRental": "Créer une location",
+    "stats": {
+      "teamMembers": "Membres de l’équipe",
+      "bicycles": "Réparations vélos",
+      "rentals": "Locations",
+      "electronics": "Réparations électroniques",
+      "carpentry": "Projets menuiserie",
+      "viewDetails": "Voir les détails"
+    },
+    "cards": {
+      "activity": "Activité",
+      "activityValue": "En ligne",
+      "activityHint": "Le système est disponible et fonctionne.",
+      "lastLogin": "Dernière connexion",
+      "lastLoginHint": "Date de la session la plus récente.",
+      "quickAccess": "Accès rapide",
+      "quickAccessTitle": "Accéder aux files de travail actives",
+      "quickAccessHint": "Utilisez la barre latérale pour ouvrir chaque module."
+    }
+  },
+  "repairs": {
+    "details": {
+      "contactInfo": "Informations de contact",
+      "contactInfoDesc": "Détails sur le propriétaire du vélo",
+      "repairInfo": "Informations de réparation",
+      "repairInfoDesc": "Détails sur la réparation",
+      "problemTypes": "Types de problèmes",
+      "receivedDate": "Date de réception",
+      "repairedDate": "Date de réparation",
+      "pickupDate": "Date de retrait",
+      "bicyclePhoto": "Photo du vélo",
+      "partsUsed": "Pièces utilisées",
+      "part": "Pièce",
+      "quantity": "Quantité"
+    },
+    "form": {
+      "problemTypes": "Types de panne",
+      "problemTypesHelp": "Sélectionnez tous les types de panne applicables",
+      "bicyclePhoto": "Photo du vélo",
+      "bicyclePhotoHelp": "Téléversez une photo du vélo (optionnel)",
+      "descriptionPlaceholder": "Description détaillée du problème...",
+      "descriptionHelp": "Fournissez une description détaillée du problème",
+      "ownerPhone": "Téléphone du propriétaire",
+      "ownerPhoneHelp": "Numéro de contact du propriétaire du vélo",
+      "statusHelp": "Statut actuel de la réparation",
+      "createRepair": "Créer la réparation"
+    }
+  },
+  "upload": {
+    "uploading": "Téléversement...",
+    "cta": "Cliquez pour téléverser une photo",
+    "hint": "PNG, JPG, GIF jusqu'à 10MB",
+    "uploadedAlt": "Image téléversée",
+    "errors": {
+      "failed": "Échec du téléversement"
+    }
+  },
+  "rentals": {
+    "new": {
+      "title": "Nouvelle Location de Vélo",
+      "description": "Créer un nouvel enregistrement de location de vélo",
+      "fields": {
+        "renterName": "Nom du locataire",
+        "renterPhone": "Numéro de téléphone",
+        "renterEmail": "Email (optionnel)",
+        "bicycleId": "ID du vélo",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "notes": "Notes (optionnel)",
+        "signature": "Signature"
+      },
+      "agreement": {
+        "title": "Contrat de location",
+        "intro": "En signant ci-dessous, j'accepte les conditions suivantes :",
+        "terms": {
+          "1": "Je rendrai le vélo dans le même état que reçu, usure normale exceptée.",
+          "2": "Je suis responsable de tout dommage ou perte pendant la période de location.",
+          "3": "Je rendrai le vélo à la date convenue ou je contacterai le bureau pour une prolongation.",
+          "4": "Je comprends que les retours tardifs peuvent entraîner des frais supplémentaires.",
+          "5": "J'utiliserai le vélo en toute sécurité et selon le code de la route local.",
+          "6": "Je confirme que toutes les informations fournies sont exactes."
+        }
+      },
+      "actions": {
+        "clearSignature": "Effacer la signature",
+        "createRental": "Créer la location"
+      },
+      "errors": {
+        "createFailed": "Échec de création de location",
+        "tryAgain": "Échec de création de location. Veuillez réessayer."
+      }
+    },
+    "statuses": {
+      "ACTIVE": "Active",
+      "RETURNED": "Rendu",
+      "OVERDUE": "En retard",
+      "CANCELLED": "Annulé"
+    }
+  },
+  "electronics": {
+    "new": {
+      "pageTitle": "Nouvelle Réparation Électronique",
+      "fields": {
+        "customerName": "Nom du client",
+        "category": "Catégorie",
+        "item": "Description de l'appareil",
+        "whatsapp": "WhatsApp",
+        "serialNumber": "Numéro de série",
+        "photo": "Photo de l'appareil",
+        "repairable": "Réparable"
+      },
+      "placeholders": {
+        "customerName": "Saisir le nom du client",
+        "category": "Sélectionner la catégorie de l'appareil",
+        "item": "ex. Samsung Galaxy S21, HP ProBook",
+        "serialNumber": "Numéro de série ou IMEI",
+        "notes": "Décrivez le problème, les pièces nécessaires, etc..."
+      },
+      "help": {
+        "customerName": "Nom de la personne demandant la réparation",
+        "category": "Type d'appareil électronique",
+        "item": "Marque, modèle ou description spécifique (optionnel)",
+        "whatsapp": "Numéro WhatsApp (optionnel)",
+        "serialNumber": "Numéro de série ou code-barres (optionnel)",
+        "photo": "Téléversez une photo de l'appareil (optionnel)",
+        "notes": "Détails supplémentaires sur la réparation (optionnel)",
+        "repairable": "Cochez si l'appareil peut être réparé",
+        "status": "Statut actuel de la réparation"
+      },
+      "actions": {
+        "create": "Créer la réparation"
+      },
+      "errors": {
+        "createFailed": "Échec de création de réparation électronique"
+      }
+    },
+    "details": {
+      "pageTitle": "Détails de la Réparation Électronique",
+      "customerInfo": "Informations client",
+      "customerInfoDesc": "Coordonnées et informations appareil",
+      "repairInfo": "Informations réparation",
+      "repairInfoDesc": "Statut de l'appareil et de la réparation",
+      "repairId": "ID réparation",
+      "customer": "Client",
+      "item": "Appareil",
+      "notAssessed": "Non évalué",
+      "repairer": "Réparateur",
+      "devicePhotoAlt": "Appareil électronique"
+    },
+    "categories": {
+      "PHONE": "Téléphone",
+      "TABLET": "Tablette",
+      "HEADPHONES": "Casque",
+      "HEATER": "Chauffage",
+      "SPEAKER": "Haut-parleur",
+      "HAIR_CLIPPER": "Tondeuse",
+      "COOLER": "Refroidisseur",
+      "POWER_BANK": "Batterie externe",
+      "KETTLE": "Bouilloire",
+      "LAPTOP": "Ordinateur portable",
+      "MULTI_SOCKET": "Multiprise",
+      "PIZZA_PAN_CABLE": "Câble de plaque à pizza",
+      "PAN": "Poêle",
+      "GLASSES": "Lunettes",
+      "AUX": "AUX",
+      "WATCH": "Montre",
+      "ADAPTOR": "Adaptateur",
+      "HANDSFREE": "Mains libres",
+      "CABLE": "Câble",
+      "HAIR_CUTTER": "Coupe-cheveux",
+      "HAIR_DRYER": "Sèche-cheveux",
+      "FAN": "Ventilateur",
+      "PRINTER": "Imprimante",
+      "ELECTRONIC_CIGARETTE": "Cigarette électronique",
+      "STOVE": "Poêle",
+      "PIZZA_PAN": "Plaque à pizza",
+      "WIRELESS": "Sans fil",
+      "EAR_PAD": "Coussin d'oreille",
+      "SMART_WATCH": "Montre connectée",
+      "XBOX360": "Xbox 360",
+      "TOASTER": "Grille-pain",
+      "TAILOR_MACHINE": "Machine de tailleur",
+      "BATTERY": "Batterie",
+      "PHONE_CASE": "Coque téléphone",
+      "BRACELET": "Bracelet",
+      "TESBIH": "Chapelet",
+      "HAND_MIXER": "Mixeur plongeant",
+      "COMPUTER": "Ordinateur",
+      "SEWING_MACHINE": "Machine à coudre",
+      "WATER_HEATER": "Chauffe-eau",
+      "PUMP": "Pompe",
+      "KEYBOARD": "Clavier",
+      "PLUG": "Prise",
+      "WATER_BOILER": "Bouilleur d'eau",
+      "THERAPY": "Thérapie",
+      "COFFEE_MAKER": "Cafetière",
+      "KITCHEN": "Cuisine",
+      "BOARD": "Carte",
+      "MAT": "Tapis",
+      "RADIO": "Radio",
+      "VACUUM_CLEANER": "Aspirateur",
+      "OTHER": "Autre"
+    }
+  },
+  "carpentry": {
+    "new": {
+      "pageTitle": "Nouveau Projet de Menuiserie",
+      "fields": {
+        "date": "Date",
+        "acceptedBy": "Accepté par",
+        "customerType": "Type de client",
+        "organizationName": "Nom de l'organisation",
+        "customerName": "Nom du client",
+        "phoneNumber": "Numéro de téléphone",
+        "gender": "Genre",
+        "orderType": "Type de commande",
+        "timeNeeded": "Temps nécessaire (heures)",
+        "itemToRepair": "Objet à réparer",
+        "problemDescription": "Description du problème",
+        "projectDescription": "Description du projet",
+        "materialCosts": "Coût des matériaux (€)",
+        "paidByCustomer": "Payé par le client",
+        "photo": "Photo du projet"
+      },
+      "placeholders": {
+        "acceptedBy": "Membre de l'équipe ayant accepté la commande",
+        "customerType": "Sélectionner le type de client",
+        "organizationName": "Nom de l'ONG ou organisation",
+        "customerName": "Nom du client",
+        "gender": "Sélectionner le genre",
+        "orderType": "Sélectionner le type de commande",
+        "timeNeeded": "Heures estimées",
+        "itemToRepair": "Description de l'objet à réparer...",
+        "problemDescription": "Décrivez le problème...",
+        "projectDescription": "Décrivez le projet...",
+        "materialCosts": "0.00"
+      },
+      "help": {
+        "date": "Date de réception de la commande",
+        "acceptedBy": "Nom du membre du personnel (optionnel)",
+        "customerType": "Type de client (optionnel)",
+        "organizationName": "Si le client est une organisation (optionnel)",
+        "customerName": "Nom du client individuel (optionnel)",
+        "phoneNumber": "Numéro de contact (optionnel)",
+        "gender": "Genre du client (optionnel)",
+        "orderType": "Type de travail à effectuer (optionnel)",
+        "timeNeeded": "Temps estimé en heures (optionnel)",
+        "itemToRepair": "Ce qui doit être réparé (optionnel)",
+        "problemDescription": "Détails du problème (optionnel)",
+        "projectDescription": "Détails généraux du projet (optionnel)",
+        "materialCosts": "Coût des matériaux en euros (optionnel)",
+        "paidByCustomer": "Cochez si les matériaux ont été payés par le client",
+        "photo": "Téléversez une photo du projet (optionnel)"
+      },
+      "actions": {
+        "create": "Créer le projet"
+      },
+      "errors": {
+        "createFailed": "Échec de création du projet de menuiserie"
+      }
+    },
+    "details": {
+      "pageTitle": "Détails du Projet de Menuiserie",
+      "customerInfo": "Informations client",
+      "customerInfoDesc": "Coordonnées",
+      "type": "Type",
+      "name": "Nom",
+      "organization": "Organisation",
+      "projectInfo": "Informations projet",
+      "projectInfoDesc": "Détails du travail et des coûts",
+      "timeNeeded": "Temps nécessaire",
+      "hoursValue": "{value} heures",
+      "assignedTo": "Assigné à",
+      "photoAlt": "Projet de menuiserie"
+    },
+    "customerTypes": {
+      "PRIVATE_PERSON": "Particulier",
+      "ORGANIZATION": "Organisation",
+      "BARBERSHOP": "Salon de coiffure",
+      "HOUSE": "Maison"
+    },
+    "orderTypes": {
+      "REPAIR_ORDER": "Ordre de réparation",
+      "PROJECT": "Projet"
+    },
+    "genders": {
+      "FEMALE": "Femme",
+      "MALE": "Homme"
+    }
+  },
+  "bicycles": {
+    "problemTypes": {
+      "FLAT_TIRE": "Pneu crevé",
+      "BRAKE_ISSUES": "Problème de freins",
+      "CHAIN_ISSUES": "Problème de chaîne",
+      "GEAR_ISSUES": "Problème de vitesses",
+      "WHEEL_ALIGNMENT": "Alignement de roue",
+      "FRAME_DAMAGE": "Dommage du cadre",
+      "SADDLE_ISSUES": "Problème de selle",
+      "HANDLEBAR_ISSUES": "Problème de guidon",
+      "PEDAL_ISSUES": "Problème de pédales",
+      "OTHER": "Autre"
+    }
+  }
+}

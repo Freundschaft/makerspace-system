@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
+import { useI18n } from "@/app/components/I18nProvider"
 
 // Define the ProblemType interface
 interface ProblemType {
@@ -53,6 +54,7 @@ const createFormSchema = (problemTypes: ProblemType[]) => {
 
 export function RepairForm({ problemTypes }: RepairFormProps) {
   const router = useRouter()
+  const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   // Create the form schema dynamically based on the provided problem types
@@ -84,7 +86,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to create repair")
+        throw new Error(t("modules.repairs.errors.createFailed", "Failed to create repair"))
       }
 
       router.push("/bicycles/repairs")
@@ -105,7 +107,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="problemTypes"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel className="text-sm sm:text-base">Problem Types</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("repairs.form.problemTypes", "Problem Types")}</FormLabel>
               <FormControl>
                 <MultiSelectButtons
                   options={problemTypes.map(type => ({
@@ -118,7 +120,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Select all applicable problem types
+                {t("repairs.form.problemTypesHelp", "Select all applicable problem types")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -130,7 +132,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="photoPath"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Bicycle Photo</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("repairs.form.bicyclePhoto", "Bicycle Photo")}</FormLabel>
               <FormControl>
                 <FileUpload
                   value={field.value}
@@ -139,7 +141,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Upload a photo of the bicycle (optional)
+                {t("repairs.form.bicyclePhotoHelp", "Upload a photo of the bicycle (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -151,16 +153,16 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Description</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("common.description", "Description")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Detailed description of the problem..."
+                  placeholder={t("repairs.form.descriptionPlaceholder", "Detailed description of the problem...")}
                   className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Provide a detailed description of the problem
+                {t("repairs.form.descriptionHelp", "Provide a detailed description of the problem")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -172,16 +174,16 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="ownerPhone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Owner Phone</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("repairs.form.ownerPhone", "Owner Phone")}</FormLabel>
               <FormControl>
                 <Input 
-                  placeholder="+1234567890" 
+                  placeholder={t("common.phonePlaceholder", "+1234567890")} 
                   className="text-sm sm:text-base"
                   {...field} 
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Contact number of the bicycle owner
+                {t("repairs.form.ownerPhoneHelp", "Contact number of the bicycle owner")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -193,24 +195,24 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Status</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("common.status", "Status")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select a status" />
+                    <SelectValue placeholder={t("common.selectStatus", "Select a status")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="PENDING">Pending</SelectItem>
-                  <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                  <SelectItem value="WAITING_FOR_PARTS">Waiting for Parts</SelectItem>
-                  <SelectItem value="COMPLETED">Completed</SelectItem>
-                  <SelectItem value="PICKED_UP">Picked Up</SelectItem>
-                  <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                  <SelectItem value="PENDING">{t("common.statuses.pending", "Pending")}</SelectItem>
+                  <SelectItem value="IN_PROGRESS">{t("common.statuses.inProgress", "In Progress")}</SelectItem>
+                  <SelectItem value="WAITING_FOR_PARTS">{t("common.statuses.waitingForParts", "Waiting for Parts")}</SelectItem>
+                  <SelectItem value="COMPLETED">{t("common.statuses.completed", "Completed")}</SelectItem>
+                  <SelectItem value="PICKED_UP">{t("common.statuses.pickedUp", "Picked Up")}</SelectItem>
+                  <SelectItem value="CANCELLED">{t("common.statuses.cancelled", "Cancelled")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Current status of the repair
+                {t("repairs.form.statusHelp", "Current status of the repair")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -218,7 +220,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
         />
 
         <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? "Creating..." : "Create Repair"}
+          {isSubmitting ? t("common.creating", "Creating...") : t("repairs.form.createRepair", "Create Repair")}
         </Button>
       </form>
     </Form>

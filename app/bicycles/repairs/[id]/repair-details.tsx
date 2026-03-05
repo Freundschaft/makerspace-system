@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { BicycleRepair, Part, RepairPart } from '@/generated/prisma'
+import { useI18n } from "@/app/components/I18nProvider"
 
 type RepairWithParts = BicycleRepair & {
   partsUsed: (RepairPart & {
@@ -20,6 +21,7 @@ interface RepairDetailsProps {
 
 export function RepairDetails({ repair }: RepairDetailsProps) {
   const router = useRouter()
+  const { t } = useI18n()
   const problemTypes = JSON.parse(repair.problemTypes)
 
   return (
@@ -27,12 +29,12 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Contact Information</CardTitle>
-            <CardDescription>Details about the bicycle owner</CardDescription>
+            <CardTitle>{t("repairs.details.contactInfo", "Contact Information")}</CardTitle>
+            <CardDescription>{t("repairs.details.contactInfoDesc", "Details about the bicycle owner")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">Phone:</div>
+              <div className="font-medium">{t("common.phone", "Phone")}:</div>
               <div>{repair.ownerPhone}</div>
             </div>
           </CardContent>
@@ -40,12 +42,12 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Repair Information</CardTitle>
-            <CardDescription>Details about the repair</CardDescription>
+            <CardTitle>{t("repairs.details.repairInfo", "Repair Information")}</CardTitle>
+            <CardDescription>{t("repairs.details.repairInfoDesc", "Details about the repair")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">Status:</div>
+              <div className="font-medium">{t("common.status", "Status")}:</div>
               <div>
                 <Badge variant={
                   repair.status === "COMPLETED"
@@ -58,26 +60,26 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
                 </Badge>
               </div>
               
-              <div className="font-medium">Problem Types:</div>
+              <div className="font-medium">{t("repairs.details.problemTypes", "Problem Types")}:</div>
               <div className="flex flex-wrap gap-1">
                 {problemTypes.map((type: string) => (
                   <Badge key={type} variant="outline">{type}</Badge>
                 ))}
               </div>
               
-              <div className="font-medium">Received Date:</div>
+              <div className="font-medium">{t("repairs.details.receivedDate", "Received Date")}:</div>
               <div>{formatDate(repair.receivedDate)}</div>
               
               {repair.repairedDate && (
                 <>
-                  <div className="font-medium">Repaired Date:</div>
+                  <div className="font-medium">{t("repairs.details.repairedDate", "Repaired Date")}:</div>
                   <div>{formatDate(repair.repairedDate)}</div>
                 </>
               )}
               
               {repair.pickupDate && (
                 <>
-                  <div className="font-medium">Pickup Date:</div>
+                  <div className="font-medium">{t("repairs.details.pickupDate", "Pickup Date")}:</div>
                   <div>{formatDate(repair.pickupDate)}</div>
                 </>
               )}
@@ -87,7 +89,7 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Description</CardTitle>
+            <CardTitle>{t("common.description", "Description")}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="whitespace-pre-wrap">{repair.description}</p>
@@ -97,12 +99,12 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Bicycle Photo</CardTitle>
+              <CardTitle>{t("repairs.details.bicyclePhoto", "Bicycle Photo")}</CardTitle>
             </CardHeader>
             <CardContent>
               <img 
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`} 
-                alt="Bicycle" 
+                alt={t("common.photo", "Photo")} 
                 className="max-w-full h-auto rounded-lg"
               />
             </CardContent>
@@ -112,15 +114,15 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.partsUsed.length > 0 && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Parts Used</CardTitle>
+              <CardTitle>{t("repairs.details.partsUsed", "Parts Used")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left py-2 px-4">Part</th>
-                      <th className="text-right py-2 px-4">Quantity</th>
+                      <th className="text-left py-2 px-4">{t("repairs.details.part", "Part")}</th>
+                      <th className="text-right py-2 px-4">{t("repairs.details.quantity", "Quantity")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -141,11 +143,11 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
       <div className="flex justify-end gap-2">
         <Button variant="outline" onClick={() => router.push(`/bicycles/repairs/${repair.id}/edit`)}>
           <Edit className="mr-2 h-4 w-4" />
-          Edit
+          {t("common.edit", "Edit")}
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
-          Delete
+          {t("common.delete", "Delete")}
         </Button>
       </div>
     </div>

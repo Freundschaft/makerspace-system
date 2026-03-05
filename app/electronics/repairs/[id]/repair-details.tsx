@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { ElectronicsRepair, User } from '@/generated/prisma'
+import { useI18n } from "@/app/components/I18nProvider"
 
 type RepairWithRepairer = ElectronicsRepair & {
   repairer: User | null
@@ -83,33 +84,34 @@ const statusLabels: Record<string, string> = {
 
 export function RepairDetails({ repair }: RepairDetailsProps) {
   const router = useRouter()
+  const { t } = useI18n()
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Customer Information</CardTitle>
-            <CardDescription>Contact details and device info</CardDescription>
+            <CardTitle>{t("electronics.details.customerInfo", "Customer Information")}</CardTitle>
+            <CardDescription>{t("electronics.details.customerInfoDesc", "Contact details and device info")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">Repair ID:</div>
+              <div className="font-medium">{t("electronics.details.repairId", "Repair ID")}:</div>
               <div className="font-mono">#{repair.repairId}</div>
 
-              <div className="font-medium">Customer:</div>
+              <div className="font-medium">{t("electronics.details.customer", "Customer")}:</div>
               <div>{repair.customerName}</div>
 
               {repair.whatsapp && (
                 <>
-                  <div className="font-medium">WhatsApp:</div>
+                  <div className="font-medium">{t("electronics.new.fields.whatsapp", "WhatsApp")}:</div>
                   <div>{repair.whatsapp}</div>
                 </>
               )}
 
               {repair.serialNumber && (
                 <>
-                  <div className="font-medium">Serial Number:</div>
+                  <div className="font-medium">{t("electronics.new.fields.serialNumber", "Serial Number")}:</div>
                   <div className="font-mono text-sm">{repair.serialNumber}</div>
                 </>
               )}
@@ -119,26 +121,26 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Repair Information</CardTitle>
-            <CardDescription>Device and repair status</CardDescription>
+            <CardTitle>{t("electronics.details.repairInfo", "Repair Information")}</CardTitle>
+            <CardDescription>{t("electronics.details.repairInfoDesc", "Device and repair status")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">Category:</div>
+              <div className="font-medium">{t("electronics.new.fields.category", "Category")}:</div>
               <div>
                 <Badge variant="outline">
-                  {categoryLabels[repair.category] || repair.category}
+                  {t(`electronics.categories.${repair.category}`, categoryLabels[repair.category] || repair.category)}
                 </Badge>
               </div>
 
               {repair.item && (
                 <>
-                  <div className="font-medium">Item:</div>
+                  <div className="font-medium">{t("electronics.details.item", "Item")}:</div>
                   <div>{repair.item}</div>
                 </>
               )}
 
-              <div className="font-medium">Status:</div>
+              <div className="font-medium">{t("common.status", "Status")}:</div>
               <div>
                 <Badge variant={
                   repair.status === "DONE" || repair.status === "PICKED_UP"
@@ -149,21 +151,25 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
                     ? "destructive"
                     : "outline"
                 }>
-                  {statusLabels[repair.status] || repair.status}
+                  {t(`common.statuses.${repair.status}`, statusLabels[repair.status] || repair.status)}
                 </Badge>
               </div>
 
-              <div className="font-medium">Repairable:</div>
+              <div className="font-medium">{t("electronics.new.fields.repairable", "Repairable")}:</div>
               <div>
-                {repair.repairable === null ? "Not assessed" : repair.repairable ? "Yes" : "No"}
+                {repair.repairable === null
+                  ? t("electronics.details.notAssessed", "Not assessed")
+                  : repair.repairable
+                  ? t("common.yes", "Yes")
+                  : t("common.no", "No")}
               </div>
 
-              <div className="font-medium">Created:</div>
+              <div className="font-medium">{t("common.created", "Created")}:</div>
               <div>{formatDate(repair.createdDate)}</div>
 
               {repair.repairer && (
                 <>
-                  <div className="font-medium">Repairer:</div>
+                  <div className="font-medium">{t("electronics.details.repairer", "Repairer")}:</div>
                   <div>{repair.repairer.email}</div>
                 </>
               )}
@@ -174,7 +180,7 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.notes && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Notes</CardTitle>
+              <CardTitle>{t("common.notes", "Notes")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{repair.notes}</p>
@@ -185,12 +191,12 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Device Photo</CardTitle>
+              <CardTitle>{t("electronics.new.fields.photo", "Device Photo")}</CardTitle>
             </CardHeader>
             <CardContent>
               <img
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`}
-                alt="Electronic device"
+                alt={t("electronics.details.devicePhotoAlt", "Electronic device")}
                 className="max-w-full h-auto rounded-lg"
               />
             </CardContent>
@@ -201,11 +207,11 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
       <div className="flex justify-end gap-2">
         <Button variant="outline" onClick={() => router.push(`/electronics/repairs/${repair.id}/edit`)}>
           <Edit className="mr-2 h-4 w-4" />
-          Edit
+          {t("common.edit", "Edit")}
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
-          Delete
+          {t("common.delete", "Delete")}
         </Button>
       </div>
     </div>

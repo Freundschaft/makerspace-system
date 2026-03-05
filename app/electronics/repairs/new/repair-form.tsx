@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useI18n } from "@/app/components/I18nProvider"
 
 const formSchema = z.object({
   customerName: z.string().min(1, "Customer name is required"),
@@ -53,44 +54,16 @@ const formSchema = z.object({
 })
 
 const categoryOptions = [
-  { value: "PHONE", label: "Phone" },
-  { value: "TABLET", label: "Tablet" },
-  { value: "LAPTOP", label: "Laptop" },
-  { value: "COMPUTER", label: "Computer" },
-  { value: "HEADPHONES", label: "Headphones" },
-  { value: "SPEAKER", label: "Speaker" },
-  { value: "POWER_BANK", label: "Power Bank" },
-  { value: "PRINTER", label: "Printer" },
-  { value: "KEYBOARD", label: "Keyboard" },
-  { value: "WATCH", label: "Watch" },
-  { value: "SMART_WATCH", label: "Smart Watch" },
-  { value: "HEATER", label: "Heater" },
-  { value: "FAN", label: "Fan" },
-  { value: "COOLER", label: "Cooler" },
-  { value: "HAIR_CLIPPER", label: "Hair Clipper" },
-  { value: "HAIR_CUTTER", label: "Hair Cutter" },
-  { value: "HAIR_DRYER", label: "Hair Dryer" },
-  { value: "KETTLE", label: "Kettle" },
-  { value: "WATER_BOILER", label: "Water Boiler" },
-  { value: "WATER_HEATER", label: "Water Heater" },
-  { value: "COFFEE_MAKER", label: "Coffee Maker" },
-  { value: "TOASTER", label: "Toaster" },
-  { value: "HAND_MIXER", label: "Hand Mixer" },
-  { value: "SEWING_MACHINE", label: "Sewing Machine" },
-  { value: "TAILOR_MACHINE", label: "Tailor Machine" },
-  { value: "VACUUM_CLEANER", label: "Vacuum Cleaner" },
-  { value: "RADIO", label: "Radio" },
-  { value: "XBOX360", label: "Xbox 360" },
-  { value: "MULTI_SOCKET", label: "Multi Socket" },
-  { value: "CABLE", label: "Cable" },
-  { value: "ADAPTOR", label: "Adaptor" },
-  { value: "PLUG", label: "Plug" },
-  { value: "BATTERY", label: "Battery" },
-  { value: "OTHER", label: "Other" },
+  "PHONE", "TABLET", "LAPTOP", "COMPUTER", "HEADPHONES", "SPEAKER", "POWER_BANK", "PRINTER", "KEYBOARD",
+  "WATCH", "SMART_WATCH", "HEATER", "FAN", "COOLER", "HAIR_CLIPPER", "HAIR_CUTTER", "HAIR_DRYER",
+  "KETTLE", "WATER_BOILER", "WATER_HEATER", "COFFEE_MAKER", "TOASTER", "HAND_MIXER", "SEWING_MACHINE",
+  "TAILOR_MACHINE", "VACUUM_CLEANER", "RADIO", "XBOX360", "MULTI_SOCKET", "CABLE", "ADAPTOR", "PLUG",
+  "BATTERY", "OTHER",
 ]
 
 export function ElectronicsRepairForm() {
   const router = useRouter()
+  const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -122,7 +95,7 @@ export function ElectronicsRepairForm() {
       })
 
       if (!response.ok) {
-        throw new Error("Failed to create electronics repair")
+        throw new Error(t("electronics.new.errors.createFailed", "Failed to create electronics repair"))
       }
 
       router.push("/electronics/repairs")
@@ -142,16 +115,16 @@ export function ElectronicsRepairForm() {
           name="customerName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Customer Name</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.customerName", "Customer Name")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Enter customer name"
+                  placeholder={t("electronics.new.placeholders.customerName", "Enter customer name")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Name of the person requesting the repair
+                {t("electronics.new.help.customerName", "Name of the person requesting the repair")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -163,23 +136,23 @@ export function ElectronicsRepairForm() {
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Category</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.category", "Category")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select device category" />
+                    <SelectValue placeholder={t("electronics.new.placeholders.category", "Select device category")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="max-h-[300px]">
-                  {categoryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
+                  {categoryOptions.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {t(`electronics.categories.${value}`, value)}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Type of electronic device
+                {t("electronics.new.help.category", "Type of electronic device")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -191,16 +164,16 @@ export function ElectronicsRepairForm() {
           name="item"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Item Description</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.item", "Item Description")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="e.g. Samsung Galaxy S21, HP ProBook"
+                  placeholder={t("electronics.new.placeholders.item", "e.g. Samsung Galaxy S21, HP ProBook")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Brand, model, or specific description (optional)
+                {t("electronics.new.help.item", "Brand, model, or specific description (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -212,16 +185,16 @@ export function ElectronicsRepairForm() {
           name="whatsapp"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">WhatsApp</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.whatsapp", "WhatsApp")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="+1234567890"
+                  placeholder={t("common.phonePlaceholder", "+1234567890")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                WhatsApp contact number (optional)
+                {t("electronics.new.help.whatsapp", "WhatsApp contact number (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -233,16 +206,16 @@ export function ElectronicsRepairForm() {
           name="serialNumber"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Serial Number</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.serialNumber", "Serial Number")}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Serial or IMEI number"
+                  placeholder={t("electronics.new.placeholders.serialNumber", "Serial or IMEI number")}
                   className="text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Device serial number or barcode (optional)
+                {t("electronics.new.help.serialNumber", "Device serial number or barcode (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -254,7 +227,7 @@ export function ElectronicsRepairForm() {
           name="photoPath"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Device Photo</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.photo", "Device Photo")}</FormLabel>
               <FormControl>
                 <FileUpload
                   value={field.value}
@@ -263,7 +236,7 @@ export function ElectronicsRepairForm() {
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Upload a photo of the device (optional)
+                {t("electronics.new.help.photo", "Upload a photo of the device (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -275,16 +248,16 @@ export function ElectronicsRepairForm() {
           name="notes"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Notes</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("common.notes", "Notes")}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Describe the problem, parts needed, etc..."
+                  placeholder={t("electronics.new.placeholders.notes", "Describe the problem, parts needed, etc...")}
                   className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                   {...field}
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                Additional details about the repair (optional)
+                {t("electronics.new.help.notes", "Additional details about the repair (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -304,10 +277,10 @@ export function ElectronicsRepairForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="text-sm sm:text-base">
-                  Repairable
+                  {t("electronics.new.fields.repairable", "Repairable")}
                 </FormLabel>
                 <FormDescription className="text-xs sm:text-sm">
-                  Check if the device can be repaired
+                  {t("electronics.new.help.repairable", "Check if the device can be repaired")}
                 </FormDescription>
               </div>
             </FormItem>
@@ -319,25 +292,25 @@ export function ElectronicsRepairForm() {
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-sm sm:text-base">Status</FormLabel>
+              <FormLabel className="text-sm sm:text-base">{t("common.status", "Status")}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder="Select a status" />
+                    <SelectValue placeholder={t("common.selectStatus", "Select a status")} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="UNCHECKED">Unchecked</SelectItem>
-                  <SelectItem value="CHECKED">Checked</SelectItem>
-                  <SelectItem value="IN_PROGRESS">In Progress</SelectItem>
-                  <SelectItem value="READY_FOR_PICKUP">Ready for Pickup</SelectItem>
-                  <SelectItem value="DONE">Done</SelectItem>
-                  <SelectItem value="PICKED_UP">Picked Up</SelectItem>
-                  <SelectItem value="NO_WAY_TO_FIX">No Way to Fix</SelectItem>
+                  <SelectItem value="UNCHECKED">{t("common.statuses.unchecked", "Unchecked")}</SelectItem>
+                  <SelectItem value="CHECKED">{t("common.statuses.checked", "Checked")}</SelectItem>
+                  <SelectItem value="IN_PROGRESS">{t("common.statuses.inProgress", "In Progress")}</SelectItem>
+                  <SelectItem value="READY_FOR_PICKUP">{t("common.statuses.readyForPickup", "Ready for Pickup")}</SelectItem>
+                  <SelectItem value="DONE">{t("common.statuses.done", "Done")}</SelectItem>
+                  <SelectItem value="PICKED_UP">{t("common.statuses.pickedUp", "Picked Up")}</SelectItem>
+                  <SelectItem value="NO_WAY_TO_FIX">{t("common.statuses.noWayToFix", "No Way to Fix")}</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
-                Current status of the repair
+                {t("electronics.new.help.status", "Current status of the repair")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -345,7 +318,7 @@ export function ElectronicsRepairForm() {
         />
 
         <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? "Creating..." : "Create Repair"}
+          {isSubmitting ? t("common.creating", "Creating...") : t("electronics.new.actions.create", "Create Repair")}
         </Button>
       </form>
     </Form>

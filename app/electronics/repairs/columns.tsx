@@ -1,9 +1,9 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
+
+type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
 const categoryLabels: Record<string, string> = {
   PHONE: "Phone",
@@ -88,7 +88,8 @@ export type ElectronicsRepair = {
   } | null
 }
 
-export const columns: ColumnDef<ElectronicsRepair>[] = [
+export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
+  return [
   {
     accessorKey: "repairId",
     header: "ID",
@@ -103,7 +104,7 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
   },
   {
     accessorKey: "photoPath",
-    header: "Photo",
+    header: t("common.photo", "Photo"),
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
       const id = row.original.id
@@ -113,7 +114,7 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
               <img
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`}
-                alt="Electronics repair"
+                alt={t("modules.electronics.title", "Electronics Repairs")}
                 className="object-cover w-full h-full"
               />
             </div>
@@ -124,7 +125,7 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
   },
   {
     accessorKey: "customerName",
-    header: "Customer",
+    header: t("electronics.details.customer", "Customer"),
     cell: ({ row }) => {
       const id = row.original.id
       return (
@@ -136,14 +137,14 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: t("electronics.new.fields.category", "Category"),
     cell: ({ row }) => {
       const category = row.getValue("category") as string
       const id = row.original.id
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
           <Badge variant="outline">
-            {categoryLabels[category] || category}
+            {t(`electronics.categories.${category}`, categoryLabels[category] || category)}
           </Badge>
         </Link>
       )
@@ -151,33 +152,33 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
   },
   {
     accessorKey: "item",
-    header: "Item",
+    header: t("electronics.details.item", "Item"),
     cell: ({ row }) => {
       const item = row.getValue("item") as string | null
       const id = row.original.id
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
-          {item || "-"}
+          {item || "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "whatsapp",
-    header: "WhatsApp",
+    header: t("electronics.new.fields.whatsapp", "WhatsApp"),
     cell: ({ row }) => {
       const whatsapp = row.getValue("whatsapp") as string | null
       const id = row.original.id
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
-          {whatsapp || "-"}
+          {whatsapp || "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t("common.status", "Status"),
     cell: ({ row }) => {
       const status = row.getValue("status") as string
       const id = row.original.id
@@ -191,7 +192,7 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
             status === 'NO_WAY_TO_FIX' ? 'destructive' :
             'outline'
           }>
-            {statusLabels[status] || status}
+            {t(`common.statuses.${status}`, statusLabels[status] || status)}
           </Badge>
         </Link>
       )
@@ -199,20 +200,20 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
   },
   {
     accessorKey: "repairable",
-    header: "Repairable",
+    header: t("electronics.new.fields.repairable", "Repairable"),
     cell: ({ row }) => {
       const repairable = row.getValue("repairable") as boolean | null
       const id = row.original.id
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
-          {repairable === null ? "-" : repairable ? "Yes" : "No"}
+          {repairable === null ? "—" : repairable ? t("common.yes", "Yes") : t("common.no", "No")}
         </Link>
       )
     },
   },
   {
     accessorKey: "createdDate",
-    header: "Created",
+    header: t("common.created", "Created"),
     cell: ({ row }) => {
       const date = row.getValue("createdDate") as Date
       const id = row.original.id
@@ -224,3 +225,4 @@ export const columns: ColumnDef<ElectronicsRepair>[] = [
     },
   },
 ]
+}

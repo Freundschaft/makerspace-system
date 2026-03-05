@@ -7,6 +7,7 @@ import { DataTableViewOptions } from "@/components/ui/data-table-view-options"
 
 import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter"
 import { statuses } from "@/data/data"
+import { useI18n } from "@/app/components/I18nProvider"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -15,13 +16,14 @@ interface DataTableToolbarProps<TData> {
 export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
+  const { t } = useI18n()
   const isFiltered = table.getState().columnFilters.length > 0
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter by renter name..."
+          placeholder={t("tables.filters.renterName", "Filter by renter name...")}
           value={(table.getColumn("renterName")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("renterName")?.setFilterValue(event.target.value)
@@ -31,7 +33,7 @@ export function DataTableToolbar<TData>({
         {table.getColumn("status") && (
           <DataTableFacetedFilter
             column={table.getColumn("status")}
-            title="Status"
+            title={t("common.status", "Status")}
             options={statuses}
           />
         )}
@@ -41,7 +43,7 @@ export function DataTableToolbar<TData>({
             onClick={() => table.resetColumnFilters()}
             className="h-8 px-2 lg:px-3"
           >
-            Reset
+            {t("common.reset", "Reset")}
             <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
