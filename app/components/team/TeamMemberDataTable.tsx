@@ -20,6 +20,22 @@ interface TeamMemberDataTableProps {
   onDelete: (member: TeamMember) => void
 }
 
+function getPhotoSrc(value?: string | null) {
+  if (!value) return undefined
+  const trimmed = value.trim()
+  if (!trimmed) return undefined
+
+  if (
+    trimmed.startsWith("data:image/") ||
+    trimmed.startsWith("http://") ||
+    trimmed.startsWith("https://")
+  ) {
+    return trimmed
+  }
+
+  return `data:image/png;base64,${trimmed}`
+}
+
 export function TeamMemberDataTable({
   data,
   onEdit,
@@ -45,7 +61,7 @@ export function TeamMemberDataTable({
             <TableRow key={member.id}>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src={member.photoPath || undefined} />
+                  <AvatarImage src={getPhotoSrc(member.photoPath)} />
                   <AvatarFallback>
                     {member.givenNames[0]}
                     {member.familyName[0]}

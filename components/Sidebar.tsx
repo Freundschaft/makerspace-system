@@ -57,9 +57,13 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full flex-col gap-2">
+    <div className="flex h-full flex-col gap-3 p-3">
+      <div className="rounded-2xl border border-sidebar-border/70 bg-sidebar-accent/20 px-3 py-3">
+        <p className="text-xs uppercase tracking-[0.2em] text-sidebar-foreground/70">Workspace</p>
+        <p className="mt-1 text-sm font-semibold text-sidebar-foreground">Operations</p>
+      </div>
       <ScrollArea className="flex-1">
-        <div className="space-y-1 p-2">
+        <div className="space-y-1">
           {navigation.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -67,8 +71,8 @@ export function Sidebar() {
                 key={item.name}
                 variant={isActive ? "secondary" : "ghost"}
                 className={cn(
-                  "w-full justify-start",
-                  isActive && "bg-secondary"
+                  "w-full justify-start rounded-xl border border-transparent px-3 py-5 text-sidebar-foreground/90 transition-all duration-200 hover:bg-sidebar-accent/30 hover:text-sidebar-foreground",
+                  isActive && "border-sidebar-primary/40 bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
                 )}
                 asChild
               >
@@ -83,4 +87,4 @@ export function Sidebar() {
       </ScrollArea>
     </div>
   )
-} 
+}

@@ -25,8 +25,15 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/team', {
-        method: mode === 'create' ? 'POST' : 'PUT',
+      if (mode === 'edit' && !initialData?.id) {
+        throw new Error('Missing team member id for edit');
+      }
+
+      const endpoint = mode === 'create' ? '/api/team' : `/api/team/${initialData?.id}`;
+      const method = mode === 'create' ? 'POST' : 'PUT';
+
+      const response = await fetch(endpoint, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -53,6 +60,25 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
       [name]: value,
     }));
   };
+
+  const getPhotoPreviewSrc = (value?: string | null) => {
+    if (!value) return null;
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+
+    if (trimmed.startsWith('data:image/')) {
+      return trimmed;
+    }
+
+    // If only raw base64 is stored, assume PNG for preview rendering.
+    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
+      return `data:image/png;base64,${trimmed}`;
+    }
+
+    return trimmed;
+  };
+
+  const photoPreviewSrc = getPhotoPreviewSrc(formData.photoPath);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -114,6 +140,16 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
           />
+          {photoPreviewSrc && (
+            <div className="mt-3">
+              <p className="mb-2 text-xs text-muted-foreground">Photo preview</p>
+              <img
+                src={photoPreviewSrc}
+                alt="Team member preview"
+                className="h-28 w-28 rounded-md border object-cover"
+              />
+            </div>
+          )}
         </div>
 
         <div>

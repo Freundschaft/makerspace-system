@@ -2,6 +2,60 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getToken } from "next-auth/jwt"
 
+// PUT /api/team/[id] - Update a team member
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const token = await getToken({ req: request })
+    if (!token) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
+    const { id } = await params
+    const body = await request.json()
+
+    if (!body.familyName || !body.givenNames || !body.nationality || !body.startDate ||
+        !body.department || !body.email || !body.phone || !body.dateOfBirth || !body.legalStatus) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      )
+    }
+
+    const updatedTeamMember = await prisma.teamMember.update({
+      where: { id },
+      data: {
+        familyName: body.familyName,
+        givenNames: body.givenNames,
+        nationality: body.nationality,
+        photoPath: body.photoPath || null,
+        status: body.status || "ACTIVE",
+        startDate: new Date(body.startDate),
+        endDate: body.endDate ? new Date(body.endDate) : null,
+        department: body.department,
+        email: body.email,
+        phone: body.phone,
+        homeAddress: body.homeAddress || null,
+        dateOfBirth: new Date(body.dateOfBirth),
+        legalStatus: body.legalStatus,
+      },
+    })
+
+    return NextResponse.json(updatedTeamMember)
+  } catch (error) {
+    console.error("Error updating team member:", error)
+    return NextResponse.json(
+      { error: "Failed to update team member" },
+      { status: 500 }
+    )
+  }
+}
+
 // DELETE /api/team/[id] - Delete a team member
 export async function DELETE(
   request: NextRequest,
