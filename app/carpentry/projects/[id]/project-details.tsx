@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Trash } from "lucide-react"
+import { Edit, Receipt, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { CarpentryProject, User } from '@/generated/prisma'
 import { useI18n } from "@/app/components/I18nProvider"
@@ -199,6 +199,19 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
       </div>
 
       <div className="flex justify-end gap-2">
+        <Button
+          variant="outline"
+          onClick={() =>
+            router.push(
+              `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(
+                t("finance.expenses.source.carpentryProjectLinked", `Linked to carpentry project: ${project.customerName || project.organizationName || project.id}`),
+              )}&title=${encodeURIComponent(project.itemToRepair || project.projectDescription || "Carpentry expense")}`,
+            )
+          }
+        >
+          <Receipt className="mr-2 h-4 w-4" />
+          {t("finance.expenses.actions.logExpense", "Log expense")}
+        </Button>
         <Button variant="outline" onClick={() => router.push(`/carpentry/projects/${project.id}/edit`)}>
           <Edit className="mr-2 h-4 w-4" />
           {t("common.edit", "Edit")}

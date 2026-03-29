@@ -12,6 +12,8 @@ import {
   Users,
   Smartphone,
   Hammer,
+  House,
+  Wallet,
 } from "lucide-react"
 import { ScrollArea } from "./ui/scroll-area"
 import { useI18n } from "@/app/components/I18nProvider"
@@ -52,6 +54,18 @@ const navigation = [
     fallback: "Carpentry",
     href: "/carpentry/projects",
     icon: Hammer,
+  },
+  {
+    key: "houseProjects",
+    fallback: "House Project",
+    href: "/house-projects",
+    icon: House,
+  },
+  {
+    key: "finance",
+    fallback: "Finance",
+    href: "/finance",
+    icon: Wallet,
   },
   {
     key: "settings",

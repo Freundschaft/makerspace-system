@@ -40,9 +40,10 @@ export async function POST(
     }
 
     // Validate file type
-    if (!file.type.startsWith("image/")) {
+    const isAllowedFile = file.type.startsWith("image/") || file.type === "application/pdf";
+    if (!isAllowedFile) {
       return NextResponse.json(
-        { error: "Only image files are allowed" },
+        { error: "Only image and PDF files are allowed" },
         { status: 400 }
       );
     }

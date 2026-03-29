@@ -4,6 +4,7 @@ const fileServerHost = (process.env.FILE_SERVER_URL || "https://files.system.mak
   .replace(/\/.*$/, "");
 
 const nextConfig = {
+  allowedDevOrigins: ["unsystematic-sam-detractively.ngrok-free.dev"],
   images: {
     remotePatterns: [
       {

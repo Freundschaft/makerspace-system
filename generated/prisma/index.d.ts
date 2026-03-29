@@ -58,6 +58,21 @@ export type ElectronicsRepair = $Result.DefaultSelection<Prisma.$ElectronicsRepa
  * 
  */
 export type CarpentryProject = $Result.DefaultSelection<Prisma.$CarpentryProjectPayload>
+/**
+ * Model HouseProject
+ * 
+ */
+export type HouseProject = $Result.DefaultSelection<Prisma.$HouseProjectPayload>
+/**
+ * Model Budget
+ * 
+ */
+export type Budget = $Result.DefaultSelection<Prisma.$BudgetPayload>
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>
 
 /**
  * Enums
@@ -189,6 +204,16 @@ export const CarpentryGender: {
 
 export type CarpentryGender = (typeof CarpentryGender)[keyof typeof CarpentryGender]
 
+
+export const HouseProjectStatus: {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type HouseProjectStatus = (typeof HouseProjectStatus)[keyof typeof HouseProjectStatus]
+
 }
 
 export type RepairStatus = $Enums.RepairStatus
@@ -222,6 +247,10 @@ export const CarpentryOrderType: typeof $Enums.CarpentryOrderType
 export type CarpentryGender = $Enums.CarpentryGender
 
 export const CarpentryGender: typeof $Enums.CarpentryGender
+
+export type HouseProjectStatus = $Enums.HouseProjectStatus
+
+export const HouseProjectStatus: typeof $Enums.HouseProjectStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -433,6 +462,36 @@ export class PrismaClient<
     * ```
     */
   get carpentryProject(): Prisma.CarpentryProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.houseProject`: Exposes CRUD operations for the **HouseProject** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HouseProjects
+    * const houseProjects = await prisma.houseProject.findMany()
+    * ```
+    */
+  get houseProject(): Prisma.HouseProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.budget`: Exposes CRUD operations for the **Budget** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Budgets
+    * const budgets = await prisma.budget.findMany()
+    * ```
+    */
+  get budget(): Prisma.BudgetDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.expense`: Exposes CRUD operations for the **Expense** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Expenses
+    * const expenses = await prisma.expense.findMany()
+    * ```
+    */
+  get expense(): Prisma.ExpenseDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -875,7 +934,10 @@ export namespace Prisma {
     BicycleRental: 'BicycleRental',
     TeamMember: 'TeamMember',
     ElectronicsRepair: 'ElectronicsRepair',
-    CarpentryProject: 'CarpentryProject'
+    CarpentryProject: 'CarpentryProject',
+    HouseProject: 'HouseProject',
+    Budget: 'Budget',
+    Expense: 'Expense'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -891,7 +953,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "electronicsRepair" | "carpentryProject"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "electronicsRepair" | "carpentryProject" | "houseProject" | "budget" | "expense"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1489,6 +1551,204 @@ export namespace Prisma {
           }
         }
       }
+      HouseProject: {
+        payload: Prisma.$HouseProjectPayload<ExtArgs>
+        fields: Prisma.HouseProjectFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HouseProjectFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HouseProjectFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          findFirst: {
+            args: Prisma.HouseProjectFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HouseProjectFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          findMany: {
+            args: Prisma.HouseProjectFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>[]
+          }
+          create: {
+            args: Prisma.HouseProjectCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          createMany: {
+            args: Prisma.HouseProjectCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.HouseProjectDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          update: {
+            args: Prisma.HouseProjectUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          deleteMany: {
+            args: Prisma.HouseProjectDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HouseProjectUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.HouseProjectUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HouseProjectPayload>
+          }
+          aggregate: {
+            args: Prisma.HouseProjectAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHouseProject>
+          }
+          groupBy: {
+            args: Prisma.HouseProjectGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HouseProjectGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HouseProjectCountArgs<ExtArgs>
+            result: $Utils.Optional<HouseProjectCountAggregateOutputType> | number
+          }
+        }
+      }
+      Budget: {
+        payload: Prisma.$BudgetPayload<ExtArgs>
+        fields: Prisma.BudgetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BudgetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BudgetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          findFirst: {
+            args: Prisma.BudgetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BudgetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          findMany: {
+            args: Prisma.BudgetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>[]
+          }
+          create: {
+            args: Prisma.BudgetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          createMany: {
+            args: Prisma.BudgetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BudgetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          update: {
+            args: Prisma.BudgetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          deleteMany: {
+            args: Prisma.BudgetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BudgetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BudgetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BudgetPayload>
+          }
+          aggregate: {
+            args: Prisma.BudgetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBudget>
+          }
+          groupBy: {
+            args: Prisma.BudgetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BudgetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BudgetCountArgs<ExtArgs>
+            result: $Utils.Optional<BudgetCountAggregateOutputType> | number
+          }
+        }
+      }
+      Expense: {
+        payload: Prisma.$ExpensePayload<ExtArgs>
+        fields: Prisma.ExpenseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ExpenseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ExpenseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          findFirst: {
+            args: Prisma.ExpenseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ExpenseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          findMany: {
+            args: Prisma.ExpenseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+          }
+          create: {
+            args: Prisma.ExpenseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          createMany: {
+            args: Prisma.ExpenseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ExpenseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          update: {
+            args: Prisma.ExpenseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          deleteMany: {
+            args: Prisma.ExpenseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ExpenseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ExpenseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ExpensePayload>
+          }
+          aggregate: {
+            args: Prisma.ExpenseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateExpense>
+          }
+          groupBy: {
+            args: Prisma.ExpenseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ExpenseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ExpenseCountArgs<ExtArgs>
+            result: $Utils.Optional<ExpenseCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1606,6 +1866,9 @@ export namespace Prisma {
     teamMember?: TeamMemberOmit
     electronicsRepair?: ElectronicsRepairOmit
     carpentryProject?: CarpentryProjectOmit
+    houseProject?: HouseProjectOmit
+    budget?: BudgetOmit
+    expense?: ExpenseOmit
   }
 
   /* Types for Logging */
@@ -1688,11 +1951,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     electronicsRepairs: number
     carpentryProjects: number
+    houseProjects: number
+    expenses: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     electronicsRepairs?: boolean | UserCountOutputTypeCountElectronicsRepairsArgs
     carpentryProjects?: boolean | UserCountOutputTypeCountCarpentryProjectsArgs
+    houseProjects?: boolean | UserCountOutputTypeCountHouseProjectsArgs
+    expenses?: boolean | UserCountOutputTypeCountExpensesArgs
   }
 
   // Custom InputTypes
@@ -1718,6 +1985,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCarpentryProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CarpentryProjectWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHouseProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HouseProjectWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExpenseWhereInput
   }
 
 
@@ -1780,6 +2061,99 @@ export namespace Prisma {
    */
   export type PartCountOutputTypeCountRepairsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RepairPartWhereInput
+  }
+
+
+  /**
+   * Count Type CarpentryProjectCountOutputType
+   */
+
+  export type CarpentryProjectCountOutputType = {
+    expenses: number
+  }
+
+  export type CarpentryProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expenses?: boolean | CarpentryProjectCountOutputTypeCountExpensesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CarpentryProjectCountOutputType without action
+   */
+  export type CarpentryProjectCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProjectCountOutputType
+     */
+    select?: CarpentryProjectCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CarpentryProjectCountOutputType without action
+   */
+  export type CarpentryProjectCountOutputTypeCountExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExpenseWhereInput
+  }
+
+
+  /**
+   * Count Type HouseProjectCountOutputType
+   */
+
+  export type HouseProjectCountOutputType = {
+    expenses: number
+  }
+
+  export type HouseProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expenses?: boolean | HouseProjectCountOutputTypeCountExpensesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HouseProjectCountOutputType without action
+   */
+  export type HouseProjectCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProjectCountOutputType
+     */
+    select?: HouseProjectCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HouseProjectCountOutputType without action
+   */
+  export type HouseProjectCountOutputTypeCountExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExpenseWhereInput
+  }
+
+
+  /**
+   * Count Type BudgetCountOutputType
+   */
+
+  export type BudgetCountOutputType = {
+    expenses: number
+  }
+
+  export type BudgetCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expenses?: boolean | BudgetCountOutputTypeCountExpensesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BudgetCountOutputType without action
+   */
+  export type BudgetCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BudgetCountOutputType
+     */
+    select?: BudgetCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BudgetCountOutputType without action
+   */
+  export type BudgetCountOutputTypeCountExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExpenseWhereInput
   }
 
 
@@ -1953,6 +2327,8 @@ export namespace Prisma {
     enabled?: boolean
     electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
     carpentryProjects?: boolean | User$carpentryProjectsArgs<ExtArgs>
+    houseProjects?: boolean | User$houseProjectsArgs<ExtArgs>
+    expenses?: boolean | User$expensesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1970,6 +2346,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     electronicsRepairs?: boolean | User$electronicsRepairsArgs<ExtArgs>
     carpentryProjects?: boolean | User$carpentryProjectsArgs<ExtArgs>
+    houseProjects?: boolean | User$houseProjectsArgs<ExtArgs>
+    expenses?: boolean | User$expensesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1978,6 +2356,8 @@ export namespace Prisma {
     objects: {
       electronicsRepairs: Prisma.$ElectronicsRepairPayload<ExtArgs>[]
       carpentryProjects: Prisma.$CarpentryProjectPayload<ExtArgs>[]
+      houseProjects: Prisma.$HouseProjectPayload<ExtArgs>[]
+      expenses: Prisma.$ExpensePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2327,6 +2707,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     electronicsRepairs<T extends User$electronicsRepairsArgs<ExtArgs> = {}>(args?: Subset<T, User$electronicsRepairsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ElectronicsRepairPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     carpentryProjects<T extends User$carpentryProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$carpentryProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    houseProjects<T extends User$houseProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$houseProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    expenses<T extends User$expensesArgs<ExtArgs> = {}>(args?: Subset<T, User$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2754,6 +3136,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CarpentryProjectScalarFieldEnum | CarpentryProjectScalarFieldEnum[]
+  }
+
+  /**
+   * User.houseProjects
+   */
+  export type User$houseProjectsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    where?: HouseProjectWhereInput
+    orderBy?: HouseProjectOrderByWithRelationInput | HouseProjectOrderByWithRelationInput[]
+    cursor?: HouseProjectWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HouseProjectScalarFieldEnum | HouseProjectScalarFieldEnum[]
+  }
+
+  /**
+   * User.expenses
+   */
+  export type User$expensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    where?: ExpenseWhereInput
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    cursor?: ExpenseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
   }
 
   /**
@@ -10127,6 +10557,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     assignedTo?: boolean | CarpentryProject$assignedToArgs<ExtArgs>
+    expenses?: boolean | CarpentryProject$expensesArgs<ExtArgs>
+    _count?: boolean | CarpentryProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["carpentryProject"]>
 
 
@@ -10156,12 +10588,15 @@ export namespace Prisma {
   export type CarpentryProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "acceptedBy" | "customerType" | "organizationName" | "customerName" | "phoneNumber" | "gender" | "orderType" | "timeNeeded" | "itemToRepair" | "problemDescription" | "projectDescription" | "materialCosts" | "paidByCustomer" | "photoPath" | "assignedToId" | "createdAt" | "updatedAt", ExtArgs["result"]["carpentryProject"]>
   export type CarpentryProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     assignedTo?: boolean | CarpentryProject$assignedToArgs<ExtArgs>
+    expenses?: boolean | CarpentryProject$expensesArgs<ExtArgs>
+    _count?: boolean | CarpentryProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $CarpentryProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CarpentryProject"
     objects: {
       assignedTo: Prisma.$UserPayload<ExtArgs> | null
+      expenses: Prisma.$ExpensePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10524,6 +10959,7 @@ export namespace Prisma {
   export interface Prisma__CarpentryProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     assignedTo<T extends CarpentryProject$assignedToArgs<ExtArgs> = {}>(args?: Subset<T, CarpentryProject$assignedToArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    expenses<T extends CarpentryProject$expensesArgs<ExtArgs> = {}>(args?: Subset<T, CarpentryProject$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10939,6 +11375,30 @@ export namespace Prisma {
   }
 
   /**
+   * CarpentryProject.expenses
+   */
+  export type CarpentryProject$expensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    where?: ExpenseWhereInput
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    cursor?: ExpenseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
    * CarpentryProject without action
    */
   export type CarpentryProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10954,6 +11414,3286 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CarpentryProjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HouseProject
+   */
+
+  export type AggregateHouseProject = {
+    _count: HouseProjectCountAggregateOutputType | null
+    _avg: HouseProjectAvgAggregateOutputType | null
+    _sum: HouseProjectSumAggregateOutputType | null
+    _min: HouseProjectMinAggregateOutputType | null
+    _max: HouseProjectMaxAggregateOutputType | null
+  }
+
+  export type HouseProjectAvgAggregateOutputType = {
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+  }
+
+  export type HouseProjectSumAggregateOutputType = {
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+  }
+
+  export type HouseProjectMinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    houseName: string | null
+    location: string | null
+    workType: string | null
+    description: string | null
+    status: $Enums.HouseProjectStatus | null
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+    notes: string | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HouseProjectMaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    houseName: string | null
+    location: string | null
+    workType: string | null
+    description: string | null
+    status: $Enums.HouseProjectStatus | null
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+    notes: string | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type HouseProjectCountAggregateOutputType = {
+    id: number
+    date: number
+    houseName: number
+    location: number
+    workType: number
+    description: number
+    status: number
+    timeNeeded: number
+    materialCosts: number
+    notes: number
+    photoPath: number
+    assignedToId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type HouseProjectAvgAggregateInputType = {
+    timeNeeded?: true
+    materialCosts?: true
+  }
+
+  export type HouseProjectSumAggregateInputType = {
+    timeNeeded?: true
+    materialCosts?: true
+  }
+
+  export type HouseProjectMinAggregateInputType = {
+    id?: true
+    date?: true
+    houseName?: true
+    location?: true
+    workType?: true
+    description?: true
+    status?: true
+    timeNeeded?: true
+    materialCosts?: true
+    notes?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HouseProjectMaxAggregateInputType = {
+    id?: true
+    date?: true
+    houseName?: true
+    location?: true
+    workType?: true
+    description?: true
+    status?: true
+    timeNeeded?: true
+    materialCosts?: true
+    notes?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type HouseProjectCountAggregateInputType = {
+    id?: true
+    date?: true
+    houseName?: true
+    location?: true
+    workType?: true
+    description?: true
+    status?: true
+    timeNeeded?: true
+    materialCosts?: true
+    notes?: true
+    photoPath?: true
+    assignedToId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type HouseProjectAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HouseProject to aggregate.
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HouseProjects to fetch.
+     */
+    orderBy?: HouseProjectOrderByWithRelationInput | HouseProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HouseProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HouseProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HouseProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HouseProjects
+    **/
+    _count?: true | HouseProjectCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HouseProjectAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HouseProjectSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HouseProjectMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HouseProjectMaxAggregateInputType
+  }
+
+  export type GetHouseProjectAggregateType<T extends HouseProjectAggregateArgs> = {
+        [P in keyof T & keyof AggregateHouseProject]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHouseProject[P]>
+      : GetScalarType<T[P], AggregateHouseProject[P]>
+  }
+
+
+
+
+  export type HouseProjectGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HouseProjectWhereInput
+    orderBy?: HouseProjectOrderByWithAggregationInput | HouseProjectOrderByWithAggregationInput[]
+    by: HouseProjectScalarFieldEnum[] | HouseProjectScalarFieldEnum
+    having?: HouseProjectScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HouseProjectCountAggregateInputType | true
+    _avg?: HouseProjectAvgAggregateInputType
+    _sum?: HouseProjectSumAggregateInputType
+    _min?: HouseProjectMinAggregateInputType
+    _max?: HouseProjectMaxAggregateInputType
+  }
+
+  export type HouseProjectGroupByOutputType = {
+    id: string
+    date: Date
+    houseName: string
+    location: string | null
+    workType: string
+    description: string
+    status: $Enums.HouseProjectStatus
+    timeNeeded: number | null
+    materialCosts: Decimal | null
+    notes: string | null
+    photoPath: string | null
+    assignedToId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: HouseProjectCountAggregateOutputType | null
+    _avg: HouseProjectAvgAggregateOutputType | null
+    _sum: HouseProjectSumAggregateOutputType | null
+    _min: HouseProjectMinAggregateOutputType | null
+    _max: HouseProjectMaxAggregateOutputType | null
+  }
+
+  type GetHouseProjectGroupByPayload<T extends HouseProjectGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HouseProjectGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HouseProjectGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HouseProjectGroupByOutputType[P]>
+            : GetScalarType<T[P], HouseProjectGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HouseProjectSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    houseName?: boolean
+    location?: boolean
+    workType?: boolean
+    description?: boolean
+    status?: boolean
+    timeNeeded?: boolean
+    materialCosts?: boolean
+    notes?: boolean
+    photoPath?: boolean
+    assignedToId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignedTo?: boolean | HouseProject$assignedToArgs<ExtArgs>
+    expenses?: boolean | HouseProject$expensesArgs<ExtArgs>
+    _count?: boolean | HouseProjectCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["houseProject"]>
+
+
+
+  export type HouseProjectSelectScalar = {
+    id?: boolean
+    date?: boolean
+    houseName?: boolean
+    location?: boolean
+    workType?: boolean
+    description?: boolean
+    status?: boolean
+    timeNeeded?: boolean
+    materialCosts?: boolean
+    notes?: boolean
+    photoPath?: boolean
+    assignedToId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type HouseProjectOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "houseName" | "location" | "workType" | "description" | "status" | "timeNeeded" | "materialCosts" | "notes" | "photoPath" | "assignedToId" | "createdAt" | "updatedAt", ExtArgs["result"]["houseProject"]>
+  export type HouseProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assignedTo?: boolean | HouseProject$assignedToArgs<ExtArgs>
+    expenses?: boolean | HouseProject$expensesArgs<ExtArgs>
+    _count?: boolean | HouseProjectCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $HouseProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HouseProject"
+    objects: {
+      assignedTo: Prisma.$UserPayload<ExtArgs> | null
+      expenses: Prisma.$ExpensePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      houseName: string
+      location: string | null
+      workType: string
+      description: string
+      status: $Enums.HouseProjectStatus
+      timeNeeded: number | null
+      materialCosts: Prisma.Decimal | null
+      notes: string | null
+      photoPath: string | null
+      assignedToId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["houseProject"]>
+    composites: {}
+  }
+
+  type HouseProjectGetPayload<S extends boolean | null | undefined | HouseProjectDefaultArgs> = $Result.GetResult<Prisma.$HouseProjectPayload, S>
+
+  type HouseProjectCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HouseProjectFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HouseProjectCountAggregateInputType | true
+    }
+
+  export interface HouseProjectDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HouseProject'], meta: { name: 'HouseProject' } }
+    /**
+     * Find zero or one HouseProject that matches the filter.
+     * @param {HouseProjectFindUniqueArgs} args - Arguments to find a HouseProject
+     * @example
+     * // Get one HouseProject
+     * const houseProject = await prisma.houseProject.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HouseProjectFindUniqueArgs>(args: SelectSubset<T, HouseProjectFindUniqueArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HouseProject that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HouseProjectFindUniqueOrThrowArgs} args - Arguments to find a HouseProject
+     * @example
+     * // Get one HouseProject
+     * const houseProject = await prisma.houseProject.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HouseProjectFindUniqueOrThrowArgs>(args: SelectSubset<T, HouseProjectFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HouseProject that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectFindFirstArgs} args - Arguments to find a HouseProject
+     * @example
+     * // Get one HouseProject
+     * const houseProject = await prisma.houseProject.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HouseProjectFindFirstArgs>(args?: SelectSubset<T, HouseProjectFindFirstArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HouseProject that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectFindFirstOrThrowArgs} args - Arguments to find a HouseProject
+     * @example
+     * // Get one HouseProject
+     * const houseProject = await prisma.houseProject.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HouseProjectFindFirstOrThrowArgs>(args?: SelectSubset<T, HouseProjectFindFirstOrThrowArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HouseProjects that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HouseProjects
+     * const houseProjects = await prisma.houseProject.findMany()
+     * 
+     * // Get first 10 HouseProjects
+     * const houseProjects = await prisma.houseProject.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const houseProjectWithIdOnly = await prisma.houseProject.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HouseProjectFindManyArgs>(args?: SelectSubset<T, HouseProjectFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HouseProject.
+     * @param {HouseProjectCreateArgs} args - Arguments to create a HouseProject.
+     * @example
+     * // Create one HouseProject
+     * const HouseProject = await prisma.houseProject.create({
+     *   data: {
+     *     // ... data to create a HouseProject
+     *   }
+     * })
+     * 
+     */
+    create<T extends HouseProjectCreateArgs>(args: SelectSubset<T, HouseProjectCreateArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HouseProjects.
+     * @param {HouseProjectCreateManyArgs} args - Arguments to create many HouseProjects.
+     * @example
+     * // Create many HouseProjects
+     * const houseProject = await prisma.houseProject.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HouseProjectCreateManyArgs>(args?: SelectSubset<T, HouseProjectCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a HouseProject.
+     * @param {HouseProjectDeleteArgs} args - Arguments to delete one HouseProject.
+     * @example
+     * // Delete one HouseProject
+     * const HouseProject = await prisma.houseProject.delete({
+     *   where: {
+     *     // ... filter to delete one HouseProject
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HouseProjectDeleteArgs>(args: SelectSubset<T, HouseProjectDeleteArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HouseProject.
+     * @param {HouseProjectUpdateArgs} args - Arguments to update one HouseProject.
+     * @example
+     * // Update one HouseProject
+     * const houseProject = await prisma.houseProject.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HouseProjectUpdateArgs>(args: SelectSubset<T, HouseProjectUpdateArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HouseProjects.
+     * @param {HouseProjectDeleteManyArgs} args - Arguments to filter HouseProjects to delete.
+     * @example
+     * // Delete a few HouseProjects
+     * const { count } = await prisma.houseProject.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HouseProjectDeleteManyArgs>(args?: SelectSubset<T, HouseProjectDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HouseProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HouseProjects
+     * const houseProject = await prisma.houseProject.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HouseProjectUpdateManyArgs>(args: SelectSubset<T, HouseProjectUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one HouseProject.
+     * @param {HouseProjectUpsertArgs} args - Arguments to update or create a HouseProject.
+     * @example
+     * // Update or create a HouseProject
+     * const houseProject = await prisma.houseProject.upsert({
+     *   create: {
+     *     // ... data to create a HouseProject
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HouseProject we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HouseProjectUpsertArgs>(args: SelectSubset<T, HouseProjectUpsertArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HouseProjects.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectCountArgs} args - Arguments to filter HouseProjects to count.
+     * @example
+     * // Count the number of HouseProjects
+     * const count = await prisma.houseProject.count({
+     *   where: {
+     *     // ... the filter for the HouseProjects we want to count
+     *   }
+     * })
+    **/
+    count<T extends HouseProjectCountArgs>(
+      args?: Subset<T, HouseProjectCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HouseProjectCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HouseProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HouseProjectAggregateArgs>(args: Subset<T, HouseProjectAggregateArgs>): Prisma.PrismaPromise<GetHouseProjectAggregateType<T>>
+
+    /**
+     * Group by HouseProject.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HouseProjectGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HouseProjectGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HouseProjectGroupByArgs['orderBy'] }
+        : { orderBy?: HouseProjectGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HouseProjectGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHouseProjectGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HouseProject model
+   */
+  readonly fields: HouseProjectFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HouseProject.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HouseProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assignedTo<T extends HouseProject$assignedToArgs<ExtArgs> = {}>(args?: Subset<T, HouseProject$assignedToArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    expenses<T extends HouseProject$expensesArgs<ExtArgs> = {}>(args?: Subset<T, HouseProject$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HouseProject model
+   */
+  interface HouseProjectFieldRefs {
+    readonly id: FieldRef<"HouseProject", 'String'>
+    readonly date: FieldRef<"HouseProject", 'DateTime'>
+    readonly houseName: FieldRef<"HouseProject", 'String'>
+    readonly location: FieldRef<"HouseProject", 'String'>
+    readonly workType: FieldRef<"HouseProject", 'String'>
+    readonly description: FieldRef<"HouseProject", 'String'>
+    readonly status: FieldRef<"HouseProject", 'HouseProjectStatus'>
+    readonly timeNeeded: FieldRef<"HouseProject", 'Int'>
+    readonly materialCosts: FieldRef<"HouseProject", 'Decimal'>
+    readonly notes: FieldRef<"HouseProject", 'String'>
+    readonly photoPath: FieldRef<"HouseProject", 'String'>
+    readonly assignedToId: FieldRef<"HouseProject", 'String'>
+    readonly createdAt: FieldRef<"HouseProject", 'DateTime'>
+    readonly updatedAt: FieldRef<"HouseProject", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HouseProject findUnique
+   */
+  export type HouseProjectFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which HouseProject to fetch.
+     */
+    where: HouseProjectWhereUniqueInput
+  }
+
+  /**
+   * HouseProject findUniqueOrThrow
+   */
+  export type HouseProjectFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which HouseProject to fetch.
+     */
+    where: HouseProjectWhereUniqueInput
+  }
+
+  /**
+   * HouseProject findFirst
+   */
+  export type HouseProjectFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which HouseProject to fetch.
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HouseProjects to fetch.
+     */
+    orderBy?: HouseProjectOrderByWithRelationInput | HouseProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HouseProjects.
+     */
+    cursor?: HouseProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HouseProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HouseProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HouseProjects.
+     */
+    distinct?: HouseProjectScalarFieldEnum | HouseProjectScalarFieldEnum[]
+  }
+
+  /**
+   * HouseProject findFirstOrThrow
+   */
+  export type HouseProjectFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which HouseProject to fetch.
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HouseProjects to fetch.
+     */
+    orderBy?: HouseProjectOrderByWithRelationInput | HouseProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HouseProjects.
+     */
+    cursor?: HouseProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HouseProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HouseProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HouseProjects.
+     */
+    distinct?: HouseProjectScalarFieldEnum | HouseProjectScalarFieldEnum[]
+  }
+
+  /**
+   * HouseProject findMany
+   */
+  export type HouseProjectFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter, which HouseProjects to fetch.
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HouseProjects to fetch.
+     */
+    orderBy?: HouseProjectOrderByWithRelationInput | HouseProjectOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HouseProjects.
+     */
+    cursor?: HouseProjectWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HouseProjects from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HouseProjects.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HouseProjects.
+     */
+    distinct?: HouseProjectScalarFieldEnum | HouseProjectScalarFieldEnum[]
+  }
+
+  /**
+   * HouseProject create
+   */
+  export type HouseProjectCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HouseProject.
+     */
+    data: XOR<HouseProjectCreateInput, HouseProjectUncheckedCreateInput>
+  }
+
+  /**
+   * HouseProject createMany
+   */
+  export type HouseProjectCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HouseProjects.
+     */
+    data: HouseProjectCreateManyInput | HouseProjectCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HouseProject update
+   */
+  export type HouseProjectUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HouseProject.
+     */
+    data: XOR<HouseProjectUpdateInput, HouseProjectUncheckedUpdateInput>
+    /**
+     * Choose, which HouseProject to update.
+     */
+    where: HouseProjectWhereUniqueInput
+  }
+
+  /**
+   * HouseProject updateMany
+   */
+  export type HouseProjectUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HouseProjects.
+     */
+    data: XOR<HouseProjectUpdateManyMutationInput, HouseProjectUncheckedUpdateManyInput>
+    /**
+     * Filter which HouseProjects to update
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * Limit how many HouseProjects to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HouseProject upsert
+   */
+  export type HouseProjectUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HouseProject to update in case it exists.
+     */
+    where: HouseProjectWhereUniqueInput
+    /**
+     * In case the HouseProject found by the `where` argument doesn't exist, create a new HouseProject with this data.
+     */
+    create: XOR<HouseProjectCreateInput, HouseProjectUncheckedCreateInput>
+    /**
+     * In case the HouseProject was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HouseProjectUpdateInput, HouseProjectUncheckedUpdateInput>
+  }
+
+  /**
+   * HouseProject delete
+   */
+  export type HouseProjectDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    /**
+     * Filter which HouseProject to delete.
+     */
+    where: HouseProjectWhereUniqueInput
+  }
+
+  /**
+   * HouseProject deleteMany
+   */
+  export type HouseProjectDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HouseProjects to delete
+     */
+    where?: HouseProjectWhereInput
+    /**
+     * Limit how many HouseProjects to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HouseProject.assignedTo
+   */
+  export type HouseProject$assignedToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * HouseProject.expenses
+   */
+  export type HouseProject$expensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    where?: ExpenseWhereInput
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    cursor?: ExpenseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * HouseProject without action
+   */
+  export type HouseProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Budget
+   */
+
+  export type AggregateBudget = {
+    _count: BudgetCountAggregateOutputType | null
+    _avg: BudgetAvgAggregateOutputType | null
+    _sum: BudgetSumAggregateOutputType | null
+    _min: BudgetMinAggregateOutputType | null
+    _max: BudgetMaxAggregateOutputType | null
+  }
+
+  export type BudgetAvgAggregateOutputType = {
+    allocatedAmount: Decimal | null
+  }
+
+  export type BudgetSumAggregateOutputType = {
+    allocatedAmount: Decimal | null
+  }
+
+  export type BudgetMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    allocatedAmount: Decimal | null
+    periodLabel: string | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BudgetMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    allocatedAmount: Decimal | null
+    periodLabel: string | null
+    notes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BudgetCountAggregateOutputType = {
+    id: number
+    name: number
+    allocatedAmount: number
+    periodLabel: number
+    notes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BudgetAvgAggregateInputType = {
+    allocatedAmount?: true
+  }
+
+  export type BudgetSumAggregateInputType = {
+    allocatedAmount?: true
+  }
+
+  export type BudgetMinAggregateInputType = {
+    id?: true
+    name?: true
+    allocatedAmount?: true
+    periodLabel?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BudgetMaxAggregateInputType = {
+    id?: true
+    name?: true
+    allocatedAmount?: true
+    periodLabel?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BudgetCountAggregateInputType = {
+    id?: true
+    name?: true
+    allocatedAmount?: true
+    periodLabel?: true
+    notes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BudgetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Budget to aggregate.
+     */
+    where?: BudgetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Budgets to fetch.
+     */
+    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BudgetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Budgets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Budgets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Budgets
+    **/
+    _count?: true | BudgetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BudgetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BudgetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BudgetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BudgetMaxAggregateInputType
+  }
+
+  export type GetBudgetAggregateType<T extends BudgetAggregateArgs> = {
+        [P in keyof T & keyof AggregateBudget]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBudget[P]>
+      : GetScalarType<T[P], AggregateBudget[P]>
+  }
+
+
+
+
+  export type BudgetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BudgetWhereInput
+    orderBy?: BudgetOrderByWithAggregationInput | BudgetOrderByWithAggregationInput[]
+    by: BudgetScalarFieldEnum[] | BudgetScalarFieldEnum
+    having?: BudgetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BudgetCountAggregateInputType | true
+    _avg?: BudgetAvgAggregateInputType
+    _sum?: BudgetSumAggregateInputType
+    _min?: BudgetMinAggregateInputType
+    _max?: BudgetMaxAggregateInputType
+  }
+
+  export type BudgetGroupByOutputType = {
+    id: string
+    name: string
+    allocatedAmount: Decimal
+    periodLabel: string | null
+    notes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: BudgetCountAggregateOutputType | null
+    _avg: BudgetAvgAggregateOutputType | null
+    _sum: BudgetSumAggregateOutputType | null
+    _min: BudgetMinAggregateOutputType | null
+    _max: BudgetMaxAggregateOutputType | null
+  }
+
+  type GetBudgetGroupByPayload<T extends BudgetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BudgetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BudgetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BudgetGroupByOutputType[P]>
+            : GetScalarType<T[P], BudgetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BudgetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    allocatedAmount?: boolean
+    periodLabel?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    expenses?: boolean | Budget$expensesArgs<ExtArgs>
+    _count?: boolean | BudgetCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["budget"]>
+
+
+
+  export type BudgetSelectScalar = {
+    id?: boolean
+    name?: boolean
+    allocatedAmount?: boolean
+    periodLabel?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BudgetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "allocatedAmount" | "periodLabel" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["budget"]>
+  export type BudgetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    expenses?: boolean | Budget$expensesArgs<ExtArgs>
+    _count?: boolean | BudgetCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $BudgetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Budget"
+    objects: {
+      expenses: Prisma.$ExpensePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      allocatedAmount: Prisma.Decimal
+      periodLabel: string | null
+      notes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["budget"]>
+    composites: {}
+  }
+
+  type BudgetGetPayload<S extends boolean | null | undefined | BudgetDefaultArgs> = $Result.GetResult<Prisma.$BudgetPayload, S>
+
+  type BudgetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BudgetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BudgetCountAggregateInputType | true
+    }
+
+  export interface BudgetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Budget'], meta: { name: 'Budget' } }
+    /**
+     * Find zero or one Budget that matches the filter.
+     * @param {BudgetFindUniqueArgs} args - Arguments to find a Budget
+     * @example
+     * // Get one Budget
+     * const budget = await prisma.budget.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BudgetFindUniqueArgs>(args: SelectSubset<T, BudgetFindUniqueArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Budget that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BudgetFindUniqueOrThrowArgs} args - Arguments to find a Budget
+     * @example
+     * // Get one Budget
+     * const budget = await prisma.budget.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BudgetFindUniqueOrThrowArgs>(args: SelectSubset<T, BudgetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Budget that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetFindFirstArgs} args - Arguments to find a Budget
+     * @example
+     * // Get one Budget
+     * const budget = await prisma.budget.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BudgetFindFirstArgs>(args?: SelectSubset<T, BudgetFindFirstArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Budget that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetFindFirstOrThrowArgs} args - Arguments to find a Budget
+     * @example
+     * // Get one Budget
+     * const budget = await prisma.budget.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BudgetFindFirstOrThrowArgs>(args?: SelectSubset<T, BudgetFindFirstOrThrowArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Budgets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Budgets
+     * const budgets = await prisma.budget.findMany()
+     * 
+     * // Get first 10 Budgets
+     * const budgets = await prisma.budget.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const budgetWithIdOnly = await prisma.budget.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BudgetFindManyArgs>(args?: SelectSubset<T, BudgetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Budget.
+     * @param {BudgetCreateArgs} args - Arguments to create a Budget.
+     * @example
+     * // Create one Budget
+     * const Budget = await prisma.budget.create({
+     *   data: {
+     *     // ... data to create a Budget
+     *   }
+     * })
+     * 
+     */
+    create<T extends BudgetCreateArgs>(args: SelectSubset<T, BudgetCreateArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Budgets.
+     * @param {BudgetCreateManyArgs} args - Arguments to create many Budgets.
+     * @example
+     * // Create many Budgets
+     * const budget = await prisma.budget.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BudgetCreateManyArgs>(args?: SelectSubset<T, BudgetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Budget.
+     * @param {BudgetDeleteArgs} args - Arguments to delete one Budget.
+     * @example
+     * // Delete one Budget
+     * const Budget = await prisma.budget.delete({
+     *   where: {
+     *     // ... filter to delete one Budget
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BudgetDeleteArgs>(args: SelectSubset<T, BudgetDeleteArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Budget.
+     * @param {BudgetUpdateArgs} args - Arguments to update one Budget.
+     * @example
+     * // Update one Budget
+     * const budget = await prisma.budget.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BudgetUpdateArgs>(args: SelectSubset<T, BudgetUpdateArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Budgets.
+     * @param {BudgetDeleteManyArgs} args - Arguments to filter Budgets to delete.
+     * @example
+     * // Delete a few Budgets
+     * const { count } = await prisma.budget.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BudgetDeleteManyArgs>(args?: SelectSubset<T, BudgetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Budgets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Budgets
+     * const budget = await prisma.budget.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BudgetUpdateManyArgs>(args: SelectSubset<T, BudgetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Budget.
+     * @param {BudgetUpsertArgs} args - Arguments to update or create a Budget.
+     * @example
+     * // Update or create a Budget
+     * const budget = await prisma.budget.upsert({
+     *   create: {
+     *     // ... data to create a Budget
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Budget we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BudgetUpsertArgs>(args: SelectSubset<T, BudgetUpsertArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Budgets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetCountArgs} args - Arguments to filter Budgets to count.
+     * @example
+     * // Count the number of Budgets
+     * const count = await prisma.budget.count({
+     *   where: {
+     *     // ... the filter for the Budgets we want to count
+     *   }
+     * })
+    **/
+    count<T extends BudgetCountArgs>(
+      args?: Subset<T, BudgetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BudgetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Budget.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BudgetAggregateArgs>(args: Subset<T, BudgetAggregateArgs>): Prisma.PrismaPromise<GetBudgetAggregateType<T>>
+
+    /**
+     * Group by Budget.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BudgetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BudgetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BudgetGroupByArgs['orderBy'] }
+        : { orderBy?: BudgetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BudgetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBudgetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Budget model
+   */
+  readonly fields: BudgetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Budget.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BudgetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    expenses<T extends Budget$expensesArgs<ExtArgs> = {}>(args?: Subset<T, Budget$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Budget model
+   */
+  interface BudgetFieldRefs {
+    readonly id: FieldRef<"Budget", 'String'>
+    readonly name: FieldRef<"Budget", 'String'>
+    readonly allocatedAmount: FieldRef<"Budget", 'Decimal'>
+    readonly periodLabel: FieldRef<"Budget", 'String'>
+    readonly notes: FieldRef<"Budget", 'String'>
+    readonly createdAt: FieldRef<"Budget", 'DateTime'>
+    readonly updatedAt: FieldRef<"Budget", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Budget findUnique
+   */
+  export type BudgetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter, which Budget to fetch.
+     */
+    where: BudgetWhereUniqueInput
+  }
+
+  /**
+   * Budget findUniqueOrThrow
+   */
+  export type BudgetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter, which Budget to fetch.
+     */
+    where: BudgetWhereUniqueInput
+  }
+
+  /**
+   * Budget findFirst
+   */
+  export type BudgetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter, which Budget to fetch.
+     */
+    where?: BudgetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Budgets to fetch.
+     */
+    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Budgets.
+     */
+    cursor?: BudgetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Budgets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Budgets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Budgets.
+     */
+    distinct?: BudgetScalarFieldEnum | BudgetScalarFieldEnum[]
+  }
+
+  /**
+   * Budget findFirstOrThrow
+   */
+  export type BudgetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter, which Budget to fetch.
+     */
+    where?: BudgetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Budgets to fetch.
+     */
+    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Budgets.
+     */
+    cursor?: BudgetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Budgets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Budgets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Budgets.
+     */
+    distinct?: BudgetScalarFieldEnum | BudgetScalarFieldEnum[]
+  }
+
+  /**
+   * Budget findMany
+   */
+  export type BudgetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter, which Budgets to fetch.
+     */
+    where?: BudgetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Budgets to fetch.
+     */
+    orderBy?: BudgetOrderByWithRelationInput | BudgetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Budgets.
+     */
+    cursor?: BudgetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Budgets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Budgets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Budgets.
+     */
+    distinct?: BudgetScalarFieldEnum | BudgetScalarFieldEnum[]
+  }
+
+  /**
+   * Budget create
+   */
+  export type BudgetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Budget.
+     */
+    data: XOR<BudgetCreateInput, BudgetUncheckedCreateInput>
+  }
+
+  /**
+   * Budget createMany
+   */
+  export type BudgetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Budgets.
+     */
+    data: BudgetCreateManyInput | BudgetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Budget update
+   */
+  export type BudgetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Budget.
+     */
+    data: XOR<BudgetUpdateInput, BudgetUncheckedUpdateInput>
+    /**
+     * Choose, which Budget to update.
+     */
+    where: BudgetWhereUniqueInput
+  }
+
+  /**
+   * Budget updateMany
+   */
+  export type BudgetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Budgets.
+     */
+    data: XOR<BudgetUpdateManyMutationInput, BudgetUncheckedUpdateManyInput>
+    /**
+     * Filter which Budgets to update
+     */
+    where?: BudgetWhereInput
+    /**
+     * Limit how many Budgets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Budget upsert
+   */
+  export type BudgetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Budget to update in case it exists.
+     */
+    where: BudgetWhereUniqueInput
+    /**
+     * In case the Budget found by the `where` argument doesn't exist, create a new Budget with this data.
+     */
+    create: XOR<BudgetCreateInput, BudgetUncheckedCreateInput>
+    /**
+     * In case the Budget was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BudgetUpdateInput, BudgetUncheckedUpdateInput>
+  }
+
+  /**
+   * Budget delete
+   */
+  export type BudgetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    /**
+     * Filter which Budget to delete.
+     */
+    where: BudgetWhereUniqueInput
+  }
+
+  /**
+   * Budget deleteMany
+   */
+  export type BudgetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Budgets to delete
+     */
+    where?: BudgetWhereInput
+    /**
+     * Limit how many Budgets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Budget.expenses
+   */
+  export type Budget$expensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    where?: ExpenseWhereInput
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    cursor?: ExpenseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * Budget without action
+   */
+  export type BudgetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Expense
+   */
+
+  export type AggregateExpense = {
+    _count: ExpenseCountAggregateOutputType | null
+    _avg: ExpenseAvgAggregateOutputType | null
+    _sum: ExpenseSumAggregateOutputType | null
+    _min: ExpenseMinAggregateOutputType | null
+    _max: ExpenseMaxAggregateOutputType | null
+  }
+
+  export type ExpenseAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type ExpenseSumAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type ExpenseMinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    title: string | null
+    vendor: string | null
+    amount: Decimal | null
+    notes: string | null
+    receiptUrl: string | null
+    budgetId: string | null
+    createdById: string | null
+    carpentryProjectId: string | null
+    houseProjectId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExpenseMaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    title: string | null
+    vendor: string | null
+    amount: Decimal | null
+    notes: string | null
+    receiptUrl: string | null
+    budgetId: string | null
+    createdById: string | null
+    carpentryProjectId: string | null
+    houseProjectId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ExpenseCountAggregateOutputType = {
+    id: number
+    date: number
+    title: number
+    vendor: number
+    amount: number
+    notes: number
+    receiptUrl: number
+    budgetId: number
+    createdById: number
+    carpentryProjectId: number
+    houseProjectId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ExpenseAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type ExpenseSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type ExpenseMinAggregateInputType = {
+    id?: true
+    date?: true
+    title?: true
+    vendor?: true
+    amount?: true
+    notes?: true
+    receiptUrl?: true
+    budgetId?: true
+    createdById?: true
+    carpentryProjectId?: true
+    houseProjectId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExpenseMaxAggregateInputType = {
+    id?: true
+    date?: true
+    title?: true
+    vendor?: true
+    amount?: true
+    notes?: true
+    receiptUrl?: true
+    budgetId?: true
+    createdById?: true
+    carpentryProjectId?: true
+    houseProjectId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ExpenseCountAggregateInputType = {
+    id?: true
+    date?: true
+    title?: true
+    vendor?: true
+    amount?: true
+    notes?: true
+    receiptUrl?: true
+    budgetId?: true
+    createdById?: true
+    carpentryProjectId?: true
+    houseProjectId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ExpenseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Expense to aggregate.
+     */
+    where?: ExpenseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Expenses to fetch.
+     */
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ExpenseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Expenses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Expenses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Expenses
+    **/
+    _count?: true | ExpenseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ExpenseAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ExpenseSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ExpenseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ExpenseMaxAggregateInputType
+  }
+
+  export type GetExpenseAggregateType<T extends ExpenseAggregateArgs> = {
+        [P in keyof T & keyof AggregateExpense]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateExpense[P]>
+      : GetScalarType<T[P], AggregateExpense[P]>
+  }
+
+
+
+
+  export type ExpenseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ExpenseWhereInput
+    orderBy?: ExpenseOrderByWithAggregationInput | ExpenseOrderByWithAggregationInput[]
+    by: ExpenseScalarFieldEnum[] | ExpenseScalarFieldEnum
+    having?: ExpenseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ExpenseCountAggregateInputType | true
+    _avg?: ExpenseAvgAggregateInputType
+    _sum?: ExpenseSumAggregateInputType
+    _min?: ExpenseMinAggregateInputType
+    _max?: ExpenseMaxAggregateInputType
+  }
+
+  export type ExpenseGroupByOutputType = {
+    id: string
+    date: Date
+    title: string
+    vendor: string | null
+    amount: Decimal
+    notes: string | null
+    receiptUrl: string | null
+    budgetId: string | null
+    createdById: string | null
+    carpentryProjectId: string | null
+    houseProjectId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ExpenseCountAggregateOutputType | null
+    _avg: ExpenseAvgAggregateOutputType | null
+    _sum: ExpenseSumAggregateOutputType | null
+    _min: ExpenseMinAggregateOutputType | null
+    _max: ExpenseMaxAggregateOutputType | null
+  }
+
+  type GetExpenseGroupByPayload<T extends ExpenseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ExpenseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ExpenseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ExpenseGroupByOutputType[P]>
+            : GetScalarType<T[P], ExpenseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ExpenseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    title?: boolean
+    vendor?: boolean
+    amount?: boolean
+    notes?: boolean
+    receiptUrl?: boolean
+    budgetId?: boolean
+    createdById?: boolean
+    carpentryProjectId?: boolean
+    houseProjectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    budget?: boolean | Expense$budgetArgs<ExtArgs>
+    createdBy?: boolean | Expense$createdByArgs<ExtArgs>
+    carpentryProject?: boolean | Expense$carpentryProjectArgs<ExtArgs>
+    houseProject?: boolean | Expense$houseProjectArgs<ExtArgs>
+  }, ExtArgs["result"]["expense"]>
+
+
+
+  export type ExpenseSelectScalar = {
+    id?: boolean
+    date?: boolean
+    title?: boolean
+    vendor?: boolean
+    amount?: boolean
+    notes?: boolean
+    receiptUrl?: boolean
+    budgetId?: boolean
+    createdById?: boolean
+    carpentryProjectId?: boolean
+    houseProjectId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ExpenseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "title" | "vendor" | "amount" | "notes" | "receiptUrl" | "budgetId" | "createdById" | "carpentryProjectId" | "houseProjectId" | "createdAt" | "updatedAt", ExtArgs["result"]["expense"]>
+  export type ExpenseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    budget?: boolean | Expense$budgetArgs<ExtArgs>
+    createdBy?: boolean | Expense$createdByArgs<ExtArgs>
+    carpentryProject?: boolean | Expense$carpentryProjectArgs<ExtArgs>
+    houseProject?: boolean | Expense$houseProjectArgs<ExtArgs>
+  }
+
+  export type $ExpensePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Expense"
+    objects: {
+      budget: Prisma.$BudgetPayload<ExtArgs> | null
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+      carpentryProject: Prisma.$CarpentryProjectPayload<ExtArgs> | null
+      houseProject: Prisma.$HouseProjectPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      title: string
+      vendor: string | null
+      amount: Prisma.Decimal
+      notes: string | null
+      receiptUrl: string | null
+      budgetId: string | null
+      createdById: string | null
+      carpentryProjectId: string | null
+      houseProjectId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["expense"]>
+    composites: {}
+  }
+
+  type ExpenseGetPayload<S extends boolean | null | undefined | ExpenseDefaultArgs> = $Result.GetResult<Prisma.$ExpensePayload, S>
+
+  type ExpenseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ExpenseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ExpenseCountAggregateInputType | true
+    }
+
+  export interface ExpenseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Expense'], meta: { name: 'Expense' } }
+    /**
+     * Find zero or one Expense that matches the filter.
+     * @param {ExpenseFindUniqueArgs} args - Arguments to find a Expense
+     * @example
+     * // Get one Expense
+     * const expense = await prisma.expense.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ExpenseFindUniqueArgs>(args: SelectSubset<T, ExpenseFindUniqueArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Expense that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ExpenseFindUniqueOrThrowArgs} args - Arguments to find a Expense
+     * @example
+     * // Get one Expense
+     * const expense = await prisma.expense.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ExpenseFindUniqueOrThrowArgs>(args: SelectSubset<T, ExpenseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Expense that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseFindFirstArgs} args - Arguments to find a Expense
+     * @example
+     * // Get one Expense
+     * const expense = await prisma.expense.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ExpenseFindFirstArgs>(args?: SelectSubset<T, ExpenseFindFirstArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Expense that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseFindFirstOrThrowArgs} args - Arguments to find a Expense
+     * @example
+     * // Get one Expense
+     * const expense = await prisma.expense.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ExpenseFindFirstOrThrowArgs>(args?: SelectSubset<T, ExpenseFindFirstOrThrowArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Expenses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Expenses
+     * const expenses = await prisma.expense.findMany()
+     * 
+     * // Get first 10 Expenses
+     * const expenses = await prisma.expense.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const expenseWithIdOnly = await prisma.expense.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ExpenseFindManyArgs>(args?: SelectSubset<T, ExpenseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Expense.
+     * @param {ExpenseCreateArgs} args - Arguments to create a Expense.
+     * @example
+     * // Create one Expense
+     * const Expense = await prisma.expense.create({
+     *   data: {
+     *     // ... data to create a Expense
+     *   }
+     * })
+     * 
+     */
+    create<T extends ExpenseCreateArgs>(args: SelectSubset<T, ExpenseCreateArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Expenses.
+     * @param {ExpenseCreateManyArgs} args - Arguments to create many Expenses.
+     * @example
+     * // Create many Expenses
+     * const expense = await prisma.expense.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ExpenseCreateManyArgs>(args?: SelectSubset<T, ExpenseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Expense.
+     * @param {ExpenseDeleteArgs} args - Arguments to delete one Expense.
+     * @example
+     * // Delete one Expense
+     * const Expense = await prisma.expense.delete({
+     *   where: {
+     *     // ... filter to delete one Expense
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ExpenseDeleteArgs>(args: SelectSubset<T, ExpenseDeleteArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Expense.
+     * @param {ExpenseUpdateArgs} args - Arguments to update one Expense.
+     * @example
+     * // Update one Expense
+     * const expense = await prisma.expense.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ExpenseUpdateArgs>(args: SelectSubset<T, ExpenseUpdateArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Expenses.
+     * @param {ExpenseDeleteManyArgs} args - Arguments to filter Expenses to delete.
+     * @example
+     * // Delete a few Expenses
+     * const { count } = await prisma.expense.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ExpenseDeleteManyArgs>(args?: SelectSubset<T, ExpenseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Expenses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Expenses
+     * const expense = await prisma.expense.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ExpenseUpdateManyArgs>(args: SelectSubset<T, ExpenseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Expense.
+     * @param {ExpenseUpsertArgs} args - Arguments to update or create a Expense.
+     * @example
+     * // Update or create a Expense
+     * const expense = await prisma.expense.upsert({
+     *   create: {
+     *     // ... data to create a Expense
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Expense we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ExpenseUpsertArgs>(args: SelectSubset<T, ExpenseUpsertArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Expenses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseCountArgs} args - Arguments to filter Expenses to count.
+     * @example
+     * // Count the number of Expenses
+     * const count = await prisma.expense.count({
+     *   where: {
+     *     // ... the filter for the Expenses we want to count
+     *   }
+     * })
+    **/
+    count<T extends ExpenseCountArgs>(
+      args?: Subset<T, ExpenseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ExpenseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Expense.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ExpenseAggregateArgs>(args: Subset<T, ExpenseAggregateArgs>): Prisma.PrismaPromise<GetExpenseAggregateType<T>>
+
+    /**
+     * Group by Expense.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ExpenseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ExpenseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ExpenseGroupByArgs['orderBy'] }
+        : { orderBy?: ExpenseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ExpenseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetExpenseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Expense model
+   */
+  readonly fields: ExpenseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Expense.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    budget<T extends Expense$budgetArgs<ExtArgs> = {}>(args?: Subset<T, Expense$budgetArgs<ExtArgs>>): Prisma__BudgetClient<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends Expense$createdByArgs<ExtArgs> = {}>(args?: Subset<T, Expense$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    carpentryProject<T extends Expense$carpentryProjectArgs<ExtArgs> = {}>(args?: Subset<T, Expense$carpentryProjectArgs<ExtArgs>>): Prisma__CarpentryProjectClient<$Result.GetResult<Prisma.$CarpentryProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    houseProject<T extends Expense$houseProjectArgs<ExtArgs> = {}>(args?: Subset<T, Expense$houseProjectArgs<ExtArgs>>): Prisma__HouseProjectClient<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Expense model
+   */
+  interface ExpenseFieldRefs {
+    readonly id: FieldRef<"Expense", 'String'>
+    readonly date: FieldRef<"Expense", 'DateTime'>
+    readonly title: FieldRef<"Expense", 'String'>
+    readonly vendor: FieldRef<"Expense", 'String'>
+    readonly amount: FieldRef<"Expense", 'Decimal'>
+    readonly notes: FieldRef<"Expense", 'String'>
+    readonly receiptUrl: FieldRef<"Expense", 'String'>
+    readonly budgetId: FieldRef<"Expense", 'String'>
+    readonly createdById: FieldRef<"Expense", 'String'>
+    readonly carpentryProjectId: FieldRef<"Expense", 'String'>
+    readonly houseProjectId: FieldRef<"Expense", 'String'>
+    readonly createdAt: FieldRef<"Expense", 'DateTime'>
+    readonly updatedAt: FieldRef<"Expense", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Expense findUnique
+   */
+  export type ExpenseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter, which Expense to fetch.
+     */
+    where: ExpenseWhereUniqueInput
+  }
+
+  /**
+   * Expense findUniqueOrThrow
+   */
+  export type ExpenseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter, which Expense to fetch.
+     */
+    where: ExpenseWhereUniqueInput
+  }
+
+  /**
+   * Expense findFirst
+   */
+  export type ExpenseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter, which Expense to fetch.
+     */
+    where?: ExpenseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Expenses to fetch.
+     */
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Expenses.
+     */
+    cursor?: ExpenseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Expenses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Expenses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Expenses.
+     */
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * Expense findFirstOrThrow
+   */
+  export type ExpenseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter, which Expense to fetch.
+     */
+    where?: ExpenseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Expenses to fetch.
+     */
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Expenses.
+     */
+    cursor?: ExpenseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Expenses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Expenses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Expenses.
+     */
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * Expense findMany
+   */
+  export type ExpenseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter, which Expenses to fetch.
+     */
+    where?: ExpenseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Expenses to fetch.
+     */
+    orderBy?: ExpenseOrderByWithRelationInput | ExpenseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Expenses.
+     */
+    cursor?: ExpenseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Expenses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Expenses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Expenses.
+     */
+    distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * Expense create
+   */
+  export type ExpenseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Expense.
+     */
+    data: XOR<ExpenseCreateInput, ExpenseUncheckedCreateInput>
+  }
+
+  /**
+   * Expense createMany
+   */
+  export type ExpenseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Expenses.
+     */
+    data: ExpenseCreateManyInput | ExpenseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Expense update
+   */
+  export type ExpenseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Expense.
+     */
+    data: XOR<ExpenseUpdateInput, ExpenseUncheckedUpdateInput>
+    /**
+     * Choose, which Expense to update.
+     */
+    where: ExpenseWhereUniqueInput
+  }
+
+  /**
+   * Expense updateMany
+   */
+  export type ExpenseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Expenses.
+     */
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyInput>
+    /**
+     * Filter which Expenses to update
+     */
+    where?: ExpenseWhereInput
+    /**
+     * Limit how many Expenses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Expense upsert
+   */
+  export type ExpenseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Expense to update in case it exists.
+     */
+    where: ExpenseWhereUniqueInput
+    /**
+     * In case the Expense found by the `where` argument doesn't exist, create a new Expense with this data.
+     */
+    create: XOR<ExpenseCreateInput, ExpenseUncheckedCreateInput>
+    /**
+     * In case the Expense was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ExpenseUpdateInput, ExpenseUncheckedUpdateInput>
+  }
+
+  /**
+   * Expense delete
+   */
+  export type ExpenseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
+    /**
+     * Filter which Expense to delete.
+     */
+    where: ExpenseWhereUniqueInput
+  }
+
+  /**
+   * Expense deleteMany
+   */
+  export type ExpenseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Expenses to delete
+     */
+    where?: ExpenseWhereInput
+    /**
+     * Limit how many Expenses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Expense.budget
+   */
+  export type Expense$budgetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Budget
+     */
+    select?: BudgetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Budget
+     */
+    omit?: BudgetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BudgetInclude<ExtArgs> | null
+    where?: BudgetWhereInput
+  }
+
+  /**
+   * Expense.createdBy
+   */
+  export type Expense$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Expense.carpentryProject
+   */
+  export type Expense$carpentryProjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CarpentryProject
+     */
+    select?: CarpentryProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CarpentryProject
+     */
+    omit?: CarpentryProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CarpentryProjectInclude<ExtArgs> | null
+    where?: CarpentryProjectWhereInput
+  }
+
+  /**
+   * Expense.houseProject
+   */
+  export type Expense$houseProjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HouseProject
+     */
+    select?: HouseProjectSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HouseProject
+     */
+    omit?: HouseProjectOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HouseProjectInclude<ExtArgs> | null
+    where?: HouseProjectWhereInput
+  }
+
+  /**
+   * Expense without action
+   */
+  export type ExpenseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Expense
+     */
+    select?: ExpenseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Expense
+     */
+    omit?: ExpenseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ExpenseInclude<ExtArgs> | null
   }
 
 
@@ -11123,6 +14863,58 @@ export namespace Prisma {
   export type CarpentryProjectScalarFieldEnum = (typeof CarpentryProjectScalarFieldEnum)[keyof typeof CarpentryProjectScalarFieldEnum]
 
 
+  export const HouseProjectScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    houseName: 'houseName',
+    location: 'location',
+    workType: 'workType',
+    description: 'description',
+    status: 'status',
+    timeNeeded: 'timeNeeded',
+    materialCosts: 'materialCosts',
+    notes: 'notes',
+    photoPath: 'photoPath',
+    assignedToId: 'assignedToId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type HouseProjectScalarFieldEnum = (typeof HouseProjectScalarFieldEnum)[keyof typeof HouseProjectScalarFieldEnum]
+
+
+  export const BudgetScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    allocatedAmount: 'allocatedAmount',
+    periodLabel: 'periodLabel',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BudgetScalarFieldEnum = (typeof BudgetScalarFieldEnum)[keyof typeof BudgetScalarFieldEnum]
+
+
+  export const ExpenseScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    title: 'title',
+    vendor: 'vendor',
+    amount: 'amount',
+    notes: 'notes',
+    receiptUrl: 'receiptUrl',
+    budgetId: 'budgetId',
+    createdById: 'createdById',
+    carpentryProjectId: 'carpentryProjectId',
+    houseProjectId: 'houseProjectId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -11247,6 +15039,45 @@ export namespace Prisma {
   export type CarpentryProjectOrderByRelevanceFieldEnum = (typeof CarpentryProjectOrderByRelevanceFieldEnum)[keyof typeof CarpentryProjectOrderByRelevanceFieldEnum]
 
 
+  export const HouseProjectOrderByRelevanceFieldEnum: {
+    id: 'id',
+    houseName: 'houseName',
+    location: 'location',
+    workType: 'workType',
+    description: 'description',
+    notes: 'notes',
+    photoPath: 'photoPath',
+    assignedToId: 'assignedToId'
+  };
+
+  export type HouseProjectOrderByRelevanceFieldEnum = (typeof HouseProjectOrderByRelevanceFieldEnum)[keyof typeof HouseProjectOrderByRelevanceFieldEnum]
+
+
+  export const BudgetOrderByRelevanceFieldEnum: {
+    id: 'id',
+    name: 'name',
+    periodLabel: 'periodLabel',
+    notes: 'notes'
+  };
+
+  export type BudgetOrderByRelevanceFieldEnum = (typeof BudgetOrderByRelevanceFieldEnum)[keyof typeof BudgetOrderByRelevanceFieldEnum]
+
+
+  export const ExpenseOrderByRelevanceFieldEnum: {
+    id: 'id',
+    title: 'title',
+    vendor: 'vendor',
+    notes: 'notes',
+    receiptUrl: 'receiptUrl',
+    budgetId: 'budgetId',
+    createdById: 'createdById',
+    carpentryProjectId: 'carpentryProjectId',
+    houseProjectId: 'houseProjectId'
+  };
+
+  export type ExpenseOrderByRelevanceFieldEnum = (typeof ExpenseOrderByRelevanceFieldEnum)[keyof typeof ExpenseOrderByRelevanceFieldEnum]
+
+
   /**
    * Field references
    */
@@ -11344,6 +15175,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'HouseProjectStatus'
+   */
+  export type EnumHouseProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HouseProjectStatus'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -11364,6 +15202,8 @@ export namespace Prisma {
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
     carpentryProjects?: CarpentryProjectListRelationFilter
+    houseProjects?: HouseProjectListRelationFilter
+    expenses?: ExpenseListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11374,6 +15214,8 @@ export namespace Prisma {
     enabled?: SortOrderInput | SortOrder
     electronicsRepairs?: ElectronicsRepairOrderByRelationAggregateInput
     carpentryProjects?: CarpentryProjectOrderByRelationAggregateInput
+    houseProjects?: HouseProjectOrderByRelationAggregateInput
+    expenses?: ExpenseOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -11388,6 +15230,8 @@ export namespace Prisma {
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
     carpentryProjects?: CarpentryProjectListRelationFilter
+    houseProjects?: HouseProjectListRelationFilter
+    expenses?: ExpenseListRelationFilter
   }, "id" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -12026,6 +15870,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
     updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
     assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    expenses?: ExpenseListRelationFilter
   }
 
   export type CarpentryProjectOrderByWithRelationInput = {
@@ -12049,6 +15894,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     assignedTo?: UserOrderByWithRelationInput
+    expenses?: ExpenseOrderByRelationAggregateInput
     _relevance?: CarpentryProjectOrderByRelevanceInput
   }
 
@@ -12076,6 +15922,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
     updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
     assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    expenses?: ExpenseListRelationFilter
   }, "id">
 
   export type CarpentryProjectOrderByWithAggregationInput = {
@@ -12130,6 +15977,287 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"CarpentryProject"> | Date | string
   }
 
+  export type HouseProjectWhereInput = {
+    AND?: HouseProjectWhereInput | HouseProjectWhereInput[]
+    OR?: HouseProjectWhereInput[]
+    NOT?: HouseProjectWhereInput | HouseProjectWhereInput[]
+    id?: StringFilter<"HouseProject"> | string
+    date?: DateTimeFilter<"HouseProject"> | Date | string
+    houseName?: StringFilter<"HouseProject"> | string
+    location?: StringNullableFilter<"HouseProject"> | string | null
+    workType?: StringFilter<"HouseProject"> | string
+    description?: StringFilter<"HouseProject"> | string
+    status?: EnumHouseProjectStatusFilter<"HouseProject"> | $Enums.HouseProjectStatus
+    timeNeeded?: IntNullableFilter<"HouseProject"> | number | null
+    materialCosts?: DecimalNullableFilter<"HouseProject"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"HouseProject"> | string | null
+    photoPath?: StringNullableFilter<"HouseProject"> | string | null
+    assignedToId?: StringNullableFilter<"HouseProject"> | string | null
+    createdAt?: DateTimeFilter<"HouseProject"> | Date | string
+    updatedAt?: DateTimeFilter<"HouseProject"> | Date | string
+    assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    expenses?: ExpenseListRelationFilter
+  }
+
+  export type HouseProjectOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    houseName?: SortOrder
+    location?: SortOrderInput | SortOrder
+    workType?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    timeNeeded?: SortOrderInput | SortOrder
+    materialCosts?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    assignedToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignedTo?: UserOrderByWithRelationInput
+    expenses?: ExpenseOrderByRelationAggregateInput
+    _relevance?: HouseProjectOrderByRelevanceInput
+  }
+
+  export type HouseProjectWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HouseProjectWhereInput | HouseProjectWhereInput[]
+    OR?: HouseProjectWhereInput[]
+    NOT?: HouseProjectWhereInput | HouseProjectWhereInput[]
+    date?: DateTimeFilter<"HouseProject"> | Date | string
+    houseName?: StringFilter<"HouseProject"> | string
+    location?: StringNullableFilter<"HouseProject"> | string | null
+    workType?: StringFilter<"HouseProject"> | string
+    description?: StringFilter<"HouseProject"> | string
+    status?: EnumHouseProjectStatusFilter<"HouseProject"> | $Enums.HouseProjectStatus
+    timeNeeded?: IntNullableFilter<"HouseProject"> | number | null
+    materialCosts?: DecimalNullableFilter<"HouseProject"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"HouseProject"> | string | null
+    photoPath?: StringNullableFilter<"HouseProject"> | string | null
+    assignedToId?: StringNullableFilter<"HouseProject"> | string | null
+    createdAt?: DateTimeFilter<"HouseProject"> | Date | string
+    updatedAt?: DateTimeFilter<"HouseProject"> | Date | string
+    assignedTo?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    expenses?: ExpenseListRelationFilter
+  }, "id">
+
+  export type HouseProjectOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    houseName?: SortOrder
+    location?: SortOrderInput | SortOrder
+    workType?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    timeNeeded?: SortOrderInput | SortOrder
+    materialCosts?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
+    assignedToId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: HouseProjectCountOrderByAggregateInput
+    _avg?: HouseProjectAvgOrderByAggregateInput
+    _max?: HouseProjectMaxOrderByAggregateInput
+    _min?: HouseProjectMinOrderByAggregateInput
+    _sum?: HouseProjectSumOrderByAggregateInput
+  }
+
+  export type HouseProjectScalarWhereWithAggregatesInput = {
+    AND?: HouseProjectScalarWhereWithAggregatesInput | HouseProjectScalarWhereWithAggregatesInput[]
+    OR?: HouseProjectScalarWhereWithAggregatesInput[]
+    NOT?: HouseProjectScalarWhereWithAggregatesInput | HouseProjectScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HouseProject"> | string
+    date?: DateTimeWithAggregatesFilter<"HouseProject"> | Date | string
+    houseName?: StringWithAggregatesFilter<"HouseProject"> | string
+    location?: StringNullableWithAggregatesFilter<"HouseProject"> | string | null
+    workType?: StringWithAggregatesFilter<"HouseProject"> | string
+    description?: StringWithAggregatesFilter<"HouseProject"> | string
+    status?: EnumHouseProjectStatusWithAggregatesFilter<"HouseProject"> | $Enums.HouseProjectStatus
+    timeNeeded?: IntNullableWithAggregatesFilter<"HouseProject"> | number | null
+    materialCosts?: DecimalNullableWithAggregatesFilter<"HouseProject"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableWithAggregatesFilter<"HouseProject"> | string | null
+    photoPath?: StringNullableWithAggregatesFilter<"HouseProject"> | string | null
+    assignedToId?: StringNullableWithAggregatesFilter<"HouseProject"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"HouseProject"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"HouseProject"> | Date | string
+  }
+
+  export type BudgetWhereInput = {
+    AND?: BudgetWhereInput | BudgetWhereInput[]
+    OR?: BudgetWhereInput[]
+    NOT?: BudgetWhereInput | BudgetWhereInput[]
+    id?: StringFilter<"Budget"> | string
+    name?: StringFilter<"Budget"> | string
+    allocatedAmount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    periodLabel?: StringNullableFilter<"Budget"> | string | null
+    notes?: StringNullableFilter<"Budget"> | string | null
+    createdAt?: DateTimeFilter<"Budget"> | Date | string
+    updatedAt?: DateTimeFilter<"Budget"> | Date | string
+    expenses?: ExpenseListRelationFilter
+  }
+
+  export type BudgetOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    allocatedAmount?: SortOrder
+    periodLabel?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    expenses?: ExpenseOrderByRelationAggregateInput
+    _relevance?: BudgetOrderByRelevanceInput
+  }
+
+  export type BudgetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BudgetWhereInput | BudgetWhereInput[]
+    OR?: BudgetWhereInput[]
+    NOT?: BudgetWhereInput | BudgetWhereInput[]
+    name?: StringFilter<"Budget"> | string
+    allocatedAmount?: DecimalFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    periodLabel?: StringNullableFilter<"Budget"> | string | null
+    notes?: StringNullableFilter<"Budget"> | string | null
+    createdAt?: DateTimeFilter<"Budget"> | Date | string
+    updatedAt?: DateTimeFilter<"Budget"> | Date | string
+    expenses?: ExpenseListRelationFilter
+  }, "id">
+
+  export type BudgetOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    allocatedAmount?: SortOrder
+    periodLabel?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BudgetCountOrderByAggregateInput
+    _avg?: BudgetAvgOrderByAggregateInput
+    _max?: BudgetMaxOrderByAggregateInput
+    _min?: BudgetMinOrderByAggregateInput
+    _sum?: BudgetSumOrderByAggregateInput
+  }
+
+  export type BudgetScalarWhereWithAggregatesInput = {
+    AND?: BudgetScalarWhereWithAggregatesInput | BudgetScalarWhereWithAggregatesInput[]
+    OR?: BudgetScalarWhereWithAggregatesInput[]
+    NOT?: BudgetScalarWhereWithAggregatesInput | BudgetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Budget"> | string
+    name?: StringWithAggregatesFilter<"Budget"> | string
+    allocatedAmount?: DecimalWithAggregatesFilter<"Budget"> | Decimal | DecimalJsLike | number | string
+    periodLabel?: StringNullableWithAggregatesFilter<"Budget"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"Budget"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Budget"> | Date | string
+  }
+
+  export type ExpenseWhereInput = {
+    AND?: ExpenseWhereInput | ExpenseWhereInput[]
+    OR?: ExpenseWhereInput[]
+    NOT?: ExpenseWhereInput | ExpenseWhereInput[]
+    id?: StringFilter<"Expense"> | string
+    date?: DateTimeFilter<"Expense"> | Date | string
+    title?: StringFilter<"Expense"> | string
+    vendor?: StringNullableFilter<"Expense"> | string | null
+    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    notes?: StringNullableFilter<"Expense"> | string | null
+    receiptUrl?: StringNullableFilter<"Expense"> | string | null
+    budgetId?: StringNullableFilter<"Expense"> | string | null
+    createdById?: StringNullableFilter<"Expense"> | string | null
+    carpentryProjectId?: StringNullableFilter<"Expense"> | string | null
+    houseProjectId?: StringNullableFilter<"Expense"> | string | null
+    createdAt?: DateTimeFilter<"Expense"> | Date | string
+    updatedAt?: DateTimeFilter<"Expense"> | Date | string
+    budget?: XOR<BudgetNullableScalarRelationFilter, BudgetWhereInput> | null
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    carpentryProject?: XOR<CarpentryProjectNullableScalarRelationFilter, CarpentryProjectWhereInput> | null
+    houseProject?: XOR<HouseProjectNullableScalarRelationFilter, HouseProjectWhereInput> | null
+  }
+
+  export type ExpenseOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    vendor?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    receiptUrl?: SortOrderInput | SortOrder
+    budgetId?: SortOrderInput | SortOrder
+    createdById?: SortOrderInput | SortOrder
+    carpentryProjectId?: SortOrderInput | SortOrder
+    houseProjectId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    budget?: BudgetOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+    carpentryProject?: CarpentryProjectOrderByWithRelationInput
+    houseProject?: HouseProjectOrderByWithRelationInput
+    _relevance?: ExpenseOrderByRelevanceInput
+  }
+
+  export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ExpenseWhereInput | ExpenseWhereInput[]
+    OR?: ExpenseWhereInput[]
+    NOT?: ExpenseWhereInput | ExpenseWhereInput[]
+    date?: DateTimeFilter<"Expense"> | Date | string
+    title?: StringFilter<"Expense"> | string
+    vendor?: StringNullableFilter<"Expense"> | string | null
+    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    notes?: StringNullableFilter<"Expense"> | string | null
+    receiptUrl?: StringNullableFilter<"Expense"> | string | null
+    budgetId?: StringNullableFilter<"Expense"> | string | null
+    createdById?: StringNullableFilter<"Expense"> | string | null
+    carpentryProjectId?: StringNullableFilter<"Expense"> | string | null
+    houseProjectId?: StringNullableFilter<"Expense"> | string | null
+    createdAt?: DateTimeFilter<"Expense"> | Date | string
+    updatedAt?: DateTimeFilter<"Expense"> | Date | string
+    budget?: XOR<BudgetNullableScalarRelationFilter, BudgetWhereInput> | null
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    carpentryProject?: XOR<CarpentryProjectNullableScalarRelationFilter, CarpentryProjectWhereInput> | null
+    houseProject?: XOR<HouseProjectNullableScalarRelationFilter, HouseProjectWhereInput> | null
+  }, "id">
+
+  export type ExpenseOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    vendor?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    receiptUrl?: SortOrderInput | SortOrder
+    budgetId?: SortOrderInput | SortOrder
+    createdById?: SortOrderInput | SortOrder
+    carpentryProjectId?: SortOrderInput | SortOrder
+    houseProjectId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ExpenseCountOrderByAggregateInput
+    _avg?: ExpenseAvgOrderByAggregateInput
+    _max?: ExpenseMaxOrderByAggregateInput
+    _min?: ExpenseMinOrderByAggregateInput
+    _sum?: ExpenseSumOrderByAggregateInput
+  }
+
+  export type ExpenseScalarWhereWithAggregatesInput = {
+    AND?: ExpenseScalarWhereWithAggregatesInput | ExpenseScalarWhereWithAggregatesInput[]
+    OR?: ExpenseScalarWhereWithAggregatesInput[]
+    NOT?: ExpenseScalarWhereWithAggregatesInput | ExpenseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Expense"> | string
+    date?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
+    title?: StringWithAggregatesFilter<"Expense"> | string
+    vendor?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    amount?: DecimalWithAggregatesFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    notes?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    receiptUrl?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    budgetId?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    createdById?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    carpentryProjectId?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    houseProjectId?: StringNullableWithAggregatesFilter<"Expense"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Expense"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email?: string | null
@@ -12138,6 +16266,8 @@ export namespace Prisma {
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12148,6 +16278,8 @@ export namespace Prisma {
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -12158,6 +16290,8 @@ export namespace Prisma {
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12168,6 +16302,8 @@ export namespace Prisma {
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -12882,6 +17018,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedTo?: UserCreateNestedOneWithoutCarpentryProjectsInput
+    expenses?: ExpenseCreateNestedManyWithoutCarpentryProjectInput
   }
 
   export type CarpentryProjectUncheckedCreateInput = {
@@ -12904,6 +17041,7 @@ export namespace Prisma {
     assignedToId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCarpentryProjectInput
   }
 
   export type CarpentryProjectUpdateInput = {
@@ -12926,6 +17064,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedTo?: UserUpdateOneWithoutCarpentryProjectsNestedInput
+    expenses?: ExpenseUpdateManyWithoutCarpentryProjectNestedInput
   }
 
   export type CarpentryProjectUncheckedUpdateInput = {
@@ -12948,6 +17087,7 @@ export namespace Prisma {
     assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUncheckedUpdateManyWithoutCarpentryProjectNestedInput
   }
 
   export type CarpentryProjectCreateManyInput = {
@@ -13015,6 +17155,310 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type HouseProjectCreateInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: UserCreateNestedOneWithoutHouseProjectsInput
+    expenses?: ExpenseCreateNestedManyWithoutHouseProjectInput
+  }
+
+  export type HouseProjectUncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutHouseProjectInput
+  }
+
+  export type HouseProjectUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: UserUpdateOneWithoutHouseProjectsNestedInput
+    expenses?: ExpenseUpdateManyWithoutHouseProjectNestedInput
+  }
+
+  export type HouseProjectUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUncheckedUpdateManyWithoutHouseProjectNestedInput
+  }
+
+  export type HouseProjectCreateManyInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HouseProjectUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HouseProjectUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BudgetCreateInput = {
+    id?: string
+    name: string
+    allocatedAmount: Decimal | DecimalJsLike | number | string
+    periodLabel?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expenses?: ExpenseCreateNestedManyWithoutBudgetInput
+  }
+
+  export type BudgetUncheckedCreateInput = {
+    id?: string
+    name: string
+    allocatedAmount: Decimal | DecimalJsLike | number | string
+    periodLabel?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutBudgetInput
+  }
+
+  export type BudgetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUpdateManyWithoutBudgetNestedInput
+  }
+
+  export type BudgetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUncheckedUpdateManyWithoutBudgetNestedInput
+  }
+
+  export type BudgetCreateManyInput = {
+    id?: string
+    name: string
+    allocatedAmount: Decimal | DecimalJsLike | number | string
+    periodLabel?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BudgetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BudgetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseCreateInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    budget?: BudgetCreateNestedOneWithoutExpensesInput
+    createdBy?: UserCreateNestedOneWithoutExpensesInput
+    carpentryProject?: CarpentryProjectCreateNestedOneWithoutExpensesInput
+    houseProject?: HouseProjectCreateNestedOneWithoutExpensesInput
+  }
+
+  export type ExpenseUncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    budget?: BudgetUpdateOneWithoutExpensesNestedInput
+    createdBy?: UserUpdateOneWithoutExpensesNestedInput
+    carpentryProject?: CarpentryProjectUpdateOneWithoutExpensesNestedInput
+    houseProject?: HouseProjectUpdateOneWithoutExpensesNestedInput
+  }
+
+  export type ExpenseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseCreateManyInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -13062,6 +17506,18 @@ export namespace Prisma {
     none?: CarpentryProjectWhereInput
   }
 
+  export type HouseProjectListRelationFilter = {
+    every?: HouseProjectWhereInput
+    some?: HouseProjectWhereInput
+    none?: HouseProjectWhereInput
+  }
+
+  export type ExpenseListRelationFilter = {
+    every?: ExpenseWhereInput
+    some?: ExpenseWhereInput
+    none?: ExpenseWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -13072,6 +17528,14 @@ export namespace Prisma {
   }
 
   export type CarpentryProjectOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HouseProjectOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ExpenseOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13887,6 +18351,238 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
+  export type EnumHouseProjectStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.HouseProjectStatus | EnumHouseProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.HouseProjectStatus[]
+    notIn?: $Enums.HouseProjectStatus[]
+    not?: NestedEnumHouseProjectStatusFilter<$PrismaModel> | $Enums.HouseProjectStatus
+  }
+
+  export type HouseProjectOrderByRelevanceInput = {
+    fields: HouseProjectOrderByRelevanceFieldEnum | HouseProjectOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type HouseProjectCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    houseName?: SortOrder
+    location?: SortOrder
+    workType?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HouseProjectAvgOrderByAggregateInput = {
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+  }
+
+  export type HouseProjectMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    houseName?: SortOrder
+    location?: SortOrder
+    workType?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HouseProjectMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    houseName?: SortOrder
+    location?: SortOrder
+    workType?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+    notes?: SortOrder
+    photoPath?: SortOrder
+    assignedToId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type HouseProjectSumOrderByAggregateInput = {
+    timeNeeded?: SortOrder
+    materialCosts?: SortOrder
+  }
+
+  export type EnumHouseProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HouseProjectStatus | EnumHouseProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.HouseProjectStatus[]
+    notIn?: $Enums.HouseProjectStatus[]
+    not?: NestedEnumHouseProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.HouseProjectStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHouseProjectStatusFilter<$PrismaModel>
+    _max?: NestedEnumHouseProjectStatusFilter<$PrismaModel>
+  }
+
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type BudgetOrderByRelevanceInput = {
+    fields: BudgetOrderByRelevanceFieldEnum | BudgetOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type BudgetCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    allocatedAmount?: SortOrder
+    periodLabel?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BudgetAvgOrderByAggregateInput = {
+    allocatedAmount?: SortOrder
+  }
+
+  export type BudgetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    allocatedAmount?: SortOrder
+    periodLabel?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BudgetMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    allocatedAmount?: SortOrder
+    periodLabel?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BudgetSumOrderByAggregateInput = {
+    allocatedAmount?: SortOrder
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type BudgetNullableScalarRelationFilter = {
+    is?: BudgetWhereInput | null
+    isNot?: BudgetWhereInput | null
+  }
+
+  export type CarpentryProjectNullableScalarRelationFilter = {
+    is?: CarpentryProjectWhereInput | null
+    isNot?: CarpentryProjectWhereInput | null
+  }
+
+  export type HouseProjectNullableScalarRelationFilter = {
+    is?: HouseProjectWhereInput | null
+    isNot?: HouseProjectWhereInput | null
+  }
+
+  export type ExpenseOrderByRelevanceInput = {
+    fields: ExpenseOrderByRelevanceFieldEnum | ExpenseOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ExpenseCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    vendor?: SortOrder
+    amount?: SortOrder
+    notes?: SortOrder
+    receiptUrl?: SortOrder
+    budgetId?: SortOrder
+    createdById?: SortOrder
+    carpentryProjectId?: SortOrder
+    houseProjectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExpenseAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type ExpenseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    vendor?: SortOrder
+    amount?: SortOrder
+    notes?: SortOrder
+    receiptUrl?: SortOrder
+    budgetId?: SortOrder
+    createdById?: SortOrder
+    carpentryProjectId?: SortOrder
+    houseProjectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExpenseMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    vendor?: SortOrder
+    amount?: SortOrder
+    notes?: SortOrder
+    receiptUrl?: SortOrder
+    budgetId?: SortOrder
+    createdById?: SortOrder
+    carpentryProjectId?: SortOrder
+    houseProjectId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ExpenseSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
   export type ElectronicsRepairCreateNestedManyWithoutRepairerInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -13901,6 +18597,20 @@ export namespace Prisma {
     connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
   }
 
+  export type HouseProjectCreateNestedManyWithoutAssignedToInput = {
+    create?: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput> | HouseProjectCreateWithoutAssignedToInput[] | HouseProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutAssignedToInput | HouseProjectCreateOrConnectWithoutAssignedToInput[]
+    createMany?: HouseProjectCreateManyAssignedToInputEnvelope
+    connect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+  }
+
+  export type ExpenseCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput> | ExpenseCreateWithoutCreatedByInput[] | ExpenseUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCreatedByInput | ExpenseCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ExpenseCreateManyCreatedByInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
   export type ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -13913,6 +18623,20 @@ export namespace Prisma {
     connectOrCreate?: CarpentryProjectCreateOrConnectWithoutAssignedToInput | CarpentryProjectCreateOrConnectWithoutAssignedToInput[]
     createMany?: CarpentryProjectCreateManyAssignedToInputEnvelope
     connect?: CarpentryProjectWhereUniqueInput | CarpentryProjectWhereUniqueInput[]
+  }
+
+  export type HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput = {
+    create?: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput> | HouseProjectCreateWithoutAssignedToInput[] | HouseProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutAssignedToInput | HouseProjectCreateOrConnectWithoutAssignedToInput[]
+    createMany?: HouseProjectCreateManyAssignedToInputEnvelope
+    connect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+  }
+
+  export type ExpenseUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput> | ExpenseCreateWithoutCreatedByInput[] | ExpenseUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCreatedByInput | ExpenseCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ExpenseCreateManyCreatedByInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13955,6 +18679,34 @@ export namespace Prisma {
     deleteMany?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
   }
 
+  export type HouseProjectUpdateManyWithoutAssignedToNestedInput = {
+    create?: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput> | HouseProjectCreateWithoutAssignedToInput[] | HouseProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutAssignedToInput | HouseProjectCreateOrConnectWithoutAssignedToInput[]
+    upsert?: HouseProjectUpsertWithWhereUniqueWithoutAssignedToInput | HouseProjectUpsertWithWhereUniqueWithoutAssignedToInput[]
+    createMany?: HouseProjectCreateManyAssignedToInputEnvelope
+    set?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    disconnect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    delete?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    connect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    update?: HouseProjectUpdateWithWhereUniqueWithoutAssignedToInput | HouseProjectUpdateWithWhereUniqueWithoutAssignedToInput[]
+    updateMany?: HouseProjectUpdateManyWithWhereWithoutAssignedToInput | HouseProjectUpdateManyWithWhereWithoutAssignedToInput[]
+    deleteMany?: HouseProjectScalarWhereInput | HouseProjectScalarWhereInput[]
+  }
+
+  export type ExpenseUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput> | ExpenseCreateWithoutCreatedByInput[] | ExpenseUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCreatedByInput | ExpenseCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutCreatedByInput | ExpenseUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ExpenseCreateManyCreatedByInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutCreatedByInput | ExpenseUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutCreatedByInput | ExpenseUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
   export type ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -13981,6 +18733,34 @@ export namespace Prisma {
     update?: CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput | CarpentryProjectUpdateWithWhereUniqueWithoutAssignedToInput[]
     updateMany?: CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput | CarpentryProjectUpdateManyWithWhereWithoutAssignedToInput[]
     deleteMany?: CarpentryProjectScalarWhereInput | CarpentryProjectScalarWhereInput[]
+  }
+
+  export type HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput = {
+    create?: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput> | HouseProjectCreateWithoutAssignedToInput[] | HouseProjectUncheckedCreateWithoutAssignedToInput[]
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutAssignedToInput | HouseProjectCreateOrConnectWithoutAssignedToInput[]
+    upsert?: HouseProjectUpsertWithWhereUniqueWithoutAssignedToInput | HouseProjectUpsertWithWhereUniqueWithoutAssignedToInput[]
+    createMany?: HouseProjectCreateManyAssignedToInputEnvelope
+    set?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    disconnect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    delete?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    connect?: HouseProjectWhereUniqueInput | HouseProjectWhereUniqueInput[]
+    update?: HouseProjectUpdateWithWhereUniqueWithoutAssignedToInput | HouseProjectUpdateWithWhereUniqueWithoutAssignedToInput[]
+    updateMany?: HouseProjectUpdateManyWithWhereWithoutAssignedToInput | HouseProjectUpdateManyWithWhereWithoutAssignedToInput[]
+    deleteMany?: HouseProjectScalarWhereInput | HouseProjectScalarWhereInput[]
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput> | ExpenseCreateWithoutCreatedByInput[] | ExpenseUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCreatedByInput | ExpenseCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutCreatedByInput | ExpenseUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ExpenseCreateManyCreatedByInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutCreatedByInput | ExpenseUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutCreatedByInput | ExpenseUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -14153,6 +18933,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ExpenseCreateNestedManyWithoutCarpentryProjectInput = {
+    create?: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput> | ExpenseCreateWithoutCarpentryProjectInput[] | ExpenseUncheckedCreateWithoutCarpentryProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCarpentryProjectInput | ExpenseCreateOrConnectWithoutCarpentryProjectInput[]
+    createMany?: ExpenseCreateManyCarpentryProjectInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type ExpenseUncheckedCreateNestedManyWithoutCarpentryProjectInput = {
+    create?: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput> | ExpenseCreateWithoutCarpentryProjectInput[] | ExpenseUncheckedCreateWithoutCarpentryProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCarpentryProjectInput | ExpenseCreateOrConnectWithoutCarpentryProjectInput[]
+    createMany?: ExpenseCreateManyCarpentryProjectInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
   export type NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput = {
     set?: $Enums.CarpentryCustomerType | null
   }
@@ -14189,6 +18983,210 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCarpentryProjectsInput, UserUpdateWithoutCarpentryProjectsInput>, UserUncheckedUpdateWithoutCarpentryProjectsInput>
+  }
+
+  export type ExpenseUpdateManyWithoutCarpentryProjectNestedInput = {
+    create?: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput> | ExpenseCreateWithoutCarpentryProjectInput[] | ExpenseUncheckedCreateWithoutCarpentryProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCarpentryProjectInput | ExpenseCreateOrConnectWithoutCarpentryProjectInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput | ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput[]
+    createMany?: ExpenseCreateManyCarpentryProjectInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutCarpentryProjectInput | ExpenseUpdateWithWhereUniqueWithoutCarpentryProjectInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutCarpentryProjectInput | ExpenseUpdateManyWithWhereWithoutCarpentryProjectInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutCarpentryProjectNestedInput = {
+    create?: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput> | ExpenseCreateWithoutCarpentryProjectInput[] | ExpenseUncheckedCreateWithoutCarpentryProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutCarpentryProjectInput | ExpenseCreateOrConnectWithoutCarpentryProjectInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput | ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput[]
+    createMany?: ExpenseCreateManyCarpentryProjectInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutCarpentryProjectInput | ExpenseUpdateWithWhereUniqueWithoutCarpentryProjectInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutCarpentryProjectInput | ExpenseUpdateManyWithWhereWithoutCarpentryProjectInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutHouseProjectsInput = {
+    create?: XOR<UserCreateWithoutHouseProjectsInput, UserUncheckedCreateWithoutHouseProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHouseProjectsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ExpenseCreateNestedManyWithoutHouseProjectInput = {
+    create?: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput> | ExpenseCreateWithoutHouseProjectInput[] | ExpenseUncheckedCreateWithoutHouseProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutHouseProjectInput | ExpenseCreateOrConnectWithoutHouseProjectInput[]
+    createMany?: ExpenseCreateManyHouseProjectInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type ExpenseUncheckedCreateNestedManyWithoutHouseProjectInput = {
+    create?: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput> | ExpenseCreateWithoutHouseProjectInput[] | ExpenseUncheckedCreateWithoutHouseProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutHouseProjectInput | ExpenseCreateOrConnectWithoutHouseProjectInput[]
+    createMany?: ExpenseCreateManyHouseProjectInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type EnumHouseProjectStatusFieldUpdateOperationsInput = {
+    set?: $Enums.HouseProjectStatus
+  }
+
+  export type UserUpdateOneWithoutHouseProjectsNestedInput = {
+    create?: XOR<UserCreateWithoutHouseProjectsInput, UserUncheckedCreateWithoutHouseProjectsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHouseProjectsInput
+    upsert?: UserUpsertWithoutHouseProjectsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHouseProjectsInput, UserUpdateWithoutHouseProjectsInput>, UserUncheckedUpdateWithoutHouseProjectsInput>
+  }
+
+  export type ExpenseUpdateManyWithoutHouseProjectNestedInput = {
+    create?: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput> | ExpenseCreateWithoutHouseProjectInput[] | ExpenseUncheckedCreateWithoutHouseProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutHouseProjectInput | ExpenseCreateOrConnectWithoutHouseProjectInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput | ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput[]
+    createMany?: ExpenseCreateManyHouseProjectInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutHouseProjectInput | ExpenseUpdateWithWhereUniqueWithoutHouseProjectInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutHouseProjectInput | ExpenseUpdateManyWithWhereWithoutHouseProjectInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutHouseProjectNestedInput = {
+    create?: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput> | ExpenseCreateWithoutHouseProjectInput[] | ExpenseUncheckedCreateWithoutHouseProjectInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutHouseProjectInput | ExpenseCreateOrConnectWithoutHouseProjectInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput | ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput[]
+    createMany?: ExpenseCreateManyHouseProjectInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutHouseProjectInput | ExpenseUpdateWithWhereUniqueWithoutHouseProjectInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutHouseProjectInput | ExpenseUpdateManyWithWhereWithoutHouseProjectInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type ExpenseCreateNestedManyWithoutBudgetInput = {
+    create?: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput> | ExpenseCreateWithoutBudgetInput[] | ExpenseUncheckedCreateWithoutBudgetInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutBudgetInput | ExpenseCreateOrConnectWithoutBudgetInput[]
+    createMany?: ExpenseCreateManyBudgetInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type ExpenseUncheckedCreateNestedManyWithoutBudgetInput = {
+    create?: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput> | ExpenseCreateWithoutBudgetInput[] | ExpenseUncheckedCreateWithoutBudgetInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutBudgetInput | ExpenseCreateOrConnectWithoutBudgetInput[]
+    createMany?: ExpenseCreateManyBudgetInputEnvelope
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type ExpenseUpdateManyWithoutBudgetNestedInput = {
+    create?: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput> | ExpenseCreateWithoutBudgetInput[] | ExpenseUncheckedCreateWithoutBudgetInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutBudgetInput | ExpenseCreateOrConnectWithoutBudgetInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutBudgetInput | ExpenseUpsertWithWhereUniqueWithoutBudgetInput[]
+    createMany?: ExpenseCreateManyBudgetInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutBudgetInput | ExpenseUpdateWithWhereUniqueWithoutBudgetInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutBudgetInput | ExpenseUpdateManyWithWhereWithoutBudgetInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutBudgetNestedInput = {
+    create?: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput> | ExpenseCreateWithoutBudgetInput[] | ExpenseUncheckedCreateWithoutBudgetInput[]
+    connectOrCreate?: ExpenseCreateOrConnectWithoutBudgetInput | ExpenseCreateOrConnectWithoutBudgetInput[]
+    upsert?: ExpenseUpsertWithWhereUniqueWithoutBudgetInput | ExpenseUpsertWithWhereUniqueWithoutBudgetInput[]
+    createMany?: ExpenseCreateManyBudgetInputEnvelope
+    set?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    disconnect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    delete?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+    update?: ExpenseUpdateWithWhereUniqueWithoutBudgetInput | ExpenseUpdateWithWhereUniqueWithoutBudgetInput[]
+    updateMany?: ExpenseUpdateManyWithWhereWithoutBudgetInput | ExpenseUpdateManyWithWhereWithoutBudgetInput[]
+    deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type BudgetCreateNestedOneWithoutExpensesInput = {
+    create?: XOR<BudgetCreateWithoutExpensesInput, BudgetUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: BudgetCreateOrConnectWithoutExpensesInput
+    connect?: BudgetWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutExpensesInput = {
+    create?: XOR<UserCreateWithoutExpensesInput, UserUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExpensesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CarpentryProjectCreateNestedOneWithoutExpensesInput = {
+    create?: XOR<CarpentryProjectCreateWithoutExpensesInput, CarpentryProjectUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutExpensesInput
+    connect?: CarpentryProjectWhereUniqueInput
+  }
+
+  export type HouseProjectCreateNestedOneWithoutExpensesInput = {
+    create?: XOR<HouseProjectCreateWithoutExpensesInput, HouseProjectUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutExpensesInput
+    connect?: HouseProjectWhereUniqueInput
+  }
+
+  export type BudgetUpdateOneWithoutExpensesNestedInput = {
+    create?: XOR<BudgetCreateWithoutExpensesInput, BudgetUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: BudgetCreateOrConnectWithoutExpensesInput
+    upsert?: BudgetUpsertWithoutExpensesInput
+    disconnect?: BudgetWhereInput | boolean
+    delete?: BudgetWhereInput | boolean
+    connect?: BudgetWhereUniqueInput
+    update?: XOR<XOR<BudgetUpdateToOneWithWhereWithoutExpensesInput, BudgetUpdateWithoutExpensesInput>, BudgetUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type UserUpdateOneWithoutExpensesNestedInput = {
+    create?: XOR<UserCreateWithoutExpensesInput, UserUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutExpensesInput
+    upsert?: UserUpsertWithoutExpensesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutExpensesInput, UserUpdateWithoutExpensesInput>, UserUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type CarpentryProjectUpdateOneWithoutExpensesNestedInput = {
+    create?: XOR<CarpentryProjectCreateWithoutExpensesInput, CarpentryProjectUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: CarpentryProjectCreateOrConnectWithoutExpensesInput
+    upsert?: CarpentryProjectUpsertWithoutExpensesInput
+    disconnect?: CarpentryProjectWhereInput | boolean
+    delete?: CarpentryProjectWhereInput | boolean
+    connect?: CarpentryProjectWhereUniqueInput
+    update?: XOR<XOR<CarpentryProjectUpdateToOneWithWhereWithoutExpensesInput, CarpentryProjectUpdateWithoutExpensesInput>, CarpentryProjectUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type HouseProjectUpdateOneWithoutExpensesNestedInput = {
+    create?: XOR<HouseProjectCreateWithoutExpensesInput, HouseProjectUncheckedCreateWithoutExpensesInput>
+    connectOrCreate?: HouseProjectCreateOrConnectWithoutExpensesInput
+    upsert?: HouseProjectUpsertWithoutExpensesInput
+    disconnect?: HouseProjectWhereInput | boolean
+    delete?: HouseProjectWhereInput | boolean
+    connect?: HouseProjectWhereUniqueInput
+    update?: XOR<XOR<HouseProjectUpdateToOneWithWhereWithoutExpensesInput, HouseProjectUpdateWithoutExpensesInput>, HouseProjectUncheckedUpdateWithoutExpensesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -14559,6 +19557,50 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumHouseProjectStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.HouseProjectStatus | EnumHouseProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.HouseProjectStatus[]
+    notIn?: $Enums.HouseProjectStatus[]
+    not?: NestedEnumHouseProjectStatusFilter<$PrismaModel> | $Enums.HouseProjectStatus
+  }
+
+  export type NestedEnumHouseProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.HouseProjectStatus | EnumHouseProjectStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.HouseProjectStatus[]
+    notIn?: $Enums.HouseProjectStatus[]
+    not?: NestedEnumHouseProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.HouseProjectStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumHouseProjectStatusFilter<$PrismaModel>
+    _max?: NestedEnumHouseProjectStatusFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
   export type ElectronicsRepairCreateWithoutRepairerInput = {
     id?: string
     repairId?: number
@@ -14622,6 +19664,7 @@ export namespace Prisma {
     photoPath?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expenses?: ExpenseCreateNestedManyWithoutCarpentryProjectInput
   }
 
   export type CarpentryProjectUncheckedCreateWithoutAssignedToInput = {
@@ -14643,6 +19686,7 @@ export namespace Prisma {
     photoPath?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCarpentryProjectInput
   }
 
   export type CarpentryProjectCreateOrConnectWithoutAssignedToInput = {
@@ -14652,6 +19696,90 @@ export namespace Prisma {
 
   export type CarpentryProjectCreateManyAssignedToInputEnvelope = {
     data: CarpentryProjectCreateManyAssignedToInput | CarpentryProjectCreateManyAssignedToInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HouseProjectCreateWithoutAssignedToInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expenses?: ExpenseCreateNestedManyWithoutHouseProjectInput
+  }
+
+  export type HouseProjectUncheckedCreateWithoutAssignedToInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutHouseProjectInput
+  }
+
+  export type HouseProjectCreateOrConnectWithoutAssignedToInput = {
+    where: HouseProjectWhereUniqueInput
+    create: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput>
+  }
+
+  export type HouseProjectCreateManyAssignedToInputEnvelope = {
+    data: HouseProjectCreateManyAssignedToInput | HouseProjectCreateManyAssignedToInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ExpenseCreateWithoutCreatedByInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    budget?: BudgetCreateNestedOneWithoutExpensesInput
+    carpentryProject?: CarpentryProjectCreateNestedOneWithoutExpensesInput
+    houseProject?: HouseProjectCreateNestedOneWithoutExpensesInput
+  }
+
+  export type ExpenseUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseCreateOrConnectWithoutCreatedByInput = {
+    where: ExpenseWhereUniqueInput
+    create: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ExpenseCreateManyCreatedByInputEnvelope = {
+    data: ExpenseCreateManyCreatedByInput | ExpenseCreateManyCreatedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -14731,6 +19859,77 @@ export namespace Prisma {
     assignedToId?: StringNullableFilter<"CarpentryProject"> | string | null
     createdAt?: DateTimeFilter<"CarpentryProject"> | Date | string
     updatedAt?: DateTimeFilter<"CarpentryProject"> | Date | string
+  }
+
+  export type HouseProjectUpsertWithWhereUniqueWithoutAssignedToInput = {
+    where: HouseProjectWhereUniqueInput
+    update: XOR<HouseProjectUpdateWithoutAssignedToInput, HouseProjectUncheckedUpdateWithoutAssignedToInput>
+    create: XOR<HouseProjectCreateWithoutAssignedToInput, HouseProjectUncheckedCreateWithoutAssignedToInput>
+  }
+
+  export type HouseProjectUpdateWithWhereUniqueWithoutAssignedToInput = {
+    where: HouseProjectWhereUniqueInput
+    data: XOR<HouseProjectUpdateWithoutAssignedToInput, HouseProjectUncheckedUpdateWithoutAssignedToInput>
+  }
+
+  export type HouseProjectUpdateManyWithWhereWithoutAssignedToInput = {
+    where: HouseProjectScalarWhereInput
+    data: XOR<HouseProjectUpdateManyMutationInput, HouseProjectUncheckedUpdateManyWithoutAssignedToInput>
+  }
+
+  export type HouseProjectScalarWhereInput = {
+    AND?: HouseProjectScalarWhereInput | HouseProjectScalarWhereInput[]
+    OR?: HouseProjectScalarWhereInput[]
+    NOT?: HouseProjectScalarWhereInput | HouseProjectScalarWhereInput[]
+    id?: StringFilter<"HouseProject"> | string
+    date?: DateTimeFilter<"HouseProject"> | Date | string
+    houseName?: StringFilter<"HouseProject"> | string
+    location?: StringNullableFilter<"HouseProject"> | string | null
+    workType?: StringFilter<"HouseProject"> | string
+    description?: StringFilter<"HouseProject"> | string
+    status?: EnumHouseProjectStatusFilter<"HouseProject"> | $Enums.HouseProjectStatus
+    timeNeeded?: IntNullableFilter<"HouseProject"> | number | null
+    materialCosts?: DecimalNullableFilter<"HouseProject"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"HouseProject"> | string | null
+    photoPath?: StringNullableFilter<"HouseProject"> | string | null
+    assignedToId?: StringNullableFilter<"HouseProject"> | string | null
+    createdAt?: DateTimeFilter<"HouseProject"> | Date | string
+    updatedAt?: DateTimeFilter<"HouseProject"> | Date | string
+  }
+
+  export type ExpenseUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: ExpenseWhereUniqueInput
+    update: XOR<ExpenseUpdateWithoutCreatedByInput, ExpenseUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<ExpenseCreateWithoutCreatedByInput, ExpenseUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ExpenseUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: ExpenseWhereUniqueInput
+    data: XOR<ExpenseUpdateWithoutCreatedByInput, ExpenseUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type ExpenseUpdateManyWithWhereWithoutCreatedByInput = {
+    where: ExpenseScalarWhereInput
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type ExpenseScalarWhereInput = {
+    AND?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+    OR?: ExpenseScalarWhereInput[]
+    NOT?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+    id?: StringFilter<"Expense"> | string
+    date?: DateTimeFilter<"Expense"> | Date | string
+    title?: StringFilter<"Expense"> | string
+    vendor?: StringNullableFilter<"Expense"> | string | null
+    amount?: DecimalFilter<"Expense"> | Decimal | DecimalJsLike | number | string
+    notes?: StringNullableFilter<"Expense"> | string | null
+    receiptUrl?: StringNullableFilter<"Expense"> | string | null
+    budgetId?: StringNullableFilter<"Expense"> | string | null
+    createdById?: StringNullableFilter<"Expense"> | string | null
+    carpentryProjectId?: StringNullableFilter<"Expense"> | string | null
+    houseProjectId?: StringNullableFilter<"Expense"> | string | null
+    createdAt?: DateTimeFilter<"Expense"> | Date | string
+    updatedAt?: DateTimeFilter<"Expense"> | Date | string
   }
 
   export type RepairPartCreateWithoutRepairInput = {
@@ -14960,6 +20159,8 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutElectronicsRepairsInput = {
@@ -14969,6 +20170,8 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutElectronicsRepairsInput = {
@@ -14994,6 +20197,8 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutElectronicsRepairsInput = {
@@ -15003,6 +20208,8 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCarpentryProjectsInput = {
@@ -15012,6 +20219,8 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+    houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCarpentryProjectsInput = {
@@ -15021,11 +20230,53 @@ export namespace Prisma {
     role?: string | null
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+    houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCarpentryProjectsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCarpentryProjectsInput, UserUncheckedCreateWithoutCarpentryProjectsInput>
+  }
+
+  export type ExpenseCreateWithoutCarpentryProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    budget?: BudgetCreateNestedOneWithoutExpensesInput
+    createdBy?: UserCreateNestedOneWithoutExpensesInput
+    houseProject?: HouseProjectCreateNestedOneWithoutExpensesInput
+  }
+
+  export type ExpenseUncheckedCreateWithoutCarpentryProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseCreateOrConnectWithoutCarpentryProjectInput = {
+    where: ExpenseWhereUniqueInput
+    create: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput>
+  }
+
+  export type ExpenseCreateManyCarpentryProjectInputEnvelope = {
+    data: ExpenseCreateManyCarpentryProjectInput | ExpenseCreateManyCarpentryProjectInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutCarpentryProjectsInput = {
@@ -15046,6 +20297,8 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+    houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCarpentryProjectsInput = {
@@ -15055,6 +20308,500 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
+    houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput = {
+    where: ExpenseWhereUniqueInput
+    update: XOR<ExpenseUpdateWithoutCarpentryProjectInput, ExpenseUncheckedUpdateWithoutCarpentryProjectInput>
+    create: XOR<ExpenseCreateWithoutCarpentryProjectInput, ExpenseUncheckedCreateWithoutCarpentryProjectInput>
+  }
+
+  export type ExpenseUpdateWithWhereUniqueWithoutCarpentryProjectInput = {
+    where: ExpenseWhereUniqueInput
+    data: XOR<ExpenseUpdateWithoutCarpentryProjectInput, ExpenseUncheckedUpdateWithoutCarpentryProjectInput>
+  }
+
+  export type ExpenseUpdateManyWithWhereWithoutCarpentryProjectInput = {
+    where: ExpenseScalarWhereInput
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutCarpentryProjectInput>
+  }
+
+  export type UserCreateWithoutHouseProjectsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutHouseProjectsInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutHouseProjectsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutHouseProjectsInput, UserUncheckedCreateWithoutHouseProjectsInput>
+  }
+
+  export type ExpenseCreateWithoutHouseProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    budget?: BudgetCreateNestedOneWithoutExpensesInput
+    createdBy?: UserCreateNestedOneWithoutExpensesInput
+    carpentryProject?: CarpentryProjectCreateNestedOneWithoutExpensesInput
+  }
+
+  export type ExpenseUncheckedCreateWithoutHouseProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseCreateOrConnectWithoutHouseProjectInput = {
+    where: ExpenseWhereUniqueInput
+    create: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput>
+  }
+
+  export type ExpenseCreateManyHouseProjectInputEnvelope = {
+    data: ExpenseCreateManyHouseProjectInput | ExpenseCreateManyHouseProjectInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutHouseProjectsInput = {
+    update: XOR<UserUpdateWithoutHouseProjectsInput, UserUncheckedUpdateWithoutHouseProjectsInput>
+    create: XOR<UserCreateWithoutHouseProjectsInput, UserUncheckedCreateWithoutHouseProjectsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHouseProjectsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHouseProjectsInput, UserUncheckedUpdateWithoutHouseProjectsInput>
+  }
+
+  export type UserUpdateWithoutHouseProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutHouseProjectsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput = {
+    where: ExpenseWhereUniqueInput
+    update: XOR<ExpenseUpdateWithoutHouseProjectInput, ExpenseUncheckedUpdateWithoutHouseProjectInput>
+    create: XOR<ExpenseCreateWithoutHouseProjectInput, ExpenseUncheckedCreateWithoutHouseProjectInput>
+  }
+
+  export type ExpenseUpdateWithWhereUniqueWithoutHouseProjectInput = {
+    where: ExpenseWhereUniqueInput
+    data: XOR<ExpenseUpdateWithoutHouseProjectInput, ExpenseUncheckedUpdateWithoutHouseProjectInput>
+  }
+
+  export type ExpenseUpdateManyWithWhereWithoutHouseProjectInput = {
+    where: ExpenseScalarWhereInput
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutHouseProjectInput>
+  }
+
+  export type ExpenseCreateWithoutBudgetInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutExpensesInput
+    carpentryProject?: CarpentryProjectCreateNestedOneWithoutExpensesInput
+    houseProject?: HouseProjectCreateNestedOneWithoutExpensesInput
+  }
+
+  export type ExpenseUncheckedCreateWithoutBudgetInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseCreateOrConnectWithoutBudgetInput = {
+    where: ExpenseWhereUniqueInput
+    create: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput>
+  }
+
+  export type ExpenseCreateManyBudgetInputEnvelope = {
+    data: ExpenseCreateManyBudgetInput | ExpenseCreateManyBudgetInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ExpenseUpsertWithWhereUniqueWithoutBudgetInput = {
+    where: ExpenseWhereUniqueInput
+    update: XOR<ExpenseUpdateWithoutBudgetInput, ExpenseUncheckedUpdateWithoutBudgetInput>
+    create: XOR<ExpenseCreateWithoutBudgetInput, ExpenseUncheckedCreateWithoutBudgetInput>
+  }
+
+  export type ExpenseUpdateWithWhereUniqueWithoutBudgetInput = {
+    where: ExpenseWhereUniqueInput
+    data: XOR<ExpenseUpdateWithoutBudgetInput, ExpenseUncheckedUpdateWithoutBudgetInput>
+  }
+
+  export type ExpenseUpdateManyWithWhereWithoutBudgetInput = {
+    where: ExpenseScalarWhereInput
+    data: XOR<ExpenseUpdateManyMutationInput, ExpenseUncheckedUpdateManyWithoutBudgetInput>
+  }
+
+  export type BudgetCreateWithoutExpensesInput = {
+    id?: string
+    name: string
+    allocatedAmount: Decimal | DecimalJsLike | number | string
+    periodLabel?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BudgetUncheckedCreateWithoutExpensesInput = {
+    id?: string
+    name: string
+    allocatedAmount: Decimal | DecimalJsLike | number | string
+    periodLabel?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BudgetCreateOrConnectWithoutExpensesInput = {
+    where: BudgetWhereUniqueInput
+    create: XOR<BudgetCreateWithoutExpensesInput, BudgetUncheckedCreateWithoutExpensesInput>
+  }
+
+  export type UserCreateWithoutExpensesInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
+  }
+
+  export type UserUncheckedCreateWithoutExpensesInput = {
+    id?: string
+    email?: string | null
+    googleId: string
+    role?: string | null
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
+  }
+
+  export type UserCreateOrConnectWithoutExpensesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutExpensesInput, UserUncheckedCreateWithoutExpensesInput>
+  }
+
+  export type CarpentryProjectCreateWithoutExpensesInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: UserCreateNestedOneWithoutCarpentryProjectsInput
+  }
+
+  export type CarpentryProjectUncheckedCreateWithoutExpensesInput = {
+    id?: string
+    date: Date | string
+    acceptedBy?: string | null
+    customerType?: $Enums.CarpentryCustomerType | null
+    organizationName?: string | null
+    customerName?: string | null
+    phoneNumber?: string | null
+    gender?: $Enums.CarpentryGender | null
+    orderType?: $Enums.CarpentryOrderType | null
+    timeNeeded?: number | null
+    itemToRepair?: string | null
+    problemDescription?: string | null
+    projectDescription?: string | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: boolean | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CarpentryProjectCreateOrConnectWithoutExpensesInput = {
+    where: CarpentryProjectWhereUniqueInput
+    create: XOR<CarpentryProjectCreateWithoutExpensesInput, CarpentryProjectUncheckedCreateWithoutExpensesInput>
+  }
+
+  export type HouseProjectCreateWithoutExpensesInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignedTo?: UserCreateNestedOneWithoutHouseProjectsInput
+  }
+
+  export type HouseProjectUncheckedCreateWithoutExpensesInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    assignedToId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HouseProjectCreateOrConnectWithoutExpensesInput = {
+    where: HouseProjectWhereUniqueInput
+    create: XOR<HouseProjectCreateWithoutExpensesInput, HouseProjectUncheckedCreateWithoutExpensesInput>
+  }
+
+  export type BudgetUpsertWithoutExpensesInput = {
+    update: XOR<BudgetUpdateWithoutExpensesInput, BudgetUncheckedUpdateWithoutExpensesInput>
+    create: XOR<BudgetCreateWithoutExpensesInput, BudgetUncheckedCreateWithoutExpensesInput>
+    where?: BudgetWhereInput
+  }
+
+  export type BudgetUpdateToOneWithWhereWithoutExpensesInput = {
+    where?: BudgetWhereInput
+    data: XOR<BudgetUpdateWithoutExpensesInput, BudgetUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type BudgetUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BudgetUncheckedUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    allocatedAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    periodLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutExpensesInput = {
+    update: XOR<UserUpdateWithoutExpensesInput, UserUncheckedUpdateWithoutExpensesInput>
+    create: XOR<UserCreateWithoutExpensesInput, UserUncheckedCreateWithoutExpensesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutExpensesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutExpensesInput, UserUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type UserUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: StringFieldUpdateOperationsInput | string
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+  }
+
+  export type CarpentryProjectUpsertWithoutExpensesInput = {
+    update: XOR<CarpentryProjectUpdateWithoutExpensesInput, CarpentryProjectUncheckedUpdateWithoutExpensesInput>
+    create: XOR<CarpentryProjectCreateWithoutExpensesInput, CarpentryProjectUncheckedCreateWithoutExpensesInput>
+    where?: CarpentryProjectWhereInput
+  }
+
+  export type CarpentryProjectUpdateToOneWithWhereWithoutExpensesInput = {
+    where?: CarpentryProjectWhereInput
+    data: XOR<CarpentryProjectUpdateWithoutExpensesInput, CarpentryProjectUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type CarpentryProjectUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: UserUpdateOneWithoutCarpentryProjectsNestedInput
+  }
+
+  export type CarpentryProjectUncheckedUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    acceptedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    customerType?: NullableEnumCarpentryCustomerTypeFieldUpdateOperationsInput | $Enums.CarpentryCustomerType | null
+    organizationName?: NullableStringFieldUpdateOperationsInput | string | null
+    customerName?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableEnumCarpentryGenderFieldUpdateOperationsInput | $Enums.CarpentryGender | null
+    orderType?: NullableEnumCarpentryOrderTypeFieldUpdateOperationsInput | $Enums.CarpentryOrderType | null
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    itemToRepair?: NullableStringFieldUpdateOperationsInput | string | null
+    problemDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    projectDescription?: NullableStringFieldUpdateOperationsInput | string | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HouseProjectUpsertWithoutExpensesInput = {
+    update: XOR<HouseProjectUpdateWithoutExpensesInput, HouseProjectUncheckedUpdateWithoutExpensesInput>
+    create: XOR<HouseProjectCreateWithoutExpensesInput, HouseProjectUncheckedCreateWithoutExpensesInput>
+    where?: HouseProjectWhereInput
+  }
+
+  export type HouseProjectUpdateToOneWithWhereWithoutExpensesInput = {
+    where?: HouseProjectWhereInput
+    data: XOR<HouseProjectUpdateWithoutExpensesInput, HouseProjectUncheckedUpdateWithoutExpensesInput>
+  }
+
+  export type HouseProjectUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedTo?: UserUpdateOneWithoutHouseProjectsNestedInput
+  }
+
+  export type HouseProjectUncheckedUpdateWithoutExpensesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedToId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ElectronicsRepairCreateManyRepairerInput = {
@@ -15091,6 +20838,37 @@ export namespace Prisma {
     materialCosts?: Decimal | DecimalJsLike | number | string | null
     paidByCustomer?: boolean | null
     photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HouseProjectCreateManyAssignedToInput = {
+    id?: string
+    date: Date | string
+    houseName: string
+    location?: string | null
+    workType: string
+    description: string
+    status?: $Enums.HouseProjectStatus
+    timeNeeded?: number | null
+    materialCosts?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    photoPath?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseCreateManyCreatedByInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15164,6 +20942,7 @@ export namespace Prisma {
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUpdateManyWithoutCarpentryProjectNestedInput
   }
 
   export type CarpentryProjectUncheckedUpdateWithoutAssignedToInput = {
@@ -15185,6 +20964,7 @@ export namespace Prisma {
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUncheckedUpdateManyWithoutCarpentryProjectNestedInput
   }
 
   export type CarpentryProjectUncheckedUpdateManyWithoutAssignedToInput = {
@@ -15204,6 +20984,101 @@ export namespace Prisma {
     materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     paidByCustomer?: NullableBoolFieldUpdateOperationsInput | boolean | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HouseProjectUpdateWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUpdateManyWithoutHouseProjectNestedInput
+  }
+
+  export type HouseProjectUncheckedUpdateWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expenses?: ExpenseUncheckedUpdateManyWithoutHouseProjectNestedInput
+  }
+
+  export type HouseProjectUncheckedUpdateManyWithoutAssignedToInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    houseName?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    workType?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumHouseProjectStatusFieldUpdateOperationsInput | $Enums.HouseProjectStatus
+    timeNeeded?: NullableIntFieldUpdateOperationsInput | number | null
+    materialCosts?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    budget?: BudgetUpdateOneWithoutExpensesNestedInput
+    carpentryProject?: CarpentryProjectUpdateOneWithoutExpensesNestedInput
+    houseProject?: HouseProjectUpdateOneWithoutExpensesNestedInput
+  }
+
+  export type ExpenseUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15268,6 +21143,186 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     repairId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseCreateManyCarpentryProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseUpdateWithoutCarpentryProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    budget?: BudgetUpdateOneWithoutExpensesNestedInput
+    createdBy?: UserUpdateOneWithoutExpensesNestedInput
+    houseProject?: HouseProjectUpdateOneWithoutExpensesNestedInput
+  }
+
+  export type ExpenseUncheckedUpdateWithoutCarpentryProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutCarpentryProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseCreateManyHouseProjectInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    budgetId?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseUpdateWithoutHouseProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    budget?: BudgetUpdateOneWithoutExpensesNestedInput
+    createdBy?: UserUpdateOneWithoutExpensesNestedInput
+    carpentryProject?: CarpentryProjectUpdateOneWithoutExpensesNestedInput
+  }
+
+  export type ExpenseUncheckedUpdateWithoutHouseProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutHouseProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    budgetId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseCreateManyBudgetInput = {
+    id?: string
+    date: Date | string
+    title: string
+    vendor?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    notes?: string | null
+    receiptUrl?: string | null
+    createdById?: string | null
+    carpentryProjectId?: string | null
+    houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ExpenseUpdateWithoutBudgetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutExpensesNestedInput
+    carpentryProject?: CarpentryProjectUpdateOneWithoutExpensesNestedInput
+    houseProject?: HouseProjectUpdateOneWithoutExpensesNestedInput
+  }
+
+  export type ExpenseUncheckedUpdateWithoutBudgetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ExpenseUncheckedUpdateManyWithoutBudgetInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    title?: StringFieldUpdateOperationsInput | string
+    vendor?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    receiptUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

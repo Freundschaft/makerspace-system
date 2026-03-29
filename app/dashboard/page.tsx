@@ -5,6 +5,7 @@ import {
   CalendarClock,
   ClipboardList,
   Hammer,
+  House,
   Settings,
   Smartphone,
   Users,
@@ -25,12 +26,14 @@ export default async function Dashboard() {
     bicycleRentalsCount,
     electronicsRepairsCount,
     carpentryProjectsCount,
+    houseProjectsCount,
   ] = await Promise.all([
     prisma.teamMember.count(),
     prisma.bicycleRepair.count(),
     prisma.bicycleRental.count(),
     prisma.electronicsRepair.count(),
     prisma.carpentryProject.count(),
+    prisma.houseProject.count(),
   ]);
 
   const stats = [
@@ -63,6 +66,12 @@ export default async function Dashboard() {
       value: carpentryProjectsCount,
       href: "/carpentry/projects",
       icon: Hammer,
+    },
+    {
+      label: t("dashboard.stats.houseProjects", "House Projects"),
+      value: houseProjectsCount,
+      href: "/house-projects",
+      icon: House,
     },
   ];
 

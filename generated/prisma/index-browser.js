@@ -245,6 +245,49 @@ exports.Prisma.CarpentryProjectScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.HouseProjectScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  houseName: 'houseName',
+  location: 'location',
+  workType: 'workType',
+  description: 'description',
+  status: 'status',
+  timeNeeded: 'timeNeeded',
+  materialCosts: 'materialCosts',
+  notes: 'notes',
+  photoPath: 'photoPath',
+  assignedToId: 'assignedToId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BudgetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  allocatedAmount: 'allocatedAmount',
+  periodLabel: 'periodLabel',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  title: 'title',
+  vendor: 'vendor',
+  amount: 'amount',
+  notes: 'notes',
+  receiptUrl: 'receiptUrl',
+  budgetId: 'budgetId',
+  createdById: 'createdById',
+  carpentryProjectId: 'carpentryProjectId',
+  houseProjectId: 'houseProjectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -334,6 +377,36 @@ exports.Prisma.CarpentryProjectOrderByRelevanceFieldEnum = {
   projectDescription: 'projectDescription',
   photoPath: 'photoPath',
   assignedToId: 'assignedToId'
+};
+
+exports.Prisma.HouseProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  houseName: 'houseName',
+  location: 'location',
+  workType: 'workType',
+  description: 'description',
+  notes: 'notes',
+  photoPath: 'photoPath',
+  assignedToId: 'assignedToId'
+};
+
+exports.Prisma.BudgetOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  periodLabel: 'periodLabel',
+  notes: 'notes'
+};
+
+exports.Prisma.ExpenseOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  vendor: 'vendor',
+  notes: 'notes',
+  receiptUrl: 'receiptUrl',
+  budgetId: 'budgetId',
+  createdById: 'createdById',
+  carpentryProjectId: 'carpentryProjectId',
+  houseProjectId: 'houseProjectId'
 };
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
@@ -438,6 +511,13 @@ exports.CarpentryOrderType = exports.$Enums.CarpentryOrderType = {
   PROJECT: 'PROJECT'
 };
 
+exports.HouseProjectStatus = exports.$Enums.HouseProjectStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -447,7 +527,10 @@ exports.Prisma.ModelName = {
   BicycleRental: 'BicycleRental',
   TeamMember: 'TeamMember',
   ElectronicsRepair: 'ElectronicsRepair',
-  CarpentryProject: 'CarpentryProject'
+  CarpentryProject: 'CarpentryProject',
+  HouseProject: 'HouseProject',
+  Budget: 'Budget',
+  Expense: 'Expense'
 };
 
 /**

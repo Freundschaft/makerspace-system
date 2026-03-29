@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
 if (!process.env.NEXTAUTH_URL && process.env.NODE_ENV !== "production") {
-  process.env.NEXTAUTH_URL = "http://localhost:3000";
+  process.env.NEXTAUTH_URL = process.env.DEV_SERVER_ORIGIN || "http://localhost:3000";
 }
 
 const handler = NextAuth(authOptions);
