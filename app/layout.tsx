@@ -4,6 +4,7 @@ import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { Layout } from "@/components/Layout";
+import { authOptions } from "@/lib/auth-options";
 import { getServerI18n } from "@/lib/i18n/server";
 import { I18nProvider } from "./components/I18nProvider";
 
@@ -27,7 +28,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const { locale, messages } = await getServerI18n();
   const dir = locale === "ar" || locale === "fa" ? "rtl" : "ltr";
 

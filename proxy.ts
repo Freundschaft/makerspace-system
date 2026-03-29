@@ -10,24 +10,45 @@ import {
   removeLocaleFromPathname,
 } from "@/lib/i18n/config";
 
+function getPreferredLocale(acceptLanguage: string): Locale | null {
+  if (!acceptLanguage) {
+    return null;
+  }
+
+  const preferredLocales = acceptLanguage
+    .split(",")
+    .map((entry) => {
+      const [languageTag, ...params] = entry.trim().toLowerCase().split(";");
+      const qualityParam = params.find((param) => param.trim().startsWith("q="));
+      const quality = qualityParam ? Number.parseFloat(qualityParam.split("=")[1] ?? "1") : 1;
+
+      return {
+        locale: languageTag.split("-")[0],
+        quality: Number.isFinite(quality) ? quality : 0,
+      };
+    })
+    .sort((a, b) => b.quality - a.quality);
+
+  for (const { locale } of preferredLocales) {
+    if (isLocale(locale)) {
+      return locale;
+    }
+  }
+
+  return null;
+}
+
 function detectLocale(request: NextRequest): Locale {
   const localeCookie = request.cookies.get("NEXT_LOCALE")?.value;
   if (isLocale(localeCookie)) {
     return localeCookie;
   }
 
-  const acceptLanguage = request.headers.get("accept-language")?.toLowerCase() ?? "";
-  if (acceptLanguage.includes("fr")) {
-    return "fr";
-  }
-  if (acceptLanguage.includes("el")) {
-    return "el";
-  }
-  if (acceptLanguage.includes("fa")) {
-    return "fa";
-  }
-  if (acceptLanguage.includes("ar")) {
-    return "ar";
+  const preferredLocale = getPreferredLocale(
+    request.headers.get("accept-language") ?? "",
+  );
+  if (preferredLocale) {
+    return preferredLocale;
   }
 
   return defaultLocale;

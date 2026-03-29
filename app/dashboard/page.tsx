@@ -11,11 +11,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth-options";
 import { prisma } from "@/lib/prisma";
 import { getServerI18n } from "@/lib/i18n/server";
 
 export default async function Dashboard() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   const { t } = await getServerI18n();
   const today = new Date().toLocaleDateString();
   const [
