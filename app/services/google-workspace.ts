@@ -75,12 +75,13 @@ export class GoogleWorkspaceService {
   }
 
   // Update a user in Google Workspace
-  async updateUser(teamMember: TeamMember) {
+  async updateUser(teamMember: TeamMember, currentEmail?: string) {
     try {
       const response = await admin.users.update({
         auth: this.authClient,
-        userKey: teamMember.email,
+        userKey: currentEmail || teamMember.email,
         requestBody: {
+          primaryEmail: teamMember.email,
           name: {
             familyName: teamMember.familyName,
             givenName: teamMember.givenNames,
@@ -189,7 +190,9 @@ export class GoogleWorkspaceService {
       });
 
       const googleUsers = response.data.users || [];
-      const dbEmails = new Set(teamMembers.map(member => member.email));
+      const existingMembersByEmail = new Map(
+        teamMembers.map((member) => [member.email, member])
+      );
 
       // Create or update users in our database based on Google Workspace data
       for (const googleUser of googleUsers) {
@@ -203,23 +206,25 @@ export class GoogleWorkspaceService {
           photoLength: photoPath ? photoPath.length : 0,
         });
 
+        const existingMember = existingMembersByEmail.get(googleUser.primaryEmail);
         const teamMemberData = {
           email: googleUser.primaryEmail,
           familyName: googleUser.name?.familyName || '',
           givenNames: googleUser.name?.givenName || '',
           nationality: '', // Not available in Google Workspace
           photoPath: photoPath,
-          status: googleUser.suspended ? TeamMemberStatus.INACTIVE : TeamMemberStatus.ACTIVE,
-          startDate: new Date(), // Not available in Google Workspace
-          endDate: null,
+          googleAccountActive: !googleUser.suspended,
+          status: existingMember?.status ?? TeamMemberStatus.ACTIVE,
+          startDate: existingMember?.startDate ?? new Date(), // Not available in Google Workspace
+          endDate: existingMember?.endDate ?? null,
           department: googleUser.orgUnitPath?.split('/').pop() || 'Unassigned',
           phone: googleUser.phones?.[0]?.value || '',
-          homeAddress: googleUser.addresses?.[0]?.value || null,
-          dateOfBirth: new Date(), // Not available in Google Workspace
-          legalStatus: '', // Not available in Google Workspace
+          homeAddress: googleUser.addresses?.[0]?.value || existingMember?.homeAddress || null,
+          dateOfBirth: existingMember?.dateOfBirth ?? new Date(), // Not available in Google Workspace
+          legalStatus: existingMember?.legalStatus ?? '', // Not available in Google Workspace
         };
 
-        if (dbEmails.has(googleUser.primaryEmail)) {
+        if (existingMember) {
           // Update existing user
           await prisma.teamMember.update({
             where: { email: googleUser.primaryEmail },

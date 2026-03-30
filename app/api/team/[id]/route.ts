@@ -33,6 +33,17 @@ export async function PUT(
       );
     }
 
+    const existingTeamMember = await prisma.teamMember.findUnique({
+      where: { id },
+    });
+
+    if (!existingTeamMember) {
+      return NextResponse.json(
+        { error: "Team member not found" },
+        { status: 404 }
+      );
+    }
+
     const updatedTeamMember = await prisma.teamMember.update({
       where: { id },
       data: {
@@ -55,7 +66,15 @@ export async function PUT(
 
     try {
       const googleWorkspace = await GoogleWorkspaceService.getInstance();
-      await googleWorkspace.updateUser(updatedTeamMember);
+      await googleWorkspace.updateUser(updatedTeamMember, existingTeamMember.email);
+
+      if (existingTeamMember.googleAccountActive !== updatedTeamMember.googleAccountActive) {
+        if (updatedTeamMember.googleAccountActive) {
+          await googleWorkspace.reactivateUser(updatedTeamMember.email);
+        } else {
+          await googleWorkspace.suspendUser(updatedTeamMember.email);
+        }
+      }
     } catch (googleError) {
       console.error("Error updating Google Workspace user:", googleError);
     }

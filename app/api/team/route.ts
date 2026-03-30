@@ -72,6 +72,9 @@ export async function POST(request: NextRequest) {
     try {
       const googleWorkspace = await GoogleWorkspaceService.getInstance();
       await googleWorkspace.createUser(teamMember);
+      if (!teamMember.googleAccountActive) {
+        await googleWorkspace.suspendUser(teamMember.email);
+      }
     } catch (googleError) {
       console.error("Error creating Google Workspace user:", googleError);
       await prisma.teamMember.delete({
