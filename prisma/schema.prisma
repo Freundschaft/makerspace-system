@@ -12,16 +12,18 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id       String     @id @default(uuid())
-  email    String?
-  googleId String     @unique
-  role     String?
-  enabled  Boolean?
+  id                  String              @id @default(uuid())
+  email               String?
+  googleId            String              @unique
+  role                String?
+  enabled             Boolean?
+  electronicsRepairs  ElectronicsRepair[]
+  carpentryProjects   CarpentryProject[]
+  houseProjects       HouseProject[]
+  expenses            Expense[]
 }
 
 model ProblemType {
@@ -47,6 +49,9 @@ model BicycleRepair {
   partsUsed       RepairPart[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([receivedDate])
+  @@index([status, receivedDate])
 }
 
 model Part {
@@ -102,6 +107,9 @@ model BicycleRental {
   signature     String?      @db.Text
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
+
+  @@index([startDate])
+  @@index([status, startDate])
 }
 
 enum TeamMemberStatus {
@@ -116,6 +124,7 @@ model TeamMember {
   nationality  String
   photoPath    String?         @db.Text
   status       TeamMemberStatus @default(ACTIVE)
+  googleAccountActive Boolean  @default(true)
   startDate    DateTime
   endDate      DateTime?
   department   String
@@ -126,4 +135,209 @@ model TeamMember {
   legalStatus  String
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
+
+  @@index([familyName, givenNames])
 }
+
+enum ElectronicsRepairStatus {
+  UNCHECKED
+  CHECKED
+  IN_PROGRESS
+  READY_FOR_PICKUP
+  DONE
+  PICKED_UP
+  NO_WAY_TO_FIX
+}
+
+enum ElectronicsCategory {
+  PHONE
+  TABLET
+  HEADPHONES
+  HEATER
+  SPEAKER
+  HAIR_CLIPPER
+  COOLER
+  POWER_BANK
+  KETTLE
+  LAPTOP
+  MULTI_SOCKET
+  PIZZA_PAN_CABLE
+  PAN
+  GLASSES
+  AUX
+  WATCH
+  ADAPTOR
+  HANDSFREE
+  CABLE
+  HAIR_CUTTER
+  HAIR_DRYER
+  FAN
+  PRINTER
+  ELECTRONIC_CIGARETTE
+  STOVE
+  PIZZA_PAN
+  WIRELESS
+  EAR_PAD
+  SMART_WATCH
+  XBOX360
+  TOASTER
+  TAILOR_MACHINE
+  BATTERY
+  PHONE_CASE
+  BRACELET
+  TESBIH
+  HAND_MIXER
+  COMPUTER
+  SEWING_MACHINE
+  WATER_HEATER
+  PUMP
+  KEYBOARD
+  PLUG
+  WATER_BOILER
+  THERAPY
+  COFFEE_MAKER
+  KITCHEN
+  BOARD
+  MAT
+  RADIO
+  VACUUM_CLEANER
+  OTHER
+}
+
+model ElectronicsRepair {
+  id           String                   @id @default(uuid())
+  repairId     Int                      @unique @default(autoincrement())
+  customerName String
+  category     ElectronicsCategory
+  item         String?
+  whatsapp     String?
+  serialNumber String?                  @db.Text
+  status       ElectronicsRepairStatus  @default(UNCHECKED)
+  repairable   Boolean?
+  notes        String?                  @db.Text
+  photoPath    String?                  @db.Text
+  createdDate  DateTime                 @default(now())
+  repairerId   String?
+  repairer     User?                    @relation(fields: [repairerId], references: [id])
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@index([createdDate])
+  @@index([status, createdDate])
+  @@index([repairerId])
+}
+
+enum CarpentryCustomerType {
+  PRIVATE_PERSON
+  ORGANIZATION
+  BARBERSHOP
+  HOUSE
+}
+
+enum CarpentryOrderType {
+  REPAIR_ORDER
+  PROJECT
+}
+
+enum CarpentryGender {
+  FEMALE
+  MALE
+}
+
+model CarpentryProject {
+  id                String                  @id @default(uuid())
+  date              DateTime
+  acceptedBy        String?
+  customerType      CarpentryCustomerType?
+  organizationName  String?                 @db.Text
+  customerName      String?
+  phoneNumber       String?                 @db.Text
+  gender            CarpentryGender?
+  orderType         CarpentryOrderType?
+  timeNeeded        Int?
+  itemToRepair      String?                 @db.Text
+  problemDescription String?                @db.Text
+  projectDescription String?                @db.Text
+  materialCosts     Decimal?                @db.Decimal(10, 2)
+  paidByCustomer    Boolean?
+  photoPath         String?                 @db.Text
+  assignedToId      String?
+  assignedTo        User?                   @relation(fields: [assignedToId], references: [id])
+  expenses          Expense[]
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  @@index([date])
+  @@index([assignedToId])
+}
+
+enum HouseProjectStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model HouseProject {
+  id            String             @id @default(uuid())
+  date          DateTime
+  houseName     String
+  location      String?            @db.Text
+  workType      String
+  description   String             @db.Text
+  status        HouseProjectStatus @default(OPEN)
+  timeNeeded    Int?
+  materialCosts Decimal?           @db.Decimal(10, 2)
+  notes         String?            @db.Text
+  photoPath     String?            @db.Text
+  assignedToId  String?
+  assignedTo    User?              @relation(fields: [assignedToId], references: [id])
+  expenses      Expense[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@index([date])
+  @@index([status, date])
+  @@index([houseName])
+  @@index([assignedToId])
+}
+
+model Budget {
+  id              String    @id @default(uuid())
+  name            String
+  allocatedAmount Decimal   @db.Decimal(10, 2)
+  periodLabel     String?
+  notes           String?   @db.Text
+  expenses        Expense[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([name])
+}
+
+model Expense {
+  id          String    @id @default(uuid())
+  date        DateTime
+  title       String
+  vendor      String?
+  amount      Decimal   @db.Decimal(10, 2)
+  notes       String?   @db.Text
+  receiptUrl  String?   @db.Text
+  budgetId    String?
+  budget      Budget?   @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+  createdById String?
+  createdBy   User?     @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  carpentryProjectId String?
+  carpentryProject   CarpentryProject? @relation(fields: [carpentryProjectId], references: [id], onDelete: SetNull)
+  houseProjectId     String?
+  houseProject       HouseProject?     @relation(fields: [houseProjectId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([date])
+  @@index([budgetId, date])
+  @@index([createdById])
+  @@index([carpentryProjectId])
+  @@index([houseProjectId])
+}
+

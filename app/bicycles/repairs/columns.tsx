@@ -1,22 +1,9 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
 
-const problemTypeLabels: Record<string, string> = {
-  FLAT_TIRE: "Flat Tire",
-  BRAKE_ISSUES: "Brake Issues",
-  CHAIN_ISSUES: "Chain Issues",
-  GEAR_ISSUES: "Gear Issues",
-  WHEEL_ALIGNMENT: "Wheel Alignment",
-  FRAME_DAMAGE: "Frame Damage",
-  SADDLE_ISSUES: "Saddle Issues",
-  HANDLEBAR_ISSUES: "Handlebar Issues",
-  PEDAL_ISSUES: "Pedal Issues",
-  OTHER: "Other",
-}
+type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
 export type Repair = {
   id: string
@@ -36,10 +23,11 @@ export type Repair = {
   }[]
 }
 
-export const columns: ColumnDef<Repair>[] = [
+export function getColumns(t: Translator): ColumnDef<Repair>[] {
+  return [
   {
     accessorKey: "photoPath",
-    header: "Photo",
+    header: t("common.photo", "Photo"),
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
       const id = row.original.id
@@ -49,7 +37,7 @@ export const columns: ColumnDef<Repair>[] = [
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
               <img 
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`} 
-                alt="Bicycle repair" 
+                alt={t("modules.repairs.title", "Bicycle Repairs")} 
                 className="object-cover w-full h-full"
               />
             </div>
@@ -60,7 +48,7 @@ export const columns: ColumnDef<Repair>[] = [
   },
   {
     accessorKey: "problemTypes",
-    header: "Problem Types",
+    header: t("repairs.details.problemTypes", "Problem Types"),
     cell: ({ row }) => {
       const types = JSON.parse(row.getValue("problemTypes") as string) as string[]
       const id = row.original.id
@@ -69,7 +57,7 @@ export const columns: ColumnDef<Repair>[] = [
           <div className="flex flex-wrap gap-1">
             {types.map((type) => (
               <Badge key={type} variant="outline">
-                {problemTypeLabels[type] || type}
+                {t(`bicycles.problemTypes.${type}`, type)}
               </Badge>
             ))}
           </div>
@@ -79,7 +67,7 @@ export const columns: ColumnDef<Repair>[] = [
   },
   {
     accessorKey: "ownerPhone",
-    header: "Owner Phone",
+    header: t("repairs.form.ownerPhone", "Owner Phone"),
     cell: ({ row }) => {
       const id = row.original.id
       return (
@@ -91,7 +79,7 @@ export const columns: ColumnDef<Repair>[] = [
   },
   {
     accessorKey: "receivedDate",
-    header: "Received",
+    header: t("repairs.details.receivedDate", "Received Date"),
     cell: ({ row }) => {
       const date = row.getValue("receivedDate") as Date
       const id = row.original.id
@@ -104,33 +92,33 @@ export const columns: ColumnDef<Repair>[] = [
   },
   {
     accessorKey: "repairedDate",
-    header: "Repaired",
+    header: t("repairs.details.repairedDate", "Repaired Date"),
     cell: ({ row }) => {
       const date = row.getValue("repairedDate") as Date | null
       const id = row.original.id
       return (
         <Link href={`/bicycles/repairs/${id}`} className="block">
-          {date ? format(date, "PPP") : "-"}
+          {date ? format(date, "PPP") : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "pickupDate",
-    header: "Picked Up",
+    header: t("repairs.details.pickupDate", "Pickup Date"),
     cell: ({ row }) => {
       const date = row.getValue("pickupDate") as Date | null
       const id = row.original.id
       return (
         <Link href={`/bicycles/repairs/${id}`} className="block">
-          {date ? format(date, "PPP") : "-"}
+          {date ? format(date, "PPP") : "—"}
         </Link>
       )
     },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t("common.status", "Status"),
     cell: ({ row }) => {
       const status = row.getValue("status") as string
       const id = row.original.id
@@ -144,7 +132,7 @@ export const columns: ColumnDef<Repair>[] = [
             status === 'CANCELLED' ? 'destructive' :
             'outline'
           }>
-            {status.replace('_', ' ')}
+            {t(`common.statuses.${status}`, status.replace('_', ' '))}
           </Badge>
         </Link>
       )
@@ -152,15 +140,16 @@ export const columns: ColumnDef<Repair>[] = [
   },
   {
     accessorKey: "partsUsed",
-    header: "Parts Used",
+    header: t("repairs.details.partsUsed", "Parts Used"),
     cell: ({ row }) => {
       const parts = row.getValue("partsUsed") as Repair['partsUsed']
       const id = row.original.id
       return (
         <Link href={`/bicycles/repairs/${id}`} className="block">
-          {parts.map(p => `${p.part.name} (${p.quantity})`).join(", ") || "-"}
+          {parts.map(p => `${p.part.name} (${p.quantity})`).join(", ") || "—"}
         </Link>
       )
     },
   },
-] 
+]
+}

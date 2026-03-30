@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cabin, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./components/SessionProvider";
 import { Layout } from "@/components/Layout";
+import { authOptions } from "@/lib/auth-options";
+import { getServerI18n } from "@/lib/i18n/server";
+import { I18nProvider } from "./components/I18nProvider";
 
-const geistSans = Geist({
+const cabin = Cabin({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const jetBrainsMono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -25,16 +28,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
+  const { locale, messages } = await getServerI18n();
+  const dir = locale === "ar" || locale === "fa" ? "rtl" : "ltr";
 
   return (
-    <html lang="en">
+    <html lang={locale} dir={dir}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${cabin.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <SessionProvider session={session}>
-          <Layout>{children}</Layout>
-        </SessionProvider>
+        <I18nProvider locale={locale} messages={messages}>
+          <SessionProvider session={session}>
+            <Layout>{children}</Layout>
+          </SessionProvider>
+        </I18nProvider>
       </body>
     </html>
   );

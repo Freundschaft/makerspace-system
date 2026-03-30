@@ -1,0 +1,326 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
+import { FileUpload } from "@/components/ui/file-upload"
+import { Checkbox } from "@/components/ui/checkbox"
+import { useI18n } from "@/app/components/I18nProvider"
+
+const formSchema = z.object({
+  customerName: z.string().min(1, "Customer name is required"),
+  category: z.enum([
+    "PHONE", "TABLET", "HEADPHONES", "HEATER", "SPEAKER", "HAIR_CLIPPER",
+    "COOLER", "POWER_BANK", "KETTLE", "LAPTOP", "MULTI_SOCKET", "PIZZA_PAN_CABLE",
+    "PAN", "GLASSES", "AUX", "WATCH", "ADAPTOR", "HANDSFREE", "CABLE",
+    "HAIR_CUTTER", "HAIR_DRYER", "FAN", "PRINTER", "ELECTRONIC_CIGARETTE",
+    "STOVE", "PIZZA_PAN", "WIRELESS", "EAR_PAD", "SMART_WATCH", "XBOX360",
+    "TOASTER", "TAILOR_MACHINE", "BATTERY", "PHONE_CASE", "BRACELET", "TESBIH",
+    "HAND_MIXER", "COMPUTER", "SEWING_MACHINE", "WATER_HEATER", "PUMP",
+    "KEYBOARD", "PLUG", "WATER_BOILER", "THERAPY", "COFFEE_MAKER", "KITCHEN",
+    "BOARD", "MAT", "RADIO", "VACUUM_CLEANER", "OTHER"
+  ]),
+  item: z.string().optional(),
+  whatsapp: z.string().optional(),
+  serialNumber: z.string().optional(),
+  status: z.enum([
+    "UNCHECKED", "CHECKED", "IN_PROGRESS", "READY_FOR_PICKUP",
+    "DONE", "PICKED_UP", "NO_WAY_TO_FIX"
+  ]),
+  repairable: z.boolean().optional(),
+  notes: z.string().optional(),
+  photoPath: z.string().optional(),
+})
+
+const categoryOptions = [
+  "PHONE", "TABLET", "LAPTOP", "COMPUTER", "HEADPHONES", "SPEAKER", "POWER_BANK", "PRINTER", "KEYBOARD",
+  "WATCH", "SMART_WATCH", "HEATER", "FAN", "COOLER", "HAIR_CLIPPER", "HAIR_CUTTER", "HAIR_DRYER",
+  "KETTLE", "WATER_BOILER", "WATER_HEATER", "COFFEE_MAKER", "TOASTER", "HAND_MIXER", "SEWING_MACHINE",
+  "TAILOR_MACHINE", "VACUUM_CLEANER", "RADIO", "XBOX360", "MULTI_SOCKET", "CABLE", "ADAPTOR", "PLUG",
+  "BATTERY", "OTHER",
+]
+
+export function ElectronicsRepairForm() {
+  const router = useRouter()
+  const { t } = useI18n()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      customerName: "",
+      item: "",
+      whatsapp: "",
+      serialNumber: "",
+      status: "UNCHECKED",
+      repairable: undefined,
+      notes: "",
+      photoPath: "",
+    },
+  })
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsSubmitting(true)
+      const response = await fetch("/api/electronics/repairs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...values,
+          createdDate: new Date(),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(t("electronics.new.errors.createFailed", "Failed to create electronics repair"))
+      }
+
+      router.push("/electronics/repairs")
+      router.refresh()
+    } catch (error) {
+      console.error("Error creating electronics repair:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
+        <FormField
+          control={form.control}
+          name="customerName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.customerName", "Customer Name")}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("electronics.new.placeholders.customerName", "Enter customer name")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.customerName", "Name of the person requesting the repair")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.category", "Category")}</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="text-sm sm:text-base">
+                    <SelectValue placeholder={t("electronics.new.placeholders.category", "Select device category")} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="max-h-[300px]">
+                  {categoryOptions.map((value) => (
+                    <SelectItem key={value} value={value}>
+                      {t(`electronics.categories.${value}`, value)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.category", "Type of electronic device")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="item"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.item", "Item Description")}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("electronics.new.placeholders.item", "e.g. Samsung Galaxy S21, HP ProBook")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.item", "Brand, model, or specific description (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="whatsapp"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.whatsapp", "WhatsApp")}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("common.phonePlaceholder", "+1234567890")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.whatsapp", "WhatsApp contact number (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="serialNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.serialNumber", "Serial Number")}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("electronics.new.placeholders.serialNumber", "Serial or IMEI number")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.serialNumber", "Device serial number or barcode (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="photoPath"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.photo", "Device Photo")}</FormLabel>
+              <FormControl>
+                <FileUpload
+                  value={field.value}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.photo", "Upload a photo of the device (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="notes"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("common.notes", "Notes")}</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder={t("electronics.new.placeholders.notes", "Describe the problem, parts needed, etc...")}
+                  className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.notes", "Additional details about the repair (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="repairable"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="text-sm sm:text-base">
+                  {t("electronics.new.fields.repairable", "Repairable")}
+                </FormLabel>
+                <FormDescription className="text-xs sm:text-sm">
+                  {t("electronics.new.help.repairable", "Check if the device can be repaired")}
+                </FormDescription>
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("common.status", "Status")}</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="text-sm sm:text-base">
+                    <SelectValue placeholder={t("common.selectStatus", "Select a status")} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="UNCHECKED">{t("common.statuses.unchecked", "Unchecked")}</SelectItem>
+                  <SelectItem value="CHECKED">{t("common.statuses.checked", "Checked")}</SelectItem>
+                  <SelectItem value="IN_PROGRESS">{t("common.statuses.inProgress", "In Progress")}</SelectItem>
+                  <SelectItem value="READY_FOR_PICKUP">{t("common.statuses.readyForPickup", "Ready for Pickup")}</SelectItem>
+                  <SelectItem value="DONE">{t("common.statuses.done", "Done")}</SelectItem>
+                  <SelectItem value="PICKED_UP">{t("common.statuses.pickedUp", "Picked Up")}</SelectItem>
+                  <SelectItem value="NO_WAY_TO_FIX">{t("common.statuses.noWayToFix", "No Way to Fix")}</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.status", "Current status of the repair")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+          {isSubmitting ? t("common.creating", "Creating...") : t("electronics.new.actions.create", "Create Repair")}
+        </Button>
+      </form>
+    </Form>
+  )
+}

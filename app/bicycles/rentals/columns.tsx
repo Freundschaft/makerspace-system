@@ -1,16 +1,9 @@
-"use client"
-
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
 
-const rentalStatusLabels: Record<string, string> = {
-  ACTIVE: "Active",
-  RETURNED: "Returned",
-  OVERDUE: "Overdue",
-  CANCELLED: "Cancelled",
-}
+type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
 export type Rental = {
   id: string
@@ -25,10 +18,11 @@ export type Rental = {
   notes: string | null
 }
 
-export const columns: ColumnDef<Rental>[] = [
+export function getColumns(t: Translator): ColumnDef<Rental>[] {
+  return [
   {
     accessorKey: "renterName",
-    header: "Renter Name",
+    header: t("rentals.new.fields.renterName", "Renter Name"),
     cell: ({ row }) => {
       const id = row.original.id
       return (
@@ -40,7 +34,7 @@ export const columns: ColumnDef<Rental>[] = [
   },
   {
     accessorKey: "renterPhone",
-    header: "Phone",
+    header: t("common.phone", "Phone"),
     cell: ({ row }) => {
       const id = row.original.id
       return (
@@ -52,7 +46,7 @@ export const columns: ColumnDef<Rental>[] = [
   },
   {
     accessorKey: "bicycleId",
-    header: "Bicycle ID",
+    header: t("rentals.new.fields.bicycleId", "Bicycle ID"),
     cell: ({ row }) => {
       const id = row.original.id
       return (
@@ -64,7 +58,7 @@ export const columns: ColumnDef<Rental>[] = [
   },
   {
     accessorKey: "startDate",
-    header: "Start Date",
+    header: t("rentals.new.fields.startDate", "Start Date"),
     cell: ({ row }) => {
       const date = row.getValue("startDate") as Date
       const id = row.original.id
@@ -77,7 +71,7 @@ export const columns: ColumnDef<Rental>[] = [
   },
   {
     accessorKey: "endDate",
-    header: "End Date",
+    header: t("rentals.new.fields.endDate", "End Date"),
     cell: ({ row }) => {
       const date = row.getValue("endDate") as Date
       const id = row.original.id
@@ -90,7 +84,7 @@ export const columns: ColumnDef<Rental>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: t("common.status", "Status"),
     cell: ({ row }) => {
       const status = row.getValue("status") as string
       const id = row.original.id
@@ -108,10 +102,11 @@ export const columns: ColumnDef<Rental>[] = [
       return (
         <Link href={`/bicycles/rentals/${id}`} className="block">
           <Badge variant={variant}>
-            {rentalStatusLabels[status] || status}
+            {t(`rentals.statuses.${status}`, status)}
           </Badge>
         </Link>
       )
     },
   },
-] 
+]
+}

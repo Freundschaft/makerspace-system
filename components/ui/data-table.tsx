@@ -27,16 +27,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Image from "next/image"
+import { useI18n } from "@/app/components/I18nProvider"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  showPagination?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  showPagination = true,
 }: DataTableProps<TData, TValue>) {
+  const { t } = useI18n()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
@@ -53,7 +57,17 @@ export function DataTable<TData, TValue>({
       sorting,
       columnFilters,
     },
+    initialState: {
+      pagination: {
+        pageSize: showPagination ? 10 : Math.max(data.length, 1),
+      },
+    },
   })
+
+  // Check if problemTypes column exists
+  const hasProblemTypesColumn = columns.some(
+    (col: any) => col.accessorKey === "problemTypes"
+  )
 
   // Function to render a card for mobile view
   const renderMobileCard = (row: any) => {
@@ -97,7 +111,7 @@ export function DataTable<TData, TValue>({
             <div className="mb-4 relative w-full h-48 rounded-md overflow-hidden">
               <Image 
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`} 
-                alt="Bicycle repair" 
+                alt={t("common.photo", "Photo")}
                 fill 
                 unoptimized 
                 className="object-cover"
@@ -110,7 +124,7 @@ export function DataTable<TData, TValue>({
               if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
                 return null
               }
-              
+
               // Special handling for problem types
               if (cell.column.id === "problemTypes") {
                 return (
@@ -123,16 +137,30 @@ export function DataTable<TData, TValue>({
                   </div>
                 )
               }
-              
+
               // Skip empty values
               if (!cell.getValue()) {
                 return null
               }
-              
+
+              // Special handling for date columns (createdDate, repairedDate, pickupDate, etc.)
+              const value = cell.getValue()
+              let displayValue: string
+
+              if (value instanceof Date || cell.column.id.toLowerCase().includes('date')) {
+                try {
+                  displayValue = format(new Date(value), "MMM d, yyyy")
+                } catch {
+                  displayValue = String(value)
+                }
+              } else {
+                displayValue = String(value)
+              }
+
               return (
                 <div key={cell.id} className="flex justify-between">
                   <span className="font-medium">{cell.column.columnDef.header as string}:</span>
-                  <span>{cell.getValue() as string}</span>
+                  <span>{displayValue}</span>
                 </div>
               )
             })}
@@ -144,23 +172,25 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter by problem type..."
-          value={(table.getColumn("problemTypes")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("problemTypes")?.setFilterValue(event.target.value)
-          }
-          className="w-full sm:max-w-sm"
-        />
-      </div>
+      {hasProblemTypesColumn && (
+        <div className="flex items-center py-4">
+          <Input
+            placeholder={t("tables.filters.problemType", "Filter by problem type...")}
+            value={(table.getColumn("problemTypes")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("problemTypes")?.setFilterValue(event.target.value)
+            }
+            className="w-full sm:max-w-sm"
+          />
+        </div>
+      )}
       
       {/* Mobile Card View */}
       <div className="block sm:hidden">
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => renderMobileCard(row))
         ) : (
-          <div className="text-center py-8">No results.</div>
+          <div className="text-center py-8">{t("tables.noResults", "No results.")}</div>
         )}
       </div>
       
@@ -208,7 +238,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {t("tables.noResults", "No results.")}
                 </TableCell>
               </TableRow>
             )}
@@ -216,24 +246,26 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div>
+      {showPagination && (
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {t("tables.previous", "Previous")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {t("tables.next", "Next")}
+          </Button>
+        </div>
+      )}
     </div>
   )
-} 
+}

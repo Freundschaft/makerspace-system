@@ -1,11 +1,20 @@
 import { prisma } from "@/lib/prisma"
-import { NextResponse } from "next/server"
+import { requireAuth } from "@/lib/auth"
+import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const token = await requireAuth(request)
+    if (!token) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
     const { id } = await params;
     const repair = await prisma.bicycleRepair.findUnique({
       where: {
