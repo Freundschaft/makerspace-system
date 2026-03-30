@@ -12,6 +12,7 @@ export type TeamMember = {
   nationality: string
   photoPath: string | null
   status: "ACTIVE" | "INACTIVE"
+  googleAccountActive: boolean
   startDate: Date
   endDate: Date | null
   department: string

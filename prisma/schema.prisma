@@ -124,6 +124,7 @@ model TeamMember {
   nationality  String
   photoPath    String?         @db.Text
   status       TeamMemberStatus @default(ACTIVE)
+  googleAccountActive Boolean  @default(true)
   startDate    DateTime
   endDate      DateTime?
   department   String

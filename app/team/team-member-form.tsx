@@ -18,6 +18,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
   const [formData, setFormData] = useState<Partial<TeamMember>>(
     initialData || {
       status: 'ACTIVE',
+      googleAccountActive: true,
       startDate: new Date(),
     }
   );
@@ -57,9 +58,14 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    const nextValue =
+      e.target instanceof HTMLInputElement && e.target.type === 'checkbox'
+        ? e.target.checked
+        : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: nextValue,
     }));
   };
 
@@ -169,6 +175,33 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
             <option value="ACTIVE">{t('common.active', 'Active')}</option>
             <option value="INACTIVE">{t('common.inactive', 'Inactive')}</option>
           </select>
+        </div>
+
+        <div>
+          <label htmlFor="googleAccountActive" className="block text-sm font-medium mb-1">
+            {t('team.form.googleAccount', 'Google Account')}
+          </label>
+          <label className="flex items-center gap-3 rounded-md border p-3">
+            <input
+              type="checkbox"
+              id="googleAccountActive"
+              name="googleAccountActive"
+              checked={formData.googleAccountActive ?? true}
+              onChange={handleChange}
+              className="h-4 w-4"
+            />
+            <div>
+              <div className="text-sm font-medium">
+                {t('team.form.googleAccountActive', 'Keep Google account active')}
+              </div>
+              <div className="text-xs text-muted-foreground">
+                {t(
+                  'team.form.googleAccountHelp',
+                  'Turn this off only when their Google account should no longer stay active.'
+                )}
+              </div>
+            </div>
+          </label>
         </div>
 
         <div>

@@ -35,6 +35,7 @@ export async function PUT(
         nationality: body.nationality,
         photoPath: body.photoPath || null,
         status: body.status || "ACTIVE",
+        googleAccountActive: body.googleAccountActive ?? true,
         startDate: new Date(body.startDate),
         endDate: body.endDate ? new Date(body.endDate) : null,
         department: body.department,

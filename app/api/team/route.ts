@@ -56,13 +56,14 @@ export async function POST(request: NextRequest) {
     const result = await prisma.$executeRaw`
       INSERT INTO TeamMember (
         id, familyName, givenNames, nationality, photoPath, 
-        status, startDate, endDate, department, email, 
+        status, googleAccountActive, startDate, endDate, department, email, 
         phone, homeAddress, dateOfBirth, legalStatus, 
         createdAt, updatedAt
       )
       VALUES (
         UUID(), ${body.familyName}, ${body.givenNames}, ${body.nationality}, ${body.photoPath || null},
-        ${body.status || 'ACTIVE'}, ${new Date(body.startDate)}, ${body.endDate ? new Date(body.endDate) : null},
+        ${body.status || 'ACTIVE'}, ${body.googleAccountActive ?? true},
+        ${new Date(body.startDate)}, ${body.endDate ? new Date(body.endDate) : null},
         ${body.department}, ${body.email}, ${body.phone}, ${body.homeAddress || null},
         ${new Date(body.dateOfBirth)}, ${body.legalStatus}, NOW(), NOW()
       )

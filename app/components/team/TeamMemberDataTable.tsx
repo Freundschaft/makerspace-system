@@ -55,6 +55,7 @@ export function TeamMemberDataTable({
             <TableHead>{t("team.table.email", "Email")}</TableHead>
             <TableHead>{t("team.table.phone", "Phone")}</TableHead>
             <TableHead>{t("team.table.status", "Status")}</TableHead>
+            <TableHead>{t("team.table.googleAccount", "Google Account")}</TableHead>
             <TableHead>{t("team.table.startDate", "Start Date")}</TableHead>
             <TableHead>{t("team.table.actions", "Actions")}</TableHead>
           </TableRow>
@@ -82,6 +83,15 @@ export function TeamMemberDataTable({
                   variant={member.status === "ACTIVE" ? "default" : "secondary"}
                 >
                   {member.status === "ACTIVE" ? t("common.active", "Active") : t("common.inactive", "Inactive")}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Badge
+                  variant={member.googleAccountActive ? "default" : "secondary"}
+                >
+                  {member.googleAccountActive
+                    ? t("team.googleAccount.active", "Active")
+                    : t("team.googleAccount.disabled", "Disabled")}
                 </Badge>
               </TableCell>
               <TableCell>

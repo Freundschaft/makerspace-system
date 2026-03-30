@@ -8154,6 +8154,7 @@ export namespace Prisma {
     nationality: string | null
     photoPath: string | null
     status: $Enums.TeamMemberStatus | null
+    googleAccountActive: boolean | null
     startDate: Date | null
     endDate: Date | null
     department: string | null
@@ -8173,6 +8174,7 @@ export namespace Prisma {
     nationality: string | null
     photoPath: string | null
     status: $Enums.TeamMemberStatus | null
+    googleAccountActive: boolean | null
     startDate: Date | null
     endDate: Date | null
     department: string | null
@@ -8192,6 +8194,7 @@ export namespace Prisma {
     nationality: number
     photoPath: number
     status: number
+    googleAccountActive: number
     startDate: number
     endDate: number
     department: number
@@ -8213,6 +8216,7 @@ export namespace Prisma {
     nationality?: true
     photoPath?: true
     status?: true
+    googleAccountActive?: true
     startDate?: true
     endDate?: true
     department?: true
@@ -8232,6 +8236,7 @@ export namespace Prisma {
     nationality?: true
     photoPath?: true
     status?: true
+    googleAccountActive?: true
     startDate?: true
     endDate?: true
     department?: true
@@ -8251,6 +8256,7 @@ export namespace Prisma {
     nationality?: true
     photoPath?: true
     status?: true
+    googleAccountActive?: true
     startDate?: true
     endDate?: true
     department?: true
@@ -8343,6 +8349,7 @@ export namespace Prisma {
     nationality: string
     photoPath: string | null
     status: $Enums.TeamMemberStatus
+    googleAccountActive: boolean
     startDate: Date
     endDate: Date | null
     department: string
@@ -8379,6 +8386,7 @@ export namespace Prisma {
     nationality?: boolean
     photoPath?: boolean
     status?: boolean
+    googleAccountActive?: boolean
     startDate?: boolean
     endDate?: boolean
     department?: boolean
@@ -8400,6 +8408,7 @@ export namespace Prisma {
     nationality?: boolean
     photoPath?: boolean
     status?: boolean
+    googleAccountActive?: boolean
     startDate?: boolean
     endDate?: boolean
     department?: boolean
@@ -8412,7 +8421,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "status" | "startDate" | "endDate" | "department" | "email" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "status" | "googleAccountActive" | "startDate" | "endDate" | "department" | "email" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
 
   export type $TeamMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TeamMember"
@@ -8424,6 +8433,7 @@ export namespace Prisma {
       nationality: string
       photoPath: string | null
       status: $Enums.TeamMemberStatus
+      googleAccountActive: boolean
       startDate: Date
       endDate: Date | null
       department: string
@@ -8809,6 +8819,7 @@ export namespace Prisma {
     readonly nationality: FieldRef<"TeamMember", 'String'>
     readonly photoPath: FieldRef<"TeamMember", 'String'>
     readonly status: FieldRef<"TeamMember", 'TeamMemberStatus'>
+    readonly googleAccountActive: FieldRef<"TeamMember", 'Boolean'>
     readonly startDate: FieldRef<"TeamMember", 'DateTime'>
     readonly endDate: FieldRef<"TeamMember", 'DateTime'>
     readonly department: FieldRef<"TeamMember", 'String'>
@@ -14802,6 +14813,7 @@ export namespace Prisma {
     nationality: 'nationality',
     photoPath: 'photoPath',
     status: 'status',
+    googleAccountActive: 'googleAccountActive',
     startDate: 'startDate',
     endDate: 'endDate',
     department: 'department',
@@ -15640,6 +15652,7 @@ export namespace Prisma {
     nationality?: StringFilter<"TeamMember"> | string
     photoPath?: StringNullableFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusFilter<"TeamMember"> | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFilter<"TeamMember"> | boolean
     startDate?: DateTimeFilter<"TeamMember"> | Date | string
     endDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     department?: StringFilter<"TeamMember"> | string
@@ -15659,6 +15672,7 @@ export namespace Prisma {
     nationality?: SortOrder
     photoPath?: SortOrderInput | SortOrder
     status?: SortOrder
+    googleAccountActive?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
     department?: SortOrder
@@ -15683,6 +15697,7 @@ export namespace Prisma {
     nationality?: StringFilter<"TeamMember"> | string
     photoPath?: StringNullableFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusFilter<"TeamMember"> | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFilter<"TeamMember"> | boolean
     startDate?: DateTimeFilter<"TeamMember"> | Date | string
     endDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     department?: StringFilter<"TeamMember"> | string
@@ -15701,6 +15716,7 @@ export namespace Prisma {
     nationality?: SortOrder
     photoPath?: SortOrderInput | SortOrder
     status?: SortOrder
+    googleAccountActive?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrderInput | SortOrder
     department?: SortOrder
@@ -15726,6 +15742,7 @@ export namespace Prisma {
     nationality?: StringWithAggregatesFilter<"TeamMember"> | string
     photoPath?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusWithAggregatesFilter<"TeamMember"> | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolWithAggregatesFilter<"TeamMember"> | boolean
     startDate?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     endDate?: DateTimeNullableWithAggregatesFilter<"TeamMember"> | Date | string | null
     department?: StringWithAggregatesFilter<"TeamMember"> | string
@@ -16749,6 +16766,7 @@ export namespace Prisma {
     nationality: string
     photoPath?: string | null
     status?: $Enums.TeamMemberStatus
+    googleAccountActive?: boolean
     startDate: Date | string
     endDate?: Date | string | null
     department: string
@@ -16768,6 +16786,7 @@ export namespace Prisma {
     nationality: string
     photoPath?: string | null
     status?: $Enums.TeamMemberStatus
+    googleAccountActive?: boolean
     startDate: Date | string
     endDate?: Date | string | null
     department: string
@@ -16787,6 +16806,7 @@ export namespace Prisma {
     nationality?: StringFieldUpdateOperationsInput | string
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
@@ -16806,6 +16826,7 @@ export namespace Prisma {
     nationality?: StringFieldUpdateOperationsInput | string
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
@@ -16825,6 +16846,7 @@ export namespace Prisma {
     nationality: string
     photoPath?: string | null
     status?: $Enums.TeamMemberStatus
+    googleAccountActive?: boolean
     startDate: Date | string
     endDate?: Date | string | null
     department: string
@@ -16844,6 +16866,7 @@ export namespace Prisma {
     nationality?: StringFieldUpdateOperationsInput | string
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
@@ -16863,6 +16886,7 @@ export namespace Prisma {
     nationality?: StringFieldUpdateOperationsInput | string
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
+    googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
@@ -17984,6 +18008,11 @@ export namespace Prisma {
     not?: NestedEnumTeamMemberStatusFilter<$PrismaModel> | $Enums.TeamMemberStatus
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type TeamMemberOrderByRelevanceInput = {
     fields: TeamMemberOrderByRelevanceFieldEnum | TeamMemberOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -17997,6 +18026,7 @@ export namespace Prisma {
     nationality?: SortOrder
     photoPath?: SortOrder
     status?: SortOrder
+    googleAccountActive?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     department?: SortOrder
@@ -18016,6 +18046,7 @@ export namespace Prisma {
     nationality?: SortOrder
     photoPath?: SortOrder
     status?: SortOrder
+    googleAccountActive?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     department?: SortOrder
@@ -18035,6 +18066,7 @@ export namespace Prisma {
     nationality?: SortOrder
     photoPath?: SortOrder
     status?: SortOrder
+    googleAccountActive?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     department?: SortOrder
@@ -18055,6 +18087,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
     _max?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumElectronicsCategoryFilter<$PrismaModel = never> = {
@@ -18903,6 +18943,10 @@ export namespace Prisma {
     set?: $Enums.TeamMemberStatus
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type UserCreateNestedOneWithoutElectronicsRepairsInput = {
     create?: XOR<UserCreateWithoutElectronicsRepairsInput, UserUncheckedCreateWithoutElectronicsRepairsInput>
     connectOrCreate?: UserCreateOrConnectWithoutElectronicsRepairsInput
@@ -19408,6 +19452,11 @@ export namespace Prisma {
     not?: NestedEnumTeamMemberStatusFilter<$PrismaModel> | $Enums.TeamMemberStatus
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumTeamMemberStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TeamMemberStatus | EnumTeamMemberStatusFieldRefInput<$PrismaModel>
     in?: $Enums.TeamMemberStatus[]
@@ -19416,6 +19465,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
     _max?: NestedEnumTeamMemberStatusFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumElectronicsCategoryFilter<$PrismaModel = never> = {

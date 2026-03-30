@@ -193,6 +193,7 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   nationality: 'nationality',
   photoPath: 'photoPath',
   status: 'status',
+  googleAccountActive: 'googleAccountActive',
   startDate: 'startDate',
   endDate: 'endDate',
   department: 'department',

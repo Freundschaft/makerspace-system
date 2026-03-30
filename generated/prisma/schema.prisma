@@ -118,22 +118,23 @@ enum TeamMemberStatus {
 }
 
 model TeamMember {
-  id          String           @id @default(uuid())
-  familyName  String
-  givenNames  String
-  nationality String
-  photoPath   String?          @db.Text
-  status      TeamMemberStatus @default(ACTIVE)
-  startDate   DateTime
-  endDate     DateTime?
-  department  String
-  email       String           @unique
-  phone       String
-  homeAddress String?          @db.Text
-  dateOfBirth DateTime
-  legalStatus String
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id                  String           @id @default(uuid())
+  familyName          String
+  givenNames          String
+  nationality         String
+  photoPath           String?          @db.Text
+  status              TeamMemberStatus @default(ACTIVE)
+  googleAccountActive Boolean          @default(true)
+  startDate           DateTime
+  endDate             DateTime?
+  department          String
+  email               String           @unique
+  phone               String
+  homeAddress         String?          @db.Text
+  dateOfBirth         DateTime
+  legalStatus         String
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
 
   @@index([familyName, givenNames])
 }
