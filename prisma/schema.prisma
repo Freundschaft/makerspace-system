@@ -121,7 +121,7 @@ model TeamMember {
   id           String          @id @default(uuid())
   familyName   String
   givenNames   String
-  nationality  String
+  nationality  String?
   photoPath    String?         @db.Text
   status       TeamMemberStatus @default(ACTIVE)
   googleAccountActive Boolean  @default(true)

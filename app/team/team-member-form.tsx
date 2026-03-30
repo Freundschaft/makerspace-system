@@ -123,7 +123,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
 
         <div>
           <label htmlFor="nationality" className="block text-sm font-medium mb-1">
-            {t('team.form.nationality', 'Nationality')} *
+            {t('team.form.nationality', 'Nationality')}
           </label>
           <input
             type="text"
@@ -131,7 +131,6 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
             name="nationality"
             value={formData.nationality || ''}
             onChange={handleChange}
-            required
             className="w-full p-2 border rounded-md"
           />
         </div>

@@ -211,7 +211,7 @@ export class GoogleWorkspaceService {
           email: googleUser.primaryEmail,
           familyName: googleUser.name?.familyName || '',
           givenNames: googleUser.name?.givenName || '',
-          nationality: '', // Not available in Google Workspace
+          nationality: existingMember?.nationality ?? null, // Not available in Google Workspace
           photoPath: photoPath,
           googleAccountActive: !googleUser.suspended,
           status: existingMember?.status ?? TeamMemberStatus.ACTIVE,

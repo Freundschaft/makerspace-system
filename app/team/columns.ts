@@ -2,7 +2,7 @@ export type TeamMember = {
   id: string
   familyName: string
   givenNames: string
-  nationality: string
+  nationality: string | null
   photoPath: string | null
   status: "ACTIVE" | "INACTIVE"
   googleAccountActive: boolean

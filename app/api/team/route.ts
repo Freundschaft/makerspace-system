@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
     if (
       !body.familyName ||
       !body.givenNames ||
-      !body.nationality ||
       !body.startDate ||
       !body.department ||
       !body.email ||
@@ -54,7 +53,7 @@ export async function POST(request: NextRequest) {
       data: {
         familyName: body.familyName,
         givenNames: body.givenNames,
-        nationality: body.nationality,
+        nationality: body.nationality || null,
         photoPath: body.photoPath || null,
         status: body.status || "ACTIVE",
         googleAccountActive: body.googleAccountActive ?? true,
