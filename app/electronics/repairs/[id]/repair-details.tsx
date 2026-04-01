@@ -6,10 +6,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
-import { ElectronicsRepair, User } from '@/generated/prisma'
+import { ElectronicsRepairStatus, ElectronicsCategory, User } from '@/generated/prisma'
 import { useI18n } from "@/app/components/I18nProvider"
 
-type RepairWithRepairer = ElectronicsRepair & {
+type RepairWithRepairer = {
+  id: string
+  repairId: number
+  customerName: string
+  customerIdCardNumber: string
+  category: ElectronicsCategory
+  item: string | null
+  whatsapp: string | null
+  serialNumber: string | null
+  status: ElectronicsRepairStatus
+  repairable: boolean | null
+  notes: string | null
+  photoPath: string | null
+  createdDate: Date
   repairer: User | null
 }
 
@@ -101,6 +114,9 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
 
               <div className="font-medium">{t("electronics.details.customer", "Customer")}:</div>
               <div>{repair.customerName}</div>
+
+              <div className="font-medium">{t("electronics.new.fields.customerIdCardNumber", "ID Card Number")}:</div>
+              <div className="font-mono text-sm">{repair.customerIdCardNumber}</div>
 
               {repair.whatsapp && (
                 <>

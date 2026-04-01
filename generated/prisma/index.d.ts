@@ -9225,6 +9225,7 @@ export namespace Prisma {
     id: string | null
     repairId: number | null
     customerName: string | null
+    customerIdCardNumber: string | null
     category: $Enums.ElectronicsCategory | null
     item: string | null
     whatsapp: string | null
@@ -9243,6 +9244,7 @@ export namespace Prisma {
     id: string | null
     repairId: number | null
     customerName: string | null
+    customerIdCardNumber: string | null
     category: $Enums.ElectronicsCategory | null
     item: string | null
     whatsapp: string | null
@@ -9261,6 +9263,7 @@ export namespace Prisma {
     id: number
     repairId: number
     customerName: number
+    customerIdCardNumber: number
     category: number
     item: number
     whatsapp: number
@@ -9289,6 +9292,7 @@ export namespace Prisma {
     id?: true
     repairId?: true
     customerName?: true
+    customerIdCardNumber?: true
     category?: true
     item?: true
     whatsapp?: true
@@ -9307,6 +9311,7 @@ export namespace Prisma {
     id?: true
     repairId?: true
     customerName?: true
+    customerIdCardNumber?: true
     category?: true
     item?: true
     whatsapp?: true
@@ -9325,6 +9330,7 @@ export namespace Prisma {
     id?: true
     repairId?: true
     customerName?: true
+    customerIdCardNumber?: true
     category?: true
     item?: true
     whatsapp?: true
@@ -9430,6 +9436,7 @@ export namespace Prisma {
     id: string
     repairId: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item: string | null
     whatsapp: string | null
@@ -9467,6 +9474,7 @@ export namespace Prisma {
     id?: boolean
     repairId?: boolean
     customerName?: boolean
+    customerIdCardNumber?: boolean
     category?: boolean
     item?: boolean
     whatsapp?: boolean
@@ -9488,6 +9496,7 @@ export namespace Prisma {
     id?: boolean
     repairId?: boolean
     customerName?: boolean
+    customerIdCardNumber?: boolean
     category?: boolean
     item?: boolean
     whatsapp?: boolean
@@ -9502,7 +9511,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ElectronicsRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repairId" | "customerName" | "category" | "item" | "whatsapp" | "serialNumber" | "status" | "repairable" | "notes" | "photoPath" | "createdDate" | "repairerId" | "createdAt" | "updatedAt", ExtArgs["result"]["electronicsRepair"]>
+  export type ElectronicsRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repairId" | "customerName" | "customerIdCardNumber" | "category" | "item" | "whatsapp" | "serialNumber" | "status" | "repairable" | "notes" | "photoPath" | "createdDate" | "repairerId" | "createdAt" | "updatedAt", ExtArgs["result"]["electronicsRepair"]>
   export type ElectronicsRepairInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     repairer?: boolean | ElectronicsRepair$repairerArgs<ExtArgs>
   }
@@ -9516,6 +9525,7 @@ export namespace Prisma {
       id: string
       repairId: number
       customerName: string
+      customerIdCardNumber: string
       category: $Enums.ElectronicsCategory
       item: string | null
       whatsapp: string | null
@@ -9901,6 +9911,7 @@ export namespace Prisma {
     readonly id: FieldRef<"ElectronicsRepair", 'String'>
     readonly repairId: FieldRef<"ElectronicsRepair", 'Int'>
     readonly customerName: FieldRef<"ElectronicsRepair", 'String'>
+    readonly customerIdCardNumber: FieldRef<"ElectronicsRepair", 'String'>
     readonly category: FieldRef<"ElectronicsRepair", 'ElectronicsCategory'>
     readonly item: FieldRef<"ElectronicsRepair", 'String'>
     readonly whatsapp: FieldRef<"ElectronicsRepair", 'String'>
@@ -14881,6 +14892,7 @@ export namespace Prisma {
     id: 'id',
     repairId: 'repairId',
     customerName: 'customerName',
+    customerIdCardNumber: 'customerIdCardNumber',
     category: 'category',
     item: 'item',
     whatsapp: 'whatsapp',
@@ -15074,6 +15086,7 @@ export namespace Prisma {
   export const ElectronicsRepairOrderByRelevanceFieldEnum: {
     id: 'id',
     customerName: 'customerName',
+    customerIdCardNumber: 'customerIdCardNumber',
     item: 'item',
     whatsapp: 'whatsapp',
     serialNumber: 'serialNumber',
@@ -15834,6 +15847,7 @@ export namespace Prisma {
     id?: StringFilter<"ElectronicsRepair"> | string
     repairId?: IntFilter<"ElectronicsRepair"> | number
     customerName?: StringFilter<"ElectronicsRepair"> | string
+    customerIdCardNumber?: StringFilter<"ElectronicsRepair"> | string
     category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
     item?: StringNullableFilter<"ElectronicsRepair"> | string | null
     whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
@@ -15853,6 +15867,7 @@ export namespace Prisma {
     id?: SortOrder
     repairId?: SortOrder
     customerName?: SortOrder
+    customerIdCardNumber?: SortOrder
     category?: SortOrder
     item?: SortOrderInput | SortOrder
     whatsapp?: SortOrderInput | SortOrder
@@ -15876,6 +15891,7 @@ export namespace Prisma {
     OR?: ElectronicsRepairWhereInput[]
     NOT?: ElectronicsRepairWhereInput | ElectronicsRepairWhereInput[]
     customerName?: StringFilter<"ElectronicsRepair"> | string
+    customerIdCardNumber?: StringFilter<"ElectronicsRepair"> | string
     category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
     item?: StringNullableFilter<"ElectronicsRepair"> | string | null
     whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
@@ -15895,6 +15911,7 @@ export namespace Prisma {
     id?: SortOrder
     repairId?: SortOrder
     customerName?: SortOrder
+    customerIdCardNumber?: SortOrder
     category?: SortOrder
     item?: SortOrderInput | SortOrder
     whatsapp?: SortOrderInput | SortOrder
@@ -15921,6 +15938,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ElectronicsRepair"> | string
     repairId?: IntWithAggregatesFilter<"ElectronicsRepair"> | number
     customerName?: StringWithAggregatesFilter<"ElectronicsRepair"> | string
+    customerIdCardNumber?: StringWithAggregatesFilter<"ElectronicsRepair"> | string
     category?: EnumElectronicsCategoryWithAggregatesFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
     item?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
     whatsapp?: StringNullableWithAggregatesFilter<"ElectronicsRepair"> | string | null
@@ -16996,6 +17014,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -17014,6 +17033,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -17031,6 +17051,7 @@ export namespace Prisma {
   export type ElectronicsRepairUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17049,6 +17070,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     repairId?: IntFieldUpdateOperationsInput | number
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17067,6 +17089,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -17084,6 +17107,7 @@ export namespace Prisma {
   export type ElectronicsRepairUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17101,6 +17125,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     repairId?: IntFieldUpdateOperationsInput | number
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18245,6 +18270,7 @@ export namespace Prisma {
     id?: SortOrder
     repairId?: SortOrder
     customerName?: SortOrder
+    customerIdCardNumber?: SortOrder
     category?: SortOrder
     item?: SortOrder
     whatsapp?: SortOrder
@@ -18267,6 +18293,7 @@ export namespace Prisma {
     id?: SortOrder
     repairId?: SortOrder
     customerName?: SortOrder
+    customerIdCardNumber?: SortOrder
     category?: SortOrder
     item?: SortOrder
     whatsapp?: SortOrder
@@ -18285,6 +18312,7 @@ export namespace Prisma {
     id?: SortOrder
     repairId?: SortOrder
     customerName?: SortOrder
+    customerIdCardNumber?: SortOrder
     category?: SortOrder
     item?: SortOrder
     whatsapp?: SortOrder
@@ -19802,6 +19830,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -19819,6 +19848,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -20003,6 +20033,7 @@ export namespace Prisma {
     id?: StringFilter<"ElectronicsRepair"> | string
     repairId?: IntFilter<"ElectronicsRepair"> | number
     customerName?: StringFilter<"ElectronicsRepair"> | string
+    customerIdCardNumber?: StringFilter<"ElectronicsRepair"> | string
     category?: EnumElectronicsCategoryFilter<"ElectronicsRepair"> | $Enums.ElectronicsCategory
     item?: StringNullableFilter<"ElectronicsRepair"> | string | null
     whatsapp?: StringNullableFilter<"ElectronicsRepair"> | string | null
@@ -21013,6 +21044,7 @@ export namespace Prisma {
     id?: string
     repairId?: number
     customerName: string
+    customerIdCardNumber: string
     category: $Enums.ElectronicsCategory
     item?: string | null
     whatsapp?: string | null
@@ -21081,6 +21113,7 @@ export namespace Prisma {
   export type ElectronicsRepairUpdateWithoutRepairerInput = {
     id?: StringFieldUpdateOperationsInput | string
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21098,6 +21131,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     repairId?: IntFieldUpdateOperationsInput | number
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21115,6 +21149,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     repairId?: IntFieldUpdateOperationsInput | number
     customerName?: StringFieldUpdateOperationsInput | string
+    customerIdCardNumber?: StringFieldUpdateOperationsInput | string
     category?: EnumElectronicsCategoryFieldUpdateOperationsInput | $Enums.ElectronicsCategory
     item?: NullableStringFieldUpdateOperationsInput | string | null
     whatsapp?: NullableStringFieldUpdateOperationsInput | string | null

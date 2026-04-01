@@ -30,6 +30,7 @@ import { useI18n } from "@/app/components/I18nProvider"
 
 const formSchema = z.object({
   customerName: z.string().min(1, "Customer name is required"),
+  customerIdCardNumber: z.string().min(1, "ID card number is required"),
   category: z.enum([
     "PHONE", "TABLET", "HEADPHONES", "HEATER", "SPEAKER", "HAIR_CLIPPER",
     "COOLER", "POWER_BANK", "KETTLE", "LAPTOP", "MULTI_SOCKET", "PIZZA_PAN_CABLE",
@@ -70,6 +71,7 @@ export function ElectronicsRepairForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       customerName: "",
+      customerIdCardNumber: "",
       item: "",
       whatsapp: "",
       serialNumber: "",
@@ -125,6 +127,29 @@ export function ElectronicsRepairForm() {
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
                 {t("electronics.new.help.customerName", "Name of the person requesting the repair")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="customerIdCardNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">
+                {t("electronics.new.fields.customerIdCardNumber", "ID Card Number")}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("electronics.new.placeholders.customerIdCardNumber", "Government ID or card number")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("electronics.new.help.customerIdCardNumber", "ID card number of the person bringing the device")}
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -213,22 +213,23 @@ enum ElectronicsCategory {
 }
 
 model ElectronicsRepair {
-  id           String                  @id @default(uuid())
-  repairId     Int                     @unique @default(autoincrement())
-  customerName String
-  category     ElectronicsCategory
-  item         String?
-  whatsapp     String?
-  serialNumber String?                 @db.Text
-  status       ElectronicsRepairStatus @default(UNCHECKED)
-  repairable   Boolean?
-  notes        String?                 @db.Text
-  photoPath    String?                 @db.Text
-  createdDate  DateTime                @default(now())
-  repairerId   String?
-  repairer     User?                   @relation(fields: [repairerId], references: [id])
-  createdAt    DateTime                @default(now())
-  updatedAt    DateTime                @updatedAt
+  id                   String                  @id @default(uuid())
+  repairId             Int                     @unique @default(autoincrement())
+  customerName         String
+  customerIdCardNumber String
+  category             ElectronicsCategory
+  item                 String?
+  whatsapp             String?
+  serialNumber         String?                 @db.Text
+  status               ElectronicsRepairStatus @default(UNCHECKED)
+  repairable           Boolean?
+  notes                String?                 @db.Text
+  photoPath            String?                 @db.Text
+  createdDate          DateTime                @default(now())
+  repairerId           String?
+  repairer             User?                   @relation(fields: [repairerId], references: [id])
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
 
   @@index([createdDate])
   @@index([status, createdDate])

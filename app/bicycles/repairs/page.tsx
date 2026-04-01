@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { getServerI18n } from "@/lib/i18n/server"
+import { localizePathname } from "@/lib/i18n/config"
 
 interface PageProps {
   searchParams: Promise<{
@@ -15,7 +16,7 @@ interface PageProps {
 const PAGE_SIZE = 20
 
 export default async function BicycleRepairsPage({ searchParams }: PageProps) {
-  const { t } = await getServerI18n()
+  const { locale, t } = await getServerI18n()
   const params = await searchParams
   const requestedPage = Number(params.page ?? "1")
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1
@@ -56,15 +57,15 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
 
   const hasPreviousPage = currentPage > 1
   const hasNextPage = currentPage < totalPages
-  const previousPageHref = `/bicycles/repairs?page=${currentPage - 1}`
-  const nextPageHref = `/bicycles/repairs?page=${currentPage + 1}`
+  const previousPageHref = `${localizePathname("/bicycles/repairs", locale)}?page=${currentPage - 1}`
+  const nextPageHref = `${localizePathname("/bicycles/repairs", locale)}?page=${currentPage + 1}`
 
   return (
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-6">
         <h1 className="text-2xl font-bold">{t("modules.repairs.title", "Bicycle Repairs")}</h1>
         <Button asChild>
-          <Link href="/bicycles/repairs/new">{t("modules.repairs.new", "New Repair")}</Link>
+          <Link href={localizePathname("/bicycles/repairs/new", locale)}>{t("modules.repairs.new", "New Repair")}</Link>
         </Button>
       </div>
       <RepairsTable data={repairs} />

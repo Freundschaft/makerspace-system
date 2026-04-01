@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const {
       customerName,
+      customerIdCardNumber,
       category,
       item,
       whatsapp,
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
     const repair = await prisma.electronicsRepair.create({
       data: {
         customerName,
+        customerIdCardNumber,
         category,
         item,
         whatsapp,

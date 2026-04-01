@@ -59,6 +59,7 @@ export async function PATCH(
     const body = await request.json()
     const {
       customerName,
+      customerIdCardNumber,
       category,
       item,
       whatsapp,
@@ -75,6 +76,7 @@ export async function PATCH(
       where: { id },
       data: {
         customerName,
+        customerIdCardNumber,
         category,
         item,
         whatsapp,

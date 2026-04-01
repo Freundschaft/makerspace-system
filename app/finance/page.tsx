@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BudgetTable } from "./budget-table";
 import { ExpenseTable } from "./expense-table";
+import { localizePathname } from "@/lib/i18n/config";
 
 export default async function FinancePage() {
-  const { t } = await getServerI18n();
+  const { locale, t } = await getServerI18n();
   const [budgets, expenses] = await Promise.all([
     prisma.budget.findMany({
       include: { expenses: true },
@@ -41,12 +42,12 @@ export default async function FinancePage() {
         <h1 className="text-2xl font-bold">{t("modules.finance.title", "Finance")}</h1>
         <div className="flex gap-2">
           <Button asChild variant="outline">
-            <Link href="/finance/new-budget">
+            <Link href={localizePathname("/finance/new-budget", locale)}>
               {t("modules.finance.newBudget", "New Budget")}
             </Link>
           </Button>
           <Button asChild>
-            <Link href="/finance/new-expense">
+            <Link href={localizePathname("/finance/new-expense", locale)}>
               {t("modules.finance.newExpense", "New Expense")}
             </Link>
           </Button>

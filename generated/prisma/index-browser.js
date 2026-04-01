@@ -213,6 +213,7 @@ exports.Prisma.ElectronicsRepairScalarFieldEnum = {
   id: 'id',
   repairId: 'repairId',
   customerName: 'customerName',
+  customerIdCardNumber: 'customerIdCardNumber',
   category: 'category',
   item: 'item',
   whatsapp: 'whatsapp',
@@ -364,6 +365,7 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
 exports.Prisma.ElectronicsRepairOrderByRelevanceFieldEnum = {
   id: 'id',
   customerName: 'customerName',
+  customerIdCardNumber: 'customerIdCardNumber',
   item: 'item',
   whatsapp: 'whatsapp',
   serialNumber: 'serialNumber',

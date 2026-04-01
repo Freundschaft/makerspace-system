@@ -74,6 +74,7 @@ export type ElectronicsRepair = {
   id: string
   repairId: number
   customerName: string
+  customerIdCardNumber: string
   category: string
   item: string | null
   whatsapp: string | null
@@ -131,6 +132,18 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
       return (
         <Link href={`/electronics/repairs/${id}`} className="block">
           {row.getValue("customerName")}
+        </Link>
+      )
+    },
+  },
+  {
+    accessorKey: "customerIdCardNumber",
+    header: t("electronics.new.fields.customerIdCardNumber", "ID Card Number"),
+    cell: ({ row }) => {
+      const id = row.original.id
+      return (
+        <Link href={`/electronics/repairs/${id}`} className="block font-mono">
+          {row.getValue("customerIdCardNumber")}
         </Link>
       )
     },

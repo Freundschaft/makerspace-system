@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import { ScrollArea } from "./ui/scroll-area"
 import { useI18n } from "@/app/components/I18nProvider"
 import { getNavigationForRole } from "@/lib/navigation"
+import { localizePathname } from "@/lib/i18n/config"
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -15,7 +16,7 @@ interface SidebarProps {
 
 export function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname()
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const { data: session } = useSession()
   const navigationItems = getNavigationForRole(session?.user?.role ?? null)
 
@@ -28,7 +29,8 @@ export function Sidebar({ onNavigate }: SidebarProps) {
       <ScrollArea className="flex-1">
         <div className="space-y-1">
           {navigationItems.map((item) => {
-            const isActive = pathname === item.href
+            const localizedHref = localizePathname(item.href, locale)
+            const isActive = pathname === localizedHref
             return (
               <Button
                 key={item.key}
@@ -39,7 +41,7 @@ export function Sidebar({ onNavigate }: SidebarProps) {
                 )}
                 asChild
               >
-                <Link href={item.href} onClick={onNavigate}>
+                <Link href={localizedHref} onClick={onNavigate}>
                   <item.icon className="mr-3 h-4 w-4 shrink-0" />
                   {t(`shell.nav.${item.key}`, item.fallback)}
                 </Link>

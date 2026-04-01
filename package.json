@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "prisma:seed": "tsx prisma/seed.ts",
     "repairs:backfill-owner-identity": "tsx scripts/backfill-bicycle-repair-owner-identity.ts",
+    "electronics:backfill-customer-id": "tsx scripts/backfill-electronics-repair-customer-id.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {

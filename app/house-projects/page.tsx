@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getServerI18n } from "@/lib/i18n/server";
+import { localizePathname } from "@/lib/i18n/config";
 
 export default async function HouseProjectsPage() {
-  const { t } = await getServerI18n();
+  const { locale, t } = await getServerI18n();
   const projects = await prisma.houseProject.findMany({
     include: {
       assignedTo: true,
@@ -22,7 +23,7 @@ export default async function HouseProjectsPage() {
           {t("modules.houseProjects.title", "House Projects")}
         </h1>
         <Button asChild>
-          <Link href="/house-projects/new">
+          <Link href={localizePathname("/house-projects/new", locale)}>
             {t("modules.houseProjects.new", "New House Project")}
           </Link>
         </Button>

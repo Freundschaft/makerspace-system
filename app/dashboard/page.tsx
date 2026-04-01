@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth-options";
 import { getServerI18n } from "@/lib/i18n/server";
 import { getNavigationForRole } from "@/lib/navigation";
+import { localizePathname } from "@/lib/i18n/config";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
-  const { t } = await getServerI18n();
+  const { locale, t } = await getServerI18n();
   const navigationItems = getNavigationForRole(session?.user?.role ?? null).filter(
     (item) => item.key !== "dashboard"
   );
@@ -25,7 +26,7 @@ export default async function Dashboard() {
           </h1>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg" className="h-12 rounded-xl px-5 text-base">
-              <Link href="/bicycles/repairs/new">
+              <Link href={localizePathname("/bicycles/repairs/new", locale)}>
                 {t("dashboard.createRepair", "Create Repair")}
               </Link>
             </Button>
@@ -35,7 +36,7 @@ export default async function Dashboard() {
               variant="outline"
               className="h-12 rounded-xl px-5 text-base"
             >
-              <Link href="/bicycles/rentals/new">
+              <Link href={localizePathname("/bicycles/rentals/new", locale)}>
                 {t("dashboard.createRental", "Create Rental")}
               </Link>
             </Button>
@@ -48,8 +49,8 @@ export default async function Dashboard() {
           {navigationItems.map((item) => (
             <Link
               key={item.key}
-              href={item.href}
-              className="group relative flex h-full min-h-[10.5rem] flex-col items-center justify-center overflow-hidden rounded-[1.75rem] border border-border/70 bg-card px-3 py-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/10 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-[11.5rem] md:min-h-full"
+              href={localizePathname(item.href, locale)}
+              className="group relative flex h-full min-h-[10.5rem] flex-col items-center justify-center overflow-hidden rounded-[1.75rem] border border-border/70 bg-card px-3 py-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/10 hover:shadow-md active:scale-[0.985] active:bg-accent/15 active:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-[11.5rem] md:min-h-full"
             >
               <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-primary/8 blur-2xl transition-transform duration-300 group-hover:scale-110" />
               <div className="relative flex flex-col items-center gap-3">

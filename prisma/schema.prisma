@@ -216,6 +216,7 @@ model ElectronicsRepair {
   id           String                   @id @default(uuid())
   repairId     Int                      @unique @default(autoincrement())
   customerName String
+  customerIdCardNumber String
   category     ElectronicsCategory
   item         String?
   whatsapp     String?
