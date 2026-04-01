@@ -34,7 +34,7 @@ export function Layout({ children }: LayoutProps) {
         
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 z-20 bg-black/40 backdrop-blur-[1px] xl:hidden"
+            className="fixed inset-0 z-20 bg-black/45 xl:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
