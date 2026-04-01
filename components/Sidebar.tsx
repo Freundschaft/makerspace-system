@@ -5,76 +5,9 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
 import { useSession } from "next-auth/react"
-import {
-  LayoutDashboard,
-  Bike,
-  Settings,
-  ClipboardList,
-  Users,
-  Smartphone,
-  Hammer,
-  House,
-  Wallet,
-} from "lucide-react"
 import { ScrollArea } from "./ui/scroll-area"
 import { useI18n } from "@/app/components/I18nProvider"
-
-const navigation = [
-  {
-    key: "dashboard",
-    fallback: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    key: "team",
-    fallback: "Team",
-    href: "/team",
-    icon: Users,
-  },
-  {
-    key: "bicycles",
-    fallback: "Bicycles",
-    href: "/bicycles/repairs",
-    icon: Bike,
-  },
-  {
-    key: "rentals",
-    fallback: "Rentals",
-    href: "/bicycles/rentals",
-    icon: ClipboardList,
-  },
-  {
-    key: "electronics",
-    fallback: "Electronics",
-    href: "/electronics/repairs",
-    icon: Smartphone,
-  },
-  {
-    key: "carpentry",
-    fallback: "Carpentry",
-    href: "/carpentry/projects",
-    icon: Hammer,
-  },
-  {
-    key: "houseProjects",
-    fallback: "House Project",
-    href: "/house-projects",
-    icon: House,
-  },
-  {
-    key: "finance",
-    fallback: "Finance",
-    href: "/finance",
-    icon: Wallet,
-  },
-  {
-    key: "settings",
-    fallback: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-]
+import { getNavigationForRole } from "@/lib/navigation"
 
 interface SidebarProps {
   onNavigate?: () => void
@@ -84,13 +17,7 @@ export function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname()
   const { t } = useI18n()
   const { data: session } = useSession()
-  const navigationItems = navigation.filter((item) => {
-    if (item.key === "team" && session?.user?.role !== "ADMIN") {
-      return false
-    }
-
-    return true
-  })
+  const navigationItems = getNavigationForRole(session?.user?.role ?? null)
 
   return (
     <div className="flex h-full flex-col gap-3 p-3 sm:p-4">

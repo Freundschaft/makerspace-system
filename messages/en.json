@@ -7,11 +7,14 @@
     "operations": "Operations",
     "nav": {
       "dashboard": "Dashboard",
+      "reports": "Reports",
       "team": "Team",
       "bicycles": "Bicycles",
       "rentals": "Rentals",
       "electronics": "Electronics",
       "carpentry": "Carpentry",
+      "houseProjects": "House Projects",
+      "finance": "Finance",
       "settings": "Settings"
     }
   },
@@ -165,14 +168,30 @@
     "welcome": "Welcome back, {name}",
     "fallbackName": "Maker",
     "description": "Everything in one place: team operations, repair queues, and rental activity.",
+    "launcherDescription": "Large quick-launch buttons for workshop use. Tap a section and get moving.",
+    "quickLaunchEyebrow": "Quick Launch",
+    "quickLaunchTitle": "Workshop Navigation",
+    "quickLaunchHint": "Oversized targets for fast access, even with gloves or greasy fingers.",
     "createRepair": "Create Repair",
     "createRental": "Create Rental",
+    "launcher": {
+      "reports": "Open reports and totals",
+      "team": "Open team administration",
+      "bicycles": "Open bicycle repairs",
+      "rentals": "Open bicycle rentals",
+      "electronics": "Open electronics repairs",
+      "carpentry": "Open carpentry projects",
+      "houseProjects": "Open house projects",
+      "finance": "Open finance",
+      "settings": "Open settings"
+    },
     "stats": {
       "teamMembers": "Team Members",
       "bicycles": "Bicycles",
       "rentals": "Rentals",
       "electronics": "Electronics",
       "carpentry": "Carpentry",
+      "houseProjects": "House Projects",
       "viewDetails": "View details"
     },
     "cards": {
@@ -185,6 +204,11 @@
       "quickAccessTitle": "Navigate to active work queues",
       "quickAccessHint": "Use the sidebar to jump to each module."
     }
+  },
+  "reports": {
+    "badge": "Reports",
+    "title": "Operations Overview",
+    "description": "Operational totals and high-level workshop activity in one place."
   },
   "repairs": {
     "details": {
