@@ -28,12 +28,6 @@ export const appNavigation: NavigationItem[] = [
     icon: LayoutDashboard,
   },
   {
-    key: "reports",
-    fallback: "Reports",
-    href: "/reports",
-    icon: BarChart3,
-  },
-  {
     key: "team",
     fallback: "Team",
     href: "/team",
@@ -75,6 +69,12 @@ export const appNavigation: NavigationItem[] = [
     fallback: "Finance",
     href: "/finance",
     icon: Wallet,
+  },
+  {
+    key: "reports",
+    fallback: "Reports",
+    href: "/reports",
+    icon: BarChart3,
   },
   {
     key: "settings",
