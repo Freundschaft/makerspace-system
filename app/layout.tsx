@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cabin, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
@@ -7,6 +7,7 @@ import { Layout } from "@/components/Layout";
 import { authOptions } from "@/lib/auth-options";
 import { getServerI18n } from "@/lib/i18n/server";
 import { I18nProvider } from "./components/I18nProvider";
+import { PwaRegistration } from "./components/PwaRegistration";
 
 const cabin = Cabin({
   variable: "--font-geist-sans",
@@ -21,6 +22,20 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Makerspace System",
   description: "A modern makerspace management system",
+  manifest: "/manifest.webmanifest",
+  applicationName: "Makerspace System",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Makerspace System",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#84b279",
 };
 
 export default async function RootLayout({
@@ -39,6 +54,7 @@ export default async function RootLayout({
       >
         <I18nProvider locale={locale} messages={messages}>
           <SessionProvider session={session}>
+            <PwaRegistration />
             <Layout>{children}</Layout>
           </SessionProvider>
         </I18nProvider>
