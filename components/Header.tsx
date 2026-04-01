@@ -31,7 +31,7 @@ export function Header({ onMenuClick }: HeaderProps) {
           <Menu className="h-5 w-5" />
         </Button>
         <div className="min-w-0 flex-1 xl:max-w-[18.5rem]">
-          <Link href={homeHref} className="inline-flex touch-manipulation [webkit-tap-highlight-color:rgba(15,23,42,0.12)] items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5 shadow-sm transition-colors hover:bg-muted active:scale-[0.98] active:bg-muted/80">
+          <Link href={homeHref} className="inline-flex touch-manipulation select-none [webkit-tap-highlight-color:rgba(15,23,42,0.12)] [webkit-touch-callout:none] items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5 shadow-sm transition-colors hover:bg-muted active:scale-[0.98] active:bg-muted/80">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground">
               <Sparkles className="h-3.5 w-3.5" />
             </span>
