@@ -21,6 +21,7 @@ export type TeamMember = {
   endDate: Date | null;
   department: string;
   email: string;
+  secondaryEmail: string | null;
   phone: string;
   homeAddress: string;
   dateOfBirth: Date;

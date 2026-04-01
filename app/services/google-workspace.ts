@@ -45,6 +45,7 @@ export class GoogleWorkspaceService {
         auth: this.authClient,
         requestBody: {
           primaryEmail: teamMember.email,
+          recoveryEmail: teamMember.secondaryEmail || undefined,
           name: {
             familyName: teamMember.familyName,
             givenName: teamMember.givenNames,
@@ -82,6 +83,7 @@ export class GoogleWorkspaceService {
         userKey: currentEmail || teamMember.email,
         requestBody: {
           primaryEmail: teamMember.email,
+          recoveryEmail: teamMember.secondaryEmail || undefined,
           name: {
             familyName: teamMember.familyName,
             givenName: teamMember.givenNames,
@@ -209,6 +211,10 @@ export class GoogleWorkspaceService {
         const existingMember = existingMembersByEmail.get(googleUser.primaryEmail);
         const teamMemberData = {
           email: googleUser.primaryEmail,
+          secondaryEmail:
+            googleUser.recoveryEmail ||
+            existingMember?.secondaryEmail ||
+            googleUser.primaryEmail,
           familyName: googleUser.name?.familyName || '',
           givenNames: googleUser.name?.givenName || '',
           nationality: existingMember?.nationality ?? null, // Not available in Google Workspace

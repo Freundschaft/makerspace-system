@@ -121,7 +121,7 @@ model TeamMember {
   id                  String           @id @default(uuid())
   familyName          String
   givenNames          String
-  nationality         String
+  nationality         String?
   photoPath           String?          @db.Text
   status              TeamMemberStatus @default(ACTIVE)
   googleAccountActive Boolean          @default(true)
@@ -129,6 +129,7 @@ model TeamMember {
   endDate             DateTime?
   department          String
   email               String           @unique
+  secondaryEmail      String
   phone               String
   homeAddress         String?          @db.Text
   dateOfBirth         DateTime

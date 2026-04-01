@@ -263,6 +263,27 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
         </div>
 
         <div>
+          <label htmlFor="secondaryEmail" className="block text-sm font-medium mb-1">
+            {t('team.form.secondaryEmail', 'Secondary Email')} *
+          </label>
+          <input
+            type="email"
+            id="secondaryEmail"
+            name="secondaryEmail"
+            value={formData.secondaryEmail || ''}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded-md"
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            {t(
+              'team.form.secondaryEmailHelp',
+              'Used as the Google Workspace recovery email for password reset.'
+            )}
+          </p>
+        </div>
+
+        <div>
           <label htmlFor="phone" className="block text-sm font-medium mb-1">
             {t('team.form.phone', 'Phone')} *
           </label>

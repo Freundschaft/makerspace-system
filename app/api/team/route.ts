@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       !body.startDate ||
       !body.department ||
       !body.email ||
+      !body.secondaryEmail ||
       !body.phone ||
       !body.dateOfBirth ||
       !body.legalStatus
@@ -61,6 +62,7 @@ export async function POST(request: NextRequest) {
         endDate: body.endDate ? new Date(body.endDate) : null,
         department: body.department,
         email: body.email,
+        secondaryEmail: body.secondaryEmail,
         phone: body.phone,
         homeAddress: body.homeAddress || null,
         dateOfBirth: new Date(body.dateOfBirth),

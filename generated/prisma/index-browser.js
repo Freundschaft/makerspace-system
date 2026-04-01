@@ -198,6 +198,7 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   endDate: 'endDate',
   department: 'department',
   email: 'email',
+  secondaryEmail: 'secondaryEmail',
   phone: 'phone',
   homeAddress: 'homeAddress',
   dateOfBirth: 'dateOfBirth',
@@ -351,6 +352,7 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
   photoPath: 'photoPath',
   department: 'department',
   email: 'email',
+  secondaryEmail: 'secondaryEmail',
   phone: 'phone',
   homeAddress: 'homeAddress',
   legalStatus: 'legalStatus'
