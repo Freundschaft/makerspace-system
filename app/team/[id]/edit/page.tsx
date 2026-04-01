@@ -1,7 +1,10 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { TeamMemberForm } from "../../team-member-form";
 import { getServerI18n } from "@/lib/i18n/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
+import { UserRole } from "@/generated/prisma";
 
 interface EditTeamMemberPageProps {
   params: Promise<{ id: string }>;
@@ -10,6 +13,11 @@ interface EditTeamMemberPageProps {
 export default async function EditTeamMemberPage({
   params,
 }: EditTeamMemberPageProps) {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== UserRole.ADMIN) {
+    redirect("/dashboard");
+  }
+
   const { t } = await getServerI18n();
   const { id } = await params;
 

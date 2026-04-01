@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { getToken } from "next-auth/jwt"
 import { GoogleWorkspaceService } from "@/app/services/google-workspace"
+import { requireAdmin } from "@/lib/auth"
 
 // POST /api/team/sync - Sync team members with Google Workspace
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
-    const token = await getToken({ req: request })
-    if (!token) {
+    if (!(await requireAdmin(request))) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }

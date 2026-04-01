@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getToken } from "next-auth/jwt";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
+import { requireAdmin } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const token = await getToken({ req: request });
-    if (!token) {
+    if (!(await requireAdmin(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -26,8 +25,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const token = await getToken({ req: request });
-    if (!token) {
+    if (!(await requireAdmin(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

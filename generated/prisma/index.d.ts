@@ -78,7 +78,15 @@ export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>
  * Enums
  */
 export namespace $Enums {
-  export const RepairStatus: {
+  export const UserRole: {
+  ADMIN: 'ADMIN',
+  TEAM_MEMBER: 'TEAM_MEMBER'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const RepairStatus: {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
   WAITING_FOR_PARTS: 'WAITING_FOR_PARTS',
@@ -215,6 +223,10 @@ export const HouseProjectStatus: {
 export type HouseProjectStatus = (typeof HouseProjectStatus)[keyof typeof HouseProjectStatus]
 
 }
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
 
 export type RepairStatus = $Enums.RepairStatus
 
@@ -2175,7 +2187,7 @@ export namespace Prisma {
     id: string | null
     email: string | null
     googleId: string | null
-    role: string | null
+    role: $Enums.UserRole | null
     enabled: boolean | null
   }
 
@@ -2183,7 +2195,7 @@ export namespace Prisma {
     id: string | null
     email: string | null
     googleId: string | null
-    role: string | null
+    role: $Enums.UserRole | null
     enabled: boolean | null
   }
 
@@ -2297,8 +2309,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string | null
-    googleId: string
-    role: string | null
+    googleId: string | null
+    role: $Enums.UserRole
     enabled: boolean | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -2362,8 +2374,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string | null
-      googleId: string
-      role: string | null
+      googleId: string | null
+      role: $Enums.UserRole
       enabled: boolean | null
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2741,7 +2753,7 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly googleId: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'UserRole'>
     readonly enabled: FieldRef<"User", 'Boolean'>
   }
     
@@ -2966,7 +2978,7 @@ export namespace Prisma {
     /**
      * The data needed to create a User.
      */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+    data?: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
@@ -8360,7 +8372,7 @@ export namespace Prisma {
     endDate: Date | null
     department: string
     email: string
-    secondaryEmail: string
+    secondaryEmail: string | null
     phone: string
     homeAddress: string | null
     dateOfBirth: Date
@@ -8447,7 +8459,7 @@ export namespace Prisma {
       endDate: Date | null
       department: string
       email: string
-      secondaryEmail: string
+      secondaryEmail: string | null
       phone: string
       homeAddress: string | null
       dateOfBirth: Date
@@ -14958,8 +14970,7 @@ export namespace Prisma {
   export const UserOrderByRelevanceFieldEnum: {
     id: 'id',
     email: 'email',
-    googleId: 'googleId',
-    role: 'role'
+    googleId: 'googleId'
   };
 
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -15116,6 +15127,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -15222,8 +15240,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
-    googleId?: StringFilter<"User"> | string
-    role?: StringNullableFilter<"User"> | string | null
+    googleId?: StringNullableFilter<"User"> | string | null
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
     carpentryProjects?: CarpentryProjectListRelationFilter
@@ -15234,8 +15252,8 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
-    googleId?: SortOrder
-    role?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
+    role?: SortOrder
     enabled?: SortOrderInput | SortOrder
     electronicsRepairs?: ElectronicsRepairOrderByRelationAggregateInput
     carpentryProjects?: CarpentryProjectOrderByRelationAggregateInput
@@ -15251,7 +15269,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     email?: StringNullableFilter<"User"> | string | null
-    role?: StringNullableFilter<"User"> | string | null
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     enabled?: BoolNullableFilter<"User"> | boolean | null
     electronicsRepairs?: ElectronicsRepairListRelationFilter
     carpentryProjects?: CarpentryProjectListRelationFilter
@@ -15262,8 +15280,8 @@ export namespace Prisma {
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
-    googleId?: SortOrder
-    role?: SortOrderInput | SortOrder
+    googleId?: SortOrderInput | SortOrder
+    role?: SortOrder
     enabled?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -15276,8 +15294,8 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
-    googleId?: StringWithAggregatesFilter<"User"> | string
-    role?: StringNullableWithAggregatesFilter<"User"> | string | null
+    googleId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     enabled?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
   }
 
@@ -15670,7 +15688,7 @@ export namespace Prisma {
     endDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     department?: StringFilter<"TeamMember"> | string
     email?: StringFilter<"TeamMember"> | string
-    secondaryEmail?: StringFilter<"TeamMember"> | string
+    secondaryEmail?: StringNullableFilter<"TeamMember"> | string | null
     phone?: StringFilter<"TeamMember"> | string
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
@@ -15691,7 +15709,7 @@ export namespace Prisma {
     endDate?: SortOrderInput | SortOrder
     department?: SortOrder
     email?: SortOrder
-    secondaryEmail?: SortOrder
+    secondaryEmail?: SortOrderInput | SortOrder
     phone?: SortOrder
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
@@ -15716,7 +15734,7 @@ export namespace Prisma {
     startDate?: DateTimeFilter<"TeamMember"> | Date | string
     endDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     department?: StringFilter<"TeamMember"> | string
-    secondaryEmail?: StringFilter<"TeamMember"> | string
+    secondaryEmail?: StringNullableFilter<"TeamMember"> | string | null
     phone?: StringFilter<"TeamMember"> | string
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
@@ -15737,7 +15755,7 @@ export namespace Prisma {
     endDate?: SortOrderInput | SortOrder
     department?: SortOrder
     email?: SortOrder
-    secondaryEmail?: SortOrder
+    secondaryEmail?: SortOrderInput | SortOrder
     phone?: SortOrder
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
@@ -15764,7 +15782,7 @@ export namespace Prisma {
     endDate?: DateTimeNullableWithAggregatesFilter<"TeamMember"> | Date | string | null
     department?: StringWithAggregatesFilter<"TeamMember"> | string
     email?: StringWithAggregatesFilter<"TeamMember"> | string
-    secondaryEmail?: StringWithAggregatesFilter<"TeamMember"> | string
+    secondaryEmail?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     phone?: StringWithAggregatesFilter<"TeamMember"> | string
     homeAddress?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
@@ -16296,8 +16314,8 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
@@ -16308,8 +16326,8 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
@@ -16320,8 +16338,8 @@ export namespace Prisma {
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
@@ -16332,8 +16350,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -16344,24 +16362,24 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -16789,7 +16807,7 @@ export namespace Prisma {
     endDate?: Date | string | null
     department: string
     email: string
-    secondaryEmail: string
+    secondaryEmail?: string | null
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
@@ -16810,7 +16828,7 @@ export namespace Prisma {
     endDate?: Date | string | null
     department: string
     email: string
-    secondaryEmail: string
+    secondaryEmail?: string | null
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
@@ -16831,7 +16849,7 @@ export namespace Prisma {
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    secondaryEmail?: StringFieldUpdateOperationsInput | string
+    secondaryEmail?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16852,7 +16870,7 @@ export namespace Prisma {
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    secondaryEmail?: StringFieldUpdateOperationsInput | string
+    secondaryEmail?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16873,7 +16891,7 @@ export namespace Prisma {
     endDate?: Date | string | null
     department: string
     email: string
-    secondaryEmail: string
+    secondaryEmail?: string | null
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
@@ -16894,7 +16912,7 @@ export namespace Prisma {
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    secondaryEmail?: StringFieldUpdateOperationsInput | string
+    secondaryEmail?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16915,7 +16933,7 @@ export namespace Prisma {
     endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     department?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    secondaryEmail?: StringFieldUpdateOperationsInput | string
+    secondaryEmail?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17538,6 +17556,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type BoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -17652,6 +17677,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18715,6 +18750,10 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
+  }
+
   export type NullableBoolFieldUpdateOperationsInput = {
     set?: boolean | null
   }
@@ -19291,6 +19330,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -19352,6 +19398,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[]
+    notIn?: $Enums.UserRole[]
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20240,8 +20296,8 @@ export namespace Prisma {
   export type UserCreateWithoutElectronicsRepairsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
@@ -20251,8 +20307,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutElectronicsRepairsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
@@ -20278,8 +20334,8 @@ export namespace Prisma {
   export type UserUpdateWithoutElectronicsRepairsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
@@ -20289,8 +20345,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutElectronicsRepairsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -20300,8 +20356,8 @@ export namespace Prisma {
   export type UserCreateWithoutCarpentryProjectsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
@@ -20311,8 +20367,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutCarpentryProjectsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
@@ -20378,8 +20434,8 @@ export namespace Prisma {
   export type UserUpdateWithoutCarpentryProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
@@ -20389,8 +20445,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutCarpentryProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -20416,8 +20472,8 @@ export namespace Prisma {
   export type UserCreateWithoutHouseProjectsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
@@ -20427,8 +20483,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutHouseProjectsInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
@@ -20494,8 +20550,8 @@ export namespace Prisma {
   export type UserUpdateWithoutHouseProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
@@ -20505,8 +20561,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutHouseProjectsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
@@ -20613,8 +20669,8 @@ export namespace Prisma {
   export type UserCreateWithoutExpensesInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
@@ -20624,8 +20680,8 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutExpensesInput = {
     id?: string
     email?: string | null
-    googleId: string
-    role?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
     enabled?: boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
@@ -20770,8 +20826,8 @@ export namespace Prisma {
   export type UserUpdateWithoutExpensesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
@@ -20781,8 +20837,8 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutExpensesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    googleId?: StringFieldUpdateOperationsInput | string
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput

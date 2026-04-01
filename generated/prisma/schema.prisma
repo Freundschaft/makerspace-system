@@ -17,13 +17,18 @@ datasource db {
 model User {
   id                 String              @id @default(uuid())
   email              String?
-  googleId           String              @unique
-  role               String?
+  googleId           String?             @unique
+  role               UserRole            @default(TEAM_MEMBER)
   enabled            Boolean?
   electronicsRepairs ElectronicsRepair[]
   carpentryProjects  CarpentryProject[]
   houseProjects      HouseProject[]
   expenses           Expense[]
+}
+
+enum UserRole {
+  ADMIN
+  TEAM_MEMBER
 }
 
 model ProblemType {
@@ -129,7 +134,7 @@ model TeamMember {
   endDate             DateTime?
   department          String
   email               String           @unique
-  secondaryEmail      String
+  secondaryEmail      String?
   phone               String
   homeAddress         String?          @db.Text
   dateOfBirth         DateTime

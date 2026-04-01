@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
+import { useSession } from "next-auth/react"
 import {
   LayoutDashboard,
   Bike,
@@ -75,9 +76,21 @@ const navigation = [
   },
 ]
 
-export function Sidebar() {
+interface SidebarProps {
+  onNavigate?: () => void
+}
+
+export function Sidebar({ onNavigate }: SidebarProps) {
   const pathname = usePathname()
   const { t } = useI18n()
+  const { data: session } = useSession()
+  const navigationItems = navigation.filter((item) => {
+    if (item.key === "team" && session?.user?.role !== "ADMIN") {
+      return false
+    }
+
+    return true
+  })
 
   return (
     <div className="flex h-full flex-col gap-3 p-3 sm:p-4">
@@ -87,7 +100,7 @@ export function Sidebar() {
       </div>
       <ScrollArea className="flex-1">
         <div className="space-y-1">
-          {navigation.map((item) => {
+          {navigationItems.map((item) => {
             const isActive = pathname === item.href
             return (
               <Button
@@ -99,7 +112,7 @@ export function Sidebar() {
                 )}
                 asChild
               >
-                <Link href={item.href}>
+                <Link href={item.href} onClick={onNavigate}>
                   <item.icon className="mr-3 h-4 w-4 shrink-0" />
                   {t(`shell.nav.${item.key}`, item.fallback)}
                 </Link>

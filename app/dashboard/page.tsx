@@ -15,11 +15,13 @@ import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth-options";
 import { prisma } from "@/lib/prisma";
 import { getServerI18n } from "@/lib/i18n/server";
+import { UserRole } from "@/generated/prisma";
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions);
   const { t } = await getServerI18n();
   const today = new Date().toLocaleDateString();
+  const isAdmin = session?.user?.role === UserRole.ADMIN;
   const [
     teamMembersCount,
     bicycleRepairsCount,
@@ -37,12 +39,14 @@ export default async function Dashboard() {
   ]);
 
   const stats = [
-    {
-      label: t("dashboard.stats.teamMembers", "Team Members"),
-      value: teamMembersCount,
-      href: "/team",
-      icon: Users,
-    },
+    ...(isAdmin
+      ? [{
+          label: t("dashboard.stats.teamMembers", "Team Members"),
+          value: teamMembersCount,
+          href: "/team",
+          icon: Users,
+        }]
+      : []),
     {
       label: t("dashboard.stats.bicycles", "Bicycles"),
       value: bicycleRepairsCount,

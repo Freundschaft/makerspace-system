@@ -303,8 +303,7 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.UserOrderByRelevanceFieldEnum = {
   id: 'id',
   email: 'email',
-  googleId: 'googleId',
-  role: 'role'
+  googleId: 'googleId'
 };
 
 exports.Prisma.ProblemTypeOrderByRelevanceFieldEnum = {
@@ -411,6 +410,11 @@ exports.Prisma.ExpenseOrderByRelevanceFieldEnum = {
   carpentryProjectId: 'carpentryProjectId',
   houseProjectId: 'houseProjectId'
 };
+exports.UserRole = exports.$Enums.UserRole = {
+  ADMIN: 'ADMIN',
+  TEAM_MEMBER: 'TEAM_MEMBER'
+};
+
 exports.RepairStatus = exports.$Enums.RepairStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',

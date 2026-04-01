@@ -1,0 +1,13 @@
+UPDATE `User`
+SET `role` = 'TEAM_MEMBER'
+WHERE `role` IS NOT NULL
+  AND UPPER(TRIM(`role`)) IN ('TEAM_MEMBER', 'MEMBER', 'USER', 'REGULAR');
+
+UPDATE `User`
+SET `role` = 'ADMIN'
+WHERE `role` IS NULL
+   OR TRIM(`role`) = ''
+   OR UPPER(TRIM(`role`)) NOT IN ('ADMIN', 'TEAM_MEMBER');
+
+ALTER TABLE `User`
+  MODIFY `role` ENUM('ADMIN', 'TEAM_MEMBER') NOT NULL DEFAULT 'TEAM_MEMBER';

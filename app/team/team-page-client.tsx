@@ -2,24 +2,30 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { TeamMember } from "@/generated/prisma";
+import { UserRole } from "@/generated/prisma";
 import { TeamMemberDataTable } from "../components/team/TeamMemberDataTable";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { TeamMemberWithRole } from "./team-types";
 
 interface TeamPageClientProps {
-  initialTeamMembers: TeamMember[];
+  initialTeamMembers: TeamMemberWithRole[];
+  currentUserEmail: string | null;
 }
 
 type StatusFilter = "ACTIVE" | "INACTIVE" | "ALL";
 
-export function TeamPageClient({ initialTeamMembers }: TeamPageClientProps) {
+export function TeamPageClient({
+  initialTeamMembers,
+  currentUserEmail,
+}: TeamPageClientProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [teamMembers, setTeamMembers] = useState(initialTeamMembers);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ACTIVE");
   const [syncing, setSyncing] = useState(false);
+  const [updatingRoleId, setUpdatingRoleId] = useState<string | null>(null);
 
   const filteredTeamMembers = teamMembers.filter((member) => {
     if (statusFilter === "ALL") {
@@ -29,11 +35,11 @@ export function TeamPageClient({ initialTeamMembers }: TeamPageClientProps) {
     return member.status === statusFilter;
   });
 
-  const handleEdit = (member: TeamMember) => {
+  const handleEdit = (member: TeamMemberWithRole) => {
     router.push(`/team/${member.id}/edit`);
   };
 
-  const handleDelete = async (member: TeamMember) => {
+  const handleDelete = async (member: TeamMemberWithRole) => {
     if (!window.confirm(t("team.confirmDelete", "Are you sure you want to delete this team member?"))) {
       return;
     }
@@ -48,6 +54,49 @@ export function TeamPageClient({ initialTeamMembers }: TeamPageClientProps) {
       setTeamMembers((prev) => prev.filter((m) => m.id !== member.id));
     } catch (error) {
       console.error("Error deleting team member:", error);
+    }
+  };
+
+  const handleRoleChange = async (
+    member: TeamMemberWithRole,
+    nextRole: UserRole
+  ) => {
+    setUpdatingRoleId(member.id);
+
+    try {
+      const response = await fetch(`/api/team/${member.id}/role`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ role: nextRole }),
+      });
+
+      const result = (await response.json()) as
+        | { role?: UserRole; error?: string }
+        | undefined;
+
+      if (!response.ok || !result?.role) {
+        throw new Error(
+          result?.error ??
+            t("team.errors.roleUpdateFailed", "Failed to update team role")
+        );
+      }
+
+      setTeamMembers((prev) =>
+        prev.map((item) =>
+          item.id === member.id ? { ...item, userRole: result.role } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating team role:", error);
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : t("team.errors.roleUpdateFailed", "Failed to update team role")
+      );
+    } finally {
+      setUpdatingRoleId(null);
     }
   };
 
@@ -131,8 +180,11 @@ export function TeamPageClient({ initialTeamMembers }: TeamPageClientProps) {
       </div>
       <TeamMemberDataTable
         data={filteredTeamMembers}
+        currentUserEmail={currentUserEmail}
         onEdit={handleEdit}
         onDelete={handleDelete}
+        onRoleChange={handleRoleChange}
+        updatingRoleId={updatingRoleId}
       />
     </div>
   );

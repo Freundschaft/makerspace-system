@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getToken } from "next-auth/jwt";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
+import { requireAdmin } from "@/lib/auth";
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const token = await getToken({ req: request });
-    if (!token) {
+    if (!(await requireAdmin(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -65,6 +64,13 @@ export async function PUT(
       },
     });
 
+    if (existingTeamMember.email !== updatedTeamMember.email) {
+      await prisma.user.updateMany({
+        where: { email: existingTeamMember.email },
+        data: { email: updatedTeamMember.email },
+      });
+    }
+
     try {
       const googleWorkspace = await GoogleWorkspaceService.getInstance();
       await googleWorkspace.updateUser(updatedTeamMember, existingTeamMember.email);
@@ -95,8 +101,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const token = await getToken({ req: request });
-    if (!token) {
+    if (!(await requireAdmin(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

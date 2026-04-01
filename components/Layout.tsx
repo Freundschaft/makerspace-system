@@ -29,7 +29,7 @@ export function Layout({ children }: LayoutProps) {
           xl:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
-          <Sidebar />
+          <Sidebar onNavigate={() => setSidebarOpen(false)} />
         </aside>
         
         {sidebarOpen && (

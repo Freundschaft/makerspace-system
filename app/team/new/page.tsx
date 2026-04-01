@@ -1,7 +1,16 @@
 import { TeamMemberForm } from "../team-member-form";
 import { getServerI18n } from "@/lib/i18n/server";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth-options";
+import { UserRole } from "@/generated/prisma";
 
 export default async function NewTeamMemberPage() {
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== UserRole.ADMIN) {
+    redirect("/dashboard");
+  }
+
   const { t } = await getServerI18n();
 
   return (
