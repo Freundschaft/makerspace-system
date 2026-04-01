@@ -6,10 +6,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
-import { BicycleRepair, Part, RepairPart } from '@/generated/prisma'
+import { RepairStatus, Part, RepairPart } from '@/generated/prisma'
 import { useI18n } from "@/app/components/I18nProvider"
 
-type RepairWithParts = BicycleRepair & {
+type RepairWithParts = {
+  id: string
+  problemTypes: string
+  description: string
+  receivedDate: Date
+  repairedDate: Date | null
+  pickupDate: Date | null
+  ownerName: string
+  ownerIdCardNumber: string
+  ownerPhone: string
+  status: RepairStatus
+  photoPath: string | null
   partsUsed: (RepairPart & {
     part: Part
   })[]
@@ -34,6 +45,12 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
+              <div className="font-medium">{t("repairs.form.ownerName", "Owner Name")}:</div>
+              <div>{repair.ownerName}</div>
+
+              <div className="font-medium">{t("repairs.form.ownerIdCardNumber", "ID Card Number")}:</div>
+              <div>{repair.ownerIdCardNumber}</div>
+
               <div className="font-medium">{t("common.phone", "Phone")}:</div>
               <div>{repair.ownerPhone}</div>
             </div>

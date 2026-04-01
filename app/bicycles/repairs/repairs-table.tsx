@@ -92,6 +92,9 @@ export function RepairsTable({ data }: RepairsTableProps) {
                       ) : null}
 
                       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground">
+                          {repair.ownerName}
+                        </span>
                         <span className="rounded-full bg-muted px-2 py-1 font-medium text-foreground">
                           {repair.ownerPhone}
                         </span>
@@ -123,6 +126,10 @@ export function RepairsTable({ data }: RepairsTableProps) {
                           ) : null}
                         </div>
                       ) : null}
+
+                      <div className="text-[11px] text-muted-foreground">
+                        {t("repairs.form.ownerIdCardNumber", "ID Card Number")}: {repair.ownerIdCardNumber}
+                      </div>
                     </div>
                   </div>
                 </Card>

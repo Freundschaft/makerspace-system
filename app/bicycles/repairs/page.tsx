@@ -1,4 +1,5 @@
 import { RepairsTable } from "./repairs-table"
+import type { Repair } from "./columns"
 import { prisma } from "@/lib/prisma"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -23,7 +24,7 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
   const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
   const currentPage = Math.min(page, totalPages)
 
-  const repairs = await prisma.bicycleRepair.findMany({
+  const repairsResult = await prisma.bicycleRepair.findMany({
     include: {
       partsUsed: {
         include: {
@@ -37,6 +38,21 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
     skip: (currentPage - 1) * PAGE_SIZE,
     take: PAGE_SIZE,
   })
+
+  const repairs: Repair[] = repairsResult.map((repair) => ({
+    id: repair.id,
+    problemTypes: repair.problemTypes,
+    description: repair.description,
+    receivedDate: repair.receivedDate,
+    repairedDate: repair.repairedDate,
+    pickupDate: repair.pickupDate,
+    ownerName: repair.ownerName ?? "",
+    ownerIdCardNumber: repair.ownerIdCardNumber ?? "",
+    ownerPhone: repair.ownerPhone,
+    status: repair.status,
+    photoPath: repair.photoPath,
+    partsUsed: repair.partsUsed,
+  }))
 
   const hasPreviousPage = currentPage > 1
   const hasNextPage = currentPage < totalPages

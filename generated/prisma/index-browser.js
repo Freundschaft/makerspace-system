@@ -145,6 +145,8 @@ exports.Prisma.BicycleRepairScalarFieldEnum = {
   receivedDate: 'receivedDate',
   repairedDate: 'repairedDate',
   pickupDate: 'pickupDate',
+  ownerName: 'ownerName',
+  ownerIdCardNumber: 'ownerIdCardNumber',
   ownerPhone: 'ownerPhone',
   status: 'status',
   photoPath: 'photoPath',
@@ -317,6 +319,8 @@ exports.Prisma.BicycleRepairOrderByRelevanceFieldEnum = {
   id: 'id',
   problemTypes: 'problemTypes',
   description: 'description',
+  ownerName: 'ownerName',
+  ownerIdCardNumber: 'ownerIdCardNumber',
   ownerPhone: 'ownerPhone',
   photoPath: 'photoPath'
 };

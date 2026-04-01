@@ -12,6 +12,8 @@ export type Repair = {
   receivedDate: Date
   repairedDate: Date | null
   pickupDate: Date | null
+  ownerName: string
+  ownerIdCardNumber: string
   ownerPhone: string
   status: 'PENDING' | 'IN_PROGRESS' | 'WAITING_FOR_PARTS' | 'COMPLETED' | 'PICKED_UP' | 'CANCELLED'
   photoPath: string | null

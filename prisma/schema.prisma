@@ -48,6 +48,8 @@ model BicycleRepair {
   receivedDate    DateTime
   repairedDate    DateTime?
   pickupDate      DateTime?
+  ownerName       String
+  ownerIdCardNumber String
   ownerPhone      String
   status          RepairStatus @default(PENDING)
   photoPath       String?   @db.Text

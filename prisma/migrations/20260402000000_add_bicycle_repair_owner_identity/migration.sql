@@ -1,0 +1,3 @@
+ALTER TABLE `BicycleRepair`
+  ADD COLUMN `ownerName` VARCHAR(191) NOT NULL DEFAULT '',
+  ADD COLUMN `ownerIdCardNumber` VARCHAR(191) NOT NULL DEFAULT '';

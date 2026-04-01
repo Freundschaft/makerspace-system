@@ -46,6 +46,8 @@ const createFormSchema = (problemTypes: ProblemType[]) => {
   return z.object({
     problemTypes: z.array(z.string()).min(1, "Select at least one problem type"),
     description: z.string().min(1, "Description is required"),
+    ownerName: z.string().min(1, "Owner name is required"),
+    ownerIdCardNumber: z.string().min(1, "ID card number is required"),
     ownerPhone: z.string().min(1, "Owner phone is required"),
     status: z.enum(["PENDING", "IN_PROGRESS", "WAITING_FOR_PARTS", "COMPLETED", "PICKED_UP", "CANCELLED"]),
     photoPath: z.string().optional(),
@@ -65,6 +67,8 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
     defaultValues: {
       problemTypes: [],
       description: "",
+      ownerName: "",
+      ownerIdCardNumber: "",
       ownerPhone: "",
       status: "PENDING",
       photoPath: "",
@@ -163,6 +167,52 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
                 {t("repairs.form.descriptionHelp", "Provide a detailed description of the problem")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="ownerName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">
+                {t("repairs.form.ownerName", "Owner Name")}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("repairs.form.ownerNamePlaceholder", "Full name of the person who brought the bicycle")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("repairs.form.ownerNameHelp", "Record who brought the bicycle in.")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="ownerIdCardNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">
+                {t("repairs.form.ownerIdCardNumber", "ID Card Number")}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={t("repairs.form.ownerIdCardNumberPlaceholder", "Government ID or card number")}
+                  className="text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("repairs.form.ownerIdCardNumberHelp", "Record the ID card number of the person who brought the bicycle.")}
               </FormDescription>
               <FormMessage />
             </FormItem>

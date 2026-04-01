@@ -4177,6 +4177,8 @@ export namespace Prisma {
     receivedDate: Date | null
     repairedDate: Date | null
     pickupDate: Date | null
+    ownerName: string | null
+    ownerIdCardNumber: string | null
     ownerPhone: string | null
     status: $Enums.RepairStatus | null
     photoPath: string | null
@@ -4191,6 +4193,8 @@ export namespace Prisma {
     receivedDate: Date | null
     repairedDate: Date | null
     pickupDate: Date | null
+    ownerName: string | null
+    ownerIdCardNumber: string | null
     ownerPhone: string | null
     status: $Enums.RepairStatus | null
     photoPath: string | null
@@ -4205,6 +4209,8 @@ export namespace Prisma {
     receivedDate: number
     repairedDate: number
     pickupDate: number
+    ownerName: number
+    ownerIdCardNumber: number
     ownerPhone: number
     status: number
     photoPath: number
@@ -4221,6 +4227,8 @@ export namespace Prisma {
     receivedDate?: true
     repairedDate?: true
     pickupDate?: true
+    ownerName?: true
+    ownerIdCardNumber?: true
     ownerPhone?: true
     status?: true
     photoPath?: true
@@ -4235,6 +4243,8 @@ export namespace Prisma {
     receivedDate?: true
     repairedDate?: true
     pickupDate?: true
+    ownerName?: true
+    ownerIdCardNumber?: true
     ownerPhone?: true
     status?: true
     photoPath?: true
@@ -4249,6 +4259,8 @@ export namespace Prisma {
     receivedDate?: true
     repairedDate?: true
     pickupDate?: true
+    ownerName?: true
+    ownerIdCardNumber?: true
     ownerPhone?: true
     status?: true
     photoPath?: true
@@ -4336,6 +4348,8 @@ export namespace Prisma {
     receivedDate: Date
     repairedDate: Date | null
     pickupDate: Date | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status: $Enums.RepairStatus
     photoPath: string | null
@@ -4367,6 +4381,8 @@ export namespace Prisma {
     receivedDate?: boolean
     repairedDate?: boolean
     pickupDate?: boolean
+    ownerName?: boolean
+    ownerIdCardNumber?: boolean
     ownerPhone?: boolean
     status?: boolean
     photoPath?: boolean
@@ -4385,6 +4401,8 @@ export namespace Prisma {
     receivedDate?: boolean
     repairedDate?: boolean
     pickupDate?: boolean
+    ownerName?: boolean
+    ownerIdCardNumber?: boolean
     ownerPhone?: boolean
     status?: boolean
     photoPath?: boolean
@@ -4392,7 +4410,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BicycleRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "problemTypes" | "description" | "receivedDate" | "repairedDate" | "pickupDate" | "ownerPhone" | "status" | "photoPath" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRepair"]>
+  export type BicycleRepairOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "problemTypes" | "description" | "receivedDate" | "repairedDate" | "pickupDate" | "ownerName" | "ownerIdCardNumber" | "ownerPhone" | "status" | "photoPath" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRepair"]>
   export type BicycleRepairInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     partsUsed?: boolean | BicycleRepair$partsUsedArgs<ExtArgs>
     _count?: boolean | BicycleRepairCountOutputTypeDefaultArgs<ExtArgs>
@@ -4410,6 +4428,8 @@ export namespace Prisma {
       receivedDate: Date
       repairedDate: Date | null
       pickupDate: Date | null
+      ownerName: string
+      ownerIdCardNumber: string
       ownerPhone: string
       status: $Enums.RepairStatus
       photoPath: string | null
@@ -4791,6 +4811,8 @@ export namespace Prisma {
     readonly receivedDate: FieldRef<"BicycleRepair", 'DateTime'>
     readonly repairedDate: FieldRef<"BicycleRepair", 'DateTime'>
     readonly pickupDate: FieldRef<"BicycleRepair", 'DateTime'>
+    readonly ownerName: FieldRef<"BicycleRepair", 'String'>
+    readonly ownerIdCardNumber: FieldRef<"BicycleRepair", 'String'>
     readonly ownerPhone: FieldRef<"BicycleRepair", 'String'>
     readonly status: FieldRef<"BicycleRepair", 'RepairStatus'>
     readonly photoPath: FieldRef<"BicycleRepair", 'String'>
@@ -14776,6 +14798,8 @@ export namespace Prisma {
     receivedDate: 'receivedDate',
     repairedDate: 'repairedDate',
     pickupDate: 'pickupDate',
+    ownerName: 'ownerName',
+    ownerIdCardNumber: 'ownerIdCardNumber',
     ownerPhone: 'ownerPhone',
     status: 'status',
     photoPath: 'photoPath',
@@ -14990,6 +15014,8 @@ export namespace Prisma {
     id: 'id',
     problemTypes: 'problemTypes',
     description: 'description',
+    ownerName: 'ownerName',
+    ownerIdCardNumber: 'ownerIdCardNumber',
     ownerPhone: 'ownerPhone',
     photoPath: 'photoPath'
   };
@@ -15374,6 +15400,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
     pickupDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
+    ownerName?: StringFilter<"BicycleRepair"> | string
+    ownerIdCardNumber?: StringFilter<"BicycleRepair"> | string
     ownerPhone?: StringFilter<"BicycleRepair"> | string
     status?: EnumRepairStatusFilter<"BicycleRepair"> | $Enums.RepairStatus
     photoPath?: StringNullableFilter<"BicycleRepair"> | string | null
@@ -15389,6 +15417,8 @@ export namespace Prisma {
     receivedDate?: SortOrder
     repairedDate?: SortOrderInput | SortOrder
     pickupDate?: SortOrderInput | SortOrder
+    ownerName?: SortOrder
+    ownerIdCardNumber?: SortOrder
     ownerPhone?: SortOrder
     status?: SortOrder
     photoPath?: SortOrderInput | SortOrder
@@ -15408,6 +15438,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
     pickupDate?: DateTimeNullableFilter<"BicycleRepair"> | Date | string | null
+    ownerName?: StringFilter<"BicycleRepair"> | string
+    ownerIdCardNumber?: StringFilter<"BicycleRepair"> | string
     ownerPhone?: StringFilter<"BicycleRepair"> | string
     status?: EnumRepairStatusFilter<"BicycleRepair"> | $Enums.RepairStatus
     photoPath?: StringNullableFilter<"BicycleRepair"> | string | null
@@ -15423,6 +15455,8 @@ export namespace Prisma {
     receivedDate?: SortOrder
     repairedDate?: SortOrderInput | SortOrder
     pickupDate?: SortOrderInput | SortOrder
+    ownerName?: SortOrder
+    ownerIdCardNumber?: SortOrder
     ownerPhone?: SortOrder
     status?: SortOrder
     photoPath?: SortOrderInput | SortOrder
@@ -15443,6 +15477,8 @@ export namespace Prisma {
     receivedDate?: DateTimeWithAggregatesFilter<"BicycleRepair"> | Date | string
     repairedDate?: DateTimeNullableWithAggregatesFilter<"BicycleRepair"> | Date | string | null
     pickupDate?: DateTimeNullableWithAggregatesFilter<"BicycleRepair"> | Date | string | null
+    ownerName?: StringWithAggregatesFilter<"BicycleRepair"> | string
+    ownerIdCardNumber?: StringWithAggregatesFilter<"BicycleRepair"> | string
     ownerPhone?: StringWithAggregatesFilter<"BicycleRepair"> | string
     status?: EnumRepairStatusWithAggregatesFilter<"BicycleRepair"> | $Enums.RepairStatus
     photoPath?: StringNullableWithAggregatesFilter<"BicycleRepair"> | string | null
@@ -16460,6 +16496,8 @@ export namespace Prisma {
     receivedDate: Date | string
     repairedDate?: Date | string | null
     pickupDate?: Date | string | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status?: $Enums.RepairStatus
     photoPath?: string | null
@@ -16475,6 +16513,8 @@ export namespace Prisma {
     receivedDate: Date | string
     repairedDate?: Date | string | null
     pickupDate?: Date | string | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status?: $Enums.RepairStatus
     photoPath?: string | null
@@ -16490,6 +16530,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16505,6 +16547,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16520,6 +16564,8 @@ export namespace Prisma {
     receivedDate: Date | string
     repairedDate?: Date | string | null
     pickupDate?: Date | string | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status?: $Enums.RepairStatus
     photoPath?: string | null
@@ -16534,6 +16580,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16548,6 +16596,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17834,6 +17884,8 @@ export namespace Prisma {
     receivedDate?: SortOrder
     repairedDate?: SortOrder
     pickupDate?: SortOrder
+    ownerName?: SortOrder
+    ownerIdCardNumber?: SortOrder
     ownerPhone?: SortOrder
     status?: SortOrder
     photoPath?: SortOrder
@@ -17848,6 +17900,8 @@ export namespace Prisma {
     receivedDate?: SortOrder
     repairedDate?: SortOrder
     pickupDate?: SortOrder
+    ownerName?: SortOrder
+    ownerIdCardNumber?: SortOrder
     ownerPhone?: SortOrder
     status?: SortOrder
     photoPath?: SortOrder
@@ -17862,6 +17916,8 @@ export namespace Prisma {
     receivedDate?: SortOrder
     repairedDate?: SortOrder
     pickupDate?: SortOrder
+    ownerName?: SortOrder
+    ownerIdCardNumber?: SortOrder
     ownerPhone?: SortOrder
     status?: SortOrder
     photoPath?: SortOrder
@@ -20176,6 +20232,8 @@ export namespace Prisma {
     receivedDate: Date | string
     repairedDate?: Date | string | null
     pickupDate?: Date | string | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status?: $Enums.RepairStatus
     photoPath?: string | null
@@ -20190,6 +20248,8 @@ export namespace Prisma {
     receivedDate: Date | string
     repairedDate?: Date | string | null
     pickupDate?: Date | string | null
+    ownerName: string
+    ownerIdCardNumber: string
     ownerPhone: string
     status?: $Enums.RepairStatus
     photoPath?: string | null
@@ -20243,6 +20303,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20257,6 +20319,8 @@ export namespace Prisma {
     receivedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     repairedDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     pickupDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ownerName?: StringFieldUpdateOperationsInput | string
+    ownerIdCardNumber?: StringFieldUpdateOperationsInput | string
     ownerPhone?: StringFieldUpdateOperationsInput | string
     status?: EnumRepairStatusFieldUpdateOperationsInput | $Enums.RepairStatus
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
