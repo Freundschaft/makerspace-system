@@ -39,8 +39,7 @@ export async function POST(request: NextRequest) {
       !body.email ||
       !body.secondaryEmail ||
       !body.phone ||
-      !body.dateOfBirth ||
-      !body.legalStatus
+      !body.dateOfBirth
     ) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -64,7 +63,7 @@ export async function POST(request: NextRequest) {
         phone: body.phone,
         homeAddress: body.homeAddress || null,
         dateOfBirth: new Date(body.dateOfBirth),
-        legalStatus: body.legalStatus,
+        legalStatus: body.legalStatus || null,
       },
     });
 
@@ -87,6 +86,68 @@ export async function POST(request: NextRequest) {
     console.error("Error creating team member:", error);
     return NextResponse.json(
       { error: "Failed to create team member" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    if (!(await requireAdmin(request))) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = (await request.json()) as {
+      ids?: unknown;
+      status?: unknown;
+    };
+
+    if (
+      !Array.isArray(body.ids) ||
+      body.ids.length === 0 ||
+      !body.ids.every((id) => typeof id === "string")
+    ) {
+      return NextResponse.json(
+        { error: "At least one team member must be selected" },
+        { status: 400 }
+      );
+    }
+
+    if (body.status !== "ACTIVE" && body.status !== "INACTIVE") {
+      return NextResponse.json(
+        { error: "Invalid status" },
+        { status: 400 }
+      );
+    }
+
+    await prisma.teamMember.updateMany({
+      where: {
+        id: {
+          in: body.ids,
+        },
+      },
+      data: {
+        status: body.status,
+      },
+    });
+
+    const updatedMembers = await prisma.teamMember.findMany({
+      where: {
+        id: {
+          in: body.ids,
+        },
+      },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    return NextResponse.json({ teamMembers: updatedMembers });
+  } catch (error) {
+    console.error("Error updating team members:", error);
+    return NextResponse.json(
+      { error: "Failed to update team members" },
       { status: 500 }
     );
   }

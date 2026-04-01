@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { UserRole } from "@/generated/prisma";
 import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,9 +27,11 @@ import { TeamMemberWithRole } from "@/app/team/team-types";
 interface TeamMemberDataTableProps {
   data: TeamMemberWithRole[];
   currentUserEmail: string | null;
+  selectedIds: string[];
   onEdit: (member: TeamMemberWithRole) => void;
   onDelete: (member: TeamMemberWithRole) => void;
   onRoleChange: (member: TeamMemberWithRole, role: UserRole) => void;
+  onSelectedIdsChange: (ids: string[]) => void;
   updatingRoleId: string | null;
 }
 
@@ -51,12 +54,20 @@ function getPhotoSrc(value?: string | null) {
 export function TeamMemberDataTable({
   data,
   currentUserEmail,
+  selectedIds,
   onEdit,
   onDelete,
   onRoleChange,
+  onSelectedIdsChange,
   updatingRoleId,
 }: TeamMemberDataTableProps) {
   const { t } = useI18n();
+  const selectableIds = data.map((member) => member.id);
+  const allSelected =
+    selectableIds.length > 0 &&
+    selectableIds.every((id) => selectedIds.includes(id));
+  const someSelected = selectableIds.some((id) => selectedIds.includes(id));
+
   const handleRowKeyDown = (
     event: React.KeyboardEvent<HTMLTableRowElement>,
     member: TeamMemberWithRole
@@ -67,11 +78,42 @@ export function TeamMemberDataTable({
     }
   };
 
+  const handleToggleAll = (checked: boolean) => {
+    if (checked) {
+      onSelectedIdsChange(
+        Array.from(new Set([...selectedIds, ...selectableIds]))
+      );
+      return;
+    }
+
+    onSelectedIdsChange(
+      selectedIds.filter((id) => !selectableIds.includes(id))
+    );
+  };
+
+  const handleToggleOne = (memberId: string, checked: boolean) => {
+    if (checked) {
+      onSelectedIdsChange(Array.from(new Set([...selectedIds, memberId])));
+      return;
+    }
+
+    onSelectedIdsChange(selectedIds.filter((id) => id !== memberId));
+  };
+
   return (
     <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead className="w-10">
+              <div onClick={(event) => event.stopPropagation()}>
+                <Checkbox
+                  checked={allSelected ? true : someSelected ? "indeterminate" : false}
+                  onCheckedChange={(checked) => handleToggleAll(checked === true)}
+                  aria-label={t("team.bulk.selectAll", "Select all team members")}
+                />
+              </div>
+            </TableHead>
             <TableHead>{t("team.table.photo", "Photo")}</TableHead>
             <TableHead>{t("team.table.name", "Name")}</TableHead>
             <TableHead className="hidden xl:table-cell">{t("team.table.department", "Department")}</TableHead>
@@ -93,6 +135,15 @@ export function TeamMemberDataTable({
               onKeyDown={(event) => handleRowKeyDown(event, member)}
               tabIndex={0}
             >
+              <TableCell onClick={(event) => event.stopPropagation()}>
+                <Checkbox
+                  checked={selectedIds.includes(member.id)}
+                  onCheckedChange={(checked) =>
+                    handleToggleOne(member.id, checked === true)
+                  }
+                  aria-label={t("team.bulk.selectOne", "Select team member")}
+                />
+              </TableCell>
               <TableCell>
                 <Avatar>
                   <AvatarImage src={getPhotoSrc(member.photoPath)} />

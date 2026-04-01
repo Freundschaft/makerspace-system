@@ -8376,7 +8376,7 @@ export namespace Prisma {
     phone: string
     homeAddress: string | null
     dateOfBirth: Date
-    legalStatus: string
+    legalStatus: string | null
     createdAt: Date
     updatedAt: Date
     _count: TeamMemberCountAggregateOutputType | null
@@ -8463,7 +8463,7 @@ export namespace Prisma {
       phone: string
       homeAddress: string | null
       dateOfBirth: Date
-      legalStatus: string
+      legalStatus: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["teamMember"]>
@@ -15692,7 +15692,7 @@ export namespace Prisma {
     phone?: StringFilter<"TeamMember"> | string
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
-    legalStatus?: StringFilter<"TeamMember"> | string
+    legalStatus?: StringNullableFilter<"TeamMember"> | string | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }
@@ -15713,7 +15713,7 @@ export namespace Prisma {
     phone?: SortOrder
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
-    legalStatus?: SortOrder
+    legalStatus?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _relevance?: TeamMemberOrderByRelevanceInput
@@ -15738,7 +15738,7 @@ export namespace Prisma {
     phone?: StringFilter<"TeamMember"> | string
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
-    legalStatus?: StringFilter<"TeamMember"> | string
+    legalStatus?: StringNullableFilter<"TeamMember"> | string | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
   }, "id" | "email">
@@ -15759,7 +15759,7 @@ export namespace Prisma {
     phone?: SortOrder
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
-    legalStatus?: SortOrder
+    legalStatus?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TeamMemberCountOrderByAggregateInput
@@ -15786,7 +15786,7 @@ export namespace Prisma {
     phone?: StringWithAggregatesFilter<"TeamMember"> | string
     homeAddress?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
-    legalStatus?: StringWithAggregatesFilter<"TeamMember"> | string
+    legalStatus?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   }
@@ -16811,7 +16811,7 @@ export namespace Prisma {
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
-    legalStatus: string
+    legalStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16832,7 +16832,7 @@ export namespace Prisma {
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
-    legalStatus: string
+    legalStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16853,7 +16853,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
-    legalStatus?: StringFieldUpdateOperationsInput | string
+    legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16874,7 +16874,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
-    legalStatus?: StringFieldUpdateOperationsInput | string
+    legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16895,7 +16895,7 @@ export namespace Prisma {
     phone: string
     homeAddress?: string | null
     dateOfBirth: Date | string
-    legalStatus: string
+    legalStatus?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16916,7 +16916,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
-    legalStatus?: StringFieldUpdateOperationsInput | string
+    legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16937,7 +16937,7 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
-    legalStatus?: StringFieldUpdateOperationsInput | string
+    legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

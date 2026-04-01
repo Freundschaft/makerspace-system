@@ -14,7 +14,7 @@ export type TeamMember = {
   phone: string
   homeAddress: string | null
   dateOfBirth: Date
-  legalStatus: string
+  legalStatus: string | null
   createdAt: Date
   updatedAt: Date
 } 

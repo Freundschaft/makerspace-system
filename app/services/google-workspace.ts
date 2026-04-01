@@ -20,7 +20,7 @@ const auth = new google.auth.GoogleAuth({
 
 export class GoogleWorkspaceService {
   private static instance: GoogleWorkspaceService;
-  private authClient: any;
+  private authClient!: Awaited<ReturnType<typeof auth.getClient>>;
 
   private constructor() {}
 
@@ -38,35 +38,162 @@ export class GoogleWorkspaceService {
     this.authClient.subject = process.env.GOOGLE_WORKSPACE_ADMIN_EMAIL;
   }
 
+  private getBaseOrgUnitPath() {
+    const configuredPath = process.env.GOOGLE_WORKSPACE_TEAM_OU_PATH?.trim();
+    if (!configuredPath) {
+      return '/Team Members';
+    }
+
+    if (configuredPath === '/') {
+      return '/';
+    }
+
+    return configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+  }
+
+  private buildOrgUnitPath(department?: string | null) {
+    const basePath = this.getBaseOrgUnitPath();
+    const normalizedDepartment = department?.trim();
+
+    if (
+      !normalizedDepartment ||
+      normalizedDepartment.toLowerCase() === 'unassigned'
+    ) {
+      return basePath;
+    }
+
+    if (basePath === '/') {
+      return `/${normalizedDepartment}`;
+    }
+
+    return `${basePath}/${normalizedDepartment}`;
+  }
+
+  private isInvalidOrgUnitError(error: unknown) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'errors' in error &&
+      Array.isArray((error as { errors?: Array<{ message?: string }> }).errors)
+    ) {
+      return (error as { errors: Array<{ message?: string }> }).errors.some(
+        (entry) => entry.message?.includes('INVALID_OU_ID')
+      );
+    }
+
+    return false;
+  }
+
+  private isHttpErrorWithCode(
+    error: unknown,
+    code: number
+  ): error is { code: number } {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as { code?: unknown }).code === code
+    );
+  }
+
+  private async insertUserWithOrgFallback(teamMember: TeamMember) {
+    const requestBody = {
+      primaryEmail: teamMember.email,
+      recoveryEmail: teamMember.secondaryEmail || undefined,
+      name: {
+        familyName: teamMember.familyName,
+        givenName: teamMember.givenNames,
+      },
+      password: Math.random().toString(36).slice(-8),
+      changePasswordAtNextLogin: true,
+      orgUnitPath: this.buildOrgUnitPath(teamMember.department),
+      phones: [
+        {
+          value: teamMember.phone,
+          type: 'work',
+        },
+      ],
+      addresses: [
+        {
+          type: 'home',
+          value: teamMember.homeAddress || '',
+        },
+      ],
+    };
+
+    try {
+      return await admin.users.insert({
+        auth: this.authClient,
+        requestBody,
+      });
+    } catch (error) {
+      if (!this.isInvalidOrgUnitError(error) || requestBody.orgUnitPath === '/') {
+        throw error;
+      }
+
+      return admin.users.insert({
+        auth: this.authClient,
+        requestBody: {
+          ...requestBody,
+          orgUnitPath: '/',
+        },
+      });
+    }
+  }
+
+  private async updateUserWithOrgFallback(
+    teamMember: TeamMember,
+    currentEmail?: string
+  ) {
+    const userKey = currentEmail || teamMember.email;
+    const requestBody = {
+      primaryEmail: teamMember.email,
+      recoveryEmail: teamMember.secondaryEmail || undefined,
+      name: {
+        familyName: teamMember.familyName,
+        givenName: teamMember.givenNames,
+      },
+      orgUnitPath: this.buildOrgUnitPath(teamMember.department),
+      phones: [
+        {
+          value: teamMember.phone,
+          type: 'work',
+        },
+      ],
+      addresses: [
+        {
+          type: 'home',
+          value: teamMember.homeAddress || '',
+        },
+      ],
+    };
+
+    try {
+      return await admin.users.update({
+        auth: this.authClient,
+        userKey,
+        requestBody,
+      });
+    } catch (error) {
+      if (!this.isInvalidOrgUnitError(error) || requestBody.orgUnitPath === '/') {
+        throw error;
+      }
+
+      return admin.users.update({
+        auth: this.authClient,
+        userKey,
+        requestBody: {
+          ...requestBody,
+          orgUnitPath: '/',
+        },
+      });
+    }
+  }
+
   // Create a user in Google Workspace
   async createUser(teamMember: TeamMember) {
     try {
-      const response = await admin.users.insert({
-        auth: this.authClient,
-        requestBody: {
-          primaryEmail: teamMember.email,
-          recoveryEmail: teamMember.secondaryEmail || undefined,
-          name: {
-            familyName: teamMember.familyName,
-            givenName: teamMember.givenNames,
-          },
-          password: Math.random().toString(36).slice(-8), // Generate random password
-          changePasswordAtNextLogin: true,
-          orgUnitPath: `/Team Members/${teamMember.department}`,
-          phones: [
-            {
-              value: teamMember.phone,
-              type: 'work',
-            },
-          ],
-          addresses: [
-            {
-              type: 'home',
-              value: teamMember.homeAddress || '',
-            },
-          ],
-        },
-      });
+      const response = await this.insertUserWithOrgFallback(teamMember);
 
       return response.data;
     } catch (error) {
@@ -78,31 +205,10 @@ export class GoogleWorkspaceService {
   // Update a user in Google Workspace
   async updateUser(teamMember: TeamMember, currentEmail?: string) {
     try {
-      const response = await admin.users.update({
-        auth: this.authClient,
-        userKey: currentEmail || teamMember.email,
-        requestBody: {
-          primaryEmail: teamMember.email,
-          recoveryEmail: teamMember.secondaryEmail || undefined,
-          name: {
-            familyName: teamMember.familyName,
-            givenName: teamMember.givenNames,
-          },
-          orgUnitPath: `/Team Members/${teamMember.department}`,
-          phones: [
-            {
-              value: teamMember.phone,
-              type: 'work',
-            },
-          ],
-          addresses: [
-            {
-              type: 'home',
-              value: teamMember.homeAddress || '',
-            },
-          ],
-        },
-      });
+      const response = await this.updateUserWithOrgFallback(
+        teamMember,
+        currentEmail
+      );
 
       return response.data;
     } catch (error) {
@@ -171,7 +277,7 @@ export class GoogleWorkspaceService {
       // Replace web-safe characters with standard base64 characters
       return photoData.replace(/-/g, '+').replace(/_/g, '/');
     } catch (error) {
-      if ((error as any).code === 404) {
+      if (this.isHttpErrorWithCode(error, 404)) {
         // User has no photo, which is fine
         return null;
       }

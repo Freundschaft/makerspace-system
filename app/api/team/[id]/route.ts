@@ -23,8 +23,7 @@ export async function PUT(
       !body.email ||
       !body.secondaryEmail ||
       !body.phone ||
-      !body.dateOfBirth ||
-      !body.legalStatus
+      !body.dateOfBirth
     ) {
       return NextResponse.json(
         { error: "Missing required fields" },
@@ -60,7 +59,7 @@ export async function PUT(
         phone: body.phone,
         homeAddress: body.homeAddress || null,
         dateOfBirth: new Date(body.dateOfBirth),
-        legalStatus: body.legalStatus,
+        legalStatus: body.legalStatus || null,
       },
     });
 

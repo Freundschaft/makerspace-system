@@ -138,7 +138,7 @@ model TeamMember {
   phone               String
   homeAddress         String?          @db.Text
   dateOfBirth         DateTime
-  legalStatus         String
+  legalStatus         String?
   createdAt           DateTime         @default(now())
   updatedAt           DateTime         @updatedAt
 

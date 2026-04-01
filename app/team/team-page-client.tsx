@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/generated/prisma";
+import { TeamMemberStatus, UserRole } from "@/generated/prisma";
 import { TeamMemberDataTable } from "../components/team/TeamMemberDataTable";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,10 @@ export function TeamPageClient({
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ACTIVE");
   const [syncing, setSyncing] = useState(false);
   const [updatingRoleId, setUpdatingRoleId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [updatingStatus, setUpdatingStatus] = useState<TeamMemberStatus | null>(
+    null
+  );
 
   const filteredTeamMembers = teamMembers.filter((member) => {
     if (statusFilter === "ALL") {
@@ -52,8 +56,67 @@ export function TeamPageClient({
         throw new Error(t("team.errors.deleteFailed", "Failed to delete team member"));
       }
       setTeamMembers((prev) => prev.filter((m) => m.id !== member.id));
+      setSelectedIds((prev) => prev.filter((id) => id !== member.id));
     } catch (error) {
       console.error("Error deleting team member:", error);
+    }
+  };
+
+  const handleSelectedIdsChange = (ids: string[]) => {
+    setSelectedIds(ids);
+  };
+
+  const handleBulkStatusUpdate = async (nextStatus: TeamMemberStatus) => {
+    if (selectedIds.length === 0) {
+      return;
+    }
+
+    setUpdatingStatus(nextStatus);
+
+    try {
+      const response = await fetch("/api/team", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ids: selectedIds,
+          status: nextStatus,
+        }),
+      });
+
+      const result = (await response.json()) as
+        | { teamMembers?: Array<{ id: string; status: TeamMemberStatus }>; error?: string }
+        | undefined;
+
+      if (!response.ok || !result?.teamMembers) {
+        throw new Error(
+          result?.error ??
+            t("team.errors.statusUpdateFailed", "Failed to update team status")
+        );
+      }
+
+      const statusById = new Map(
+        result.teamMembers.map((member) => [member.id, member.status])
+      );
+
+      setTeamMembers((prev) =>
+        prev.map((member) =>
+          statusById.has(member.id)
+            ? { ...member, status: statusById.get(member.id)! }
+            : member
+        )
+      );
+      setSelectedIds([]);
+    } catch (error) {
+      console.error("Error updating team status:", error);
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : t("team.errors.statusUpdateFailed", "Failed to update team status")
+      );
+    } finally {
+      setUpdatingStatus(null);
     }
   };
 
@@ -177,13 +240,54 @@ export function TeamPageClient({
         >
           {t("common.all", "All")}
         </Button>
+        {selectedIds.length > 0 && (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={updatingStatus !== null}
+              onClick={() => void handleBulkStatusUpdate("ACTIVE")}
+            >
+              {updatingStatus === "ACTIVE" ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("team.bulk.updating", "Updating...")}
+                </>
+              ) : (
+                t("team.bulk.markActive", "Mark Active")
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={updatingStatus !== null}
+              onClick={() => void handleBulkStatusUpdate("INACTIVE")}
+            >
+              {updatingStatus === "INACTIVE" ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("team.bulk.updating", "Updating...")}
+                </>
+              ) : (
+                t("team.bulk.markInactive", "Mark Inactive")
+              )}
+            </Button>
+            <span className="text-sm text-muted-foreground">
+              {t("team.bulk.selectedCount", "{count} selected", {
+                count: selectedIds.length,
+              })}
+            </span>
+          </>
+        )}
       </div>
       <TeamMemberDataTable
         data={filteredTeamMembers}
         currentUserEmail={currentUserEmail}
+        selectedIds={selectedIds}
         onEdit={handleEdit}
         onDelete={handleDelete}
         onRoleChange={handleRoleChange}
+        onSelectedIdsChange={handleSelectedIdsChange}
         updatingRoleId={updatingRoleId}
       />
     </div>

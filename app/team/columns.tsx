@@ -25,7 +25,7 @@ export type TeamMember = {
   phone: string;
   homeAddress: string;
   dateOfBirth: Date;
-  legalStatus: string;
+  legalStatus: string | null;
 };
 
 function getPhotoSrc(value?: string | null) {
