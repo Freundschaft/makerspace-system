@@ -23,27 +23,24 @@ export function Layout({ children }: LayoutProps) {
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(132,178,121,0.18),transparent_38%),radial-gradient(circle_at_90%_90%,rgba(240,136,9,0.12),transparent_42%)]" />
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       <div className="flex">
-        {/* Sidebar - hidden on mobile by default, shown when toggled */}
         <aside className={`
-          fixed left-0 top-14 z-30 h-[calc(100vh-3.5rem)] w-72 border-r border-sidebar-border/50 bg-sidebar text-sidebar-foreground shadow-xl
+          fixed left-0 top-16 z-30 h-[calc(100vh-4rem)] w-[18.5rem] border-r border-sidebar-border/50 bg-sidebar text-sidebar-foreground shadow-xl
           transition-transform duration-300 ease-in-out
-          md:translate-x-0
+          xl:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
           <Sidebar />
         </aside>
         
-        {/* Overlay for mobile when sidebar is open */}
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 z-20 bg-black/40 backdrop-blur-[1px] md:hidden"
+            className="fixed inset-0 z-20 bg-black/40 backdrop-blur-[1px] xl:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
         
-        {/* Main content - full width on mobile, with padding on desktop */}
-        <main className="flex-1 md:pl-72">
-          <div className="mx-auto w-full max-w-[1440px] px-4 py-6 md:px-8">
+        <main className="flex-1 xl:pl-[18.5rem]">
+          <div className="mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-5 md:px-6 lg:px-8">
             {children}
           </div>
         </main>

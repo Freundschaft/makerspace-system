@@ -35,6 +35,13 @@ interface DataTableProps<TData, TValue> {
   showPagination?: boolean
 }
 
+function formatDisplayText(value: string) {
+  return value
+    .replace(/_/g, " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -82,8 +89,8 @@ export function DataTable<TData, TValue>({
     const photoPath = photoPathCell ? photoPathCell.getValue() : null
     
     return (
-      <Card key={row.id} className="mb-4">
-        <CardHeader className="pb-2">
+      <Card key={row.id} className="mb-4 overflow-hidden rounded-[1.75rem] border-border/80 bg-card/90 shadow-sm">
+        <CardHeader className="pb-3">
           <div className="flex justify-between items-start">
             <CardTitle className="text-base">
               {status ? (
@@ -94,12 +101,12 @@ export function DataTable<TData, TValue>({
                   status === 'PICKED_UP' ? 'secondary' :
                   status === 'CANCELLED' ? 'destructive' :
                   'outline'
-                }>
-                  {status.replace('_', ' ')}
+                } className="rounded-full px-3 py-1 text-[11px] tracking-[0.12em]">
+                  {formatDisplayText(String(status))}
                 </Badge>
               ) : null}
             </CardTitle>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm font-medium text-muted-foreground">
               {cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue() ? 
                 format(new Date(cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue()), "MMM d, yyyy") : 
                 null}
@@ -108,7 +115,7 @@ export function DataTable<TData, TValue>({
         </CardHeader>
         <CardContent>
           {photoPath && (
-            <div className="mb-4 relative w-full h-48 rounded-md overflow-hidden">
+            <div className="relative mb-4 aspect-[16/9] w-full overflow-hidden rounded-2xl bg-muted/40">
               <Image 
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`} 
                 alt={t("common.photo", "Photo")}
@@ -118,7 +125,7 @@ export function DataTable<TData, TValue>({
               />
             </div>
           )}
-          <div className="space-y-2">
+          <div className="space-y-3">
             {cells.map((cell: any) => {
               // Skip status, receivedDate, and photoPath as they're already handled
               if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
@@ -127,13 +134,19 @@ export function DataTable<TData, TValue>({
 
               // Special handling for problem types
               if (cell.column.id === "problemTypes") {
+                const problemTypes = JSON.parse(cell.getValue() as string)
                 return (
-                  <div key={cell.id} className="flex flex-wrap gap-1">
-                    {JSON.parse(cell.getValue() as string).map((type: string) => (
-                      <Badge key={type} variant="outline">
-                        {type}
+                  <div key={cell.id} className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                      {t("modules.repairs.problemTypes", "Problem Types")}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                    {problemTypes.map((type: string) => (
+                      <Badge key={type} variant="outline" className="rounded-full border-border/70 bg-background px-3 py-1 text-[11px]">
+                        {formatDisplayText(type)}
                       </Badge>
                     ))}
+                    </div>
                   </div>
                 )
               }
@@ -154,13 +167,18 @@ export function DataTable<TData, TValue>({
                   displayValue = String(value)
                 }
               } else {
-                displayValue = String(value)
+                displayValue =
+                  typeof value === "string" && /^[A-Z0-9_]+$/.test(value)
+                    ? formatDisplayText(value)
+                    : String(value)
               }
 
               return (
-                <div key={cell.id} className="flex justify-between">
-                  <span className="font-medium">{cell.column.columnDef.header as string}:</span>
-                  <span>{displayValue}</span>
+                <div key={cell.id} className="grid gap-1 rounded-2xl border border-border/60 bg-background/70 px-3 py-2">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    {String(cell.column.columnDef.header)}
+                  </span>
+                  <span className="text-sm font-medium text-foreground">{displayValue}</span>
                 </div>
               )
             })}
@@ -180,13 +198,13 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn("problemTypes")?.setFilterValue(event.target.value)
             }
-            className="w-full sm:max-w-sm"
+            className="w-full md:max-w-md"
           />
         </div>
       )}
       
       {/* Mobile Card View */}
-      <div className="block sm:hidden">
+      <div className="block lg:hidden">
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => renderMobileCard(row))
         ) : (
@@ -195,7 +213,8 @@ export function DataTable<TData, TValue>({
       </div>
       
       {/* Desktop Table View */}
-      <div className="hidden sm:block rounded-md border overflow-x-auto">
+      <div className="hidden lg:block rounded-2xl border bg-card/70 shadow-sm">
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -244,10 +263,11 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
       
       {showPagination && (
-        <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-end sm:space-x-2 sm:gap-2">
           <Button
             variant="outline"
             size="sm"
