@@ -50,7 +50,7 @@ export default async function Dashboard() {
             <Link
               key={item.key}
               href={localizePathname(item.href, locale)}
-              className="group relative flex h-full min-h-[10.5rem] flex-col items-center justify-center overflow-hidden rounded-[1.75rem] border border-border/70 bg-card px-3 py-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/10 hover:shadow-md active:scale-[0.985] active:bg-accent/15 active:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-[11.5rem] md:min-h-full"
+              className="group relative flex h-full min-h-[10.5rem] touch-manipulation [webkit-tap-highlight-color:rgba(15,23,42,0.12)] flex-col items-center justify-center overflow-hidden rounded-[1.75rem] border border-border/70 bg-card px-3 py-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:bg-accent/10 hover:shadow-md active:scale-[0.985] active:border-primary/35 active:bg-accent/20 active:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-h-[11.5rem] md:min-h-full"
             >
               <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-primary/8 blur-2xl transition-transform duration-300 group-hover:scale-110" />
               <div className="relative flex flex-col items-center gap-3">
