@@ -1,4 +1,5 @@
 import { google } from 'googleapis';
+import { JWT } from 'google-auth-library';
 import { TeamMember } from '../team/columns';
 import { prisma } from '@/lib/prisma';
 import { TeamMemberStatus } from '@/generated/prisma';
@@ -20,7 +21,7 @@ const auth = new google.auth.GoogleAuth({
 
 export class GoogleWorkspaceService {
   private static instance: GoogleWorkspaceService;
-  private authClient!: Awaited<ReturnType<typeof auth.getClient>>;
+  private authClient!: JWT;
 
   private constructor() {}
 
@@ -33,7 +34,12 @@ export class GoogleWorkspaceService {
   }
 
   private async initialize() {
-    this.authClient = await auth.getClient();
+    const client = await auth.getClient();
+    if (!(client instanceof google.auth.JWT)) {
+      throw new Error('Google Workspace auth client must be a JWT client');
+    }
+
+    this.authClient = client;
     // Set the subject (admin user) for domain-wide delegation
     this.authClient.subject = process.env.GOOGLE_WORKSPACE_ADMIN_EMAIL;
   }

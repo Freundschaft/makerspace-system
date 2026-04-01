@@ -148,7 +148,9 @@ export function TeamPageClient({
 
       setTeamMembers((prev) =>
         prev.map((item) =>
-          item.id === member.id ? { ...item, userRole: result.role } : item
+          item.id === member.id
+            ? { ...item, userRole: result.role ?? item.userRole }
+            : item
         )
       );
     } catch (error) {
