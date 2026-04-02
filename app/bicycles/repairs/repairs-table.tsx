@@ -55,9 +55,9 @@ export function RepairsTable({ data }: RepairsTableProps) {
             return (
               <Link key={repair.id} href={`/bicycles/repairs/${repair.id}`} className="block">
                 <Card className="gap-0 rounded-2xl border-border/70 bg-card/90 py-0 shadow-sm transition-colors hover:bg-accent/10">
-                  <div className="flex gap-3 p-3">
+                  <div className="flex items-stretch gap-3 p-3">
                     {repair.photoPath ? (
-                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-muted/50">
+                      <div className="relative min-h-20 w-30 shrink-0 self-stretch overflow-hidden rounded-xl bg-muted/50">
                         <Image
                           src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || "https://files.system.makerspace-lesvos.org"}${repair.photoPath}`}
                           alt={t("common.photo", "Photo")}
@@ -67,7 +67,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
                         />
                       </div>
                     ) : (
-                      <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl border border-dashed border-border/70 bg-muted/30 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                      <div className="flex min-h-20 w-30 shrink-0 self-stretch items-center justify-center rounded-xl border border-dashed border-border/70 bg-muted/30 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                         {t("common.photo", "Photo")}
                       </div>
                     )}
