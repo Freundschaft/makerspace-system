@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Calendar } from "@/components/ui/calendar"
@@ -53,27 +53,67 @@ const formSchema = z.object({
   photoPath: z.string().optional(),
 })
 
+const customerTypeOptions = [
+  "PRIVATE_PERSON",
+  "ORGANIZATION",
+  "BARBERSHOP",
+  "HOUSE",
+] as const
+
+const genderOptions = ["FEMALE", "MALE"] as const
+
+const orderTypeOptions = ["REPAIR_ORDER", "PROJECT"] as const
+
+const defaultValues: z.infer<typeof formSchema> = {
+  date: new Date(),
+  acceptedBy: "",
+  customerType: undefined,
+  organizationName: "",
+  customerName: "",
+  phoneNumber: "",
+  gender: undefined,
+  orderType: undefined,
+  timeNeeded: "",
+  itemToRepair: "",
+  problemDescription: "",
+  projectDescription: "",
+  materialCosts: "",
+  paidByCustomer: false,
+  photoPath: "",
+}
+
 export function CarpentryProjectForm() {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const localizedCustomerTypeOptions = useMemo(
+    () =>
+      customerTypeOptions.map((value) => ({
+        value,
+        label: t(`carpentry.customerTypes.${value}`, value),
+      })),
+    [t]
+  )
+  const localizedGenderOptions = useMemo(
+    () =>
+      genderOptions.map((value) => ({
+        value,
+        label: t(`carpentry.genders.${value}`, value),
+      })),
+    [t]
+  )
+  const localizedOrderTypeOptions = useMemo(
+    () =>
+      orderTypeOptions.map((value) => ({
+        value,
+        label: t(`carpentry.orderTypes.${value}`, value),
+      })),
+    [t]
+  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      date: new Date(),
-      acceptedBy: "",
-      organizationName: "",
-      customerName: "",
-      phoneNumber: "",
-      timeNeeded: "",
-      itemToRepair: "",
-      problemDescription: "",
-      projectDescription: "",
-      materialCosts: "",
-      paidByCustomer: false,
-      photoPath: "",
-    },
+    defaultValues,
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -182,10 +222,11 @@ export function CarpentryProjectForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="PRIVATE_PERSON">{t("carpentry.customerTypes.PRIVATE_PERSON", "Private Person")}</SelectItem>
-                  <SelectItem value="ORGANIZATION">{t("carpentry.customerTypes.ORGANIZATION", "Organization")}</SelectItem>
-                  <SelectItem value="BARBERSHOP">{t("carpentry.customerTypes.BARBERSHOP", "Barbershop")}</SelectItem>
-                  <SelectItem value="HOUSE">{t("carpentry.customerTypes.HOUSE", "House")}</SelectItem>
+                  {localizedCustomerTypeOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
@@ -272,8 +313,11 @@ export function CarpentryProjectForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="FEMALE">{t("carpentry.genders.FEMALE", "Female")}</SelectItem>
-                  <SelectItem value="MALE">{t("carpentry.genders.MALE", "Male")}</SelectItem>
+                  {localizedGenderOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
@@ -297,8 +341,11 @@ export function CarpentryProjectForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="REPAIR_ORDER">{t("carpentry.orderTypes.REPAIR_ORDER", "Repair Order")}</SelectItem>
-                  <SelectItem value="PROJECT">{t("carpentry.orderTypes.PROJECT", "Project")}</SelectItem>
+                  {localizedOrderTypeOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">

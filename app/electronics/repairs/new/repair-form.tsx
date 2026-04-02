@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useI18n } from "@/app/components/I18nProvider"
@@ -62,24 +62,51 @@ const categoryOptions = [
   "BATTERY", "OTHER",
 ]
 
+const statusOptions = [
+  "UNCHECKED",
+  "CHECKED",
+  "IN_PROGRESS",
+  "READY_FOR_PICKUP",
+  "DONE",
+  "PICKED_UP",
+  "NO_WAY_TO_FIX",
+] as const
+
+const defaultValues: Omit<z.infer<typeof formSchema>, "category"> = {
+  customerName: "",
+  customerIdCardNumber: "",
+  item: "",
+  whatsapp: "",
+  serialNumber: "",
+  status: "UNCHECKED",
+  repairable: undefined,
+  notes: "",
+  photoPath: "",
+}
+
 export function ElectronicsRepairForm() {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const localizedCategoryOptions = useMemo(
+    () => categoryOptions.map((value) => ({
+      value,
+      label: t(`electronics.categories.${value}`, value),
+    })),
+    [t]
+  )
+  const localizedStatusOptions = useMemo(
+    () =>
+      statusOptions.map((value) => ({
+        value,
+        label: t(`common.statuses.${value}`, value),
+      })),
+    [t]
+  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      customerName: "",
-      customerIdCardNumber: "",
-      item: "",
-      whatsapp: "",
-      serialNumber: "",
-      status: "UNCHECKED",
-      repairable: undefined,
-      notes: "",
-      photoPath: "",
-    },
+    defaultValues,
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -169,9 +196,9 @@ export function ElectronicsRepairForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="max-h-[300px]">
-                  {categoryOptions.map((value) => (
-                    <SelectItem key={value} value={value}>
-                      {t(`electronics.categories.${value}`, value)}
+                  {localizedCategoryOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -325,13 +352,11 @@ export function ElectronicsRepairForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="UNCHECKED">{t("common.statuses.unchecked", "Unchecked")}</SelectItem>
-                  <SelectItem value="CHECKED">{t("common.statuses.checked", "Checked")}</SelectItem>
-                  <SelectItem value="IN_PROGRESS">{t("common.statuses.inProgress", "In Progress")}</SelectItem>
-                  <SelectItem value="READY_FOR_PICKUP">{t("common.statuses.readyForPickup", "Ready for Pickup")}</SelectItem>
-                  <SelectItem value="DONE">{t("common.statuses.done", "Done")}</SelectItem>
-                  <SelectItem value="PICKED_UP">{t("common.statuses.pickedUp", "Picked Up")}</SelectItem>
-                  <SelectItem value="NO_WAY_TO_FIX">{t("common.statuses.noWayToFix", "No Way to Fix")}</SelectItem>
+                  {localizedStatusOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription className="text-xs sm:text-sm">
