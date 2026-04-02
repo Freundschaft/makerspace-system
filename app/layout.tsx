@@ -27,12 +27,11 @@ export const metadata: Metadata = {
   applicationName: "Makerspace System",
   icons: {
     icon: [
-      { url: "/favicon.ico" },
       { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
       { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
-    shortcut: ["/favicon.ico"],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/icon-192.png"],
   },
   openGraph: {
     images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Makerspace Lesvos" }],
