@@ -21,7 +21,7 @@ export function Header({ menuToggleId }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl supports-[backdrop-filter]:bg-background/75">
-      <div className="flex h-16 items-center w-full gap-2 px-3 sm:px-4 md:px-5 lg:px-6">
+      <div className="flex h-16 w-full items-center gap-2 px-3 sm:px-4 md:px-5 lg:px-6">
         {menuToggleId ? (
           <Button
             variant="ghost"
@@ -34,7 +34,7 @@ export function Header({ menuToggleId }: HeaderProps) {
             </label>
           </Button>
         ) : null}
-        <div className="min-w-0 flex-1 xl:max-w-[18.5rem]">
+        <div className="min-w-0 flex-1 xl:w-[18.5rem] xl:flex-none">
           <Link href={homeHref} className="inline-flex touch-manipulation select-none [webkit-tap-highlight-color:rgba(15,23,42,0.12)] [webkit-touch-callout:none] items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5 shadow-sm transition-colors hover:bg-muted active:scale-[0.98] active:bg-muted/80">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground">
               <Sparkles className="h-3.5 w-3.5" />
@@ -43,7 +43,7 @@ export function Header({ menuToggleId }: HeaderProps) {
             <span className="text-xs font-semibold tracking-wide sm:hidden">MS</span>
           </Link>
         </div>
-        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+        <div className="ml-auto flex min-w-0 items-center justify-end gap-2 sm:gap-3 md:gap-4">
           <LocaleSwitcher />
           {session?.user?.image && (
             <Image
