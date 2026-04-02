@@ -209,6 +209,14 @@ exports.Prisma.TeamMemberScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TeamMemberPresenceScalarFieldEnum = {
+  id: 'id',
+  teamMemberId: 'teamMemberId',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ElectronicsRepairScalarFieldEnum = {
   id: 'id',
   repairId: 'repairId',
@@ -360,6 +368,11 @@ exports.Prisma.TeamMemberOrderByRelevanceFieldEnum = {
   phone: 'phone',
   homeAddress: 'homeAddress',
   legalStatus: 'legalStatus'
+};
+
+exports.Prisma.TeamMemberPresenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  teamMemberId: 'teamMemberId'
 };
 
 exports.Prisma.ElectronicsRepairOrderByRelevanceFieldEnum = {
@@ -539,6 +552,7 @@ exports.Prisma.ModelName = {
   RepairPart: 'RepairPart',
   BicycleRental: 'BicycleRental',
   TeamMember: 'TeamMember',
+  TeamMemberPresence: 'TeamMemberPresence',
   ElectronicsRepair: 'ElectronicsRepair',
   CarpentryProject: 'CarpentryProject',
   HouseProject: 'HouseProject',
