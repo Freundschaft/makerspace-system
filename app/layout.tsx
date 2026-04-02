@@ -24,6 +24,22 @@ export const metadata: Metadata = {
   description: "A modern makerspace management system",
   manifest: "/manifest.webmanifest",
   applicationName: "Makerspace System",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
+  openGraph: {
+    images: [{ url: "/icon-512.png", width: 512, height: 512, alt: "Makerspace Lesvos" }],
+  },
+  twitter: {
+    card: "summary",
+    images: ["/icon-512.png"],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

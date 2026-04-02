@@ -1,42 +1,7 @@
-import { ImageResponse } from "next/og";
+import { createBrandIconResponse } from "@/lib/branding/icon-response";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET() {
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          alignItems: "center",
-          background: "linear-gradient(160deg, #f4f0e8 0%, #dbe7cb 100%)",
-          display: "flex",
-          height: "100%",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <div
-          style={{
-            alignItems: "center",
-            background: "#1e2b20",
-            borderRadius: 132,
-            color: "#f4f0e8",
-            display: "flex",
-            fontSize: 250,
-            fontWeight: 700,
-            height: 380,
-            justifyContent: "center",
-            letterSpacing: "-0.08em",
-            width: 380,
-          }}
-        >
-          M
-        </div>
-      </div>
-    ),
-    {
-      width: 512,
-      height: 512,
-    }
-  );
+  return createBrandIconResponse(512, 512, { padded: true });
 }
