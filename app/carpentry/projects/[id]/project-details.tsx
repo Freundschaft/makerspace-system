@@ -6,8 +6,7 @@ import { formatDate } from "@/lib/utils"
 import { CarpentryProject, User } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
-import { getServerI18n } from "@/lib/i18n/server"
-import { localizePathname } from "@/lib/i18n/config"
+import { Locale, localizePathname } from "@/lib/i18n/config"
 
 type ProjectWithAssignedTo = CarpentryProject & {
   assignedTo: User | null
@@ -15,6 +14,41 @@ type ProjectWithAssignedTo = CarpentryProject & {
 
 interface ProjectDetailsProps {
   project: ProjectWithAssignedTo
+  locale: Locale
+  labels: {
+    customerInfo: string
+    customerInfoDesc: string
+    date: string
+    type: string
+    name: string
+    organization: string
+    phone: string
+    gender: string
+    projectInfo: string
+    projectInfoDesc: string
+    orderType: string
+    acceptedBy: string
+    timeNeeded: string
+    timeNeededValue: string
+    materialCosts: string
+    paidByCustomer: string
+    yes: string
+    no: string
+    assignedTo: string
+    itemToRepair: string
+    problemDescription: string
+    projectDescription: string
+    photo: string
+    photoAlt: string
+    logExpense: string
+    edit: string
+    delete: string
+    financeContextLabel: string
+    financeTitle: string
+    customerTypeLabels: Record<string, string>
+    orderTypeLabels: Record<string, string>
+    genderLabels: Record<string, string>
+  }
 }
 
 const customerTypeLabels: Record<string, string> = {
@@ -34,13 +68,10 @@ const genderLabels: Record<string, string> = {
   MALE: "Male",
 }
 
-export async function ProjectDetails({ project }: ProjectDetailsProps) {
-  const { locale, t } = await getServerI18n()
+export async function ProjectDetails({ project, locale, labels }: ProjectDetailsProps) {
   const editHref = localizePathname(`/carpentry/projects/${project.id}/edit`, locale)
   const financeHref = localizePathname(
-    `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(
-      t("finance.expenses.source.carpentryProjectLinked", `Linked to carpentry project: ${project.customerName || project.organizationName || project.id}`),
-    )}&title=${encodeURIComponent(project.itemToRepair || project.projectDescription || "Carpentry expense")}`,
+    `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(labels.financeContextLabel)}&title=${encodeURIComponent(labels.financeTitle)}`,
     locale,
   )
 
@@ -49,20 +80,20 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>{t("carpentry.details.customerInfo", "Customer Information")}</CardTitle>
-            <CardDescription>{t("carpentry.details.customerInfoDesc", "Contact details")}</CardDescription>
+            <CardTitle>{labels.customerInfo}</CardTitle>
+            <CardDescription>{labels.customerInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("carpentry.new.fields.date", "Date")}:</div>
+              <div className="font-medium">{labels.date}:</div>
               <div>{formatDate(project.date)}</div>
 
               {project.customerType && (
                 <>
-                  <div className="font-medium">{t("carpentry.details.type", "Type")}:</div>
+                  <div className="font-medium">{labels.type}:</div>
                   <div>
                     <Badge variant="outline">
-                      {t(`carpentry.customerTypes.${project.customerType}`, customerTypeLabels[project.customerType] || project.customerType)}
+                      {labels.customerTypeLabels[project.customerType] ?? customerTypeLabels[project.customerType] ?? project.customerType}
                     </Badge>
                   </div>
                 </>
@@ -70,29 +101,29 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
 
               {project.customerName && (
                 <>
-                  <div className="font-medium">{t("carpentry.details.name", "Name")}:</div>
+                  <div className="font-medium">{labels.name}:</div>
                   <div>{project.customerName}</div>
                 </>
               )}
 
               {project.organizationName && (
                 <>
-                  <div className="font-medium">{t("carpentry.details.organization", "Organization")}:</div>
+                  <div className="font-medium">{labels.organization}:</div>
                   <div>{project.organizationName}</div>
                 </>
               )}
 
               {project.phoneNumber && (
                 <>
-                  <div className="font-medium">{t("common.phone", "Phone")}:</div>
+                  <div className="font-medium">{labels.phone}:</div>
                   <div>{project.phoneNumber}</div>
                 </>
               )}
 
               {project.gender && (
                 <>
-                  <div className="font-medium">{t("carpentry.new.fields.gender", "Gender")}:</div>
-                  <div>{t(`carpentry.genders.${project.gender}`, genderLabels[project.gender] || project.gender)}</div>
+                  <div className="font-medium">{labels.gender}:</div>
+                  <div>{labels.genderLabels[project.gender] ?? genderLabels[project.gender] ?? project.gender}</div>
                 </>
               )}
             </div>
@@ -101,17 +132,17 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("carpentry.details.projectInfo", "Project Information")}</CardTitle>
-            <CardDescription>{t("carpentry.details.projectInfoDesc", "Work details and costs")}</CardDescription>
+            <CardTitle>{labels.projectInfo}</CardTitle>
+            <CardDescription>{labels.projectInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
               {project.orderType && (
                 <>
-                  <div className="font-medium">{t("carpentry.new.fields.orderType", "Order Type")}:</div>
+                  <div className="font-medium">{labels.orderType}:</div>
                   <div>
                     <Badge variant={project.orderType === 'PROJECT' ? 'default' : 'secondary'}>
-                      {t(`carpentry.orderTypes.${project.orderType}`, orderTypeLabels[project.orderType] || project.orderType)}
+                      {labels.orderTypeLabels[project.orderType] ?? orderTypeLabels[project.orderType] ?? project.orderType}
                     </Badge>
                   </div>
                 </>
@@ -119,35 +150,35 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
 
               {project.acceptedBy && (
                 <>
-                  <div className="font-medium">{t("carpentry.new.fields.acceptedBy", "Accepted By")}:</div>
+                  <div className="font-medium">{labels.acceptedBy}:</div>
                   <div>{project.acceptedBy}</div>
                 </>
               )}
 
               {project.timeNeeded !== null && (
                 <>
-                  <div className="font-medium">{t("carpentry.details.timeNeeded", "Time Needed")}:</div>
-                  <div>{t("carpentry.details.hoursValue", "{value} hours", { value: project.timeNeeded })}</div>
+                  <div className="font-medium">{labels.timeNeeded}:</div>
+                  <div>{labels.timeNeededValue.replace("{value}", String(project.timeNeeded))}</div>
                 </>
               )}
 
               {project.materialCosts !== null && (
                 <>
-                  <div className="font-medium">{t("carpentry.new.fields.materialCosts", "Material Costs (€)")}:</div>
+                  <div className="font-medium">{labels.materialCosts}:</div>
                   <div>€{Number(project.materialCosts).toFixed(2)}</div>
                 </>
               )}
 
               {project.paidByCustomer !== null && (
                 <>
-                  <div className="font-medium">{t("carpentry.new.fields.paidByCustomer", "Paid by Customer")}:</div>
-                  <div>{project.paidByCustomer ? t("common.yes", "Yes") : t("common.no", "No")}</div>
+                  <div className="font-medium">{labels.paidByCustomer}:</div>
+                  <div>{project.paidByCustomer ? labels.yes : labels.no}</div>
                 </>
               )}
 
               {project.assignedTo && (
                 <>
-                  <div className="font-medium">{t("carpentry.details.assignedTo", "Assigned To")}:</div>
+                  <div className="font-medium">{labels.assignedTo}:</div>
                   <div>{project.assignedTo.email}</div>
                 </>
               )}
@@ -158,7 +189,7 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         {project.itemToRepair && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("carpentry.new.fields.itemToRepair", "Item to Repair")}</CardTitle>
+              <CardTitle>{labels.itemToRepair}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{project.itemToRepair}</p>
@@ -169,7 +200,7 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         {project.problemDescription && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("carpentry.new.fields.problemDescription", "Problem Description")}</CardTitle>
+              <CardTitle>{labels.problemDescription}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{project.problemDescription}</p>
@@ -180,7 +211,7 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         {project.projectDescription && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("carpentry.new.fields.projectDescription", "Project Description")}</CardTitle>
+              <CardTitle>{labels.projectDescription}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{project.projectDescription}</p>
@@ -191,12 +222,12 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         {project.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("carpentry.new.fields.photo", "Project Photo")}</CardTitle>
+              <CardTitle>{labels.photo}</CardTitle>
             </CardHeader>
             <CardContent>
               <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${project.photoPath}`}
-                alt={t("carpentry.details.photoAlt", "Carpentry project")}
+                alt={labels.photoAlt}
                 width={1200}
                 height={900}
                 unoptimized
@@ -211,18 +242,18 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         <Button variant="outline" asChild>
           <Link href={financeHref}>
             <Receipt className="mr-2 h-4 w-4" />
-            {t("finance.expenses.actions.logExpense", "Log expense")}
+            {labels.logExpense}
           </Link>
         </Button>
         <Button variant="outline" asChild>
           <Link href={editHref}>
             <Edit className="mr-2 h-4 w-4" />
-            {t("common.edit", "Edit")}
+            {labels.edit}
           </Link>
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
-          {t("common.delete", "Delete")}
+          {labels.delete}
         </Button>
       </div>
     </div>

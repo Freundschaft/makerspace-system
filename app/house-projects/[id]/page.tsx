@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export default async function HouseProjectDetailsPage({ params }: PageProps) {
-  const { t } = await getServerI18n();
+  const { locale, t } = await getServerI18n();
   const project = await prisma.houseProject.findUnique({
     where: {
       id: (await params).id,
@@ -32,7 +32,34 @@ export default async function HouseProjectDetailsPage({ params }: PageProps) {
         </h1>
       </div>
 
-      <ProjectDetails project={project} />
+      <ProjectDetails
+        project={project}
+        locale={locale}
+        labels={{
+          financeContextLabel: t(
+            "finance.expenses.source.houseProjectLinked",
+            `Linked to house project: ${project.houseName}`
+          ),
+          financeTitle: project.workType,
+          logExpense: t("finance.expenses.actions.logExpense", "Log expense"),
+          projectInfo: t("houseProjects.details.projectInfo", "Project Information"),
+          houseName: t("houseProjects.fields.houseName", "House"),
+          location: t("houseProjects.fields.location", "Location / Room"),
+          workType: t("houseProjects.fields.workType", "Work Type"),
+          status: t("common.status", "Status"),
+          date: t("houseProjects.fields.date", "Date"),
+          timeNeeded: t("houseProjects.fields.timeNeeded", "Time Needed"),
+          materialCosts: t("houseProjects.fields.materialCosts", "Material Costs (€)"),
+          assignedTo: t("houseProjects.details.assignedTo", "Assigned To"),
+          description: t("common.description", "Description"),
+          notes: t("common.notes", "Notes"),
+          photo: t("common.photo", "Photo"),
+          photoAlt: t("houseProjects.details.photoAlt", "House project"),
+          statusLabels: {
+            [project.status]: t(`houseProjects.statuses.${project.status}`, project.status),
+          },
+        }}
+      />
     </div>
   );
 }

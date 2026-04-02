@@ -6,8 +6,7 @@ import { formatDate } from "@/lib/utils"
 import { RepairStatus, Part, RepairPart } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
-import { getServerI18n } from "@/lib/i18n/server"
-import { localizePathname } from "@/lib/i18n/config"
+import { Locale, localizePathname } from "@/lib/i18n/config"
 
 type RepairWithParts = {
   id: string
@@ -28,10 +27,34 @@ type RepairWithParts = {
 
 interface RepairDetailsProps {
   repair: RepairWithParts
+  locale: Locale
+  labels: {
+    contactInfo: string
+    contactInfoDesc: string
+    ownerName: string
+    ownerIdCardNumber: string
+    phone: string
+    repairInfo: string
+    repairInfoDesc: string
+    status: string
+    problemTypes: string
+    receivedDate: string
+    repairedDate: string
+    pickupDate: string
+    description: string
+    bicyclePhoto: string
+    photoAlt: string
+    partsUsed: string
+    part: string
+    quantity: string
+    edit: string
+    delete: string
+    statusLabels: Record<string, string>
+    problemTypeLabels: Record<string, string>
+  }
 }
 
-export async function RepairDetails({ repair }: RepairDetailsProps) {
-  const { locale, t } = await getServerI18n()
+export async function RepairDetails({ repair, locale, labels }: RepairDetailsProps) {
   const problemTypes = JSON.parse(repair.problemTypes)
   const editHref = localizePathname(`/bicycles/repairs/${repair.id}/edit`, locale)
 
@@ -40,18 +63,18 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>{t("repairs.details.contactInfo", "Contact Information")}</CardTitle>
-            <CardDescription>{t("repairs.details.contactInfoDesc", "Details about the bicycle owner")}</CardDescription>
+            <CardTitle>{labels.contactInfo}</CardTitle>
+            <CardDescription>{labels.contactInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("repairs.form.ownerName", "Owner Name")}:</div>
+              <div className="font-medium">{labels.ownerName}:</div>
               <div>{repair.ownerName}</div>
 
-              <div className="font-medium">{t("repairs.form.ownerIdCardNumber", "ID Card Number")}:</div>
+              <div className="font-medium">{labels.ownerIdCardNumber}:</div>
               <div>{repair.ownerIdCardNumber}</div>
 
-              <div className="font-medium">{t("common.phone", "Phone")}:</div>
+              <div className="font-medium">{labels.phone}:</div>
               <div>{repair.ownerPhone}</div>
             </div>
           </CardContent>
@@ -59,12 +82,12 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("repairs.details.repairInfo", "Repair Information")}</CardTitle>
-            <CardDescription>{t("repairs.details.repairInfoDesc", "Details about the repair")}</CardDescription>
+            <CardTitle>{labels.repairInfo}</CardTitle>
+            <CardDescription>{labels.repairInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("common.status", "Status")}:</div>
+              <div className="font-medium">{labels.status}:</div>
               <div>
                 <Badge variant={
                   repair.status === "COMPLETED"
@@ -73,30 +96,30 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
                     ? "secondary"
                     : "outline"
                 }>
-                  {repair.status}
+                  {labels.statusLabels[repair.status] ?? repair.status}
                 </Badge>
               </div>
               
-              <div className="font-medium">{t("repairs.details.problemTypes", "Problem Types")}:</div>
+              <div className="font-medium">{labels.problemTypes}:</div>
               <div className="flex flex-wrap gap-1">
                 {problemTypes.map((type: string) => (
-                  <Badge key={type} variant="outline">{type}</Badge>
+                  <Badge key={type} variant="outline">{labels.problemTypeLabels[type] ?? type}</Badge>
                 ))}
               </div>
               
-              <div className="font-medium">{t("repairs.details.receivedDate", "Received Date")}:</div>
+              <div className="font-medium">{labels.receivedDate}:</div>
               <div>{formatDate(repair.receivedDate)}</div>
               
               {repair.repairedDate && (
                 <>
-                  <div className="font-medium">{t("repairs.details.repairedDate", "Repaired Date")}:</div>
+                  <div className="font-medium">{labels.repairedDate}:</div>
                   <div>{formatDate(repair.repairedDate)}</div>
                 </>
               )}
               
               {repair.pickupDate && (
                 <>
-                  <div className="font-medium">{t("repairs.details.pickupDate", "Pickup Date")}:</div>
+                  <div className="font-medium">{labels.pickupDate}:</div>
                   <div>{formatDate(repair.pickupDate)}</div>
                 </>
               )}
@@ -106,7 +129,7 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>{t("common.description", "Description")}</CardTitle>
+            <CardTitle>{labels.description}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="whitespace-pre-wrap">{repair.description}</p>
@@ -116,12 +139,12 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("repairs.details.bicyclePhoto", "Bicycle Photo")}</CardTitle>
+              <CardTitle>{labels.bicyclePhoto}</CardTitle>
             </CardHeader>
             <CardContent>
               <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`} 
-                alt={t("common.photo", "Photo")} 
+                alt={labels.photoAlt}
                 width={1200}
                 height={900}
                 unoptimized
@@ -134,15 +157,15 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.partsUsed.length > 0 && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("repairs.details.partsUsed", "Parts Used")}</CardTitle>
+              <CardTitle>{labels.partsUsed}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left py-2 px-4">{t("repairs.details.part", "Part")}</th>
-                      <th className="text-right py-2 px-4">{t("repairs.details.quantity", "Quantity")}</th>
+                      <th className="text-left py-2 px-4">{labels.part}</th>
+                      <th className="text-right py-2 px-4">{labels.quantity}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -164,12 +187,12 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         <Button variant="outline" asChild>
           <Link href={editHref}>
             <Edit className="mr-2 h-4 w-4" />
-            {t("common.edit", "Edit")}
+            {labels.edit}
           </Link>
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
-          {t("common.delete", "Delete")}
+          {labels.delete}
         </Button>
       </div>
     </div>

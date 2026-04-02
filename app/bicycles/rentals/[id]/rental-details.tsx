@@ -2,8 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Edit } from "lucide-react";
 import { BicycleRental } from "@/generated/prisma";
-import { getServerI18n } from "@/lib/i18n/server";
-import { localizePathname } from "@/lib/i18n/config";
+import { Locale, localizePathname } from "@/lib/i18n/config";
 import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,28 @@ import { RentalReturnActions } from "./RentalReturnActions";
 
 interface RentalDetailsProps {
   rental: BicycleRental;
+  locale: Locale;
+  labels: {
+    renterInfo: string;
+    renterInfoDesc: string;
+    renterName: string;
+    phone: string;
+    email: string;
+    notProvided: string;
+    rentalInfo: string;
+    rentalInfoDesc: string;
+    bicycleId: string;
+    status: string;
+    startDate: string;
+    endDate: string;
+    actualReturnDate: string;
+    notReturned: string;
+    notes: string;
+    signature: string;
+    signatureAlt: string;
+    edit: string;
+    statusLabels: Record<string, string>;
+  };
 }
 
 function getStatusVariant(status: BicycleRental["status"]) {
@@ -27,8 +48,7 @@ function getStatusVariant(status: BicycleRental["status"]) {
   }
 }
 
-export async function RentalDetails({ rental }: RentalDetailsProps) {
-  const { locale, t } = await getServerI18n();
+export async function RentalDetails({ rental, locale, labels }: RentalDetailsProps) {
   const editHref = localizePathname(`/bicycles/rentals/${rental.id}/edit`, locale);
   const canReturnBike = rental.status !== "RETURNED" && rental.status !== "CANCELLED";
 
@@ -37,57 +57,57 @@ export async function RentalDetails({ rental }: RentalDetailsProps) {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>{t("rentals.details.renterInfo", "Renter Information")}</CardTitle>
+            <CardTitle>{labels.renterInfo}</CardTitle>
             <CardDescription>
-              {t("rentals.details.renterInfoDesc", "Contact details for the renter")}
+              {labels.renterInfoDesc}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("rentals.new.fields.renterName", "Renter Name")}:</div>
+              <div className="font-medium">{labels.renterName}:</div>
               <div>{rental.renterName}</div>
 
-              <div className="font-medium">{t("common.phone", "Phone")}:</div>
+              <div className="font-medium">{labels.phone}:</div>
               <div>{rental.renterPhone}</div>
 
-              <div className="font-medium">{t("common.email", "Email")}:</div>
-              <div>{rental.renterEmail || t("common.notAvailable", "Not provided")}</div>
+              <div className="font-medium">{labels.email}:</div>
+              <div>{rental.renterEmail || labels.notProvided}</div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("rentals.details.rentalInfo", "Rental Information")}</CardTitle>
+            <CardTitle>{labels.rentalInfo}</CardTitle>
             <CardDescription>
-              {t("rentals.details.rentalInfoDesc", "Dates, bicycle, and return status")}
+              {labels.rentalInfoDesc}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("rentals.new.fields.bicycleId", "Bicycle ID")}:</div>
+              <div className="font-medium">{labels.bicycleId}:</div>
               <div>{rental.bicycleId}</div>
 
-              <div className="font-medium">{t("common.status", "Status")}:</div>
+              <div className="font-medium">{labels.status}:</div>
               <div>
                 <Badge variant={getStatusVariant(rental.status)}>
-                  {t(`rentals.statuses.${rental.status}`, rental.status)}
+                  {labels.statusLabels[rental.status] ?? rental.status}
                 </Badge>
               </div>
 
-              <div className="font-medium">{t("rentals.new.fields.startDate", "Start Date")}:</div>
+              <div className="font-medium">{labels.startDate}:</div>
               <div>{formatDate(rental.startDate)}</div>
 
-              <div className="font-medium">{t("rentals.new.fields.endDate", "End Date")}:</div>
+              <div className="font-medium">{labels.endDate}:</div>
               <div>{formatDate(rental.endDate)}</div>
 
               <div className="font-medium">
-                {t("rentals.details.actualReturnDate", "Actual Return Date")}:
+                {labels.actualReturnDate}:
               </div>
               <div>
                 {rental.actualReturnDate
                   ? formatDate(rental.actualReturnDate)
-                  : t("rentals.details.notReturned", "Not returned yet")}
+                  : labels.notReturned}
               </div>
             </div>
           </CardContent>
@@ -96,7 +116,7 @@ export async function RentalDetails({ rental }: RentalDetailsProps) {
         {rental.notes && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("common.notes", "Notes")}</CardTitle>
+              <CardTitle>{labels.notes}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{rental.notes}</p>
@@ -107,12 +127,12 @@ export async function RentalDetails({ rental }: RentalDetailsProps) {
         {rental.signature && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("rentals.details.signature", "Signature")}</CardTitle>
+              <CardTitle>{labels.signature}</CardTitle>
             </CardHeader>
             <CardContent>
               <Image
                 src={rental.signature}
-                alt={t("rentals.details.signatureAlt", "Rental signature")}
+                alt={labels.signatureAlt}
                 width={640}
                 height={240}
                 unoptimized
@@ -127,7 +147,7 @@ export async function RentalDetails({ rental }: RentalDetailsProps) {
         <Button variant="outline" asChild>
           <Link href={editHref}>
             <Edit className="mr-2 h-4 w-4" />
-            {t("common.edit", "Edit")}
+            {labels.edit}
           </Link>
         </Button>
         {canReturnBike ? <RentalReturnActions rentalId={rental.id} /> : null}

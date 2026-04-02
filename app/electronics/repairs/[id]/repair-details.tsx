@@ -6,8 +6,7 @@ import { formatDate } from "@/lib/utils"
 import { ElectronicsRepairStatus, ElectronicsCategory, User } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
-import { getServerI18n } from "@/lib/i18n/server"
-import { localizePathname } from "@/lib/i18n/config"
+import { Locale, localizePathname } from "@/lib/i18n/config"
 
 type RepairWithRepairer = {
   id: string
@@ -28,6 +27,34 @@ type RepairWithRepairer = {
 
 interface RepairDetailsProps {
   repair: RepairWithRepairer
+  locale: Locale
+  labels: {
+    customerInfo: string
+    customerInfoDesc: string
+    repairId: string
+    customer: string
+    customerIdCardNumber: string
+    whatsapp: string
+    serialNumber: string
+    repairInfo: string
+    repairInfoDesc: string
+    category: string
+    item: string
+    status: string
+    repairable: string
+    notAssessed: string
+    yes: string
+    no: string
+    created: string
+    repairer: string
+    notes: string
+    photo: string
+    devicePhotoAlt: string
+    edit: string
+    delete: string
+    categoryLabels: Record<string, string>
+    statusLabels: Record<string, string>
+  }
 }
 
 const categoryLabels: Record<string, string> = {
@@ -95,8 +122,7 @@ const statusLabels: Record<string, string> = {
   NO_WAY_TO_FIX: "No Way to Fix",
 }
 
-export async function RepairDetails({ repair }: RepairDetailsProps) {
-  const { locale, t } = await getServerI18n()
+export async function RepairDetails({ repair, locale, labels }: RepairDetailsProps) {
   const editHref = localizePathname(`/electronics/repairs/${repair.id}/edit`, locale)
 
   return (
@@ -104,30 +130,30 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>{t("electronics.details.customerInfo", "Customer Information")}</CardTitle>
-            <CardDescription>{t("electronics.details.customerInfoDesc", "Contact details and device info")}</CardDescription>
+            <CardTitle>{labels.customerInfo}</CardTitle>
+            <CardDescription>{labels.customerInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("electronics.details.repairId", "Repair ID")}:</div>
+              <div className="font-medium">{labels.repairId}:</div>
               <div className="font-mono">#{repair.repairId}</div>
 
-              <div className="font-medium">{t("electronics.details.customer", "Customer")}:</div>
+              <div className="font-medium">{labels.customer}:</div>
               <div>{repair.customerName}</div>
 
-              <div className="font-medium">{t("electronics.new.fields.customerIdCardNumber", "ID Card Number")}:</div>
+              <div className="font-medium">{labels.customerIdCardNumber}:</div>
               <div className="font-mono text-sm">{repair.customerIdCardNumber}</div>
 
               {repair.whatsapp && (
                 <>
-                  <div className="font-medium">{t("electronics.new.fields.whatsapp", "WhatsApp")}:</div>
+                  <div className="font-medium">{labels.whatsapp}:</div>
                   <div>{repair.whatsapp}</div>
                 </>
               )}
 
               {repair.serialNumber && (
                 <>
-                  <div className="font-medium">{t("electronics.new.fields.serialNumber", "Serial Number")}:</div>
+                  <div className="font-medium">{labels.serialNumber}:</div>
                   <div className="font-mono text-sm">{repair.serialNumber}</div>
                 </>
               )}
@@ -137,26 +163,26 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>{t("electronics.details.repairInfo", "Repair Information")}</CardTitle>
-            <CardDescription>{t("electronics.details.repairInfoDesc", "Device and repair status")}</CardDescription>
+            <CardTitle>{labels.repairInfo}</CardTitle>
+            <CardDescription>{labels.repairInfoDesc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="grid grid-cols-2 gap-2">
-              <div className="font-medium">{t("electronics.new.fields.category", "Category")}:</div>
+              <div className="font-medium">{labels.category}:</div>
               <div>
                 <Badge variant="outline">
-                  {t(`electronics.categories.${repair.category}`, categoryLabels[repair.category] || repair.category)}
+                  {labels.categoryLabels[repair.category] ?? categoryLabels[repair.category] ?? repair.category}
                 </Badge>
               </div>
 
               {repair.item && (
                 <>
-                  <div className="font-medium">{t("electronics.details.item", "Item")}:</div>
+                  <div className="font-medium">{labels.item}:</div>
                   <div>{repair.item}</div>
                 </>
               )}
 
-              <div className="font-medium">{t("common.status", "Status")}:</div>
+              <div className="font-medium">{labels.status}:</div>
               <div>
                 <Badge variant={
                   repair.status === "DONE" || repair.status === "PICKED_UP"
@@ -167,25 +193,25 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
                     ? "destructive"
                     : "outline"
                 }>
-                  {t(`common.statuses.${repair.status}`, statusLabels[repair.status] || repair.status)}
+                  {labels.statusLabels[repair.status] ?? statusLabels[repair.status] ?? repair.status}
                 </Badge>
               </div>
 
-              <div className="font-medium">{t("electronics.new.fields.repairable", "Repairable")}:</div>
+              <div className="font-medium">{labels.repairable}:</div>
               <div>
                 {repair.repairable === null
-                  ? t("electronics.details.notAssessed", "Not assessed")
+                  ? labels.notAssessed
                   : repair.repairable
-                  ? t("common.yes", "Yes")
-                  : t("common.no", "No")}
+                  ? labels.yes
+                  : labels.no}
               </div>
 
-              <div className="font-medium">{t("common.created", "Created")}:</div>
+              <div className="font-medium">{labels.created}:</div>
               <div>{formatDate(repair.createdDate)}</div>
 
               {repair.repairer && (
                 <>
-                  <div className="font-medium">{t("electronics.details.repairer", "Repairer")}:</div>
+                  <div className="font-medium">{labels.repairer}:</div>
                   <div>{repair.repairer.email}</div>
                 </>
               )}
@@ -196,7 +222,7 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.notes && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("common.notes", "Notes")}</CardTitle>
+              <CardTitle>{labels.notes}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="whitespace-pre-wrap">{repair.notes}</p>
@@ -207,12 +233,12 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         {repair.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>{t("electronics.new.fields.photo", "Device Photo")}</CardTitle>
+              <CardTitle>{labels.photo}</CardTitle>
             </CardHeader>
             <CardContent>
               <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`}
-                alt={t("electronics.details.devicePhotoAlt", "Electronic device")}
+                alt={labels.devicePhotoAlt}
                 width={1200}
                 height={900}
                 unoptimized
@@ -227,12 +253,12 @@ export async function RepairDetails({ repair }: RepairDetailsProps) {
         <Button variant="outline" asChild>
           <Link href={editHref}>
             <Edit className="mr-2 h-4 w-4" />
-            {t("common.edit", "Edit")}
+            {labels.edit}
           </Link>
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
-          {t("common.delete", "Delete")}
+          {labels.delete}
         </Button>
       </div>
     </div>

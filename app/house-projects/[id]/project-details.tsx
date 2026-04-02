@@ -6,8 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { Receipt } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { getServerI18n } from "@/lib/i18n/server";
-import { localizePathname } from "@/lib/i18n/config";
+import { Locale, localizePathname } from "@/lib/i18n/config";
 
 type ProjectWithAssignedTo = HouseProject & {
   assignedTo: User | null;
@@ -15,6 +14,26 @@ type ProjectWithAssignedTo = HouseProject & {
 
 interface ProjectDetailsProps {
   project: ProjectWithAssignedTo;
+  locale: Locale;
+  labels: {
+    financeContextLabel: string;
+    financeTitle: string;
+    logExpense: string;
+    projectInfo: string;
+    houseName: string;
+    location: string;
+    workType: string;
+    status: string;
+    date: string;
+    timeNeeded: string;
+    materialCosts: string;
+    assignedTo: string;
+    description: string;
+    notes: string;
+    photo: string;
+    photoAlt: string;
+    statusLabels: Record<string, string>;
+  };
 }
 
 function getStatusVariant(status: HouseProject["status"]) {
@@ -30,12 +49,9 @@ function getStatusVariant(status: HouseProject["status"]) {
   }
 }
 
-export async function ProjectDetails({ project }: ProjectDetailsProps) {
-  const { locale, t } = await getServerI18n();
+export async function ProjectDetails({ project, locale, labels }: ProjectDetailsProps) {
   const financeHref = localizePathname(
-    `/finance/new-expense?houseProjectId=${project.id}&contextLabel=${encodeURIComponent(
-      t("finance.expenses.source.houseProjectLinked", `Linked to house project: ${project.houseName}`),
-    )}&title=${encodeURIComponent(project.workType)}`,
+    `/finance/new-expense?houseProjectId=${project.id}&contextLabel=${encodeURIComponent(labels.financeContextLabel)}&title=${encodeURIComponent(labels.financeTitle)}`,
     locale,
   );
 
@@ -45,51 +61,51 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
         <Button variant="outline" asChild>
           <Link href={financeHref}>
             <Receipt className="mr-2 h-4 w-4" />
-            {t("finance.expenses.actions.logExpense", "Log expense")}
+            {labels.logExpense}
           </Link>
         </Button>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle>{t("houseProjects.details.projectInfo", "Project Information")}</CardTitle>
+          <CardTitle>{labels.projectInfo}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
-            <div className="font-medium">{t("houseProjects.fields.houseName", "House")}:</div>
+            <div className="font-medium">{labels.houseName}:</div>
             <div>{project.houseName}</div>
 
-            <div className="font-medium">{t("houseProjects.fields.location", "Location / Room")}:</div>
+            <div className="font-medium">{labels.location}:</div>
             <div>{project.location || "—"}</div>
 
-            <div className="font-medium">{t("houseProjects.fields.workType", "Work Type")}:</div>
+            <div className="font-medium">{labels.workType}:</div>
             <div>{project.workType}</div>
 
-            <div className="font-medium">{t("common.status", "Status")}:</div>
+            <div className="font-medium">{labels.status}:</div>
             <div>
               <Badge variant={getStatusVariant(project.status)}>
-                {t(`houseProjects.statuses.${project.status}`, project.status)}
+                {labels.statusLabels[project.status] ?? project.status}
               </Badge>
             </div>
 
-            <div className="font-medium">{t("houseProjects.fields.date", "Date")}:</div>
+            <div className="font-medium">{labels.date}:</div>
             <div>{formatDate(project.date)}</div>
 
-            <div className="font-medium">{t("houseProjects.fields.timeNeeded", "Time Needed")}:</div>
+            <div className="font-medium">{labels.timeNeeded}:</div>
             <div>{project.timeNeeded ? `${project.timeNeeded}h` : "—"}</div>
 
-            <div className="font-medium">{t("houseProjects.fields.materialCosts", "Material Costs (€)")}:</div>
+            <div className="font-medium">{labels.materialCosts}:</div>
             <div>{project.materialCosts ? `€${Number(project.materialCosts).toFixed(2)}` : "—"}</div>
 
-            <div className="font-medium">{t("houseProjects.details.assignedTo", "Assigned To")}:</div>
+            <div className="font-medium">{labels.assignedTo}:</div>
             <div>{project.assignedTo?.email || "—"}</div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("common.description", "Description")}</CardTitle>
+        <Card>
+          <CardHeader>
+          <CardTitle>{labels.description}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="whitespace-pre-wrap">{project.description}</p>
@@ -99,7 +115,7 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
       {project.notes && (
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>{t("common.notes", "Notes")}</CardTitle>
+            <CardTitle>{labels.notes}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="whitespace-pre-wrap">{project.notes}</p>
@@ -110,12 +126,12 @@ export async function ProjectDetails({ project }: ProjectDetailsProps) {
       {project.photoPath && (
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>{t("common.photo", "Photo")}</CardTitle>
+            <CardTitle>{labels.photo}</CardTitle>
           </CardHeader>
           <CardContent>
             <Image
               src={project.photoPath}
-              alt={t("houseProjects.details.photoAlt", "House project")}
+              alt={labels.photoAlt}
               width={1200}
               height={900}
               unoptimized
