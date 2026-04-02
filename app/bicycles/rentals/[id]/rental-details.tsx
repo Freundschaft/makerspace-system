@@ -1,24 +1,14 @@
-"use client";
-
-import { useI18n } from "@/app/components/I18nProvider";
+import Link from "next/link";
+import Image from "next/image";
+import { Edit } from "lucide-react";
+import { BicycleRental } from "@/generated/prisma";
+import { getServerI18n } from "@/lib/i18n/server";
+import { localizePathname } from "@/lib/i18n/config";
+import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { BicycleRental } from "@/generated/prisma";
-import { formatDate } from "@/lib/utils";
-import { CheckCircle2, Edit } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { RentalReturnActions } from "./RentalReturnActions";
 
 interface RentalDetailsProps {
   rental: BicycleRental;
@@ -37,46 +27,10 @@ function getStatusVariant(status: BicycleRental["status"]) {
   }
 }
 
-export function RentalDetails({ rental }: RentalDetailsProps) {
-  const { t } = useI18n();
-  const router = useRouter();
-  const [isReturning, setIsReturning] = useState(false);
-  const [isReturnDialogOpen, setIsReturnDialogOpen] = useState(false);
-  const [isBicycleChecked, setIsBicycleChecked] = useState(false);
-  const [isDepositReturned, setIsDepositReturned] = useState(false);
-
+export async function RentalDetails({ rental }: RentalDetailsProps) {
+  const { locale, t } = await getServerI18n();
+  const editHref = localizePathname(`/bicycles/rentals/${rental.id}/edit`, locale);
   const canReturnBike = rental.status !== "RETURNED" && rental.status !== "CANCELLED";
-  const isReturnChecklistComplete = isBicycleChecked && isDepositReturned;
-
-  const handleReturnBike = async () => {
-    setIsReturning(true);
-
-    try {
-      const response = await fetch(`/api/bicycles/rentals/${rental.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          action: "return-bike",
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to return bike");
-      }
-
-      setIsReturnDialogOpen(false);
-      setIsBicycleChecked(false);
-      setIsDepositReturned(false);
-      router.refresh();
-    } catch (error) {
-      console.error("Error returning bike:", error);
-      alert(t("rentals.details.returnBikeFailed", "Failed to return bicycle. Please try again."));
-    } finally {
-      setIsReturning(false);
-    }
-  };
 
   return (
     <div className="space-y-6">
@@ -170,95 +124,13 @@ export function RentalDetails({ rental }: RentalDetailsProps) {
       </div>
 
       <div className="flex flex-wrap justify-end gap-2">
-        <Button variant="outline" onClick={() => router.push(`/bicycles/rentals/${rental.id}/edit`)}>
-          <Edit className="mr-2 h-4 w-4" />
-          {t("common.edit", "Edit")}
+        <Button variant="outline" asChild>
+          <Link href={editHref}>
+            <Edit className="mr-2 h-4 w-4" />
+            {t("common.edit", "Edit")}
+          </Link>
         </Button>
-        {canReturnBike && (
-          <>
-            <Button onClick={() => setIsReturnDialogOpen(true)} disabled={isReturning}>
-              <CheckCircle2 className="mr-2 h-4 w-4" />
-              {isReturning
-                ? t("rentals.details.returningBike", "Returning bike...")
-                : t("rentals.details.returnBike", "Return bike")}
-            </Button>
-
-            <Dialog
-              open={isReturnDialogOpen}
-              onOpenChange={(open) => {
-                setIsReturnDialogOpen(open);
-                if (!open) {
-                  setIsBicycleChecked(false);
-                  setIsDepositReturned(false);
-                }
-              }}
-            >
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>{t("rentals.details.returnChecklistTitle", "Return checklist")}</DialogTitle>
-                  <DialogDescription>
-                    {t(
-                      "rentals.details.returnChecklistDescription",
-                      "Complete both checks before marking this bicycle as returned.",
-                    )}
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="space-y-4">
-                  <label className="flex items-start gap-3 rounded-md border p-3">
-                    <Checkbox
-                      checked={isBicycleChecked}
-                      onCheckedChange={(checked) => setIsBicycleChecked(checked === true)}
-                    />
-                    <div>
-                      <div className="font-medium">
-                        {t("rentals.details.checkBicycleOk", "Check if bicycle is ok")}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t(
-                          "rentals.details.checkBicycleOkHint",
-                          "Confirm the bicycle came back in acceptable condition.",
-                        )}
-                      </div>
-                    </div>
-                  </label>
-
-                  <label className="flex items-start gap-3 rounded-md border p-3">
-                    <Checkbox
-                      checked={isDepositReturned}
-                      onCheckedChange={(checked) => setIsDepositReturned(checked === true)}
-                    />
-                    <div>
-                      <div className="font-medium">
-                        {t("rentals.details.returnDeposit", "Return deposit")}
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t(
-                          "rentals.details.returnDepositHint",
-                          "Confirm the deposit has been given back to the renter.",
-                        )}
-                      </div>
-                    </div>
-                  </label>
-                </div>
-
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsReturnDialogOpen(false)}>
-                    {t("common.cancel", "Cancel")}
-                  </Button>
-                  <Button
-                    onClick={handleReturnBike}
-                    disabled={isReturning || !isReturnChecklistComplete}
-                  >
-                    {isReturning
-                      ? t("rentals.details.returningBike", "Returning bike...")
-                      : t("rentals.details.confirmReturnBike", "Confirm return")}
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </>
-        )}
+        {canReturnBike ? <RentalReturnActions rentalId={rental.id} /> : null}
       </div>
     </div>
   );

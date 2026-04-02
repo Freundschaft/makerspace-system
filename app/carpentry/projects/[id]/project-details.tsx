@@ -1,14 +1,13 @@
-"use client"
-
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Edit, Receipt, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { CarpentryProject, User } from '@/generated/prisma'
-import { useI18n } from "@/app/components/I18nProvider"
 import Image from "next/image"
+import Link from "next/link"
+import { getServerI18n } from "@/lib/i18n/server"
+import { localizePathname } from "@/lib/i18n/config"
 
 type ProjectWithAssignedTo = CarpentryProject & {
   assignedTo: User | null
@@ -35,9 +34,15 @@ const genderLabels: Record<string, string> = {
   MALE: "Male",
 }
 
-export function ProjectDetails({ project }: ProjectDetailsProps) {
-  const router = useRouter()
-  const { t } = useI18n()
+export async function ProjectDetails({ project }: ProjectDetailsProps) {
+  const { locale, t } = await getServerI18n()
+  const editHref = localizePathname(`/carpentry/projects/${project.id}/edit`, locale)
+  const financeHref = localizePathname(
+    `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(
+      t("finance.expenses.source.carpentryProjectLinked", `Linked to carpentry project: ${project.customerName || project.organizationName || project.id}`),
+    )}&title=${encodeURIComponent(project.itemToRepair || project.projectDescription || "Carpentry expense")}`,
+    locale,
+  )
 
   return (
     <div className="space-y-6">
@@ -203,22 +208,17 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
       </div>
 
       <div className="flex justify-end gap-2">
-        <Button
-          variant="outline"
-          onClick={() =>
-            router.push(
-              `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(
-                t("finance.expenses.source.carpentryProjectLinked", `Linked to carpentry project: ${project.customerName || project.organizationName || project.id}`),
-              )}&title=${encodeURIComponent(project.itemToRepair || project.projectDescription || "Carpentry expense")}`,
-            )
-          }
-        >
-          <Receipt className="mr-2 h-4 w-4" />
-          {t("finance.expenses.actions.logExpense", "Log expense")}
+        <Button variant="outline" asChild>
+          <Link href={financeHref}>
+            <Receipt className="mr-2 h-4 w-4" />
+            {t("finance.expenses.actions.logExpense", "Log expense")}
+          </Link>
         </Button>
-        <Button variant="outline" onClick={() => router.push(`/carpentry/projects/${project.id}/edit`)}>
-          <Edit className="mr-2 h-4 w-4" />
-          {t("common.edit", "Edit")}
+        <Button variant="outline" asChild>
+          <Link href={editHref}>
+            <Edit className="mr-2 h-4 w-4" />
+            {t("common.edit", "Edit")}
+          </Link>
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />

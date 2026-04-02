@@ -1,14 +1,13 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HouseProject, User } from "@/generated/prisma";
 import { formatDate } from "@/lib/utils";
-import { useI18n } from "@/app/components/I18nProvider";
 import { Receipt } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { getServerI18n } from "@/lib/i18n/server";
+import { localizePathname } from "@/lib/i18n/config";
 
 type ProjectWithAssignedTo = HouseProject & {
   assignedTo: User | null;
@@ -31,25 +30,23 @@ function getStatusVariant(status: HouseProject["status"]) {
   }
 }
 
-export function ProjectDetails({ project }: ProjectDetailsProps) {
-  const { t } = useI18n();
-  const router = useRouter();
+export async function ProjectDetails({ project }: ProjectDetailsProps) {
+  const { locale, t } = await getServerI18n();
+  const financeHref = localizePathname(
+    `/finance/new-expense?houseProjectId=${project.id}&contextLabel=${encodeURIComponent(
+      t("finance.expenses.source.houseProjectLinked", `Linked to house project: ${project.houseName}`),
+    )}&title=${encodeURIComponent(project.workType)}`,
+    locale,
+  );
 
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <Button
-          variant="outline"
-          onClick={() =>
-            router.push(
-              `/finance/new-expense?houseProjectId=${project.id}&contextLabel=${encodeURIComponent(
-                t("finance.expenses.source.houseProjectLinked", `Linked to house project: ${project.houseName}`),
-              )}&title=${encodeURIComponent(project.workType)}`,
-            )
-          }
-        >
-          <Receipt className="mr-2 h-4 w-4" />
-          {t("finance.expenses.actions.logExpense", "Log expense")}
+        <Button variant="outline" asChild>
+          <Link href={financeHref}>
+            <Receipt className="mr-2 h-4 w-4" />
+            {t("finance.expenses.actions.logExpense", "Log expense")}
+          </Link>
         </Button>
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

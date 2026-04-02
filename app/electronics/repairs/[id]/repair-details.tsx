@@ -1,14 +1,13 @@
-"use client"
-
-import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { ElectronicsRepairStatus, ElectronicsCategory, User } from '@/generated/prisma'
-import { useI18n } from "@/app/components/I18nProvider"
 import Image from "next/image"
+import Link from "next/link"
+import { getServerI18n } from "@/lib/i18n/server"
+import { localizePathname } from "@/lib/i18n/config"
 
 type RepairWithRepairer = {
   id: string
@@ -96,9 +95,9 @@ const statusLabels: Record<string, string> = {
   NO_WAY_TO_FIX: "No Way to Fix",
 }
 
-export function RepairDetails({ repair }: RepairDetailsProps) {
-  const router = useRouter()
-  const { t } = useI18n()
+export async function RepairDetails({ repair }: RepairDetailsProps) {
+  const { locale, t } = await getServerI18n()
+  const editHref = localizePathname(`/electronics/repairs/${repair.id}/edit`, locale)
 
   return (
     <div className="space-y-6">
@@ -225,9 +224,11 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
       </div>
 
       <div className="flex justify-end gap-2">
-        <Button variant="outline" onClick={() => router.push(`/electronics/repairs/${repair.id}/edit`)}>
-          <Edit className="mr-2 h-4 w-4" />
-          {t("common.edit", "Edit")}
+        <Button variant="outline" asChild>
+          <Link href={editHref}>
+            <Edit className="mr-2 h-4 w-4" />
+            {t("common.edit", "Edit")}
+          </Link>
         </Button>
         <Button variant="destructive">
           <Trash className="mr-2 h-4 w-4" />
