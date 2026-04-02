@@ -24,24 +24,20 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
+import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useI18n } from "@/app/components/I18nProvider"
+import {
+  electronicsCategories,
+  electronicsCategoryLabels,
+  getElectronicsCategoryImage,
+} from "@/lib/electronics-categories"
 
 const formSchema = z.object({
   customerName: z.string().min(1, "Customer name is required"),
   customerIdCardNumber: z.string().min(1, "ID card number is required"),
-  category: z.enum([
-    "PHONE", "TABLET", "HEADPHONES", "HEATER", "SPEAKER", "HAIR_CLIPPER",
-    "COOLER", "POWER_BANK", "KETTLE", "LAPTOP", "MULTI_SOCKET", "PIZZA_PAN_CABLE",
-    "PAN", "GLASSES", "AUX", "WATCH", "ADAPTOR", "HANDSFREE", "CABLE",
-    "HAIR_CUTTER", "HAIR_DRYER", "FAN", "PRINTER", "ELECTRONIC_CIGARETTE",
-    "STOVE", "PIZZA_PAN", "WIRELESS", "EAR_PAD", "SMART_WATCH", "XBOX360",
-    "TOASTER", "TAILOR_MACHINE", "BATTERY", "PHONE_CASE", "BRACELET", "TESBIH",
-    "HAND_MIXER", "COMPUTER", "SEWING_MACHINE", "WATER_HEATER", "PUMP",
-    "KEYBOARD", "PLUG", "WATER_BOILER", "THERAPY", "COFFEE_MAKER", "KITCHEN",
-    "BOARD", "MAT", "RADIO", "VACUUM_CLEANER", "OTHER"
-  ]),
+  category: z.enum(electronicsCategories),
   item: z.string().optional(),
   whatsapp: z.string().optional(),
   serialNumber: z.string().optional(),
@@ -53,14 +49,6 @@ const formSchema = z.object({
   notes: z.string().optional(),
   photoPath: z.string().optional(),
 })
-
-const categoryOptions = [
-  "PHONE", "TABLET", "LAPTOP", "COMPUTER", "HEADPHONES", "SPEAKER", "POWER_BANK", "PRINTER", "KEYBOARD",
-  "WATCH", "SMART_WATCH", "HEATER", "FAN", "COOLER", "HAIR_CLIPPER", "HAIR_CUTTER", "HAIR_DRYER",
-  "KETTLE", "WATER_BOILER", "WATER_HEATER", "COFFEE_MAKER", "TOASTER", "HAND_MIXER", "SEWING_MACHINE",
-  "TAILOR_MACHINE", "VACUUM_CLEANER", "RADIO", "XBOX360", "MULTI_SOCKET", "CABLE", "ADAPTOR", "PLUG",
-  "BATTERY", "OTHER",
-]
 
 const statusOptions = [
   "UNCHECKED",
@@ -89,9 +77,13 @@ export function ElectronicsRepairForm() {
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const localizedCategoryOptions = useMemo(
-    () => categoryOptions.map((value) => ({
+    () => electronicsCategories.map((value) => ({
       value,
-      label: t(`electronics.categories.${value}`, value),
+      label: t(
+        `electronics.categories.${value}`,
+        electronicsCategoryLabels[value]
+      ),
+      image: getElectronicsCategoryImage(value),
     })),
     [t]
   )
@@ -187,22 +179,18 @@ export function ElectronicsRepairForm() {
           control={form.control}
           name="category"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col">
               <FormLabel className="text-sm sm:text-base">{t("electronics.new.fields.category", "Category")}</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="text-sm sm:text-base">
-                    <SelectValue placeholder={t("electronics.new.placeholders.category", "Select device category")} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="max-h-[300px]">
-                  {localizedCategoryOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <FormControl>
+                <MultiSelectButtons
+                  options={localizedCategoryOptions}
+                  selectedValues={field.value ? [field.value] : []}
+                  onChange={(values) =>
+                    field.onChange(values[values.length - 1] ?? field.value)
+                  }
+                  className="grid-cols-2 md:grid-cols-4 xl:grid-cols-6"
+                />
+              </FormControl>
               <FormDescription className="text-xs sm:text-sm">
                 {t("electronics.new.help.category", "Type of electronic device")}
               </FormDescription>

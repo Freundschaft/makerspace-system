@@ -4,63 +4,12 @@ import { format } from "date-fns"
 import Link from "next/link"
 import Image from "next/image"
 import { localizePathname, type Locale } from "@/lib/i18n/config"
+import {
+  electronicsCategoryLabels,
+  getElectronicsCategoryImage,
+} from "@/lib/electronics-categories"
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
-
-const categoryLabels: Record<string, string> = {
-  PHONE: "Phone",
-  TABLET: "Tablet",
-  HEADPHONES: "Headphones",
-  HEATER: "Heater",
-  SPEAKER: "Speaker",
-  HAIR_CLIPPER: "Hair Clipper",
-  COOLER: "Cooler",
-  POWER_BANK: "Power Bank",
-  KETTLE: "Kettle",
-  LAPTOP: "Laptop",
-  MULTI_SOCKET: "Multi Socket",
-  PIZZA_PAN_CABLE: "Pizza Pan Cable",
-  PAN: "Pan",
-  GLASSES: "Glasses",
-  AUX: "Aux",
-  WATCH: "Watch",
-  ADAPTOR: "Adaptor",
-  HANDSFREE: "Handsfree",
-  CABLE: "Cable",
-  HAIR_CUTTER: "Hair Cutter",
-  HAIR_DRYER: "Hair Dryer",
-  FAN: "Fan",
-  PRINTER: "Printer",
-  ELECTRONIC_CIGARETTE: "Electronic Cigarette",
-  STOVE: "Stove",
-  PIZZA_PAN: "Pizza Pan",
-  WIRELESS: "Wireless",
-  EAR_PAD: "Ear Pad",
-  SMART_WATCH: "Smart Watch",
-  XBOX360: "Xbox 360",
-  TOASTER: "Toaster",
-  TAILOR_MACHINE: "Tailor Machine",
-  BATTERY: "Battery",
-  PHONE_CASE: "Phone Case",
-  BRACELET: "Bracelet",
-  TESBIH: "Tesbih",
-  HAND_MIXER: "Hand Mixer",
-  COMPUTER: "Computer",
-  SEWING_MACHINE: "Sewing Machine",
-  WATER_HEATER: "Water Heater",
-  PUMP: "Pump",
-  KEYBOARD: "Keyboard",
-  PLUG: "Plug",
-  WATER_BOILER: "Water Boiler",
-  THERAPY: "Therapy",
-  COFFEE_MAKER: "Coffee Maker",
-  KITCHEN: "Kitchen",
-  BOARD: "Board",
-  MAT: "Mat",
-  RADIO: "Radio",
-  VACUUM_CLEANER: "Vacuum Cleaner",
-  OTHER: "Other",
-}
 
 const statusLabels: Record<string, string> = {
   UNCHECKED: "Unchecked",
@@ -165,9 +114,25 @@ export function getColumns(t: Translator, locale: Locale): ColumnDef<Electronics
       const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
         <Link href={href} className="block">
-          <Badge variant="outline">
-            {t(`electronics.categories.${category}`, categoryLabels[category] || category)}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <div className="relative h-8 w-8 shrink-0 rounded-md border bg-background/80 p-1">
+              <Image
+                src={getElectronicsCategoryImage(category)}
+                alt={t(
+                  `electronics.categories.${category}`,
+                  electronicsCategoryLabels[category as keyof typeof electronicsCategoryLabels] ?? category
+                )}
+                fill
+                className="object-contain p-1"
+              />
+            </div>
+            <Badge variant="outline">
+              {t(
+                `electronics.categories.${category}`,
+                electronicsCategoryLabels[category as keyof typeof electronicsCategoryLabels] ?? category
+              )}
+            </Badge>
+          </div>
         </Link>
       )
     },
