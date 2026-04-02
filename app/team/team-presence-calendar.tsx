@@ -106,23 +106,23 @@ export function TeamPresenceCalendar({
   }
 
   return (
-    <div className="overflow-x-auto">
+    <div className="w-full">
       <div
-        className="grid min-w-max gap-px rounded-md border bg-border"
-        style={{ gridTemplateColumns: `max-content repeat(${days.length}, minmax(2.5rem, 1fr))` }}
+        className="grid w-full gap-px rounded-md border bg-border"
+        style={{ gridTemplateColumns: `fit-content(12rem) repeat(${days.length}, minmax(0, 1fr))` }}
       >
-        <div className="sticky left-0 z-10 flex items-center whitespace-nowrap bg-background px-3 py-2 text-sm font-medium">
+        <div className="sticky left-0 z-10 flex items-center bg-background px-2 py-2 text-xs font-medium sm:px-3 sm:text-sm">
           {t("team.table.name", "Name")}
         </div>
         {days.map((day) => (
           <div
             key={day.toISOString()}
-            className="flex flex-col items-center justify-center bg-background px-1 py-2 text-center"
+            className="flex min-w-0 flex-col items-center justify-center bg-background px-0.5 py-1.5 text-center sm:px-1 sm:py-2"
           >
-            <div className="text-[10px] uppercase text-muted-foreground">
-              {format(day, "EEE")}
+            <div className="text-[9px] uppercase leading-none text-muted-foreground sm:text-[10px]">
+              {format(day, "EEEEE")}
             </div>
-            <div className="text-sm font-medium">{format(day, "d")}</div>
+            <div className="text-xs font-medium leading-none sm:text-sm">{format(day, "d")}</div>
           </div>
         ))}
 
@@ -162,12 +162,12 @@ function FragmentRow({
 }) {
   return (
     <>
-      <div className="sticky left-0 z-10 flex items-center whitespace-nowrap bg-background px-3 py-2 text-sm">
-        <div>
-          <div className="font-medium">
+      <div className="sticky left-0 z-10 flex items-center bg-background px-2 py-2 text-xs sm:px-3 sm:text-sm">
+        <div className="min-w-0 max-w-[12rem]">
+          <div className="truncate font-medium">
             {member.givenNames} {member.familyName}
           </div>
-          <div className="text-xs text-muted-foreground">{member.department}</div>
+          <div className="truncate text-[10px] text-muted-foreground sm:text-xs">{member.department}</div>
         </div>
       </div>
       {days.map((day) => {
@@ -178,13 +178,13 @@ function FragmentRow({
         const isPreview = previewKeys.has(`${member.id}:${dateKey}`);
 
         return (
-          <div key={`${member.id}-${dateKey}`} className="bg-background p-1">
+          <div key={`${member.id}-${dateKey}`} className="flex bg-background p-0.5 sm:p-1">
             <Button
               type="button"
               variant={isPresent ? "default" : "outline"}
               size="sm"
               className={cn(
-                "h-9 w-full px-0",
+                "h-full min-h-7 w-full min-w-0 self-stretch px-0 text-[11px] sm:min-h-9",
                 !isPresent && "text-muted-foreground",
                 isPreview &&
                   "border-primary bg-primary/20 text-foreground shadow-[inset_0_0_0_2px_hsl(var(--primary))]",
