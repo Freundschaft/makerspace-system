@@ -46,6 +46,13 @@
     "scanningId": "Scanning ID...",
     "scanIdHelp": "Use the tablet or phone camera to read the name and ID number locally in the browser.",
     "scanIdError": "Could not read the ID clearly. Please try again or enter the values manually.",
+    "scanDebug": "Scan debug",
+    "scanDebugRawText": "Raw OCR text",
+    "scanDebugConfidence": "Confidence",
+    "scanDebugName": "Detected name",
+    "scanDebugId": "Detected ID number",
+    "scanDebugImage": "Captured image",
+    "scanDebugLines": "OCR lines",
     "phonePlaceholder": "+1234567890",
     "selectStatus": "Select a status",
     "statuses": {

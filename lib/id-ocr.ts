@@ -2,6 +2,7 @@ export interface ParsedIdScan {
   rawText: string;
   name: string | null;
   idNumber: string | null;
+  candidateLines: string[];
 }
 
 const NOISE_TOKENS = new Set([
@@ -25,6 +26,34 @@ const NOISE_TOKENS = new Set([
   "ID",
 ]);
 
+const GREEK_TO_LATIN_LOOKALIKES: Record<string, string> = {
+  Α: "A",
+  Β: "B",
+  Ε: "E",
+  Ζ: "Z",
+  Η: "H",
+  Ι: "I",
+  Κ: "K",
+  Μ: "M",
+  Ν: "N",
+  Ο: "O",
+  Ρ: "P",
+  Τ: "T",
+  Υ: "Y",
+  Χ: "X",
+  α: "a",
+  β: "b",
+  ε: "e",
+  ι: "i",
+  κ: "k",
+  μ: "m",
+  ν: "v",
+  ο: "o",
+  ρ: "p",
+  τ: "t",
+  χ: "x",
+};
+
 function normalizeWhitespace(text: string) {
   return text.replace(/\s+/g, " ").trim();
 }
@@ -37,9 +66,16 @@ function normalizeForIdSearch(text: string) {
     .trim();
 }
 
+function greekLookalikesToLatin(text: string) {
+  return text
+    .split("")
+    .map((char) => GREEK_TO_LATIN_LOOKALIKES[char] ?? char)
+    .join("");
+}
+
 function isLikelyNameLine(line: string) {
-  const cleaned = line
-    .replace(/[^A-Za-zΑ-ΩΆ-Ώα-ωά-ώ\s'-]/g, " ")
+  const cleaned = greekLookalikesToLatin(line)
+    .replace(/[^A-Za-z\s'-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -61,7 +97,7 @@ function isLikelyNameLine(line: string) {
 }
 
 function titleCaseName(line: string) {
-  return line
+  return greekLookalikesToLatin(line)
     .toLowerCase()
     .split(/\s+/)
     .filter(Boolean)
@@ -69,7 +105,36 @@ function titleCaseName(line: string) {
     .join(" ");
 }
 
-function extractIdNumber(text: string) {
+function normalizeNameCandidate(line: string) {
+  return greekLookalikesToLatin(line)
+    .replace(/[|]/g, " ")
+    .replace(/[^A-Za-z\s'-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractIdNumber(lines: string[], text: string) {
+  const topLines = lines.slice(0, 6).join(" ");
+  const topMatches = normalizeForIdSearch(topLines).match(/\b[0-9]{7,8}\b/g);
+
+  if (topMatches?.length) {
+    return topMatches[0] ?? null;
+  }
+
+  const cardLine = lines.find((line) =>
+    /CARD\s*(NR|NO|NUMBER)|ΔΕΛΤΙΟ/i.test(line)
+  );
+
+  if (cardLine) {
+    const cardLineMatches = normalizeForIdSearch(cardLine).match(
+      /\b[A-Z]{1,3}[0-9]{5,9}\b|\b[0-9]{6,12}\b/g
+    );
+
+    if (cardLineMatches?.length) {
+      return cardLineMatches[0] ?? null;
+    }
+  }
+
   const normalized = normalizeForIdSearch(text.toUpperCase());
   const matches = normalized.match(/\b[A-Z]{1,3}[0-9]{5,9}\b|\b[0-9]{6,12}\b/g);
 
@@ -80,22 +145,44 @@ function extractIdNumber(text: string) {
   return matches.sort((a, b) => b.length - a.length)[0] ?? null;
 }
 
-function extractName(text: string) {
-  const lines = text
-    .split(/\r?\n/)
-    .map((line) => normalizeWhitespace(line))
-    .filter(Boolean);
+function extractName(lines: string[]) {
+  const surnameHeaderIndex = lines.findIndex((line) =>
+    /SURNAME|ΕΠΩΝΥΜΟ/i.test(line)
+  );
 
-  const bestLine = lines.find(isLikelyNameLine);
-  return bestLine ? titleCaseName(bestLine) : null;
+  if (surnameHeaderIndex !== -1) {
+    const nextLine = normalizeNameCandidate(lines[surnameHeaderIndex + 1] ?? "");
+    if (isLikelyNameLine(nextLine)) {
+      return nextLine;
+    }
+  }
+
+  const fallbackHeaderIndex = lines.findIndex((line) =>
+    /NAME|ΟΝΟΜΑ/i.test(line)
+  );
+
+  if (fallbackHeaderIndex !== -1) {
+    const nextLine = normalizeNameCandidate(lines[fallbackHeaderIndex + 1] ?? "");
+    if (isLikelyNameLine(nextLine)) {
+      return nextLine;
+    }
+  }
+
+  const bestLine = lines.find((line) => isLikelyNameLine(normalizeNameCandidate(line)));
+  return bestLine ? titleCaseName(normalizeNameCandidate(bestLine)) : null;
 }
 
 export function parseIdScanText(text: string): ParsedIdScan {
+  const candidateLines = text
+    .split(/\r?\n/)
+    .map((line) => normalizeWhitespace(line))
+    .filter(Boolean);
   const rawText = normalizeWhitespace(text);
 
   return {
     rawText,
-    name: extractName(text),
-    idNumber: extractIdNumber(text),
+    name: extractName(candidateLines),
+    idNumber: extractIdNumber(candidateLines, text),
+    candidateLines,
   };
 }

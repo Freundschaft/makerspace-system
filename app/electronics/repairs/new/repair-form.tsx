@@ -143,6 +143,13 @@ export function ElectronicsRepairForm() {
             "common.scanIdError",
             "Could not read the ID clearly. Please try again or enter the values manually."
           )}
+          debugTitle={t("common.scanDebug", "Scan debug")}
+          rawTextLabel={t("common.scanDebugRawText", "Raw OCR text")}
+          confidenceLabel={t("common.scanDebugConfidence", "Confidence")}
+          detectedNameLabel={t("common.scanDebugName", "Detected name")}
+          detectedIdLabel={t("common.scanDebugId", "Detected ID number")}
+          imagePreviewLabel={t("common.scanDebugImage", "Captured image")}
+          candidateLinesLabel={t("common.scanDebugLines", "OCR lines")}
           onScanResult={({ name, idNumber }) => {
             if (name && !form.getValues("customerName")) {
               form.setValue("customerName", name, { shouldDirty: true });
