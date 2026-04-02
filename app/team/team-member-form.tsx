@@ -10,6 +10,7 @@ import Image from 'next/image';
 interface TeamMemberFormProps {
   initialData?: TeamMember;
   mode: 'create' | 'edit';
+  returnTo?: string;
 }
 
 function getPhotoPreviewSrc(value?: string | null) {
@@ -52,7 +53,11 @@ const TeamPhotoPreview = memo(function TeamPhotoPreview({
   );
 });
 
-export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
+export function TeamMemberForm({
+  initialData,
+  mode,
+  returnTo,
+}: TeamMemberFormProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [loading, setLoading] = useState(false);
@@ -88,7 +93,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
         throw new Error(t('team.errors.saveFailed', 'Failed to save team member'));
       }
 
-      router.push('/team');
+      router.push(returnTo || '/team');
       router.refresh();
     } catch (error) {
       console.error('Error saving team member:', error);
@@ -369,7 +374,7 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
       <div className="flex justify-end space-x-4">
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => (returnTo ? router.push(returnTo) : router.back())}
           className="px-4 py-2 border rounded-md hover:bg-accent/20"
         >
           {t('common.cancel', 'Cancel')}

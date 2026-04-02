@@ -35,9 +35,10 @@ export default async function TeamPage({ searchParams }: PageProps) {
   const monthKey = `${month.getFullYear()}-${String(month.getMonth() + 1).padStart(2, "0")}`;
   const statusFilter =
     params.status === TeamMemberStatus.ACTIVE ||
-    params.status === TeamMemberStatus.INACTIVE
+    params.status === TeamMemberStatus.INACTIVE ||
+    params.status === "ALL"
       ? params.status
-      : "ALL";
+      : TeamMemberStatus.ACTIVE;
 
   const where =
     statusFilter === "ALL"

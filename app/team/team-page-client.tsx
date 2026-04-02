@@ -63,13 +63,13 @@ export function TeamPageClient({
     setPresenceEntries(initialPresenceEntries);
   }, [initialPresenceEntries]);
 
-  const navigateToListing = (
-    nextStatus: StatusFilter,
-    nextPage: number,
+  const getListingHref = (
+    nextStatus: StatusFilter = statusFilter,
+    nextPage: number = currentPage,
     nextMonth: string = month
   ) => {
     const params = new URLSearchParams();
-    if (nextStatus !== "ALL") {
+    if (nextStatus !== "ACTIVE") {
       params.set("status", nextStatus);
     }
     if (nextPage > 1) {
@@ -80,7 +80,15 @@ export function TeamPageClient({
     }
 
     const query = params.toString();
-    router.push(query ? `${basePath}?${query}` : basePath);
+    return query ? `${basePath}?${query}` : basePath;
+  };
+
+  const navigateToListing = (
+    nextStatus: StatusFilter,
+    nextPage: number,
+    nextMonth: string = month
+  ) => {
+    router.push(getListingHref(nextStatus, nextPage, nextMonth));
   };
 
   const handleMonthChange = (offset: number) => {
@@ -93,7 +101,10 @@ export function TeamPageClient({
   };
 
   const handleEdit = (member: TeamMemberWithRole) => {
-    router.push(localizePathname(`/team/${member.id}/edit`, locale));
+    const returnTo = getListingHref();
+    router.push(
+      `${localizePathname(`/team/${member.id}/edit`, locale)}?returnTo=${encodeURIComponent(returnTo)}`
+    );
   };
 
   const handleDelete = async (member: TeamMemberWithRole) => {

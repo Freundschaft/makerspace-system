@@ -8,10 +8,12 @@ import { UserRole } from "@/generated/prisma";
 
 interface EditTeamMemberPageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ returnTo?: string }>;
 }
 
 export default async function EditTeamMemberPage({
   params,
+  searchParams,
 }: EditTeamMemberPageProps) {
   const session = await getServerSession(authOptions);
   if (session?.user?.role !== UserRole.ADMIN) {
@@ -20,6 +22,7 @@ export default async function EditTeamMemberPage({
 
   const { t } = await getServerI18n();
   const { id } = await params;
+  const { returnTo } = await searchParams;
 
   const teamMember = await prisma.teamMember.findUnique({
     where: { id },
@@ -33,7 +36,7 @@ export default async function EditTeamMemberPage({
     <div className="container mx-auto py-10">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-8">{t("team.edit.title", "Edit Team Member")}</h1>
-        <TeamMemberForm mode="edit" initialData={teamMember} />
+        <TeamMemberForm mode="edit" initialData={teamMember} returnTo={returnTo} />
       </div>
     </div>
   );
