@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { DataTable } from "@/components/ui/data-table";
 import { useI18n } from "@/app/components/I18nProvider";
 import { getColumns, type Repair } from "./columns";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,15 +38,46 @@ interface RepairsTableProps {
   data: Repair[];
 }
 
+type RepairStatusFilter = Repair["status"] | "ALL";
+
 export function RepairsTable({ data }: RepairsTableProps) {
   const { t } = useI18n();
   const columns = getColumns(t);
+  const [statusFilter, setStatusFilter] = useState<RepairStatusFilter>("ALL");
+  const filteredData =
+    statusFilter === "ALL"
+      ? data
+      : data.filter((repair) => repair.status === statusFilter);
+  const statusFilters: RepairStatusFilter[] = [
+    "ALL",
+    "PENDING",
+    "IN_PROGRESS",
+    "WAITING_FOR_PARTS",
+    "COMPLETED",
+    "PICKED_UP",
+    "CANCELLED",
+  ];
 
   return (
     <div className="space-y-4">
+      <div className="flex flex-wrap items-center gap-2">
+        {statusFilters.map((filterValue) => (
+          <Button
+            key={filterValue}
+            variant={statusFilter === filterValue ? "default" : "outline"}
+            size="sm"
+            onClick={() => setStatusFilter(filterValue)}
+          >
+            {filterValue === "ALL"
+              ? t("common.all", "All")
+              : t(`common.statuses.${filterValue}`, formatDisplayText(filterValue))}
+          </Button>
+        ))}
+      </div>
+
       <div className="grid gap-3 lg:hidden">
-        {data.length ? (
-          data.map((repair) => {
+        {filteredData.length ? (
+          filteredData.map((repair) => {
             const problemTypes = JSON.parse(repair.problemTypes) as string[];
             const visibleProblemTypes = problemTypes.slice(0, 3);
             const extraProblemTypes = problemTypes.length - visibleProblemTypes.length;
@@ -142,7 +175,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
       </div>
 
       <div className="hidden lg:block">
-        <DataTable columns={columns} data={data} showPagination={false} />
+        <DataTable columns={columns} data={filteredData} showPagination={false} />
       </div>
     </div>
   );
