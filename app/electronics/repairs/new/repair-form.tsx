@@ -28,6 +28,7 @@ import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useI18n } from "@/app/components/I18nProvider"
+import { IdScanButton } from "@/components/IdScanButton"
 import {
   electronicsCategories,
   electronicsCategoryLabels,
@@ -131,6 +132,29 @@ export function ElectronicsRepairForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
+        <IdScanButton
+          label={t("common.scanId", "Scan ID")}
+          scanningLabel={t("common.scanningId", "Scanning ID...")}
+          helpText={t(
+            "common.scanIdHelp",
+            "Use the tablet or phone camera to read the name and ID number locally in the browser."
+          )}
+          errorText={t(
+            "common.scanIdError",
+            "Could not read the ID clearly. Please try again or enter the values manually."
+          )}
+          onScanResult={({ name, idNumber }) => {
+            if (name && !form.getValues("customerName")) {
+              form.setValue("customerName", name, { shouldDirty: true });
+            }
+            if (idNumber && !form.getValues("customerIdCardNumber")) {
+              form.setValue("customerIdCardNumber", idNumber, {
+                shouldDirty: true,
+              });
+            }
+          }}
+        />
+
         <FormField
           control={form.control}
           name="customerName"

@@ -42,6 +42,10 @@
     "yes": "Yes",
     "no": "No",
     "created": "Created",
+    "scanId": "Scan ID",
+    "scanningId": "Scanning ID...",
+    "scanIdHelp": "Use the tablet or phone camera to read the name and ID number locally in the browser.",
+    "scanIdError": "Could not read the ID clearly. Please try again or enter the values manually.",
     "phonePlaceholder": "+1234567890",
     "selectStatus": "Select a status",
     "statuses": {
