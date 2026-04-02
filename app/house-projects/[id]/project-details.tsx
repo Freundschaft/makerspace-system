@@ -7,6 +7,7 @@ import { HouseProject, User } from "@/generated/prisma";
 import { formatDate } from "@/lib/utils";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Receipt } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type ProjectWithAssignedTo = HouseProject & {
@@ -115,10 +116,13 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
             <CardTitle>{t("common.photo", "Photo")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <img
+            <Image
               src={project.photoPath}
               alt={t("houseProjects.details.photoAlt", "House project")}
-              className="max-w-full rounded-lg"
+              width={1200}
+              height={900}
+              unoptimized
+              className="h-auto max-w-full rounded-lg"
             />
           </CardContent>
         </Card>

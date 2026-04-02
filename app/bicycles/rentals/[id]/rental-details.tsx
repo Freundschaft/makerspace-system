@@ -16,6 +16,7 @@ import {
 import { BicycleRental } from "@/generated/prisma";
 import { formatDate } from "@/lib/utils";
 import { CheckCircle2, Edit } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -155,10 +156,13 @@ export function RentalDetails({ rental }: RentalDetailsProps) {
               <CardTitle>{t("rentals.details.signature", "Signature")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img
+              <Image
                 src={rental.signature}
                 alt={t("rentals.details.signatureAlt", "Rental signature")}
-                className="max-h-64 rounded-lg border bg-white p-2"
+                width={640}
+                height={240}
+                unoptimized
+                className="max-h-64 h-auto rounded-lg border bg-white p-2"
               />
             </CardContent>
           </Card>

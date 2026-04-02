@@ -8,6 +8,7 @@ import { Edit, Receipt, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { CarpentryProject, User } from '@/generated/prisma'
 import { useI18n } from "@/app/components/I18nProvider"
+import Image from "next/image"
 
 type ProjectWithAssignedTo = CarpentryProject & {
   assignedTo: User | null
@@ -188,10 +189,13 @@ export function ProjectDetails({ project }: ProjectDetailsProps) {
               <CardTitle>{t("carpentry.new.fields.photo", "Project Photo")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img
+              <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${project.photoPath}`}
                 alt={t("carpentry.details.photoAlt", "Carpentry project")}
-                className="max-w-full h-auto rounded-lg"
+                width={1200}
+                height={900}
+                unoptimized
+                className="h-auto max-w-full rounded-lg"
               />
             </CardContent>
           </Card>

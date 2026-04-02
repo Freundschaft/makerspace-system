@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import SignatureCanvas from "react-signature-canvas";
 import type { BicycleRental, RentalStatus } from "@/generated/prisma";
+import Image from "next/image";
 
 interface RentalFormProps {
   initialData?: BicycleRental;
@@ -332,10 +333,13 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
               {formData.signature && !signatureCleared && (
                 <div className="rounded-md border bg-muted/20 p-3">
                   <p className="mb-2 text-sm font-medium">{t("rentals.edit.currentSignature", "Current signature")}</p>
-                  <img
+                  <Image
                     src={formData.signature}
                     alt={t("rentals.details.signatureAlt", "Rental signature")}
-                    className="max-h-40 rounded-md border bg-white p-2"
+                    width={640}
+                    height={240}
+                    unoptimized
+                    className="max-h-40 h-auto rounded-md border bg-white p-2"
                   />
                 </div>
               )}

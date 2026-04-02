@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { TeamMember } from './columns';
 import { format } from 'date-fns';
 import { useI18n } from '@/app/components/I18nProvider';
+import Image from 'next/image';
 
 interface TeamMemberFormProps {
   initialData?: TeamMember;
@@ -150,9 +151,12 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
           {photoPreviewSrc && (
             <div className="mt-3">
               <p className="mb-2 text-xs text-muted-foreground">{t('team.form.photoPreview', 'Photo preview')}</p>
-              <img
+              <Image
                 src={photoPreviewSrc}
                 alt={t('team.form.photoPreviewAlt', 'Team member preview')}
+                width={112}
+                height={112}
+                unoptimized
                 className="h-28 w-28 rounded-md border object-cover"
               />
             </div>

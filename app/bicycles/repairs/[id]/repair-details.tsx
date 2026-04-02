@@ -8,6 +8,7 @@ import { ArrowLeft, Edit, Trash } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { RepairStatus, Part, RepairPart } from '@/generated/prisma'
 import { useI18n } from "@/app/components/I18nProvider"
+import Image from "next/image"
 
 type RepairWithParts = {
   id: string
@@ -119,10 +120,13 @@ export function RepairDetails({ repair }: RepairDetailsProps) {
               <CardTitle>{t("repairs.details.bicyclePhoto", "Bicycle Photo")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <img 
+              <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${repair.photoPath}`} 
                 alt={t("common.photo", "Photo")} 
-                className="max-w-full h-auto rounded-lg"
+                width={1200}
+                height={900}
+                unoptimized
+                className="h-auto max-w-full rounded-lg"
               />
             </CardContent>
           </Card>
