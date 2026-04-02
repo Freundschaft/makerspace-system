@@ -6,12 +6,18 @@ import { TeamMemberStatus, UserRole } from "@/generated/prisma";
 import { TeamMemberDataTable } from "../components/team/TeamMemberDataTable";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { TeamMemberWithRole } from "./team-types";
+import { localizePathname, type Locale } from "@/lib/i18n/config";
 
 interface TeamPageClientProps {
   initialTeamMembers: TeamMemberWithRole[];
   currentUserEmail: string | null;
+  locale: Locale;
+  currentPage: number;
+  totalPages: number;
+  totalMembers: number;
+  statusFilter: StatusFilter;
 }
 
 type StatusFilter = "ACTIVE" | "INACTIVE" | "ALL";
@@ -19,28 +25,38 @@ type StatusFilter = "ACTIVE" | "INACTIVE" | "ALL";
 export function TeamPageClient({
   initialTeamMembers,
   currentUserEmail,
+  locale,
+  currentPage,
+  totalPages,
+  totalMembers,
+  statusFilter,
 }: TeamPageClientProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [teamMembers, setTeamMembers] = useState(initialTeamMembers);
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("ACTIVE");
   const [syncing, setSyncing] = useState(false);
   const [updatingRoleId, setUpdatingRoleId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [updatingStatus, setUpdatingStatus] = useState<TeamMemberStatus | null>(
     null
   );
+  const basePath = localizePathname("/team", locale);
 
-  const filteredTeamMembers = teamMembers.filter((member) => {
-    if (statusFilter === "ALL") {
-      return true;
+  const navigateToListing = (nextStatus: StatusFilter, nextPage: number) => {
+    const params = new URLSearchParams();
+    if (nextStatus !== "ALL") {
+      params.set("status", nextStatus);
+    }
+    if (nextPage > 1) {
+      params.set("page", String(nextPage));
     }
 
-    return member.status === statusFilter;
-  });
+    const query = params.toString();
+    router.push(query ? `${basePath}?${query}` : basePath);
+  };
 
   const handleEdit = (member: TeamMemberWithRole) => {
-    router.push(`/team/${member.id}/edit`);
+    router.push(localizePathname(`/team/${member.id}/edit`, locale));
   };
 
   const handleDelete = async (member: TeamMemberWithRole) => {
@@ -179,7 +195,7 @@ export function TeamPageClient({
         );
       }
 
-      window.alert(
+          window.alert(
         t("team.sync.success", "Successfully synced with Google Workspace")
       );
       router.refresh();
@@ -214,7 +230,7 @@ export function TeamPageClient({
           </Button>
           <button
             className="rounded-md bg-primary px-4 py-2 text-primary-foreground hover:bg-primary/90"
-            onClick={() => router.push("/team/new")}
+            onClick={() => router.push(localizePathname("/team/new", locale))}
           >
             {t("team.list.add", "Add Team Member")}
           </button>
@@ -224,21 +240,21 @@ export function TeamPageClient({
         <Button
           variant={statusFilter === "ACTIVE" ? "default" : "outline"}
           size="sm"
-          onClick={() => setStatusFilter("ACTIVE")}
+          onClick={() => navigateToListing("ACTIVE", 1)}
         >
           {t("common.active", "Active")}
         </Button>
         <Button
           variant={statusFilter === "INACTIVE" ? "default" : "outline"}
           size="sm"
-          onClick={() => setStatusFilter("INACTIVE")}
+          onClick={() => navigateToListing("INACTIVE", 1)}
         >
           {t("common.inactive", "Inactive")}
         </Button>
         <Button
           variant={statusFilter === "ALL" ? "default" : "outline"}
           size="sm"
-          onClick={() => setStatusFilter("ALL")}
+          onClick={() => navigateToListing("ALL", 1)}
         >
           {t("common.all", "All")}
         </Button>
@@ -283,7 +299,7 @@ export function TeamPageClient({
         )}
       </div>
       <TeamMemberDataTable
-        data={filteredTeamMembers}
+        data={teamMembers}
         currentUserEmail={currentUserEmail}
         selectedIds={selectedIds}
         onEdit={handleEdit}
@@ -292,6 +308,31 @@ export function TeamPageClient({
         onSelectedIdsChange={handleSelectedIdsChange}
         updatingRoleId={updatingRoleId}
       />
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <p className="text-sm text-muted-foreground">
+          {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalMembers} {t("team.list.title", "Team Members")})
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage <= 1}
+            onClick={() => navigateToListing(statusFilter, currentPage - 1)}
+          >
+            <ChevronLeft className="mr-1 h-4 w-4" />
+            {t("tables.previous", "Previous")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={currentPage >= totalPages}
+            onClick={() => navigateToListing(statusFilter, currentPage + 1)}
+          >
+            {t("tables.next", "Next")}
+            <ChevronRight className="ml-1 h-4 w-4" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

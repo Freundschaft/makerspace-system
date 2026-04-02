@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
+import Image from "next/image"
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
@@ -64,10 +65,12 @@ export function getColumns(t: Translator): ColumnDef<CarpentryProject>[] {
         <Link href={`/carpentry/projects/${id}`} className="block">
           {photoPath ? (
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
-              <img
+              <Image
                 src={`${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${photoPath}`}
                 alt={t("carpentry.details.photoAlt", "Carpentry project")}
-                className="object-cover w-full h-full"
+                fill
+                unoptimized
+                className="object-cover"
               />
             </div>
           ) : null}

@@ -21,24 +21,25 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
   const requestedPage = Number(params.page ?? "1")
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1
 
-  const totalRepairs = await prisma.bicycleRepair.count()
-  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
-  const currentPage = Math.min(page, totalPages)
-
-  const repairsResult = await prisma.bicycleRepair.findMany({
-    include: {
-      partsUsed: {
-        include: {
-          part: true,
+  const [totalRepairs, repairsResult] = await Promise.all([
+    prisma.bicycleRepair.count(),
+    prisma.bicycleRepair.findMany({
+      include: {
+        partsUsed: {
+          include: {
+            part: true,
+          },
         },
       },
-    },
-    orderBy: {
-      receivedDate: "desc",
-    },
-    skip: (currentPage - 1) * PAGE_SIZE,
-    take: PAGE_SIZE,
-  })
+      orderBy: {
+        receivedDate: "desc",
+      },
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+    }),
+  ])
+  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
+  const currentPage = Math.min(page, totalPages)
 
   const repairs: Repair[] = repairsResult.map((repair) => ({
     id: repair.id,

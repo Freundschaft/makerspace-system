@@ -10,10 +10,10 @@ import { useI18n } from "@/app/components/I18nProvider"
 import { localizePathname } from "@/lib/i18n/config"
 
 interface HeaderProps {
-  onMenuClick: () => void
+  menuToggleId?: string
 }
 
-export function Header({ onMenuClick }: HeaderProps) {
+export function Header({ menuToggleId }: HeaderProps) {
   const { data: session } = useSession()
   const { locale, t } = useI18n()
   const homeHref = localizePathname("/", locale)
@@ -22,14 +22,18 @@ export function Header({ onMenuClick }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl supports-[backdrop-filter]:bg-background/75">
       <div className="flex h-16 items-center w-full gap-2 px-3 sm:px-4 md:px-5 lg:px-6">
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="shrink-0 text-foreground/90 hover:bg-accent/20 xl:hidden"
-          onClick={onMenuClick}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+        {menuToggleId ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="shrink-0 text-foreground/90 hover:bg-accent/20 xl:hidden"
+            asChild
+          >
+            <label htmlFor={menuToggleId}>
+              <Menu className="h-5 w-5" />
+            </label>
+          </Button>
+        ) : null}
         <div className="min-w-0 flex-1 xl:max-w-[18.5rem]">
           <Link href={homeHref} className="inline-flex touch-manipulation select-none [webkit-tap-highlight-color:rgba(15,23,42,0.12)] [webkit-touch-callout:none] items-center gap-2 rounded-full border border-border/70 bg-card px-2.5 py-1.5 shadow-sm transition-colors hover:bg-muted active:scale-[0.98] active:bg-muted/80">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground">

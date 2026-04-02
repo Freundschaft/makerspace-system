@@ -10,11 +10,7 @@ import { useI18n } from "@/app/components/I18nProvider"
 import { getNavigationForRole } from "@/lib/navigation"
 import { localizePathname } from "@/lib/i18n/config"
 
-interface SidebarProps {
-  onNavigate?: () => void
-}
-
-export function Sidebar({ onNavigate }: SidebarProps) {
+export function Sidebar() {
   const pathname = usePathname()
   const { locale, t } = useI18n()
   const { data: session } = useSession()
@@ -41,7 +37,7 @@ export function Sidebar({ onNavigate }: SidebarProps) {
                 )}
                 asChild
               >
-                <Link href={localizedHref} onClick={onNavigate}>
+                <Link href={localizedHref}>
                   <item.icon className="mr-3 h-4 w-4 shrink-0" />
                   {t(`shell.nav.${item.key}`, item.fallback)}
                 </Link>

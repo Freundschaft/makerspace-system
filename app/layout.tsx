@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cabin, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth";
+import { headers } from "next/headers";
 import SessionProvider from "./components/SessionProvider";
 import { Layout } from "@/components/Layout";
 import { authOptions } from "@/lib/auth-options";
@@ -59,6 +60,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const requestHeaders = await headers();
+  const internalPathname = requestHeaders.get("x-internal-pathname") ?? "/";
+  const showShell = !internalPathname.startsWith("/login");
   const session = await getServerSession(authOptions);
   const { locale, messages } = await getServerI18n();
   const dir = locale === "ar" || locale === "fa" ? "rtl" : "ltr";
@@ -71,7 +75,7 @@ export default async function RootLayout({
         <I18nProvider locale={locale} messages={messages}>
           <SessionProvider session={session}>
             <PwaRegistration />
-            <Layout>{children}</Layout>
+            {showShell ? <Layout>{children}</Layout> : children}
           </SessionProvider>
         </I18nProvider>
       </body>

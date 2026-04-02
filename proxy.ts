@@ -88,6 +88,7 @@ export async function proxy(request: NextRequest) {
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-locale", locale);
+  requestHeaders.set("x-internal-pathname", internalPathname);
 
   const response = NextResponse.rewrite(rewrittenUrl, {
     request: {
