@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
 import Image from "next/image"
+import { localizePathname, type Locale } from "@/lib/i18n/config"
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
@@ -90,15 +91,16 @@ export type ElectronicsRepair = {
   } | null
 }
 
-export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
+export function getColumns(t: Translator, locale: Locale): ColumnDef<ElectronicsRepair>[] {
   return [
   {
     accessorKey: "repairId",
     header: "ID",
     cell: ({ row }) => {
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block font-mono">
+        <Link href={href} className="block font-mono">
           #{row.getValue("repairId")}
         </Link>
       )
@@ -110,8 +112,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const photoPath = row.getValue("photoPath") as string | null
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {photoPath ? (
             <div className="w-10 h-10 relative rounded-md overflow-hidden">
               <Image
@@ -132,8 +135,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     header: t("electronics.details.customer", "Customer"),
     cell: ({ row }) => {
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {row.getValue("customerName")}
         </Link>
       )
@@ -144,8 +148,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     header: t("electronics.new.fields.customerIdCardNumber", "ID Card Number"),
     cell: ({ row }) => {
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block font-mono">
+        <Link href={href} className="block font-mono">
           {row.getValue("customerIdCardNumber")}
         </Link>
       )
@@ -157,8 +162,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const category = row.getValue("category") as string
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           <Badge variant="outline">
             {t(`electronics.categories.${category}`, categoryLabels[category] || category)}
           </Badge>
@@ -172,8 +178,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const item = row.getValue("item") as string | null
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {item || "—"}
         </Link>
       )
@@ -185,8 +192,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const whatsapp = row.getValue("whatsapp") as string | null
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {whatsapp || "—"}
         </Link>
       )
@@ -198,8 +206,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const status = row.getValue("status") as string
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           <Badge variant={
             status === 'DONE' || status === 'PICKED_UP' ? 'default' :
             status === 'READY_FOR_PICKUP' ? 'default' :
@@ -220,8 +229,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const repairable = row.getValue("repairable") as boolean | null
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {repairable === null ? "—" : repairable ? t("common.yes", "Yes") : t("common.no", "No")}
         </Link>
       )
@@ -233,8 +243,9 @@ export function getColumns(t: Translator): ColumnDef<ElectronicsRepair>[] {
     cell: ({ row }) => {
       const date = row.getValue("createdDate") as Date
       const id = row.original.id
+      const href = localizePathname(`/electronics/repairs/${id}`, locale)
       return (
-        <Link href={`/electronics/repairs/${id}`} className="block">
+        <Link href={href} className="block">
           {format(new Date(date), "PPP")}
         </Link>
       )

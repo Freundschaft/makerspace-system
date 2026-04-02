@@ -6,10 +6,14 @@ import { getServerI18n } from "@/lib/i18n/server"
 import { RentalsTable } from "./rentals-table"
 import { localizePathname } from "@/lib/i18n/config"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { RentalsPageFilters } from "./rentals-page-filters"
+import { Prisma } from "@/generated/prisma"
 
 interface PageProps {
   searchParams: Promise<{
     page?: string
+    q?: string
+    status?: string
   }>
 }
 
@@ -20,10 +24,44 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
   const params = await searchParams
   const requestedPage = Number(params.page ?? "1")
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1
+  const searchQuery = params.q?.trim() ?? ""
+  const statusFilter =
+    params.status === "ACTIVE" ||
+    params.status === "RETURNED" ||
+    params.status === "OVERDUE" ||
+    params.status === "CANCELLED"
+      ? params.status
+      : "ALL"
+
+  const where: Prisma.BicycleRentalWhereInput = {
+    ...(statusFilter !== "ALL" ? { status: statusFilter } : {}),
+    ...(searchQuery
+      ? {
+          OR: [
+            { renterName: { contains: searchQuery } },
+            { renterPhone: { contains: searchQuery } },
+            { bicycleId: { contains: searchQuery } },
+          ],
+        }
+      : {}),
+  }
 
   const [totalRentals, rentals] = await Promise.all([
-    prisma.bicycleRental.count(),
+    prisma.bicycleRental.count({ where }),
     prisma.bicycleRental.findMany({
+      where,
+      select: {
+        id: true,
+        renterName: true,
+        renterPhone: true,
+        renterEmail: true,
+        bicycleId: true,
+        startDate: true,
+        endDate: true,
+        actualReturnDate: true,
+        status: true,
+        notes: true,
+      },
       orderBy: {
         startDate: "desc",
       },
@@ -34,6 +72,23 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
 
   const totalPages = Math.max(1, Math.ceil(totalRentals / PAGE_SIZE))
   const currentPage = Math.min(page, totalPages)
+  const buildPageHref = (nextPage: number) => {
+    const params = new URLSearchParams()
+
+    if (statusFilter !== "ALL") {
+      params.set("status", statusFilter)
+    }
+    if (searchQuery) {
+      params.set("q", searchQuery)
+    }
+    if (nextPage > 1) {
+      params.set("page", String(nextPage))
+    }
+
+    const query = params.toString()
+    const basePath = localizePathname("/bicycles/rentals", locale)
+    return query ? `${basePath}?${query}` : basePath
+  }
 
   return (
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
@@ -43,7 +98,12 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
           <Link href={localizePathname("/bicycles/rentals/new", locale)}>{t("modules.rentals.new", "New Rental")}</Link>
         </Button>
       </div>
-      <RentalsTable data={rentals} />
+      <RentalsPageFilters
+        locale={locale}
+        statusFilter={statusFilter}
+        searchQuery={searchQuery}
+      />
+      <RentalsTable data={rentals} locale={locale} />
       <div className="mt-4 flex items-center justify-between gap-2">
         <p className="text-sm text-muted-foreground">
           {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalRentals} {t("modules.rentals.title", "Bicycle Rentals")})
@@ -51,7 +111,7 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm" disabled={currentPage <= 1}>
             <Link
-              href={currentPage > 1 ? `${localizePathname("/bicycles/rentals", locale)}?page=${currentPage - 1}` : "#"}
+              href={currentPage > 1 ? buildPageHref(currentPage - 1) : "#"}
               aria-disabled={currentPage <= 1}
               tabIndex={currentPage > 1 ? 0 : -1}
             >
@@ -61,7 +121,7 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
           </Button>
           <Button asChild variant="outline" size="sm" disabled={currentPage >= totalPages}>
             <Link
-              href={currentPage < totalPages ? `${localizePathname("/bicycles/rentals", locale)}?page=${currentPage + 1}` : "#"}
+              href={currentPage < totalPages ? buildPageHref(currentPage + 1) : "#"}
               aria-disabled={currentPage >= totalPages}
               tabIndex={currentPage < totalPages ? 0 : -1}
             >

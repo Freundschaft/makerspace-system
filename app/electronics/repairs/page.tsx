@@ -6,10 +6,14 @@ import { RepairsTable } from "./repairs-table"
 import type { ElectronicsRepair } from "./columns"
 import { localizePathname } from "@/lib/i18n/config"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { RepairsPageFilters } from "./repairs-page-filters"
+import { ElectronicsRepairStatus, Prisma } from "@/generated/prisma"
 
 interface PageProps {
   searchParams: Promise<{
     page?: string
+    q?: string
+    status?: string
   }>
 }
 
@@ -20,12 +24,55 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
   const params = await searchParams
   const requestedPage = Number(params.page ?? "1")
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1
+  const searchQuery = params.q?.trim() ?? ""
+  const statusFilter =
+    params.status === ElectronicsRepairStatus.UNCHECKED ||
+    params.status === ElectronicsRepairStatus.CHECKED ||
+    params.status === ElectronicsRepairStatus.IN_PROGRESS ||
+    params.status === ElectronicsRepairStatus.READY_FOR_PICKUP ||
+    params.status === ElectronicsRepairStatus.DONE ||
+    params.status === ElectronicsRepairStatus.PICKED_UP ||
+    params.status === ElectronicsRepairStatus.NO_WAY_TO_FIX
+      ? params.status
+      : "ALL"
+
+  const where: Prisma.ElectronicsRepairWhereInput = {
+    ...(statusFilter !== "ALL" ? { status: statusFilter } : {}),
+    ...(searchQuery
+      ? {
+          OR: [
+            { customerName: { contains: searchQuery } },
+            { customerIdCardNumber: { contains: searchQuery } },
+            { item: { contains: searchQuery } },
+            { whatsapp: { contains: searchQuery } },
+          ],
+        }
+      : {}),
+  }
 
   const [totalRepairs, repairsResult] = await Promise.all([
-    prisma.electronicsRepair.count(),
+    prisma.electronicsRepair.count({ where }),
     prisma.electronicsRepair.findMany({
-      include: {
-        repairer: true
+      where,
+      select: {
+        id: true,
+        repairId: true,
+        customerName: true,
+        customerIdCardNumber: true,
+        category: true,
+        item: true,
+        whatsapp: true,
+        serialNumber: true,
+        status: true,
+        repairable: true,
+        notes: true,
+        photoPath: true,
+        createdDate: true,
+        repairer: {
+          select: {
+            email: true,
+          },
+        },
       },
       orderBy: {
         createdDate: 'desc'
@@ -54,6 +101,23 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
     createdDate: repair.createdDate,
     repairer: repair.repairer,
   }))
+  const buildPageHref = (nextPage: number) => {
+    const params = new URLSearchParams()
+
+    if (statusFilter !== "ALL") {
+      params.set("status", statusFilter)
+    }
+    if (searchQuery) {
+      params.set("q", searchQuery)
+    }
+    if (nextPage > 1) {
+      params.set("page", String(nextPage))
+    }
+
+    const query = params.toString()
+    const basePath = localizePathname("/electronics/repairs", locale)
+    return query ? `${basePath}?${query}` : basePath
+  }
 
   return (
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
@@ -63,7 +127,12 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
           <Link href={localizePathname("/electronics/repairs/new", locale)}>{t("modules.electronics.new", "New Repair")}</Link>
         </Button>
       </div>
-      <RepairsTable data={repairs} />
+      <RepairsPageFilters
+        locale={locale}
+        statusFilter={statusFilter}
+        searchQuery={searchQuery}
+      />
+      <RepairsTable data={repairs} locale={locale} />
       <div className="mt-4 flex items-center justify-between gap-2">
         <p className="text-sm text-muted-foreground">
           {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalRepairs} {t("modules.electronics.title", "Electronics Repairs")})
@@ -71,7 +140,7 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
         <div className="flex items-center gap-2">
           <Button asChild variant="outline" size="sm" disabled={currentPage <= 1}>
             <Link
-              href={currentPage > 1 ? `${localizePathname("/electronics/repairs", locale)}?page=${currentPage - 1}` : "#"}
+              href={currentPage > 1 ? buildPageHref(currentPage - 1) : "#"}
               aria-disabled={currentPage <= 1}
               tabIndex={currentPage > 1 ? 0 : -1}
             >
@@ -81,7 +150,7 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
           </Button>
           <Button asChild variant="outline" size="sm" disabled={currentPage >= totalPages}>
             <Link
-              href={currentPage < totalPages ? `${localizePathname("/electronics/repairs", locale)}?page=${currentPage + 1}` : "#"}
+              href={currentPage < totalPages ? buildPageHref(currentPage + 1) : "#"}
               aria-disabled={currentPage >= totalPages}
               tabIndex={currentPage < totalPages ? 0 : -1}
             >
