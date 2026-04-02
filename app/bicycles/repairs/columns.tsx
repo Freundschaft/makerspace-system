@@ -9,7 +9,7 @@ type Translator = (key: string, fallback: string, params?: Record<string, string
 export type Repair = {
   id: string
   problemTypes: string
-  description: string
+  description: string | null
   receivedDate: Date
   repairedDate: Date | null
   pickupDate: Date | null

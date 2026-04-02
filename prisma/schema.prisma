@@ -44,7 +44,7 @@ model ProblemType {
 model BicycleRepair {
   id              String    @id @default(uuid())
   problemTypes    String    @db.Text @default("[]")
-  description     String    @db.Text
+  description     String?   @db.Text
   receivedDate    DateTime
   repairedDate    DateTime?
   pickupDate      DateTime?
@@ -141,10 +141,24 @@ model TeamMember {
   homeAddress  String?         @db.Text
   dateOfBirth  DateTime
   legalStatus  String?
+  presences    TeamMemberPresence[]
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 
   @@index([familyName, givenNames])
+}
+
+model TeamMemberPresence {
+  id           String     @id @default(uuid())
+  teamMember   TeamMember @relation(fields: [teamMemberId], references: [id], onDelete: Cascade)
+  teamMemberId String
+  date         DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([teamMemberId, date])
+  @@index([date])
+  @@index([teamMemberId, date])
 }
 
 enum ElectronicsRepairStatus {

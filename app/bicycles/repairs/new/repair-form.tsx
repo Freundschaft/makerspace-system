@@ -23,11 +23,12 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { useI18n } from "@/app/components/I18nProvider"
 import { IdScanButton } from "@/components/IdScanButton"
+import { localizePathname } from "@/lib/i18n/config"
 
 // Define the ProblemType interface
 interface ProblemType {
@@ -40,13 +41,35 @@ interface ProblemType {
 // Define the form props interface
 interface RepairFormProps {
   problemTypes: ProblemType[]
+  repairId?: string
+  initialData?: {
+    problemTypes: string[]
+    description: string | null
+    ownerName: string
+    ownerIdCardNumber: string
+    ownerPhone: string
+    status: "PENDING" | "IN_PROGRESS" | "WAITING_FOR_PARTS" | "COMPLETED" | "PICKED_UP" | "CANCELLED"
+    photoPath: string | null
+  }
+}
+
+function getDefaultValues(initialData?: RepairFormProps["initialData"]) {
+  return {
+    problemTypes: initialData?.problemTypes ?? [],
+    description: initialData?.description ?? "",
+    ownerName: initialData?.ownerName ?? "",
+    ownerIdCardNumber: initialData?.ownerIdCardNumber ?? "",
+    ownerPhone: initialData?.ownerPhone ?? "",
+    status: initialData?.status ?? "PENDING",
+    photoPath: initialData?.photoPath ?? "",
+  } as const;
 }
 
 // Create a dynamic schema based on the problem types
-const createFormSchema = (problemTypes: ProblemType[]) => {
+const createFormSchema = () => {
   return z.object({
     problemTypes: z.array(z.string()).min(1, "Select at least one problem type"),
-    description: z.string().min(1, "Description is required"),
+    description: z.string().optional(),
     ownerName: z.string().min(1, "Owner name is required"),
     ownerIdCardNumber: z.string().min(1, "ID card number is required"),
     ownerPhone: z.string().min(1, "Owner phone is required"),
@@ -55,13 +78,14 @@ const createFormSchema = (problemTypes: ProblemType[]) => {
   })
 }
 
-export function RepairForm({ problemTypes }: RepairFormProps) {
+export function RepairForm({ problemTypes, repairId, initialData }: RepairFormProps) {
   const router = useRouter()
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const isEditMode = Boolean(repairId)
   
   // Create the form schema dynamically based on the provided problem types
-  const formSchema = useMemo(() => createFormSchema(problemTypes), [problemTypes])
+  const formSchema = useMemo(() => createFormSchema(), [])
   const problemTypeOptions = useMemo(
     () =>
       problemTypes.map((type) => ({
@@ -71,42 +95,52 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
       })),
     [problemTypes]
   )
+  const defaultValues = useMemo(() => getDefaultValues(initialData), [initialData])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      problemTypes: [],
-      description: "",
-      ownerName: "",
-      ownerIdCardNumber: "",
-      ownerPhone: "",
-      status: "PENDING",
-      photoPath: "",
-    },
+    defaultValues,
   })
+
+  useEffect(() => {
+    form.reset(defaultValues)
+  }, [defaultValues, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true)
-      const response = await fetch("/api/bicycles/repairs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...values,
-          receivedDate: new Date(),
-        }),
-      })
+      const normalizedDescription = values.description?.trim() || null
+      const response = await fetch(
+        isEditMode ? `/api/bicycles/repairs/${repairId}` : "/api/bicycles/repairs",
+        {
+          method: isEditMode ? "PATCH" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...values,
+            description: normalizedDescription,
+            receivedDate: isEditMode ? undefined : new Date(),
+          }),
+        }
+      )
 
       if (!response.ok) {
-        throw new Error(t("modules.repairs.errors.createFailed", "Failed to create repair"))
+        throw new Error(
+          isEditMode
+            ? t("modules.repairs.errors.updateFailed", "Failed to update repair")
+            : t("modules.repairs.errors.createFailed", "Failed to create repair")
+        )
       }
 
-      router.push("/bicycles/repairs")
+      router.push(
+        isEditMode
+          ? localizePathname(`/bicycles/repairs/${repairId}`, locale)
+          : localizePathname("/bicycles/repairs", locale)
+      )
       router.refresh()
     } catch (error) {
-      console.error("Error creating repair:", error)
+      console.error(isEditMode ? "Error updating repair:" : "Error creating repair:", error)
       // You might want to show an error message to the user here
     } finally {
       setIsSubmitting(false)
@@ -202,7 +236,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                {t("repairs.form.descriptionHelp", "Provide a detailed description of the problem")}
+                {t("repairs.form.descriptionHelp", "Provide a detailed description of the problem (optional)")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -282,7 +316,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-sm sm:text-base">{t("common.status", "Status")}</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger className="text-sm sm:text-base">
                     <SelectValue placeholder={t("common.selectStatus", "Select a status")} />
@@ -306,7 +340,9 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
         />
 
         <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? t("common.creating", "Creating...") : t("repairs.form.createRepair", "Create Repair")}
+          {isSubmitting
+            ? (isEditMode ? t("common.saving", "Saving...") : t("common.creating", "Creating..."))
+            : (isEditMode ? t("common.saveChanges", "Save Changes") : t("repairs.form.createRepair", "Create Repair"))}
         </Button>
       </form>
     </Form>

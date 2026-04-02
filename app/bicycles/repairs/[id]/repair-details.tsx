@@ -11,7 +11,7 @@ import { Locale, localizePathname } from "@/lib/i18n/config"
 type RepairWithParts = {
   id: string
   problemTypes: string
-  description: string
+  description: string | null
   receivedDate: Date
   repairedDate: Date | null
   pickupDate: Date | null
@@ -132,7 +132,7 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
             <CardTitle>{labels.description}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="whitespace-pre-wrap">{repair.description}</p>
+            <p className="whitespace-pre-wrap">{repair.description || "—"}</p>
           </CardContent>
         </Card>
 

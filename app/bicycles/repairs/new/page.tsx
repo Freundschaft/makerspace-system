@@ -4,7 +4,6 @@ import { getServerI18n } from "@/lib/i18n/server"
 
 export default async function NewRepairPage() {
   const { t } = await getServerI18n()
-  // Fetch problem types from the database
   const problemTypes = await prisma.problemType.findMany({
     orderBy: {
       index: 'asc'

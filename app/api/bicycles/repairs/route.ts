@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const repair = await prisma.bicycleRepair.create({
       data: {
         problemTypes: JSON.stringify(problemTypes),
-        description,
+        description: description || null,
         ownerName,
         ownerIdCardNumber,
         ownerPhone,
