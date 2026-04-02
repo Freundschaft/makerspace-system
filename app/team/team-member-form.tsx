@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TeamMember } from './columns';
 import { format } from 'date-fns';
@@ -12,11 +12,51 @@ interface TeamMemberFormProps {
   mode: 'create' | 'edit';
 }
 
+function getPhotoPreviewSrc(value?: string | null) {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('data:image/')) {
+    return trimmed;
+  }
+
+  if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
+    return `data:image/png;base64,${trimmed}`;
+  }
+
+  return trimmed;
+}
+
+const TeamPhotoPreview = memo(function TeamPhotoPreview({
+  src,
+  title,
+  alt,
+}: {
+  src: string;
+  title: string;
+  alt: string;
+}) {
+  return (
+    <div className="mt-3">
+      <p className="mb-2 text-xs text-muted-foreground">{title}</p>
+      <Image
+        src={src}
+        alt={alt}
+        width={112}
+        height={112}
+        unoptimized
+        className="h-28 w-28 rounded-md border object-cover"
+      />
+    </div>
+  );
+});
+
 export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<Partial<TeamMember>>(
+  const [formData, setFormData] = useState<Partial<TeamMember>>(() =>
     initialData || {
       status: 'ACTIVE',
       googleAccountActive: true,
@@ -70,24 +110,10 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
     }));
   };
 
-  const getPhotoPreviewSrc = (value?: string | null) => {
-    if (!value) return null;
-    const trimmed = value.trim();
-    if (!trimmed) return null;
-
-    if (trimmed.startsWith('data:image/')) {
-      return trimmed;
-    }
-
-    // If only raw base64 is stored, assume PNG for preview rendering.
-    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
-      return `data:image/png;base64,${trimmed}`;
-    }
-
-    return trimmed;
-  };
-
-  const photoPreviewSrc = getPhotoPreviewSrc(formData.photoPath);
+  const photoPreviewSrc = useMemo(
+    () => getPhotoPreviewSrc(formData.photoPath),
+    [formData.photoPath]
+  );
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -149,17 +175,11 @@ export function TeamMemberForm({ initialData, mode }: TeamMemberFormProps) {
             className="w-full p-2 border rounded-md"
           />
           {photoPreviewSrc && (
-            <div className="mt-3">
-              <p className="mb-2 text-xs text-muted-foreground">{t('team.form.photoPreview', 'Photo preview')}</p>
-              <Image
-                src={photoPreviewSrc}
-                alt={t('team.form.photoPreviewAlt', 'Team member preview')}
-                width={112}
-                height={112}
-                unoptimized
-                className="h-28 w-28 rounded-md border object-cover"
-              />
-            </div>
+            <TeamPhotoPreview
+              src={photoPreviewSrc}
+              title={t('team.form.photoPreview', 'Photo preview')}
+              alt={t('team.form.photoPreviewAlt', 'Team member preview')}
+            />
           )}
         </div>
 

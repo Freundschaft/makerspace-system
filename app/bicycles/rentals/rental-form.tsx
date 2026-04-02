@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
@@ -65,12 +65,66 @@ function getInitialState(initialData?: BicycleRental): RentalFormState {
   };
 }
 
+const RentalSignatureSection = memo(function RentalSignatureSection({
+  signatureRef,
+  currentSignature,
+  showCurrentSignature,
+  isCreateMode,
+  clearLabel,
+  currentSignatureLabel,
+  signatureLabel,
+  signatureAlt,
+  onClearSignature,
+}: {
+  signatureRef: React.RefObject<SignatureCanvas | null>;
+  currentSignature: string | null;
+  showCurrentSignature: boolean;
+  isCreateMode: boolean;
+  clearLabel: string;
+  currentSignatureLabel: string;
+  signatureLabel: string;
+  signatureAlt: string;
+  onClearSignature: () => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label>
+        {signatureLabel} {isCreateMode ? "*" : ""}
+      </Label>
+      <div className="rounded-md border p-2">
+        <SignatureCanvas
+          ref={signatureRef}
+          canvasProps={{
+            className: "h-40 w-full rounded-md border",
+          }}
+        />
+      </div>
+      {showCurrentSignature && currentSignature ? (
+        <div className="rounded-md border bg-muted/20 p-3">
+          <p className="mb-2 text-sm font-medium">{currentSignatureLabel}</p>
+          <Image
+            src={currentSignature}
+            alt={signatureAlt}
+            width={640}
+            height={240}
+            unoptimized
+            className="max-h-40 h-auto rounded-md border bg-white p-2"
+          />
+        </div>
+      ) : null}
+      <Button type="button" variant="outline" onClick={onClearSignature} className="mt-2">
+        {clearLabel}
+      </Button>
+    </div>
+  );
+});
+
 export function RentalForm({ initialData, mode }: RentalFormProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const signatureRef = useRef<SignatureCanvas>(null);
-  const [formData, setFormData] = useState<RentalFormState>(getInitialState(initialData));
+  const [formData, setFormData] = useState<RentalFormState>(() => getInitialState(initialData));
   const [signatureCleared, setSignatureCleared] = useState(false);
 
   const handleChange = (
@@ -91,11 +145,11 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
     }
   };
 
-  const handleClearSignature = () => {
+  const handleClearSignature = useCallback(() => {
     signatureRef.current?.clear();
     setSignatureCleared(true);
     setFormData((prev) => ({ ...prev, signature: null }));
-  };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -320,33 +374,17 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label>{t("rentals.new.fields.signature", "Signature")} {mode === "create" ? "*" : ""}</Label>
-              <div className="rounded-md border p-2">
-                <SignatureCanvas
-                  ref={signatureRef}
-                  canvasProps={{
-                    className: "h-40 w-full rounded-md border",
-                  }}
-                />
-              </div>
-              {formData.signature && !signatureCleared && (
-                <div className="rounded-md border bg-muted/20 p-3">
-                  <p className="mb-2 text-sm font-medium">{t("rentals.edit.currentSignature", "Current signature")}</p>
-                  <Image
-                    src={formData.signature}
-                    alt={t("rentals.details.signatureAlt", "Rental signature")}
-                    width={640}
-                    height={240}
-                    unoptimized
-                    className="max-h-40 h-auto rounded-md border bg-white p-2"
-                  />
-                </div>
-              )}
-              <Button type="button" variant="outline" onClick={handleClearSignature} className="mt-2">
-                {t("rentals.new.actions.clearSignature", "Clear Signature")}
-              </Button>
-            </div>
+            <RentalSignatureSection
+              signatureRef={signatureRef}
+              currentSignature={formData.signature}
+              showCurrentSignature={!signatureCleared}
+              isCreateMode={mode === "create"}
+              clearLabel={t("rentals.new.actions.clearSignature", "Clear Signature")}
+              currentSignatureLabel={t("rentals.edit.currentSignature", "Current signature")}
+              signatureLabel={t("rentals.new.fields.signature", "Signature")}
+              signatureAlt={t("rentals.details.signatureAlt", "Rental signature")}
+              onClearSignature={handleClearSignature}
+            />
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button type="button" variant="outline" onClick={() => router.back()}>
