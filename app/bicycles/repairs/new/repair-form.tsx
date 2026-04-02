@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { useI18n } from "@/app/components/I18nProvider"
@@ -60,7 +60,16 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   // Create the form schema dynamically based on the provided problem types
-  const formSchema = createFormSchema(problemTypes)
+  const formSchema = useMemo(() => createFormSchema(problemTypes), [problemTypes])
+  const problemTypeOptions = useMemo(
+    () =>
+      problemTypes.map((type) => ({
+        value: type.value,
+        label: type.label,
+        image: type.image,
+      })),
+    [problemTypes]
+  )
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -114,11 +123,7 @@ export function RepairForm({ problemTypes }: RepairFormProps) {
               <FormLabel className="text-sm sm:text-base">{t("repairs.form.problemTypes", "Problem Types")}</FormLabel>
               <FormControl>
                 <MultiSelectButtons
-                  options={problemTypes.map(type => ({
-                    value: type.value,
-                    label: type.label,
-                    image: type.image
-                  }))}
+                  options={problemTypeOptions}
                   selectedValues={field.value}
                   onChange={field.onChange}
                 />

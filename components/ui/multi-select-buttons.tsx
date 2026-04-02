@@ -17,19 +17,19 @@ interface MultiSelectButtonsProps {
   className?: string
 }
 
-export function MultiSelectButtons({
+export const MultiSelectButtons = React.memo(function MultiSelectButtons({
   options,
   selectedValues,
   onChange,
   className,
 }: MultiSelectButtonsProps) {
-  const toggleOption = (value: string) => {
+  const toggleOption = React.useCallback((value: string) => {
     if (selectedValues.includes(value)) {
       onChange(selectedValues.filter((v) => v !== value))
     } else {
       onChange([...selectedValues, value])
     }
-  }
+  }, [onChange, selectedValues])
 
   return (
     <div className={cn("grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-3", className)}>
@@ -65,4 +65,4 @@ export function MultiSelectButtons({
       ))}
     </div>
   )
-} 
+})

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { memo, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { X, Image as ImageIcon } from "lucide-react";
@@ -15,7 +15,7 @@ interface FileUploadProps {
   directory?: string;
 }
 
-export function FileUpload({
+export const FileUpload = memo(function FileUpload({
   onChange,
   value,
   className,
@@ -81,6 +81,10 @@ export function FileUpload({
     return `${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${filePath}`;
   };
 
+  const previewUrl = useMemo(() => {
+    return value ? getImageUrl(value) : null;
+  }, [value]);
+
   return (
     <div className={cn("space-y-2", className)}>
       <div className="flex flex-col items-center justify-center w-full">
@@ -88,7 +92,7 @@ export function FileUpload({
           <div className="relative w-full max-w-xs mx-auto">
             <div className="relative aspect-square w-full overflow-hidden rounded-lg">
               <Image
-                src={getImageUrl(value)}
+                src={previewUrl!}
                 alt={t("upload.uploadedAlt", "Uploaded image")}
                 fill
                 className="object-cover"
@@ -144,4 +148,4 @@ export function FileUpload({
       {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
-} 
+}) 
