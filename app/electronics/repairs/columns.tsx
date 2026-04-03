@@ -1,5 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
+import { Checkbox } from "@/components/ui/checkbox"
 import { format } from "date-fns"
 import Link from "next/link"
 import Image from "next/image"
@@ -40,8 +41,72 @@ export type ElectronicsRepair = {
   } | null
 }
 
-export function getColumns(t: Translator, locale: Locale): ColumnDef<ElectronicsRepair>[] {
+interface ElectronicsSelectionConfig {
+  selectedIds: string[]
+  onSelectedIdsChange: (ids: string[]) => void
+  visibleIds: string[]
+}
+
+export function getColumns(
+  t: Translator,
+  locale: Locale,
+  selection?: ElectronicsSelectionConfig
+): ColumnDef<ElectronicsRepair>[] {
+  const selectionColumn: ColumnDef<ElectronicsRepair>[] = selection
+    ? [
+        {
+          id: "select",
+          header: () => {
+            const allSelected =
+              selection.visibleIds.length > 0 &&
+              selection.visibleIds.every((id) => selection.selectedIds.includes(id))
+            const someSelected = selection.visibleIds.some((id) =>
+              selection.selectedIds.includes(id)
+            )
+
+            return (
+              <Checkbox
+                checked={allSelected ? true : someSelected ? "indeterminate" : false}
+                onCheckedChange={(checked) => {
+                  if (checked === true) {
+                    selection.onSelectedIdsChange(
+                      Array.from(new Set([...selection.selectedIds, ...selection.visibleIds]))
+                    )
+                    return
+                  }
+
+                  selection.onSelectedIdsChange(
+                    selection.selectedIds.filter((id) => !selection.visibleIds.includes(id))
+                  )
+                }}
+                aria-label={t("common.selectAll", "Select all")}
+              />
+            )
+          },
+          cell: ({ row }) => (
+            <Checkbox
+              checked={selection.selectedIds.includes(row.original.id)}
+              onCheckedChange={(checked) => {
+                if (checked === true) {
+                  selection.onSelectedIdsChange(
+                    Array.from(new Set([...selection.selectedIds, row.original.id]))
+                  )
+                  return
+                }
+
+                selection.onSelectedIdsChange(
+                  selection.selectedIds.filter((id) => id !== row.original.id)
+                )
+              }}
+              aria-label={t("common.selectRow", "Select row")}
+            />
+          ),
+        },
+      ]
+    : []
+
   return [
+  ...selectionColumn,
   {
     accessorKey: "repairId",
     header: "ID",

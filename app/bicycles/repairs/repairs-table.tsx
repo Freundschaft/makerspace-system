@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DataTable } from "@/components/ui/data-table";
 import { useI18n } from "@/app/components/I18nProvider";
 import { getColumns, type Repair } from "./columns";
@@ -10,6 +10,10 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 function formatDisplayText(value: string) {
   return value
@@ -42,12 +46,25 @@ type RepairStatusFilter = Repair["status"] | "ALL";
 
 export function RepairsTable({ data }: RepairsTableProps) {
   const { t } = useI18n();
-  const columns = getColumns(t);
+  const router = useRouter();
+  const [repairs, setRepairs] = useState(data);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [bulkStatus, setBulkStatus] = useState<Repair["status"]>("PENDING");
+  const [isUpdating, setIsUpdating] = useState(false);
   const [statusFilter, setStatusFilter] = useState<RepairStatusFilter>("ALL");
   const filteredData =
     statusFilter === "ALL"
-      ? data
-      : data.filter((repair) => repair.status === statusFilter);
+      ? repairs
+      : repairs.filter((repair) => repair.status === statusFilter);
+  const columns = useMemo(
+    () =>
+      getColumns(t, {
+        selectedIds,
+        onSelectedIdsChange: setSelectedIds,
+        visibleIds: filteredData.map((repair) => repair.id),
+      }),
+    [filteredData, selectedIds, t]
+  );
   const statusFilters: RepairStatusFilter[] = [
     "ALL",
     "PENDING",
@@ -57,6 +74,57 @@ export function RepairsTable({ data }: RepairsTableProps) {
     "PICKED_UP",
     "CANCELLED",
   ];
+
+  useEffect(() => {
+    setRepairs(data);
+    setSelectedIds([]);
+  }, [data]);
+
+  const handleBulkUpdate = async () => {
+    if (!selectedIds.length || isUpdating) {
+      return;
+    }
+
+    try {
+      setIsUpdating(true);
+      const response = await fetch("/api/bicycles/repairs", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ids: selectedIds,
+          status: bulkStatus,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update repairs");
+      }
+
+      setRepairs((current) =>
+        current.map((repair) => {
+          if (!selectedIds.includes(repair.id)) {
+            return repair;
+          }
+
+          const now = new Date();
+          return {
+            ...repair,
+            status: bulkStatus,
+            repairedDate: bulkStatus === "COMPLETED" ? now : repair.repairedDate,
+            pickupDate: bulkStatus === "PICKED_UP" ? now : repair.pickupDate,
+          };
+        })
+      );
+      setSelectedIds([]);
+      router.refresh();
+    } catch (error) {
+      console.error("Error updating repairs:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -75,6 +143,44 @@ export function RepairsTable({ data }: RepairsTableProps) {
         ))}
       </div>
 
+      <div className="flex flex-wrap items-center gap-3">
+        {selectedIds.length ? (
+          <>
+            <Select
+              value={bulkStatus}
+              onValueChange={(value) => setBulkStatus(value as Repair["status"])}
+            >
+              <SelectTrigger className="w-[240px]">
+                <SelectValue placeholder={t("common.status", "Status")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="PENDING">{t("common.statuses.PENDING", "Pending")}</SelectItem>
+                <SelectItem value="IN_PROGRESS">{t("common.statuses.IN_PROGRESS", "In Progress")}</SelectItem>
+                <SelectItem value="WAITING_FOR_PARTS">{t("common.statuses.WAITING_FOR_PARTS", "Waiting for Parts")}</SelectItem>
+                <SelectItem value="COMPLETED">{t("common.statuses.COMPLETED", "Completed")}</SelectItem>
+                <SelectItem value="PICKED_UP">{t("common.statuses.PICKED_UP", "Picked Up")}</SelectItem>
+                <SelectItem value="CANCELLED">{t("common.statuses.CANCELLED", "Cancelled")}</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button onClick={() => void handleBulkUpdate()} disabled={isUpdating}>
+              {isUpdating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("common.updating", "Updating...")}
+                </>
+              ) : (
+                t("common.apply", "Apply")
+              )}
+            </Button>
+            <span className="text-sm text-muted-foreground">
+              {t("team.bulk.selectedCount", "{count} selected", {
+                count: selectedIds.length,
+              })}
+            </span>
+          </>
+        ) : null}
+      </div>
+
       <div className="grid gap-3 lg:hidden">
         {filteredData.length ? (
           filteredData.map((repair) => {
@@ -89,6 +195,30 @@ export function RepairsTable({ data }: RepairsTableProps) {
               <Link key={repair.id} href={`/bicycles/repairs/${repair.id}`} className="block">
                 <Card className="gap-0 rounded-2xl border-border/70 bg-card/90 py-0 shadow-sm transition-colors hover:bg-accent/10">
                   <div className="flex items-stretch gap-3 p-3">
+                    <div
+                      className="pt-1"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }}
+                    >
+                      <Checkbox
+                        checked={selectedIds.includes(repair.id)}
+                        onCheckedChange={(checked) => {
+                          if (checked === true) {
+                            setSelectedIds((current) =>
+                              Array.from(new Set([...current, repair.id]))
+                            );
+                            return;
+                          }
+
+                          setSelectedIds((current) =>
+                            current.filter((id) => id !== repair.id)
+                          );
+                        }}
+                        aria-label={t("common.selectRow", "Select row")}
+                      />
+                    </div>
                     {repair.photoPath ? (
                       <div className="relative min-h-20 w-30 shrink-0 self-stretch overflow-hidden rounded-xl bg-muted/50">
                         <Image

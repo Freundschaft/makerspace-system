@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getToken } from "next-auth/jwt"
+import { RentalStatus } from "@/generated/prisma"
+
+const rentalStatuses: RentalStatus[] = ["ACTIVE", "RETURNED", "OVERDUE", "CANCELLED"]
 
 // GET /api/bicycles/rentals - Get all rentals
 export async function GET(request: NextRequest) {
@@ -82,4 +85,58 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-} 
+}
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const token = await getToken({ req: request })
+    if (!token) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
+    const body = await request.json()
+    const ids = Array.isArray(body.ids)
+      ? body.ids.filter((value: unknown): value is string => typeof value === "string" && value.length > 0)
+      : []
+    const status =
+      typeof body.status === "string" && rentalStatuses.includes(body.status as RentalStatus)
+        ? (body.status as RentalStatus)
+        : null
+
+    if (!ids.length || !status) {
+      return NextResponse.json(
+        { error: "Invalid bulk rental update payload" },
+        { status: 400 }
+      )
+    }
+
+    const updatedRentals = await prisma.$transaction(async (tx) => {
+      await tx.bicycleRental.updateMany({
+        where: {
+          id: { in: ids },
+        },
+        data: {
+          status,
+          actualReturnDate: status === "RETURNED" ? new Date() : null,
+        },
+      })
+
+      return tx.bicycleRental.findMany({
+        where: {
+          id: { in: ids },
+        },
+      })
+    })
+
+    return NextResponse.json({ rentals: updatedRentals })
+  } catch (error) {
+    console.error("Error updating rentals:", error)
+    return NextResponse.json(
+      { error: "Failed to update rentals" },
+      { status: 500 }
+    )
+  }
+}

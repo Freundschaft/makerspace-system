@@ -19,7 +19,7 @@ export function Layout({ children }: LayoutProps) {
       />
       <Header menuToggleId={SIDEBAR_TOGGLE_ID} />
       <aside className="fixed left-0 top-16 z-30 h-[calc(100vh-4rem)] w-[18.5rem] -translate-x-full border-r border-sidebar-border/50 bg-sidebar text-sidebar-foreground shadow-xl transition-transform duration-300 ease-in-out peer-checked:translate-x-0 xl:translate-x-0">
-        <Sidebar />
+        <Sidebar menuToggleId={SIDEBAR_TOGGLE_ID} />
       </aside>
       <label
         htmlFor={SIDEBAR_TOGGLE_ID}

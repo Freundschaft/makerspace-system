@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "./ui/button"
 import { useSession } from "next-auth/react"
@@ -10,11 +11,30 @@ import { useI18n } from "@/app/components/I18nProvider"
 import { getNavigationForRole } from "@/lib/navigation"
 import { localizePathname } from "@/lib/i18n/config"
 
-export function Sidebar() {
+interface SidebarProps {
+  menuToggleId?: string
+}
+
+export function Sidebar({ menuToggleId }: SidebarProps) {
   const pathname = usePathname()
   const { locale, t } = useI18n()
   const { data: session } = useSession()
   const navigationItems = getNavigationForRole(session?.user?.role ?? null)
+
+  const closeSidebar = () => {
+    if (!menuToggleId) {
+      return
+    }
+
+    const toggle = document.getElementById(menuToggleId) as HTMLInputElement | null
+    if (toggle) {
+      toggle.checked = false
+    }
+  }
+
+  useEffect(() => {
+    closeSidebar()
+  }, [pathname])
 
   return (
     <div className="flex h-full flex-col gap-3 p-3 sm:p-4">
@@ -37,7 +57,7 @@ export function Sidebar() {
                 )}
                 asChild
               >
-                <Link href={localizedHref}>
+                <Link href={localizedHref} onClick={closeSidebar}>
                   <item.icon className="mr-3 h-4 w-4 shrink-0" />
                   {t(`shell.nav.${item.key}`, item.fallback)}
                 </Link>
