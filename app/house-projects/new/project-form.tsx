@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "lucide-react";
@@ -50,6 +50,7 @@ export function HouseProjectForm() {
   const router = useRouter();
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitLockRef = useRef(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -68,6 +69,10 @@ export function HouseProjectForm() {
   });
 
   async function onSubmit(values: FormValues) {
+    if (submitLockRef.current) {
+      return;
+    }
+    submitLockRef.current = true;
     try {
       setIsSubmitting(true);
       const response = await fetch("/api/house-projects", {
@@ -87,6 +92,7 @@ export function HouseProjectForm() {
     } catch (error) {
       console.error("Error creating house project:", error);
     } finally {
+      submitLockRef.current = false;
       setIsSubmitting(false);
     }
   }

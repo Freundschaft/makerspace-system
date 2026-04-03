@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Calendar } from "@/components/ui/calendar"
@@ -86,6 +86,7 @@ export function CarpentryProjectForm() {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const submitLockRef = useRef(false)
   const localizedCustomerTypeOptions = useMemo(
     () =>
       customerTypeOptions.map((value) => ({
@@ -117,6 +118,10 @@ export function CarpentryProjectForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (submitLockRef.current) {
+      return
+    }
+    submitLockRef.current = true
     try {
       setIsSubmitting(true)
       const response = await fetch("/api/carpentry/projects", {
@@ -136,6 +141,7 @@ export function CarpentryProjectForm() {
     } catch (error) {
       console.error("Error creating carpentry project:", error)
     } finally {
+      submitLockRef.current = false
       setIsSubmitting(false)
     }
   }

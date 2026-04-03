@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,7 @@ export function BudgetForm({
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const submitLockRef = useRef(false);
   const [formData, setFormData] = useState<BudgetFormData>(
     initialData || {
       name: "",
@@ -44,6 +45,10 @@ export function BudgetForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) {
+      return;
+    }
+    submitLockRef.current = true;
     setIsSubmitting(true);
     try {
       const endpoint = mode === "create" ? "/api/budgets" : `/api/budgets/${initialData?.id}`;
@@ -59,6 +64,7 @@ export function BudgetForm({
     } catch (error) {
       console.error("Error saving budget:", error);
     } finally {
+      submitLockRef.current = false;
       setIsSubmitting(false);
     }
   };

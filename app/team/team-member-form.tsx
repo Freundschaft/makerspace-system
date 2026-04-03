@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TeamMember } from './columns';
 import { format } from 'date-fns';
@@ -102,6 +102,7 @@ export function TeamMemberForm({
   const router = useRouter();
   const { t } = useI18n();
   const [loading, setLoading] = useState(false);
+  const submitLockRef = useRef(false);
   const [formData, setFormData] = useState<Partial<TeamMember>>(() =>
     initialData || {
       status: 'ACTIVE',
@@ -128,6 +129,10 @@ export function TeamMemberForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) {
+      return;
+    }
+    submitLockRef.current = true;
     setLoading(true);
 
     try {
@@ -155,6 +160,7 @@ export function TeamMemberForm({
     } catch (error) {
       console.error('Error saving team member:', error);
     } finally {
+      submitLockRef.current = false;
       setLoading(false);
     }
   };

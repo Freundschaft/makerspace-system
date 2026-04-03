@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { useI18n } from "@/app/components/I18nProvider"
@@ -82,6 +82,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
   const router = useRouter()
   const { locale, t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const submitLockRef = useRef(false)
   const isEditMode = Boolean(repairId)
   
   // Create the form schema dynamically based on the provided problem types
@@ -107,6 +108,10 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
   }, [defaultValues, form])
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (submitLockRef.current) {
+      return
+    }
+    submitLockRef.current = true
     try {
       setIsSubmitting(true)
       const normalizedDescription = values.description?.trim() || null
@@ -143,6 +148,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
       console.error(isEditMode ? "Error updating repair:" : "Error creating repair:", error)
       // You might want to show an error message to the user here
     } finally {
+      submitLockRef.current = false
       setIsSubmitting(false)
     }
   }

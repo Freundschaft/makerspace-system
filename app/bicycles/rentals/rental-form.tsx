@@ -123,6 +123,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
   const router = useRouter();
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitLockRef = useRef(false);
   const signatureRef = useRef<SignatureCanvas>(null);
   const [formData, setFormData] = useState<RentalFormState>(() => getInitialState(initialData));
   const [signatureCleared, setSignatureCleared] = useState(false);
@@ -153,6 +154,10 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) {
+      return;
+    }
+    submitLockRef.current = true;
     setIsSubmitting(true);
 
     try {
@@ -204,6 +209,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
           : t("rentals.edit.errors.tryAgain", "Failed to update rental. Please try again."),
       );
     } finally {
+      submitLockRef.current = false;
       setIsSubmitting(false);
     }
   };

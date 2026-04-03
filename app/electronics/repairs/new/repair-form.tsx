@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useRouter } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { MultiSelectButtons } from "@/components/ui/multi-select-buttons"
 import { FileUpload } from "@/components/ui/file-upload"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -77,6 +77,7 @@ export function ElectronicsRepairForm() {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const submitLockRef = useRef(false)
   const localizedCategoryOptions = useMemo(
     () => electronicsCategories.map((value) => ({
       value,
@@ -103,6 +104,10 @@ export function ElectronicsRepairForm() {
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (submitLockRef.current) {
+      return
+    }
+    submitLockRef.current = true
     try {
       setIsSubmitting(true)
       const response = await fetch("/api/electronics/repairs", {
@@ -125,6 +130,7 @@ export function ElectronicsRepairForm() {
     } catch (error) {
       console.error("Error creating electronics repair:", error)
     } finally {
+      submitLockRef.current = false
       setIsSubmitting(false)
     }
   }

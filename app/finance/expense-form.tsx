@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
@@ -42,6 +42,7 @@ export function ExpenseForm({
   const { t } = useI18n();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const submitLockRef = useRef(false);
   const [budgets, setBudgets] = useState<BudgetOption[]>([]);
   const contextDefaults = useMemo<ContextOption>(() => ({
     carpentryProjectId: searchParams.get("carpentryProjectId"),
@@ -85,6 +86,10 @@ export function ExpenseForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) {
+      return;
+    }
+    submitLockRef.current = true;
     setIsSubmitting(true);
     try {
       const endpoint = mode === "create" ? "/api/expenses" : `/api/expenses/${initialData?.id}`;
@@ -100,6 +105,7 @@ export function ExpenseForm({
     } catch (error) {
       console.error("Error saving expense:", error);
     } finally {
+      submitLockRef.current = false;
       setIsSubmitting(false);
     }
   };

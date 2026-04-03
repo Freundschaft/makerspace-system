@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Trash } from "lucide-react"
+import { Edit } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { ElectronicsRepairStatus, ElectronicsCategory, User } from '@/generated/prisma'
 import Image from "next/image"
@@ -11,6 +11,7 @@ import {
   electronicsCategoryLabels,
   getElectronicsCategoryImage,
 } from "@/lib/electronics-categories"
+import { ElectronicsRepairDeleteButton } from "./electronics-repair-delete-button"
 
 type RepairWithRepairer = {
   id: string
@@ -219,10 +220,14 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
             {labels.edit}
           </Link>
         </Button>
-        <Button variant="destructive">
-          <Trash className="mr-2 h-4 w-4" />
-          {labels.delete}
-        </Button>
+        <ElectronicsRepairDeleteButton
+          repairId={repair.id}
+          locale={locale}
+          label={labels.delete}
+          deletingLabel="Deleting..."
+          confirmMessage="Are you sure you want to delete this repair?"
+          errorMessage="Failed to delete electronics repair"
+        />
       </div>
     </div>
   )
