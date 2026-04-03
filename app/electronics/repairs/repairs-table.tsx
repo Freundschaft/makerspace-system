@@ -23,6 +23,7 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [bulkStatus, setBulkStatus] = useState<ElectronicsRepairStatus>("UNCHECKED");
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const columns = useMemo(
     () =>
       getColumns(t, locale, {
@@ -39,7 +40,7 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
   }, [data]);
 
   const handleBulkUpdate = async () => {
-    if (!selectedIds.length || isUpdating) {
+    if (!selectedIds.length || isUpdating || isDeleting) {
       return;
     }
 
@@ -79,6 +80,41 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
     }
   };
 
+  const handleBulkDelete = async () => {
+    if (!selectedIds.length || isDeleting || isUpdating) {
+      return;
+    }
+
+    if (!window.confirm(t("common.confirmDeleteSelected", "Delete the selected items?"))) {
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      const response = await fetch("/api/electronics/repairs", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ids: selectedIds }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete electronics repairs");
+      }
+
+      setRepairs((current) =>
+        current.filter((repair) => !selectedIds.includes(repair.id))
+      );
+      setSelectedIds([]);
+      router.refresh();
+    } catch (error) {
+      console.error("Error deleting electronics repairs:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
@@ -109,6 +145,16 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
                 </>
               ) : (
                 t("common.apply", "Apply")
+              )}
+            </Button>
+            <Button variant="destructive" onClick={() => void handleBulkDelete()} disabled={isDeleting || isUpdating}>
+              {isDeleting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {t("common.deleting", "Deleting...")}
+                </>
+              ) : (
+                t("common.delete", "Delete")
               )}
             </Button>
             <span className="text-sm text-muted-foreground">

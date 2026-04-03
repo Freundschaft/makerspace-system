@@ -65,8 +65,10 @@ function parseBaseIds(value: string | undefined, fallback: string[]) {
 
 const BASE_IDS = {
   team: process.env.AIRTABLE_TEAM_BASE_ID || "applcBkmGbKfiRbVl",
-  electronics:
-    process.env.AIRTABLE_ELECTRONICS_BASE_ID || "appa8QskVbtYWTfS6",
+  electronics: parseBaseIds(process.env.AIRTABLE_ELECTRONICS_BASE_IDS, [
+    "appJgb5Axcnrylc3g",
+    "appa8QskVbtYWTfS6",
+  ]),
   bicycleRepairs: parseBaseIds(process.env.AIRTABLE_BICYCLE_REPAIRS_BASE_IDS, [
     "appQI0YGpBn3hlR4D",
     "appYA7TN9jWJdItZt",
@@ -986,8 +988,13 @@ async function importElectronics(write: boolean, allowNonEmpty: boolean) {
   await ensureWritable("electronics", write, allowNonEmpty);
   logProgress(`electronics: starting ${write ? "import" : "dry run"}`);
 
-  const records = await listRecords(BASE_IDS.electronics, "Electronics Repair");
-  logProgress(`electronics: loaded ${records.length} records`);
+  const records = await listRecordsFromBases(
+    BASE_IDS.electronics,
+    "Electronics Repair"
+  );
+  logProgress(
+    `electronics: loaded ${records.length} records across ${BASE_IDS.electronics.length} bases`
+  );
   let created = 0;
   let updated = 0;
 

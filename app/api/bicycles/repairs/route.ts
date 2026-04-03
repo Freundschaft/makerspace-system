@@ -111,3 +111,49 @@ export async function PATCH(request: NextRequest) {
     )
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const token = await requireAuth(request)
+    if (!token) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      )
+    }
+
+    const body = await request.json()
+    const ids = Array.isArray(body.ids)
+      ? body.ids.filter((value: unknown): value is string => typeof value === "string" && value.length > 0)
+      : []
+
+    if (!ids.length) {
+      return NextResponse.json(
+        { error: "Invalid bulk repair delete payload" },
+        { status: 400 }
+      )
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.repairPart.deleteMany({
+        where: {
+          repairId: { in: ids },
+        },
+      })
+
+      await tx.bicycleRepair.deleteMany({
+        where: {
+          id: { in: ids },
+        },
+      })
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error("Error deleting bicycle repairs:", error)
+    return NextResponse.json(
+      { error: "Failed to delete bicycle repairs" },
+      { status: 500 }
+    )
+  }
+}
