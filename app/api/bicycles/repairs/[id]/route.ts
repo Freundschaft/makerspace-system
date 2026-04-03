@@ -50,6 +50,7 @@ export async function PATCH(
     const {
       problemTypes,
       description,
+      receivedDate,
       ownerName,
       ownerIdCardNumber,
       ownerPhone,
@@ -65,6 +66,7 @@ export async function PATCH(
         ownerName,
         ownerIdCardNumber,
         ownerPhone,
+        receivedDate: receivedDate ? new Date(receivedDate) : undefined,
         status,
         photoPath,
       },

@@ -36,6 +36,7 @@ import {
 } from "@/lib/electronics-categories"
 
 const formSchema = z.object({
+  createdDate: z.string().min(1, "Created date is required"),
   customerName: z.string().min(1, "Customer name is required"),
   customerIdCardNumber: z.string().min(1, "ID card number is required"),
   category: z.enum(electronicsCategories),
@@ -62,6 +63,7 @@ const statusOptions = [
 ] as const
 
 const defaultValues: Omit<z.infer<typeof formSchema>, "category"> = {
+  createdDate: new Date().toISOString().slice(0, 10),
   customerName: "",
   customerIdCardNumber: "",
   item: "",
@@ -117,7 +119,7 @@ export function ElectronicsRepairForm() {
         },
         body: JSON.stringify({
           ...values,
-          createdDate: new Date(),
+          createdDate: values.createdDate,
         }),
       })
 
@@ -166,6 +168,28 @@ export function ElectronicsRepairForm() {
               });
             }
           }}
+        />
+
+        <FormField
+          control={form.control}
+          name="createdDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">
+                {t("common.created", "Created")}
+              </FormLabel>
+              <FormControl>
+                <Input type="date" className="text-sm sm:text-base" {...field} />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t(
+                  "electronics.new.help.createdDate",
+                  "Defaults to today, but you can set an earlier date when entering older repairs."
+                )}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
         <FormField

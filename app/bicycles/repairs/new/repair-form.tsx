@@ -45,6 +45,7 @@ interface RepairFormProps {
   initialData?: {
     problemTypes: string[]
     description: string | null
+    receivedDate: string
     ownerName: string
     ownerIdCardNumber: string
     ownerPhone: string
@@ -57,6 +58,7 @@ function getDefaultValues(initialData?: RepairFormProps["initialData"]) {
   return {
     problemTypes: initialData?.problemTypes ?? [],
     description: initialData?.description ?? "",
+    receivedDate: initialData?.receivedDate ?? new Date().toISOString().slice(0, 10),
     ownerName: initialData?.ownerName ?? "",
     ownerIdCardNumber: initialData?.ownerIdCardNumber ?? "",
     ownerPhone: initialData?.ownerPhone ?? "",
@@ -70,6 +72,7 @@ const createFormSchema = () => {
   return z.object({
     problemTypes: z.array(z.string()).min(1, "Select at least one problem type"),
     description: z.string().optional(),
+    receivedDate: z.string().min(1, "Received date is required"),
     ownerName: z.string().min(1, "Owner name is required"),
     ownerIdCardNumber: z.string().min(1, "ID card number is required"),
     ownerPhone: z.string().min(1, "Owner phone is required"),
@@ -125,7 +128,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
           body: JSON.stringify({
             ...values,
             description: normalizedDescription,
-            receivedDate: isEditMode ? undefined : new Date(),
+            receivedDate: values.receivedDate,
           }),
         }
       )
@@ -222,6 +225,28 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
                 {t("repairs.form.bicyclePhotoHelp", "Upload a photo of the bicycle (optional)")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="receivedDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">
+                {t("repairs.details.receivedDate", "Received Date")}
+              </FormLabel>
+              <FormControl>
+                <Input type="date" className="text-sm sm:text-base" {...field} />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t(
+                  "repairs.form.receivedDateHelp",
+                  "Defaults to today, but you can backdate repairs entered after the fact."
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>

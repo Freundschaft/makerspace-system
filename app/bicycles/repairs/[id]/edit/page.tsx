@@ -37,6 +37,7 @@ export default async function EditRepairPage({ params }: EditRepairPageProps) {
         initialData={{
           problemTypes: JSON.parse(repair.problemTypes) as string[],
           description: repair.description,
+          receivedDate: repair.receivedDate.toISOString().slice(0, 10),
           ownerName: repair.ownerName,
           ownerIdCardNumber: repair.ownerIdCardNumber,
           ownerPhone: repair.ownerPhone,
