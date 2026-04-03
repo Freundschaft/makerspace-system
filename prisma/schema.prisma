@@ -141,6 +141,34 @@ model TeamMember {
   homeAddress  String?         @db.Text
   dateOfBirth  DateTime
   legalStatus  String?
+  vaccinationCertificate String? @db.Text
+  liabilityInsurance Boolean?
+  accidentInsurance Boolean?
+  testCertificate String? @db.Text
+  livesInCamp Boolean?
+  legalSupportStatus String?
+  legalSupportComment String? @db.Text
+  powerToolClearanceWood Boolean?
+  powerToolClearanceMetal Boolean?
+  weldingClearance Boolean?
+  handToolsClearance Boolean?
+  toolLiabilityWaiverSigned Boolean?
+  vaccinationComment String? @db.Text
+  driversLicenseCar Boolean?
+  registeredForMakerspaceVan Boolean?
+  registeredForOhfVan Boolean?
+  codeOfConductSigned Boolean?
+  safeguardingPolicySigned Boolean?
+  codeOfConductSignedAttachment String? @db.Text
+  codeOfConductSigningDate DateTime?
+  safeguardingPolicySigningDate DateTime?
+  keys String? @db.Text
+  fireSafetyTraining Boolean?
+  firstAidTraining Boolean?
+  safetyTraining Boolean?
+  cardNumber String?
+  toolLiabilityWaiverSignedAttachment String? @db.Text
+  toolLiabilityWaiverSigningDate DateTime?
   presences    TeamMemberPresence[]
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt

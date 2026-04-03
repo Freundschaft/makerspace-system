@@ -13,6 +13,43 @@ interface TeamMemberFormProps {
   returnTo?: string;
 }
 
+const teamComplianceCheckboxFields = [
+  ['liabilityInsurance', 'Liability Insurance'],
+  ['accidentInsurance', 'Accident Insurance'],
+  ['livesInCamp', 'Lives in Camp'],
+  ['powerToolClearanceWood', 'Power Tool Clearance Wood'],
+  ['powerToolClearanceMetal', 'Power Tool Clearance Metal'],
+  ['weldingClearance', 'Welding Clearance'],
+  ['handToolsClearance', 'Hand Tools Clearance'],
+  ['toolLiabilityWaiverSigned', 'Tool Liability Waiver Signed'],
+  ['driversLicenseCar', 'Drivers License (Car)'],
+  ['registeredForMakerspaceVan', 'Registered for Makerspace Van'],
+  ['registeredForOhfVan', 'Registered for OHF Van'],
+  ['codeOfConductSigned', 'Code of Conduct Signed'],
+  ['safeguardingPolicySigned', 'Safeguarding Policy Signed'],
+  ['fireSafetyTraining', 'Fire Safety Training'],
+  ['firstAidTraining', 'First Aid Training'],
+  ['safetyTraining', 'Safety Training'],
+] as const;
+
+const teamComplianceTextFields = [
+  ['vaccinationCertificate', 'Vaccination Certificate'],
+  ['testCertificate', 'Test Certificate'],
+  ['legalSupportStatus', 'Legal Support Status'],
+  ['legalSupportComment', 'Legal Support Comment'],
+  ['vaccinationComment', 'Vaccination Comment'],
+  ['codeOfConductSignedAttachment', 'Code of Conduct (signed attachment)'],
+  ['keys', 'Keys'],
+  ['cardNumber', 'CARD NR'],
+  ['toolLiabilityWaiverSignedAttachment', 'Tool Liability Waiver (signed)'],
+] as const;
+
+const teamComplianceDateFields = [
+  ['codeOfConductSigningDate', 'Code of Conduct Signing Date'],
+  ['safeguardingPolicySigningDate', 'Safeguarding Policy Signing Date'],
+  ['toolLiabilityWaiverSigningDate', 'Tool Liability Waiver Signing Date'],
+] as const;
+
 function getPhotoPreviewSrc(value?: string | null) {
   if (!value) return null;
   const trimmed = value.trim();
@@ -70,6 +107,22 @@ export function TeamMemberForm({
       status: 'ACTIVE',
       googleAccountActive: true,
       startDate: new Date(),
+      liabilityInsurance: false,
+      accidentInsurance: false,
+      livesInCamp: false,
+      powerToolClearanceWood: false,
+      powerToolClearanceMetal: false,
+      weldingClearance: false,
+      handToolsClearance: false,
+      toolLiabilityWaiverSigned: false,
+      driversLicenseCar: false,
+      registeredForMakerspaceVan: false,
+      registeredForOhfVan: false,
+      codeOfConductSigned: false,
+      safeguardingPolicySigned: false,
+      fireSafetyTraining: false,
+      firstAidTraining: false,
+      safetyTraining: false,
     }
   );
 
@@ -374,6 +427,81 @@ export function TeamMemberForm({
           />
         </div>
       </div>
+
+      <section className="space-y-4 rounded-lg border p-4">
+        <div>
+          <h2 className="text-lg font-semibold">
+            {t('team.form.complianceSection', 'Compliance & Documentation')}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {t(
+              'team.form.complianceSectionHelp',
+              'Track legal, safety, and signed-document information for each team member.'
+            )}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {teamComplianceTextFields.map(([name, fallback]) => (
+            <div key={name}>
+              <label htmlFor={name} className="block text-sm font-medium mb-1">
+                {t(`team.form.${name}`, fallback)}
+              </label>
+              <input
+                type="text"
+                id={name}
+                name={name}
+                value={(formData[name as keyof TeamMember] as string | null) || ''}
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md"
+              />
+            </div>
+          ))}
+
+          {teamComplianceDateFields.map(([name, fallback]) => (
+            <div key={name}>
+              <label htmlFor={name} className="block text-sm font-medium mb-1">
+                {t(`team.form.${name}`, fallback)}
+              </label>
+              <input
+                type="date"
+                id={name}
+                name={name}
+                value={
+                  formData[name as keyof TeamMember]
+                    ? format(
+                        new Date(formData[name as keyof TeamMember] as Date | string),
+                        'yyyy-MM-dd'
+                      )
+                    : ''
+                }
+                onChange={handleChange}
+                className="w-full p-2 border rounded-md"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+          {teamComplianceCheckboxFields.map(([name, fallback]) => (
+            <label
+              key={name}
+              className="flex items-center gap-3 rounded-md border p-3"
+            >
+              <input
+                type="checkbox"
+                name={name}
+                checked={Boolean(formData[name as keyof TeamMember])}
+                onChange={handleChange}
+                className="h-4 w-4"
+              />
+              <span className="text-sm font-medium">
+                {t(`team.form.${name}`, fallback)}
+              </span>
+            </label>
+          ))}
+        </div>
+      </section>
 
       <div className="flex justify-end space-x-4">
         <button

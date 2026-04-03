@@ -314,6 +314,18 @@ function buildFallbackEmail(givenNames: string, familyName: string) {
   return `${localPart || "team.member"}@makerspace-lesvos.org`;
 }
 
+function buildTeamIdentityKey(
+  givenNames: string,
+  familyName: string,
+  dateOfBirth: Date | null
+) {
+  return [
+    normalizeEmailPart(givenNames),
+    normalizeEmailPart(familyName),
+    dateOfBirth ? dateOfBirth.toISOString().slice(0, 10) : "",
+  ].join("::");
+}
+
 function asBoolean(value: unknown) {
   return value === true;
 }
@@ -706,12 +718,29 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
   let created = 0;
   let updated = 0;
   let skipped = 0;
-  const usedEmails = new Set(
-    (
-      await prisma.teamMember.findMany({
-        select: { email: true },
-      })
-    ).map((member) => member.email.toLowerCase())
+  const existingMembers = await prisma.teamMember.findMany({
+    select: {
+      id: true,
+      email: true,
+      givenNames: true,
+      familyName: true,
+      dateOfBirth: true,
+      photoPath: true,
+      vaccinationCertificate: true,
+      testCertificate: true,
+      codeOfConductSignedAttachment: true,
+      toolLiabilityWaiverSignedAttachment: true,
+    },
+  });
+  const usedEmails = new Set(existingMembers.map((member) => member.email.toLowerCase()));
+  const existingByEmail = new Map(
+    existingMembers.map((member) => [member.email.toLowerCase(), member])
+  );
+  const existingByIdentity = new Map(
+    existingMembers.map((member) => [
+      buildTeamIdentityKey(member.givenNames, member.familyName, member.dateOfBirth),
+      member,
+    ])
   );
 
   for (const [index, record] of teamRecords.entries()) {
@@ -719,10 +748,15 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
     const givenNames = asString(record.fields["Given Names"]);
     const familyName = asString(record.fields["Family Name"]);
     const existingEmail = asString(record.fields["Email address"]).toLowerCase();
+    const dateOfBirth = asDate(record.fields["Date of Birth"]) || new Date("1970-01-01");
+    const identityKey = buildTeamIdentityKey(givenNames, familyName, dateOfBirth);
+    const matchedExisting =
+      (existingEmail ? existingByEmail.get(existingEmail) : undefined) ||
+      existingByIdentity.get(identityKey);
     const fallbackEmail = buildFallbackEmail(givenNames, familyName);
-    let email = existingEmail || fallbackEmail;
+    let email = matchedExisting?.email.toLowerCase() || existingEmail || fallbackEmail;
 
-    if (!existingEmail) {
+    if (!matchedExisting && !existingEmail) {
       let suffix = 2;
       while (usedEmails.has(email)) {
         email = fallbackEmail.replace(
@@ -742,7 +776,7 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
       departmentIds.map((id) => departmentByRecordId.get(id)).find(Boolean) ||
       "Unassigned";
 
-    const existing = await prisma.teamMember.findUnique({ where: { email } });
+    const existing = matchedExisting || existingByEmail.get(email);
     const photoPath = write
       ? await importRemoteFile(
           firstAttachmentUrl(record.fields.Photo),
@@ -751,6 +785,38 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
           `team image ${index + 1}/${teamRecords.length} ${email}`
         )
       : firstAttachmentUrl(record.fields.Photo);
+    const vaccinationCertificate = write
+      ? await importRemoteFile(
+          firstAttachmentUrl(record.fields["Vaccination Certificate"]),
+          "team-documents",
+          existing?.vaccinationCertificate,
+          `team vaccination certificate ${index + 1}/${teamRecords.length} ${email}`
+        )
+      : firstAttachmentUrl(record.fields["Vaccination Certificate"]);
+    const testCertificate = write
+      ? await importRemoteFile(
+          firstAttachmentUrl(record.fields["Test Certificate"]),
+          "team-documents",
+          existing?.testCertificate,
+          `team test certificate ${index + 1}/${teamRecords.length} ${email}`
+        )
+      : firstAttachmentUrl(record.fields["Test Certificate"]);
+    const codeOfConductSignedAttachment = write
+      ? await importRemoteFile(
+          firstAttachmentUrl(record.fields["Code of Conduct (signed attachment)"]),
+          "team-documents",
+          existing?.codeOfConductSignedAttachment,
+          `team code of conduct ${index + 1}/${teamRecords.length} ${email}`
+        )
+      : firstAttachmentUrl(record.fields["Code of Conduct (signed attachment)"]);
+    const toolLiabilityWaiverSignedAttachment = write
+      ? await importRemoteFile(
+          firstAttachmentUrl(record.fields["Tool Liability Waiver (signed)"]),
+          "team-documents",
+          existing?.toolLiabilityWaiverSignedAttachment,
+          `team tool waiver ${index + 1}/${teamRecords.length} ${email}`
+        )
+      : firstAttachmentUrl(record.fields["Tool Liability Waiver (signed)"]);
 
     const data = {
       familyName,
@@ -766,8 +832,84 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
       secondaryEmail: existingEmail || null,
       phone: asString(record.fields.Phone),
       homeAddress: asOptionalString(record.fields["Home address"]),
-      dateOfBirth: asDate(record.fields["Date of Birth"]) || new Date("1970-01-01"),
+      dateOfBirth,
       legalStatus: asOptionalString(record.fields["Legal Status"]),
+      vaccinationCertificate,
+      liabilityInsurance: typeof record.fields["Liability Insurance"] === "boolean"
+        ? asBoolean(record.fields["Liability Insurance"])
+        : null,
+      accidentInsurance: typeof record.fields["Accident Insurance"] === "boolean"
+        ? asBoolean(record.fields["Accident Insurance"])
+        : null,
+      testCertificate,
+      livesInCamp: typeof record.fields["Lives in Camp"] === "boolean"
+        ? asBoolean(record.fields["Lives in Camp"])
+        : null,
+      legalSupportStatus: asOptionalString(record.fields["Legal Support Status"]),
+      legalSupportComment: asOptionalString(record.fields["Legal Support Comment"]),
+      powerToolClearanceWood:
+        typeof record.fields["Power Tool Clearance Wood"] === "boolean"
+          ? asBoolean(record.fields["Power Tool Clearance Wood"])
+          : null,
+      powerToolClearanceMetal:
+        typeof record.fields["Power Tool Clearance Metal"] === "boolean"
+          ? asBoolean(record.fields["Power Tool Clearance Metal"])
+          : null,
+      weldingClearance: typeof record.fields["Welding Clearance"] === "boolean"
+        ? asBoolean(record.fields["Welding Clearance"])
+        : null,
+      handToolsClearance: typeof record.fields["Hand Tools Clearance"] === "boolean"
+        ? asBoolean(record.fields["Hand Tools Clearance"])
+        : null,
+      toolLiabilityWaiverSigned:
+        typeof record.fields["Tool Liability Waiver signed"] === "boolean"
+          ? asBoolean(record.fields["Tool Liability Waiver signed"])
+          : null,
+      vaccinationComment: asOptionalString(record.fields["Vaccination Comment"]),
+      driversLicenseCar:
+        typeof record.fields["Drivers License (Car)"] === "boolean"
+          ? asBoolean(record.fields["Drivers License (Car)"])
+          : null,
+      registeredForMakerspaceVan:
+        typeof record.fields["Registered for Makerspace Van"] === "boolean"
+          ? asBoolean(record.fields["Registered for Makerspace Van"])
+          : null,
+      registeredForOhfVan:
+        typeof record.fields["Registered for OHF Van"] === "boolean"
+          ? asBoolean(record.fields["Registered for OHF Van"])
+          : null,
+      codeOfConductSigned:
+        typeof record.fields["Code of Conduct Signed"] === "boolean"
+          ? asBoolean(record.fields["Code of Conduct Signed"])
+          : null,
+      safeguardingPolicySigned:
+        typeof record.fields["Safeguarding Policy Signed"] === "boolean"
+          ? asBoolean(record.fields["Safeguarding Policy Signed"])
+          : null,
+      codeOfConductSignedAttachment,
+      codeOfConductSigningDate: asDate(
+        record.fields["Code of Conduct Signing Date"]
+      ),
+      safeguardingPolicySigningDate: asDate(
+        record.fields["Safeguarding Policy Signing Date"]
+      ),
+      keys: firstStringFromArray(record.fields.Keys) || null,
+      fireSafetyTraining:
+        typeof record.fields["Fire Safety Training"] === "boolean"
+          ? asBoolean(record.fields["Fire Safety Training"])
+          : null,
+      firstAidTraining:
+        typeof record.fields["First Aid Training"] === "boolean"
+          ? asBoolean(record.fields["First Aid Training"])
+          : null,
+      safetyTraining: typeof record.fields["Safety Training"] === "boolean"
+        ? asBoolean(record.fields["Safety Training"])
+        : null,
+      cardNumber: asOptionalString(record.fields["CARD NR"]),
+      toolLiabilityWaiverSignedAttachment,
+      toolLiabilityWaiverSigningDate: asDate(
+        record.fields["Tool Liability Waiver Signing Date"]
+      ),
     };
 
     if (!write) {
@@ -780,9 +922,50 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
         where: { email },
         data,
       });
+      existingByEmail.set(email, {
+        ...existing,
+        email,
+        givenNames,
+        familyName,
+        dateOfBirth,
+        photoPath: photoPath ?? null,
+        vaccinationCertificate: vaccinationCertificate ?? null,
+        testCertificate: testCertificate ?? null,
+        codeOfConductSignedAttachment: codeOfConductSignedAttachment ?? null,
+        toolLiabilityWaiverSignedAttachment:
+          toolLiabilityWaiverSignedAttachment ?? null,
+      });
+      existingByIdentity.set(identityKey, {
+        ...existing,
+        email,
+        givenNames,
+        familyName,
+        dateOfBirth,
+        photoPath: photoPath ?? null,
+        vaccinationCertificate: vaccinationCertificate ?? null,
+        testCertificate: testCertificate ?? null,
+        codeOfConductSignedAttachment: codeOfConductSignedAttachment ?? null,
+        toolLiabilityWaiverSignedAttachment:
+          toolLiabilityWaiverSignedAttachment ?? null,
+      });
       updated += 1;
     } else {
       await prisma.teamMember.create({ data });
+      const createdMember = {
+        id: "",
+        email,
+        givenNames,
+        familyName,
+        dateOfBirth,
+        photoPath: photoPath ?? null,
+        vaccinationCertificate: vaccinationCertificate ?? null,
+        testCertificate: testCertificate ?? null,
+        codeOfConductSignedAttachment: codeOfConductSignedAttachment ?? null,
+        toolLiabilityWaiverSignedAttachment:
+          toolLiabilityWaiverSignedAttachment ?? null,
+      };
+      existingByEmail.set(email, createdMember);
+      existingByIdentity.set(identityKey, createdMember);
       created += 1;
     }
   }

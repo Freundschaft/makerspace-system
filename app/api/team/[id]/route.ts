@@ -60,6 +60,41 @@ export async function PUT(
         homeAddress: body.homeAddress || null,
         dateOfBirth: new Date(body.dateOfBirth),
         legalStatus: body.legalStatus || null,
+        vaccinationCertificate: body.vaccinationCertificate || null,
+        liabilityInsurance: body.liabilityInsurance ?? null,
+        accidentInsurance: body.accidentInsurance ?? null,
+        testCertificate: body.testCertificate || null,
+        livesInCamp: body.livesInCamp ?? null,
+        legalSupportStatus: body.legalSupportStatus || null,
+        legalSupportComment: body.legalSupportComment || null,
+        powerToolClearanceWood: body.powerToolClearanceWood ?? null,
+        powerToolClearanceMetal: body.powerToolClearanceMetal ?? null,
+        weldingClearance: body.weldingClearance ?? null,
+        handToolsClearance: body.handToolsClearance ?? null,
+        toolLiabilityWaiverSigned: body.toolLiabilityWaiverSigned ?? null,
+        vaccinationComment: body.vaccinationComment || null,
+        driversLicenseCar: body.driversLicenseCar ?? null,
+        registeredForMakerspaceVan: body.registeredForMakerspaceVan ?? null,
+        registeredForOhfVan: body.registeredForOhfVan ?? null,
+        codeOfConductSigned: body.codeOfConductSigned ?? null,
+        safeguardingPolicySigned: body.safeguardingPolicySigned ?? null,
+        codeOfConductSignedAttachment: body.codeOfConductSignedAttachment || null,
+        codeOfConductSigningDate: body.codeOfConductSigningDate
+          ? new Date(body.codeOfConductSigningDate)
+          : null,
+        safeguardingPolicySigningDate: body.safeguardingPolicySigningDate
+          ? new Date(body.safeguardingPolicySigningDate)
+          : null,
+        keys: body.keys || null,
+        fireSafetyTraining: body.fireSafetyTraining ?? null,
+        firstAidTraining: body.firstAidTraining ?? null,
+        safetyTraining: body.safetyTraining ?? null,
+        cardNumber: body.cardNumber || null,
+        toolLiabilityWaiverSignedAttachment:
+          body.toolLiabilityWaiverSignedAttachment || null,
+        toolLiabilityWaiverSigningDate: body.toolLiabilityWaiverSigningDate
+          ? new Date(body.toolLiabilityWaiverSigningDate)
+          : null,
       },
     });
 
