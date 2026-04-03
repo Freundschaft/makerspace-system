@@ -8312,6 +8312,34 @@ export namespace Prisma {
     homeAddress: string | null
     dateOfBirth: Date | null
     legalStatus: string | null
+    vaccinationCertificate: string | null
+    liabilityInsurance: boolean | null
+    accidentInsurance: boolean | null
+    testCertificate: string | null
+    livesInCamp: boolean | null
+    legalSupportStatus: string | null
+    legalSupportComment: string | null
+    powerToolClearanceWood: boolean | null
+    powerToolClearanceMetal: boolean | null
+    weldingClearance: boolean | null
+    handToolsClearance: boolean | null
+    toolLiabilityWaiverSigned: boolean | null
+    vaccinationComment: string | null
+    driversLicenseCar: boolean | null
+    registeredForMakerspaceVan: boolean | null
+    registeredForOhfVan: boolean | null
+    codeOfConductSigned: boolean | null
+    safeguardingPolicySigned: boolean | null
+    codeOfConductSignedAttachment: string | null
+    codeOfConductSigningDate: Date | null
+    safeguardingPolicySigningDate: Date | null
+    keys: string | null
+    fireSafetyTraining: boolean | null
+    firstAidTraining: boolean | null
+    safetyTraining: boolean | null
+    cardNumber: string | null
+    toolLiabilityWaiverSignedAttachment: string | null
+    toolLiabilityWaiverSigningDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8333,6 +8361,34 @@ export namespace Prisma {
     homeAddress: string | null
     dateOfBirth: Date | null
     legalStatus: string | null
+    vaccinationCertificate: string | null
+    liabilityInsurance: boolean | null
+    accidentInsurance: boolean | null
+    testCertificate: string | null
+    livesInCamp: boolean | null
+    legalSupportStatus: string | null
+    legalSupportComment: string | null
+    powerToolClearanceWood: boolean | null
+    powerToolClearanceMetal: boolean | null
+    weldingClearance: boolean | null
+    handToolsClearance: boolean | null
+    toolLiabilityWaiverSigned: boolean | null
+    vaccinationComment: string | null
+    driversLicenseCar: boolean | null
+    registeredForMakerspaceVan: boolean | null
+    registeredForOhfVan: boolean | null
+    codeOfConductSigned: boolean | null
+    safeguardingPolicySigned: boolean | null
+    codeOfConductSignedAttachment: string | null
+    codeOfConductSigningDate: Date | null
+    safeguardingPolicySigningDate: Date | null
+    keys: string | null
+    fireSafetyTraining: boolean | null
+    firstAidTraining: boolean | null
+    safetyTraining: boolean | null
+    cardNumber: string | null
+    toolLiabilityWaiverSignedAttachment: string | null
+    toolLiabilityWaiverSigningDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -8354,6 +8410,34 @@ export namespace Prisma {
     homeAddress: number
     dateOfBirth: number
     legalStatus: number
+    vaccinationCertificate: number
+    liabilityInsurance: number
+    accidentInsurance: number
+    testCertificate: number
+    livesInCamp: number
+    legalSupportStatus: number
+    legalSupportComment: number
+    powerToolClearanceWood: number
+    powerToolClearanceMetal: number
+    weldingClearance: number
+    handToolsClearance: number
+    toolLiabilityWaiverSigned: number
+    vaccinationComment: number
+    driversLicenseCar: number
+    registeredForMakerspaceVan: number
+    registeredForOhfVan: number
+    codeOfConductSigned: number
+    safeguardingPolicySigned: number
+    codeOfConductSignedAttachment: number
+    codeOfConductSigningDate: number
+    safeguardingPolicySigningDate: number
+    keys: number
+    fireSafetyTraining: number
+    firstAidTraining: number
+    safetyTraining: number
+    cardNumber: number
+    toolLiabilityWaiverSignedAttachment: number
+    toolLiabilityWaiverSigningDate: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -8377,6 +8461,34 @@ export namespace Prisma {
     homeAddress?: true
     dateOfBirth?: true
     legalStatus?: true
+    vaccinationCertificate?: true
+    liabilityInsurance?: true
+    accidentInsurance?: true
+    testCertificate?: true
+    livesInCamp?: true
+    legalSupportStatus?: true
+    legalSupportComment?: true
+    powerToolClearanceWood?: true
+    powerToolClearanceMetal?: true
+    weldingClearance?: true
+    handToolsClearance?: true
+    toolLiabilityWaiverSigned?: true
+    vaccinationComment?: true
+    driversLicenseCar?: true
+    registeredForMakerspaceVan?: true
+    registeredForOhfVan?: true
+    codeOfConductSigned?: true
+    safeguardingPolicySigned?: true
+    codeOfConductSignedAttachment?: true
+    codeOfConductSigningDate?: true
+    safeguardingPolicySigningDate?: true
+    keys?: true
+    fireSafetyTraining?: true
+    firstAidTraining?: true
+    safetyTraining?: true
+    cardNumber?: true
+    toolLiabilityWaiverSignedAttachment?: true
+    toolLiabilityWaiverSigningDate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8398,6 +8510,34 @@ export namespace Prisma {
     homeAddress?: true
     dateOfBirth?: true
     legalStatus?: true
+    vaccinationCertificate?: true
+    liabilityInsurance?: true
+    accidentInsurance?: true
+    testCertificate?: true
+    livesInCamp?: true
+    legalSupportStatus?: true
+    legalSupportComment?: true
+    powerToolClearanceWood?: true
+    powerToolClearanceMetal?: true
+    weldingClearance?: true
+    handToolsClearance?: true
+    toolLiabilityWaiverSigned?: true
+    vaccinationComment?: true
+    driversLicenseCar?: true
+    registeredForMakerspaceVan?: true
+    registeredForOhfVan?: true
+    codeOfConductSigned?: true
+    safeguardingPolicySigned?: true
+    codeOfConductSignedAttachment?: true
+    codeOfConductSigningDate?: true
+    safeguardingPolicySigningDate?: true
+    keys?: true
+    fireSafetyTraining?: true
+    firstAidTraining?: true
+    safetyTraining?: true
+    cardNumber?: true
+    toolLiabilityWaiverSignedAttachment?: true
+    toolLiabilityWaiverSigningDate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -8419,6 +8559,34 @@ export namespace Prisma {
     homeAddress?: true
     dateOfBirth?: true
     legalStatus?: true
+    vaccinationCertificate?: true
+    liabilityInsurance?: true
+    accidentInsurance?: true
+    testCertificate?: true
+    livesInCamp?: true
+    legalSupportStatus?: true
+    legalSupportComment?: true
+    powerToolClearanceWood?: true
+    powerToolClearanceMetal?: true
+    weldingClearance?: true
+    handToolsClearance?: true
+    toolLiabilityWaiverSigned?: true
+    vaccinationComment?: true
+    driversLicenseCar?: true
+    registeredForMakerspaceVan?: true
+    registeredForOhfVan?: true
+    codeOfConductSigned?: true
+    safeguardingPolicySigned?: true
+    codeOfConductSignedAttachment?: true
+    codeOfConductSigningDate?: true
+    safeguardingPolicySigningDate?: true
+    keys?: true
+    fireSafetyTraining?: true
+    firstAidTraining?: true
+    safetyTraining?: true
+    cardNumber?: true
+    toolLiabilityWaiverSignedAttachment?: true
+    toolLiabilityWaiverSigningDate?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -8513,6 +8681,34 @@ export namespace Prisma {
     homeAddress: string | null
     dateOfBirth: Date
     legalStatus: string | null
+    vaccinationCertificate: string | null
+    liabilityInsurance: boolean | null
+    accidentInsurance: boolean | null
+    testCertificate: string | null
+    livesInCamp: boolean | null
+    legalSupportStatus: string | null
+    legalSupportComment: string | null
+    powerToolClearanceWood: boolean | null
+    powerToolClearanceMetal: boolean | null
+    weldingClearance: boolean | null
+    handToolsClearance: boolean | null
+    toolLiabilityWaiverSigned: boolean | null
+    vaccinationComment: string | null
+    driversLicenseCar: boolean | null
+    registeredForMakerspaceVan: boolean | null
+    registeredForOhfVan: boolean | null
+    codeOfConductSigned: boolean | null
+    safeguardingPolicySigned: boolean | null
+    codeOfConductSignedAttachment: string | null
+    codeOfConductSigningDate: Date | null
+    safeguardingPolicySigningDate: Date | null
+    keys: string | null
+    fireSafetyTraining: boolean | null
+    firstAidTraining: boolean | null
+    safetyTraining: boolean | null
+    cardNumber: string | null
+    toolLiabilityWaiverSignedAttachment: string | null
+    toolLiabilityWaiverSigningDate: Date | null
     createdAt: Date
     updatedAt: Date
     _count: TeamMemberCountAggregateOutputType | null
@@ -8551,6 +8747,34 @@ export namespace Prisma {
     homeAddress?: boolean
     dateOfBirth?: boolean
     legalStatus?: boolean
+    vaccinationCertificate?: boolean
+    liabilityInsurance?: boolean
+    accidentInsurance?: boolean
+    testCertificate?: boolean
+    livesInCamp?: boolean
+    legalSupportStatus?: boolean
+    legalSupportComment?: boolean
+    powerToolClearanceWood?: boolean
+    powerToolClearanceMetal?: boolean
+    weldingClearance?: boolean
+    handToolsClearance?: boolean
+    toolLiabilityWaiverSigned?: boolean
+    vaccinationComment?: boolean
+    driversLicenseCar?: boolean
+    registeredForMakerspaceVan?: boolean
+    registeredForOhfVan?: boolean
+    codeOfConductSigned?: boolean
+    safeguardingPolicySigned?: boolean
+    codeOfConductSignedAttachment?: boolean
+    codeOfConductSigningDate?: boolean
+    safeguardingPolicySigningDate?: boolean
+    keys?: boolean
+    fireSafetyTraining?: boolean
+    firstAidTraining?: boolean
+    safetyTraining?: boolean
+    cardNumber?: boolean
+    toolLiabilityWaiverSignedAttachment?: boolean
+    toolLiabilityWaiverSigningDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     presences?: boolean | TeamMember$presencesArgs<ExtArgs>
@@ -8576,11 +8800,39 @@ export namespace Prisma {
     homeAddress?: boolean
     dateOfBirth?: boolean
     legalStatus?: boolean
+    vaccinationCertificate?: boolean
+    liabilityInsurance?: boolean
+    accidentInsurance?: boolean
+    testCertificate?: boolean
+    livesInCamp?: boolean
+    legalSupportStatus?: boolean
+    legalSupportComment?: boolean
+    powerToolClearanceWood?: boolean
+    powerToolClearanceMetal?: boolean
+    weldingClearance?: boolean
+    handToolsClearance?: boolean
+    toolLiabilityWaiverSigned?: boolean
+    vaccinationComment?: boolean
+    driversLicenseCar?: boolean
+    registeredForMakerspaceVan?: boolean
+    registeredForOhfVan?: boolean
+    codeOfConductSigned?: boolean
+    safeguardingPolicySigned?: boolean
+    codeOfConductSignedAttachment?: boolean
+    codeOfConductSigningDate?: boolean
+    safeguardingPolicySigningDate?: boolean
+    keys?: boolean
+    fireSafetyTraining?: boolean
+    firstAidTraining?: boolean
+    safetyTraining?: boolean
+    cardNumber?: boolean
+    toolLiabilityWaiverSignedAttachment?: boolean
+    toolLiabilityWaiverSigningDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "status" | "googleAccountActive" | "startDate" | "endDate" | "department" | "email" | "secondaryEmail" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "status" | "googleAccountActive" | "startDate" | "endDate" | "department" | "email" | "secondaryEmail" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "vaccinationCertificate" | "liabilityInsurance" | "accidentInsurance" | "testCertificate" | "livesInCamp" | "legalSupportStatus" | "legalSupportComment" | "powerToolClearanceWood" | "powerToolClearanceMetal" | "weldingClearance" | "handToolsClearance" | "toolLiabilityWaiverSigned" | "vaccinationComment" | "driversLicenseCar" | "registeredForMakerspaceVan" | "registeredForOhfVan" | "codeOfConductSigned" | "safeguardingPolicySigned" | "codeOfConductSignedAttachment" | "codeOfConductSigningDate" | "safeguardingPolicySigningDate" | "keys" | "fireSafetyTraining" | "firstAidTraining" | "safetyTraining" | "cardNumber" | "toolLiabilityWaiverSignedAttachment" | "toolLiabilityWaiverSigningDate" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
   export type TeamMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     presences?: boolean | TeamMember$presencesArgs<ExtArgs>
     _count?: boolean | TeamMemberCountOutputTypeDefaultArgs<ExtArgs>
@@ -8608,6 +8860,34 @@ export namespace Prisma {
       homeAddress: string | null
       dateOfBirth: Date
       legalStatus: string | null
+      vaccinationCertificate: string | null
+      liabilityInsurance: boolean | null
+      accidentInsurance: boolean | null
+      testCertificate: string | null
+      livesInCamp: boolean | null
+      legalSupportStatus: string | null
+      legalSupportComment: string | null
+      powerToolClearanceWood: boolean | null
+      powerToolClearanceMetal: boolean | null
+      weldingClearance: boolean | null
+      handToolsClearance: boolean | null
+      toolLiabilityWaiverSigned: boolean | null
+      vaccinationComment: string | null
+      driversLicenseCar: boolean | null
+      registeredForMakerspaceVan: boolean | null
+      registeredForOhfVan: boolean | null
+      codeOfConductSigned: boolean | null
+      safeguardingPolicySigned: boolean | null
+      codeOfConductSignedAttachment: string | null
+      codeOfConductSigningDate: Date | null
+      safeguardingPolicySigningDate: Date | null
+      keys: string | null
+      fireSafetyTraining: boolean | null
+      firstAidTraining: boolean | null
+      safetyTraining: boolean | null
+      cardNumber: string | null
+      toolLiabilityWaiverSignedAttachment: string | null
+      toolLiabilityWaiverSigningDate: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["teamMember"]>
@@ -8996,6 +9276,34 @@ export namespace Prisma {
     readonly homeAddress: FieldRef<"TeamMember", 'String'>
     readonly dateOfBirth: FieldRef<"TeamMember", 'DateTime'>
     readonly legalStatus: FieldRef<"TeamMember", 'String'>
+    readonly vaccinationCertificate: FieldRef<"TeamMember", 'String'>
+    readonly liabilityInsurance: FieldRef<"TeamMember", 'Boolean'>
+    readonly accidentInsurance: FieldRef<"TeamMember", 'Boolean'>
+    readonly testCertificate: FieldRef<"TeamMember", 'String'>
+    readonly livesInCamp: FieldRef<"TeamMember", 'Boolean'>
+    readonly legalSupportStatus: FieldRef<"TeamMember", 'String'>
+    readonly legalSupportComment: FieldRef<"TeamMember", 'String'>
+    readonly powerToolClearanceWood: FieldRef<"TeamMember", 'Boolean'>
+    readonly powerToolClearanceMetal: FieldRef<"TeamMember", 'Boolean'>
+    readonly weldingClearance: FieldRef<"TeamMember", 'Boolean'>
+    readonly handToolsClearance: FieldRef<"TeamMember", 'Boolean'>
+    readonly toolLiabilityWaiverSigned: FieldRef<"TeamMember", 'Boolean'>
+    readonly vaccinationComment: FieldRef<"TeamMember", 'String'>
+    readonly driversLicenseCar: FieldRef<"TeamMember", 'Boolean'>
+    readonly registeredForMakerspaceVan: FieldRef<"TeamMember", 'Boolean'>
+    readonly registeredForOhfVan: FieldRef<"TeamMember", 'Boolean'>
+    readonly codeOfConductSigned: FieldRef<"TeamMember", 'Boolean'>
+    readonly safeguardingPolicySigned: FieldRef<"TeamMember", 'Boolean'>
+    readonly codeOfConductSignedAttachment: FieldRef<"TeamMember", 'String'>
+    readonly codeOfConductSigningDate: FieldRef<"TeamMember", 'DateTime'>
+    readonly safeguardingPolicySigningDate: FieldRef<"TeamMember", 'DateTime'>
+    readonly keys: FieldRef<"TeamMember", 'String'>
+    readonly fireSafetyTraining: FieldRef<"TeamMember", 'Boolean'>
+    readonly firstAidTraining: FieldRef<"TeamMember", 'Boolean'>
+    readonly safetyTraining: FieldRef<"TeamMember", 'Boolean'>
+    readonly cardNumber: FieldRef<"TeamMember", 'String'>
+    readonly toolLiabilityWaiverSignedAttachment: FieldRef<"TeamMember", 'String'>
+    readonly toolLiabilityWaiverSigningDate: FieldRef<"TeamMember", 'DateTime'>
     readonly createdAt: FieldRef<"TeamMember", 'DateTime'>
     readonly updatedAt: FieldRef<"TeamMember", 'DateTime'>
   }
@@ -16002,6 +16310,34 @@ export namespace Prisma {
     homeAddress: 'homeAddress',
     dateOfBirth: 'dateOfBirth',
     legalStatus: 'legalStatus',
+    vaccinationCertificate: 'vaccinationCertificate',
+    liabilityInsurance: 'liabilityInsurance',
+    accidentInsurance: 'accidentInsurance',
+    testCertificate: 'testCertificate',
+    livesInCamp: 'livesInCamp',
+    legalSupportStatus: 'legalSupportStatus',
+    legalSupportComment: 'legalSupportComment',
+    powerToolClearanceWood: 'powerToolClearanceWood',
+    powerToolClearanceMetal: 'powerToolClearanceMetal',
+    weldingClearance: 'weldingClearance',
+    handToolsClearance: 'handToolsClearance',
+    toolLiabilityWaiverSigned: 'toolLiabilityWaiverSigned',
+    vaccinationComment: 'vaccinationComment',
+    driversLicenseCar: 'driversLicenseCar',
+    registeredForMakerspaceVan: 'registeredForMakerspaceVan',
+    registeredForOhfVan: 'registeredForOhfVan',
+    codeOfConductSigned: 'codeOfConductSigned',
+    safeguardingPolicySigned: 'safeguardingPolicySigned',
+    codeOfConductSignedAttachment: 'codeOfConductSignedAttachment',
+    codeOfConductSigningDate: 'codeOfConductSigningDate',
+    safeguardingPolicySigningDate: 'safeguardingPolicySigningDate',
+    keys: 'keys',
+    fireSafetyTraining: 'fireSafetyTraining',
+    firstAidTraining: 'firstAidTraining',
+    safetyTraining: 'safetyTraining',
+    cardNumber: 'cardNumber',
+    toolLiabilityWaiverSignedAttachment: 'toolLiabilityWaiverSignedAttachment',
+    toolLiabilityWaiverSigningDate: 'toolLiabilityWaiverSigningDate',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16209,7 +16545,16 @@ export namespace Prisma {
     secondaryEmail: 'secondaryEmail',
     phone: 'phone',
     homeAddress: 'homeAddress',
-    legalStatus: 'legalStatus'
+    legalStatus: 'legalStatus',
+    vaccinationCertificate: 'vaccinationCertificate',
+    testCertificate: 'testCertificate',
+    legalSupportStatus: 'legalSupportStatus',
+    legalSupportComment: 'legalSupportComment',
+    vaccinationComment: 'vaccinationComment',
+    codeOfConductSignedAttachment: 'codeOfConductSignedAttachment',
+    keys: 'keys',
+    cardNumber: 'cardNumber',
+    toolLiabilityWaiverSignedAttachment: 'toolLiabilityWaiverSignedAttachment'
   };
 
   export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum]
@@ -16882,6 +17227,34 @@ export namespace Prisma {
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
     legalStatus?: StringNullableFilter<"TeamMember"> | string | null
+    vaccinationCertificate?: StringNullableFilter<"TeamMember"> | string | null
+    liabilityInsurance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    accidentInsurance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    testCertificate?: StringNullableFilter<"TeamMember"> | string | null
+    livesInCamp?: BoolNullableFilter<"TeamMember"> | boolean | null
+    legalSupportStatus?: StringNullableFilter<"TeamMember"> | string | null
+    legalSupportComment?: StringNullableFilter<"TeamMember"> | string | null
+    powerToolClearanceWood?: BoolNullableFilter<"TeamMember"> | boolean | null
+    powerToolClearanceMetal?: BoolNullableFilter<"TeamMember"> | boolean | null
+    weldingClearance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    handToolsClearance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    toolLiabilityWaiverSigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    vaccinationComment?: StringNullableFilter<"TeamMember"> | string | null
+    driversLicenseCar?: BoolNullableFilter<"TeamMember"> | boolean | null
+    registeredForMakerspaceVan?: BoolNullableFilter<"TeamMember"> | boolean | null
+    registeredForOhfVan?: BoolNullableFilter<"TeamMember"> | boolean | null
+    codeOfConductSigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    safeguardingPolicySigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    codeOfConductSignedAttachment?: StringNullableFilter<"TeamMember"> | string | null
+    codeOfConductSigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
+    safeguardingPolicySigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
+    keys?: StringNullableFilter<"TeamMember"> | string | null
+    fireSafetyTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    firstAidTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    safetyTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    cardNumber?: StringNullableFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSignedAttachment?: StringNullableFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
     presences?: TeamMemberPresenceListRelationFilter
@@ -16904,6 +17277,34 @@ export namespace Prisma {
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
     legalStatus?: SortOrderInput | SortOrder
+    vaccinationCertificate?: SortOrderInput | SortOrder
+    liabilityInsurance?: SortOrderInput | SortOrder
+    accidentInsurance?: SortOrderInput | SortOrder
+    testCertificate?: SortOrderInput | SortOrder
+    livesInCamp?: SortOrderInput | SortOrder
+    legalSupportStatus?: SortOrderInput | SortOrder
+    legalSupportComment?: SortOrderInput | SortOrder
+    powerToolClearanceWood?: SortOrderInput | SortOrder
+    powerToolClearanceMetal?: SortOrderInput | SortOrder
+    weldingClearance?: SortOrderInput | SortOrder
+    handToolsClearance?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSigned?: SortOrderInput | SortOrder
+    vaccinationComment?: SortOrderInput | SortOrder
+    driversLicenseCar?: SortOrderInput | SortOrder
+    registeredForMakerspaceVan?: SortOrderInput | SortOrder
+    registeredForOhfVan?: SortOrderInput | SortOrder
+    codeOfConductSigned?: SortOrderInput | SortOrder
+    safeguardingPolicySigned?: SortOrderInput | SortOrder
+    codeOfConductSignedAttachment?: SortOrderInput | SortOrder
+    codeOfConductSigningDate?: SortOrderInput | SortOrder
+    safeguardingPolicySigningDate?: SortOrderInput | SortOrder
+    keys?: SortOrderInput | SortOrder
+    fireSafetyTraining?: SortOrderInput | SortOrder
+    firstAidTraining?: SortOrderInput | SortOrder
+    safetyTraining?: SortOrderInput | SortOrder
+    cardNumber?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSignedAttachment?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSigningDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     presences?: TeamMemberPresenceOrderByRelationAggregateInput
@@ -16930,6 +17331,34 @@ export namespace Prisma {
     homeAddress?: StringNullableFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeFilter<"TeamMember"> | Date | string
     legalStatus?: StringNullableFilter<"TeamMember"> | string | null
+    vaccinationCertificate?: StringNullableFilter<"TeamMember"> | string | null
+    liabilityInsurance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    accidentInsurance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    testCertificate?: StringNullableFilter<"TeamMember"> | string | null
+    livesInCamp?: BoolNullableFilter<"TeamMember"> | boolean | null
+    legalSupportStatus?: StringNullableFilter<"TeamMember"> | string | null
+    legalSupportComment?: StringNullableFilter<"TeamMember"> | string | null
+    powerToolClearanceWood?: BoolNullableFilter<"TeamMember"> | boolean | null
+    powerToolClearanceMetal?: BoolNullableFilter<"TeamMember"> | boolean | null
+    weldingClearance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    handToolsClearance?: BoolNullableFilter<"TeamMember"> | boolean | null
+    toolLiabilityWaiverSigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    vaccinationComment?: StringNullableFilter<"TeamMember"> | string | null
+    driversLicenseCar?: BoolNullableFilter<"TeamMember"> | boolean | null
+    registeredForMakerspaceVan?: BoolNullableFilter<"TeamMember"> | boolean | null
+    registeredForOhfVan?: BoolNullableFilter<"TeamMember"> | boolean | null
+    codeOfConductSigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    safeguardingPolicySigned?: BoolNullableFilter<"TeamMember"> | boolean | null
+    codeOfConductSignedAttachment?: StringNullableFilter<"TeamMember"> | string | null
+    codeOfConductSigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
+    safeguardingPolicySigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
+    keys?: StringNullableFilter<"TeamMember"> | string | null
+    fireSafetyTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    firstAidTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    safetyTraining?: BoolNullableFilter<"TeamMember"> | boolean | null
+    cardNumber?: StringNullableFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSignedAttachment?: StringNullableFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSigningDate?: DateTimeNullableFilter<"TeamMember"> | Date | string | null
     createdAt?: DateTimeFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeFilter<"TeamMember"> | Date | string
     presences?: TeamMemberPresenceListRelationFilter
@@ -16952,6 +17381,34 @@ export namespace Prisma {
     homeAddress?: SortOrderInput | SortOrder
     dateOfBirth?: SortOrder
     legalStatus?: SortOrderInput | SortOrder
+    vaccinationCertificate?: SortOrderInput | SortOrder
+    liabilityInsurance?: SortOrderInput | SortOrder
+    accidentInsurance?: SortOrderInput | SortOrder
+    testCertificate?: SortOrderInput | SortOrder
+    livesInCamp?: SortOrderInput | SortOrder
+    legalSupportStatus?: SortOrderInput | SortOrder
+    legalSupportComment?: SortOrderInput | SortOrder
+    powerToolClearanceWood?: SortOrderInput | SortOrder
+    powerToolClearanceMetal?: SortOrderInput | SortOrder
+    weldingClearance?: SortOrderInput | SortOrder
+    handToolsClearance?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSigned?: SortOrderInput | SortOrder
+    vaccinationComment?: SortOrderInput | SortOrder
+    driversLicenseCar?: SortOrderInput | SortOrder
+    registeredForMakerspaceVan?: SortOrderInput | SortOrder
+    registeredForOhfVan?: SortOrderInput | SortOrder
+    codeOfConductSigned?: SortOrderInput | SortOrder
+    safeguardingPolicySigned?: SortOrderInput | SortOrder
+    codeOfConductSignedAttachment?: SortOrderInput | SortOrder
+    codeOfConductSigningDate?: SortOrderInput | SortOrder
+    safeguardingPolicySigningDate?: SortOrderInput | SortOrder
+    keys?: SortOrderInput | SortOrder
+    fireSafetyTraining?: SortOrderInput | SortOrder
+    firstAidTraining?: SortOrderInput | SortOrder
+    safetyTraining?: SortOrderInput | SortOrder
+    cardNumber?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSignedAttachment?: SortOrderInput | SortOrder
+    toolLiabilityWaiverSigningDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TeamMemberCountOrderByAggregateInput
@@ -16979,6 +17436,34 @@ export namespace Prisma {
     homeAddress?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     dateOfBirth?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     legalStatus?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    vaccinationCertificate?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    liabilityInsurance?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    accidentInsurance?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    testCertificate?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    livesInCamp?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    legalSupportStatus?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    legalSupportComment?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    powerToolClearanceWood?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    powerToolClearanceMetal?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    weldingClearance?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    handToolsClearance?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    toolLiabilityWaiverSigned?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    vaccinationComment?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    driversLicenseCar?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    registeredForMakerspaceVan?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    registeredForOhfVan?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    codeOfConductSigned?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    safeguardingPolicySigned?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    codeOfConductSignedAttachment?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    codeOfConductSigningDate?: DateTimeNullableWithAggregatesFilter<"TeamMember"> | Date | string | null
+    safeguardingPolicySigningDate?: DateTimeNullableWithAggregatesFilter<"TeamMember"> | Date | string | null
+    keys?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    fireSafetyTraining?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    firstAidTraining?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    safetyTraining?: BoolNullableWithAggregatesFilter<"TeamMember"> | boolean | null
+    cardNumber?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSignedAttachment?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    toolLiabilityWaiverSigningDate?: DateTimeNullableWithAggregatesFilter<"TeamMember"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
   }
@@ -18080,6 +18565,34 @@ export namespace Prisma {
     homeAddress?: string | null
     dateOfBirth: Date | string
     legalStatus?: string | null
+    vaccinationCertificate?: string | null
+    liabilityInsurance?: boolean | null
+    accidentInsurance?: boolean | null
+    testCertificate?: string | null
+    livesInCamp?: boolean | null
+    legalSupportStatus?: string | null
+    legalSupportComment?: string | null
+    powerToolClearanceWood?: boolean | null
+    powerToolClearanceMetal?: boolean | null
+    weldingClearance?: boolean | null
+    handToolsClearance?: boolean | null
+    toolLiabilityWaiverSigned?: boolean | null
+    vaccinationComment?: string | null
+    driversLicenseCar?: boolean | null
+    registeredForMakerspaceVan?: boolean | null
+    registeredForOhfVan?: boolean | null
+    codeOfConductSigned?: boolean | null
+    safeguardingPolicySigned?: boolean | null
+    codeOfConductSignedAttachment?: string | null
+    codeOfConductSigningDate?: Date | string | null
+    safeguardingPolicySigningDate?: Date | string | null
+    keys?: string | null
+    fireSafetyTraining?: boolean | null
+    firstAidTraining?: boolean | null
+    safetyTraining?: boolean | null
+    cardNumber?: string | null
+    toolLiabilityWaiverSignedAttachment?: string | null
+    toolLiabilityWaiverSigningDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     presences?: TeamMemberPresenceCreateNestedManyWithoutTeamMemberInput
@@ -18102,6 +18615,34 @@ export namespace Prisma {
     homeAddress?: string | null
     dateOfBirth: Date | string
     legalStatus?: string | null
+    vaccinationCertificate?: string | null
+    liabilityInsurance?: boolean | null
+    accidentInsurance?: boolean | null
+    testCertificate?: string | null
+    livesInCamp?: boolean | null
+    legalSupportStatus?: string | null
+    legalSupportComment?: string | null
+    powerToolClearanceWood?: boolean | null
+    powerToolClearanceMetal?: boolean | null
+    weldingClearance?: boolean | null
+    handToolsClearance?: boolean | null
+    toolLiabilityWaiverSigned?: boolean | null
+    vaccinationComment?: string | null
+    driversLicenseCar?: boolean | null
+    registeredForMakerspaceVan?: boolean | null
+    registeredForOhfVan?: boolean | null
+    codeOfConductSigned?: boolean | null
+    safeguardingPolicySigned?: boolean | null
+    codeOfConductSignedAttachment?: string | null
+    codeOfConductSigningDate?: Date | string | null
+    safeguardingPolicySigningDate?: Date | string | null
+    keys?: string | null
+    fireSafetyTraining?: boolean | null
+    firstAidTraining?: boolean | null
+    safetyTraining?: boolean | null
+    cardNumber?: string | null
+    toolLiabilityWaiverSignedAttachment?: string | null
+    toolLiabilityWaiverSigningDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     presences?: TeamMemberPresenceUncheckedCreateNestedManyWithoutTeamMemberInput
@@ -18124,6 +18665,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     presences?: TeamMemberPresenceUpdateManyWithoutTeamMemberNestedInput
@@ -18146,6 +18715,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     presences?: TeamMemberPresenceUncheckedUpdateManyWithoutTeamMemberNestedInput
@@ -18168,6 +18765,34 @@ export namespace Prisma {
     homeAddress?: string | null
     dateOfBirth: Date | string
     legalStatus?: string | null
+    vaccinationCertificate?: string | null
+    liabilityInsurance?: boolean | null
+    accidentInsurance?: boolean | null
+    testCertificate?: string | null
+    livesInCamp?: boolean | null
+    legalSupportStatus?: string | null
+    legalSupportComment?: string | null
+    powerToolClearanceWood?: boolean | null
+    powerToolClearanceMetal?: boolean | null
+    weldingClearance?: boolean | null
+    handToolsClearance?: boolean | null
+    toolLiabilityWaiverSigned?: boolean | null
+    vaccinationComment?: string | null
+    driversLicenseCar?: boolean | null
+    registeredForMakerspaceVan?: boolean | null
+    registeredForOhfVan?: boolean | null
+    codeOfConductSigned?: boolean | null
+    safeguardingPolicySigned?: boolean | null
+    codeOfConductSignedAttachment?: string | null
+    codeOfConductSigningDate?: Date | string | null
+    safeguardingPolicySigningDate?: Date | string | null
+    keys?: string | null
+    fireSafetyTraining?: boolean | null
+    firstAidTraining?: boolean | null
+    safetyTraining?: boolean | null
+    cardNumber?: string | null
+    toolLiabilityWaiverSignedAttachment?: string | null
+    toolLiabilityWaiverSigningDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -18189,6 +18814,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18210,6 +18863,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19446,6 +20127,34 @@ export namespace Prisma {
     homeAddress?: SortOrder
     dateOfBirth?: SortOrder
     legalStatus?: SortOrder
+    vaccinationCertificate?: SortOrder
+    liabilityInsurance?: SortOrder
+    accidentInsurance?: SortOrder
+    testCertificate?: SortOrder
+    livesInCamp?: SortOrder
+    legalSupportStatus?: SortOrder
+    legalSupportComment?: SortOrder
+    powerToolClearanceWood?: SortOrder
+    powerToolClearanceMetal?: SortOrder
+    weldingClearance?: SortOrder
+    handToolsClearance?: SortOrder
+    toolLiabilityWaiverSigned?: SortOrder
+    vaccinationComment?: SortOrder
+    driversLicenseCar?: SortOrder
+    registeredForMakerspaceVan?: SortOrder
+    registeredForOhfVan?: SortOrder
+    codeOfConductSigned?: SortOrder
+    safeguardingPolicySigned?: SortOrder
+    codeOfConductSignedAttachment?: SortOrder
+    codeOfConductSigningDate?: SortOrder
+    safeguardingPolicySigningDate?: SortOrder
+    keys?: SortOrder
+    fireSafetyTraining?: SortOrder
+    firstAidTraining?: SortOrder
+    safetyTraining?: SortOrder
+    cardNumber?: SortOrder
+    toolLiabilityWaiverSignedAttachment?: SortOrder
+    toolLiabilityWaiverSigningDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19467,6 +20176,34 @@ export namespace Prisma {
     homeAddress?: SortOrder
     dateOfBirth?: SortOrder
     legalStatus?: SortOrder
+    vaccinationCertificate?: SortOrder
+    liabilityInsurance?: SortOrder
+    accidentInsurance?: SortOrder
+    testCertificate?: SortOrder
+    livesInCamp?: SortOrder
+    legalSupportStatus?: SortOrder
+    legalSupportComment?: SortOrder
+    powerToolClearanceWood?: SortOrder
+    powerToolClearanceMetal?: SortOrder
+    weldingClearance?: SortOrder
+    handToolsClearance?: SortOrder
+    toolLiabilityWaiverSigned?: SortOrder
+    vaccinationComment?: SortOrder
+    driversLicenseCar?: SortOrder
+    registeredForMakerspaceVan?: SortOrder
+    registeredForOhfVan?: SortOrder
+    codeOfConductSigned?: SortOrder
+    safeguardingPolicySigned?: SortOrder
+    codeOfConductSignedAttachment?: SortOrder
+    codeOfConductSigningDate?: SortOrder
+    safeguardingPolicySigningDate?: SortOrder
+    keys?: SortOrder
+    fireSafetyTraining?: SortOrder
+    firstAidTraining?: SortOrder
+    safetyTraining?: SortOrder
+    cardNumber?: SortOrder
+    toolLiabilityWaiverSignedAttachment?: SortOrder
+    toolLiabilityWaiverSigningDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19488,6 +20225,34 @@ export namespace Prisma {
     homeAddress?: SortOrder
     dateOfBirth?: SortOrder
     legalStatus?: SortOrder
+    vaccinationCertificate?: SortOrder
+    liabilityInsurance?: SortOrder
+    accidentInsurance?: SortOrder
+    testCertificate?: SortOrder
+    livesInCamp?: SortOrder
+    legalSupportStatus?: SortOrder
+    legalSupportComment?: SortOrder
+    powerToolClearanceWood?: SortOrder
+    powerToolClearanceMetal?: SortOrder
+    weldingClearance?: SortOrder
+    handToolsClearance?: SortOrder
+    toolLiabilityWaiverSigned?: SortOrder
+    vaccinationComment?: SortOrder
+    driversLicenseCar?: SortOrder
+    registeredForMakerspaceVan?: SortOrder
+    registeredForOhfVan?: SortOrder
+    codeOfConductSigned?: SortOrder
+    safeguardingPolicySigned?: SortOrder
+    codeOfConductSignedAttachment?: SortOrder
+    codeOfConductSigningDate?: SortOrder
+    safeguardingPolicySigningDate?: SortOrder
+    keys?: SortOrder
+    fireSafetyTraining?: SortOrder
+    firstAidTraining?: SortOrder
+    safetyTraining?: SortOrder
+    cardNumber?: SortOrder
+    toolLiabilityWaiverSignedAttachment?: SortOrder
+    toolLiabilityWaiverSigningDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -21821,6 +22586,34 @@ export namespace Prisma {
     homeAddress?: string | null
     dateOfBirth: Date | string
     legalStatus?: string | null
+    vaccinationCertificate?: string | null
+    liabilityInsurance?: boolean | null
+    accidentInsurance?: boolean | null
+    testCertificate?: string | null
+    livesInCamp?: boolean | null
+    legalSupportStatus?: string | null
+    legalSupportComment?: string | null
+    powerToolClearanceWood?: boolean | null
+    powerToolClearanceMetal?: boolean | null
+    weldingClearance?: boolean | null
+    handToolsClearance?: boolean | null
+    toolLiabilityWaiverSigned?: boolean | null
+    vaccinationComment?: string | null
+    driversLicenseCar?: boolean | null
+    registeredForMakerspaceVan?: boolean | null
+    registeredForOhfVan?: boolean | null
+    codeOfConductSigned?: boolean | null
+    safeguardingPolicySigned?: boolean | null
+    codeOfConductSignedAttachment?: string | null
+    codeOfConductSigningDate?: Date | string | null
+    safeguardingPolicySigningDate?: Date | string | null
+    keys?: string | null
+    fireSafetyTraining?: boolean | null
+    firstAidTraining?: boolean | null
+    safetyTraining?: boolean | null
+    cardNumber?: string | null
+    toolLiabilityWaiverSignedAttachment?: string | null
+    toolLiabilityWaiverSigningDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21842,6 +22635,34 @@ export namespace Prisma {
     homeAddress?: string | null
     dateOfBirth: Date | string
     legalStatus?: string | null
+    vaccinationCertificate?: string | null
+    liabilityInsurance?: boolean | null
+    accidentInsurance?: boolean | null
+    testCertificate?: string | null
+    livesInCamp?: boolean | null
+    legalSupportStatus?: string | null
+    legalSupportComment?: string | null
+    powerToolClearanceWood?: boolean | null
+    powerToolClearanceMetal?: boolean | null
+    weldingClearance?: boolean | null
+    handToolsClearance?: boolean | null
+    toolLiabilityWaiverSigned?: boolean | null
+    vaccinationComment?: string | null
+    driversLicenseCar?: boolean | null
+    registeredForMakerspaceVan?: boolean | null
+    registeredForOhfVan?: boolean | null
+    codeOfConductSigned?: boolean | null
+    safeguardingPolicySigned?: boolean | null
+    codeOfConductSignedAttachment?: string | null
+    codeOfConductSigningDate?: Date | string | null
+    safeguardingPolicySigningDate?: Date | string | null
+    keys?: string | null
+    fireSafetyTraining?: boolean | null
+    firstAidTraining?: boolean | null
+    safetyTraining?: boolean | null
+    cardNumber?: string | null
+    toolLiabilityWaiverSignedAttachment?: string | null
+    toolLiabilityWaiverSigningDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -21879,6 +22700,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21900,6 +22749,34 @@ export namespace Prisma {
     homeAddress?: NullableStringFieldUpdateOperationsInput | string | null
     dateOfBirth?: DateTimeFieldUpdateOperationsInput | Date | string
     legalStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    vaccinationCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    liabilityInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    accidentInsurance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    testCertificate?: NullableStringFieldUpdateOperationsInput | string | null
+    livesInCamp?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    legalSupportStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    legalSupportComment?: NullableStringFieldUpdateOperationsInput | string | null
+    powerToolClearanceWood?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    powerToolClearanceMetal?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    weldingClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    handToolsClearance?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    toolLiabilityWaiverSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    vaccinationComment?: NullableStringFieldUpdateOperationsInput | string | null
+    driversLicenseCar?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForMakerspaceVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    registeredForOhfVan?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safeguardingPolicySigned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    codeOfConductSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    codeOfConductSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    safeguardingPolicySigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    keys?: NullableStringFieldUpdateOperationsInput | string | null
+    fireSafetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    firstAidTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    safetyTraining?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSignedAttachment?: NullableStringFieldUpdateOperationsInput | string | null
+    toolLiabilityWaiverSigningDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
