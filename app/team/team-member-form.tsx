@@ -178,7 +178,7 @@ export function TeamMemberForm({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 pb-28">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="familyName" className="block text-sm font-medium mb-1">
@@ -503,7 +503,7 @@ export function TeamMemberForm({
         </div>
       </section>
 
-      <div className="flex justify-end space-x-4">
+      <div className="sticky bottom-0 z-20 -mx-4 flex justify-end gap-4 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <button
           type="button"
           onClick={() => (returnTo ? router.push(returnTo) : router.back())}

@@ -224,7 +224,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 pb-28">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="renterName">{t("rentals.new.fields.renterName", "Renter Name")} *</Label>
@@ -386,7 +386,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
               onClearSignature={handleClearSignature}
             />
           </CardContent>
-          <CardFooter className="flex justify-between">
+          <CardFooter className="sticky bottom-0 z-20 flex justify-between border-t bg-background/95 px-6 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
             <Button type="button" variant="outline" onClick={() => router.back()}>
               {t("common.cancel", "Cancel")}
             </Button>

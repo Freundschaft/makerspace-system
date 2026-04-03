@@ -142,7 +142,7 @@ export function CarpentryProjectForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pb-28 sm:space-y-8">
         <FormField
           control={form.control}
           name="date"
@@ -508,9 +508,14 @@ export function CarpentryProjectForm() {
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? t("common.creating", "Creating...") : t("carpentry.new.actions.create", "Create Project")}
-        </Button>
+        <div className="sticky bottom-0 z-20 -mx-4 flex flex-col gap-3 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:-mx-6 sm:flex-row sm:justify-end">
+          <Button type="button" variant="outline" onClick={() => router.back()} className="w-full sm:w-auto">
+            {t("common.cancel", "Cancel")}
+          </Button>
+          <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+            {isSubmitting ? t("common.creating", "Creating...") : t("carpentry.new.actions.create", "Create Project")}
+          </Button>
+        </div>
       </form>
     </Form>
   )
