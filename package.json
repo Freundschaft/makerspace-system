@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint .",
     "prisma:seed": "tsx prisma/seed.ts",
+    "import:airtable": "node --experimental-strip-types scripts/import-airtable.ts",
     "repairs:backfill-owner-identity": "tsx scripts/backfill-bicycle-repair-owner-identity.ts",
     "electronics:backfill-customer-id": "tsx scripts/backfill-electronics-repair-customer-id.ts",
     "postinstall": "prisma generate"
