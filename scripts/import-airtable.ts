@@ -40,6 +40,7 @@ type AirtableListResponse = {
 };
 
 const PROGRESS_EVERY = 100;
+const BATCH_WRITE_SIZE = 250;
 
 let prisma: PrismaClient;
 
@@ -248,6 +249,14 @@ function logModuleProgress(
       )}%)`
     );
   }
+}
+
+function chunkArray<T>(items: T[], size: number) {
+  const chunks: T[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    chunks.push(items.slice(index, index + size));
+  }
+  return chunks;
 }
 
 async function listRecords(baseId: string, tableName: string) {
@@ -1057,22 +1066,47 @@ async function importBicycleRepairs(write: boolean, allowNonEmpty: boolean) {
     "Repair List"
   );
   logProgress(`bicycle-repairs: loaded ${records.length} records across ${BASE_IDS.bicycleRepairs.length} bases`);
-  const existingKeys = new Set(
-    (
-      await prisma.bicycleRepair.findMany({
-        select: {
-          id: true,
-          ownerName: true,
-          receivedDate: true,
-        },
-      })
-    ).map(
-      (repair) =>
-        `${repair.ownerName}::${repair.receivedDate.toISOString().slice(0, 10)}`
-    )
+  const existingRepairs = await prisma.bicycleRepair.findMany({
+    select: {
+      id: true,
+      ownerName: true,
+      receivedDate: true,
+    },
+  });
+  const existingByKey = new Map(
+    existingRepairs.map((repair) => [
+      `${repair.ownerName}::${repair.receivedDate.toISOString().slice(0, 10)}`,
+      { id: repair.id },
+    ])
   );
   let created = 0;
   let updated = 0;
+  let skipped = 0;
+  const queuedCreateKeys = new Set<string>();
+  const queuedUpdateKeys = new Set<string>();
+  const creates: {
+    ownerName: string;
+    ownerIdCardNumber: string;
+    ownerPhone: string;
+    receivedDate: Date;
+    description: string | null;
+    problemTypes: string;
+    status: RepairStatus;
+    photoPath: string | null;
+  }[] = [];
+  const updates: {
+    id: string;
+    data: {
+      ownerName: string;
+      ownerIdCardNumber: string;
+      ownerPhone: string;
+      receivedDate: Date;
+      description: string | null;
+      problemTypes: string;
+      status: RepairStatus;
+      photoPath: string | null;
+    };
+  }[] = [];
 
   for (const [index, record] of records.entries()) {
     logModuleProgress(
@@ -1104,36 +1138,86 @@ async function importBicycleRepairs(write: boolean, allowNonEmpty: boolean) {
       photoPath: null as string | null,
     };
     const recordKey = `${ownerName}::${receivedDate.toISOString().slice(0, 10)}`;
+    const existing = existingByKey.get(recordKey);
 
     if (!write) {
-      if (existingKeys.has(recordKey)) {
+      if (queuedCreateKeys.has(recordKey) || queuedUpdateKeys.has(recordKey)) {
+        skipped += 1;
+        continue;
+      }
+      if (existing) {
+        queuedUpdateKeys.add(recordKey);
         updated += 1;
       } else {
+        queuedCreateKeys.add(recordKey);
         created += 1;
       }
       continue;
     }
 
-    const existing = await prisma.bicycleRepair.findFirst({
-      where: {
-        ownerName,
-        receivedDate,
-      },
-    });
     if (existing) {
-      await prisma.bicycleRepair.update({
-        where: { id: existing.id },
+      if (queuedUpdateKeys.has(recordKey)) {
+        skipped += 1;
+        continue;
+      }
+      updates.push({
+        id: existing.id,
         data,
       });
-      updated += 1;
+      queuedUpdateKeys.add(recordKey);
     } else {
-      await prisma.bicycleRepair.create({ data });
-      existingKeys.add(recordKey);
-      created += 1;
+      if (queuedCreateKeys.has(recordKey)) {
+        skipped += 1;
+        continue;
+      }
+      creates.push(data);
+      queuedCreateKeys.add(recordKey);
     }
   }
 
-  return { created, updated, skipped: 0 };
+  if (write) {
+    logProgress(
+      `bicycle-repairs: classified ${creates.length} creates and ${updates.length} updates`
+    );
+
+    const createChunks = chunkArray(creates, BATCH_WRITE_SIZE);
+    for (const [chunkIndex, chunk] of createChunks.entries()) {
+      logProgress(
+        `bicycle-repairs: create batch ${chunkIndex + 1}/${createChunks.length} (${chunk.length} records)`
+      );
+      await prisma.bicycleRepair.createMany({
+        data: chunk,
+      });
+      created += chunk.length;
+    }
+
+    for (const [index, update] of updates.entries()) {
+      if (
+        index === 0 ||
+        index === updates.length - 1 ||
+        (index + 1) % 25 === 0
+      ) {
+        logProgress(
+          `bicycle-repairs: update ${index + 1}/${updates.length} (${Math.round(
+            ((index + 1) / updates.length) * 100
+          )}%)`
+        );
+      }
+      await prisma.bicycleRepair.update({
+        where: { id: update.id },
+        data: update.data,
+      });
+      updated += 1;
+    }
+  }
+
+  if (skipped > 0) {
+    logProgress(
+      `bicycle-repairs: skipped ${skipped} duplicate records from Airtable input`
+    );
+  }
+
+  return { created, updated, skipped };
 }
 
 async function importRentals(write: boolean, allowNonEmpty: boolean) {

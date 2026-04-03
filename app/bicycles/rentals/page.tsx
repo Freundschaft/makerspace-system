@@ -8,6 +8,7 @@ import { localizePathname } from "@/lib/i18n/config"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { RentalsPageFilters } from "./rentals-page-filters"
 import { Prisma } from "@/generated/prisma"
+import { PageJump } from "@/components/ui/page-jump"
 
 interface PageProps {
   searchParams: Promise<{
@@ -104,11 +105,11 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
         searchQuery={searchQuery}
       />
       <RentalsTable data={rentals} locale={locale} />
-      <div className="mt-4 flex items-center justify-between gap-2">
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalRentals} {t("modules.rentals.title", "Bicycle Rentals")})
+          {totalRentals} {t("modules.rentals.title", "Bicycle Rentals")}
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
           <Button asChild variant="outline" size="sm" disabled={currentPage <= 1}>
             <Link
               href={currentPage > 1 ? buildPageHref(currentPage - 1) : "#"}
@@ -119,6 +120,22 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
               {t("tables.previous", "Previous")}
             </Link>
           </Button>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <span>{t("tables.pagination.page", "Page")}</span>
+            <PageJump
+              basePath={localizePathname("/bicycles/rentals", locale)}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              preservedParams={{
+                status: statusFilter !== "ALL" ? statusFilter : undefined,
+                q: searchQuery || undefined,
+              }}
+              inputLabel={t("tables.pagination.page", "Page")}
+            />
+            <span>
+              {t("tables.pagination.of", "of")} {totalPages}
+            </span>
+          </div>
           <Button asChild variant="outline" size="sm" disabled={currentPage >= totalPages}>
             <Link
               href={currentPage < totalPages ? buildPageHref(currentPage + 1) : "#"}

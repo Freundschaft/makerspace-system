@@ -11,6 +11,7 @@ import { TeamMemberWithRole, TeamPresenceEntry } from "./team-types";
 import { localizePathname, type Locale } from "@/lib/i18n/config";
 import { addMonths, format } from "date-fns";
 import { TeamPresenceCalendar } from "./team-presence-calendar";
+import { PageJump } from "@/components/ui/page-jump";
 
 interface TeamPageClientProps {
   initialTeamMembers: TeamMemberWithRole[];
@@ -433,11 +434,11 @@ export function TeamPageClient({
             onSelectedIdsChange={handleSelectedIdsChange}
             updatingRoleId={updatingRoleId}
           />
-          <div className="mt-4 flex items-center justify-between gap-2">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
-              {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalMembers} {t("team.list.title", "Team Members")})
+              {totalMembers} {t("team.list.title", "Team Members")}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 sm:justify-end">
               <Button
                 variant="outline"
                 size="sm"
@@ -447,6 +448,22 @@ export function TeamPageClient({
                 <ChevronLeft className="mr-1 h-4 w-4" />
                 {t("tables.previous", "Previous")}
               </Button>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                <span>{t("tables.pagination.page", "Page")}</span>
+                <PageJump
+                  basePath={basePath}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  preservedParams={{
+                    status: statusFilter !== "ACTIVE" ? statusFilter : undefined,
+                    month: month !== currentMonthKey ? month : undefined,
+                  }}
+                  inputLabel={t("tables.pagination.page", "Page")}
+                />
+                <span>
+                  {t("tables.pagination.of", "of")} {totalPages}
+                </span>
+              </div>
               <Button
                 variant="outline"
                 size="sm"

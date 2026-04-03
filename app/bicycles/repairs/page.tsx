@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { getServerI18n } from "@/lib/i18n/server"
 import { localizePathname } from "@/lib/i18n/config"
+import { PageJump } from "@/components/ui/page-jump"
 
 interface PageProps {
   searchParams: Promise<{
@@ -70,11 +71,11 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
         </Button>
       </div>
       <RepairsTable data={repairs} />
-      <div className="mt-4 flex items-center justify-between gap-2">
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          {t("tables.pagination.page", "Page")} {currentPage} {t("tables.pagination.of", "of")} {totalPages} ({totalRepairs} {t("modules.repairs.total", "total repairs")})
+          {totalRepairs} {t("modules.repairs.total", "total repairs")}
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-end">
           <Button asChild variant="outline" size="sm" disabled={!hasPreviousPage}>
             <Link
               href={hasPreviousPage ? previousPageHref : "#"}
@@ -85,6 +86,18 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
               {t("tables.previous", "Previous")}
             </Link>
           </Button>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <span>{t("tables.pagination.page", "Page")}</span>
+            <PageJump
+              basePath={localizePathname("/bicycles/repairs", locale)}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              inputLabel={t("tables.pagination.page", "Page")}
+            />
+            <span>
+              {t("tables.pagination.of", "of")} {totalPages}
+            </span>
+          </div>
           <Button asChild variant="outline" size="sm" disabled={!hasNextPage}>
             <Link
               href={hasNextPage ? nextPageHref : "#"}

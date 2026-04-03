@@ -71,6 +71,18 @@ export function getColumns(t: Translator): ColumnDef<Repair>[] {
     },
   },
   {
+    accessorKey: "ownerName",
+    header: t("repairs.form.ownerName", "Owner Name"),
+    cell: ({ row }) => {
+      const id = row.original.id
+      return (
+        <Link href={`/bicycles/repairs/${id}`} className="block">
+          {row.getValue("ownerName")}
+        </Link>
+      )
+    },
+  },
+  {
     accessorKey: "ownerPhone",
     header: t("repairs.form.ownerPhone", "Owner Phone"),
     cell: ({ row }) => {
