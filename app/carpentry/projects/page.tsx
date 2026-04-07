@@ -15,6 +15,18 @@ export default async function CarpentryProjectsPage() {
       date: 'desc'
     }
   })
+  const serializedProjects = projects.map((project) => ({
+    ...project,
+    date: project.date.toISOString(),
+    materialCosts: project.materialCosts === null ? null : Number(project.materialCosts),
+    createdAt: project.createdAt.toISOString(),
+    updatedAt: project.updatedAt.toISOString(),
+    assignedTo: project.assignedTo
+      ? {
+          email: project.assignedTo.email,
+        }
+      : null,
+  }))
 
   return (
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
@@ -24,7 +36,7 @@ export default async function CarpentryProjectsPage() {
           <Link href={localizePathname("/carpentry/projects/new", locale)}>{t("modules.carpentry.new", "New Project")}</Link>
         </Button>
       </div>
-      <ProjectsTable data={projects} />
+      <ProjectsTable data={serializedProjects} />
     </div>
   )
 }

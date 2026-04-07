@@ -20,7 +20,7 @@ const orderTypeLabels: Record<string, string> = {
 
 export type CarpentryProject = {
   id: string
-  date: Date
+  date: string
   acceptedBy: string | null
   customerType: string | null
   organizationName: string | null
@@ -32,7 +32,7 @@ export type CarpentryProject = {
   itemToRepair: string | null
   problemDescription: string | null
   projectDescription: string | null
-  materialCosts: any | null
+  materialCosts: number | null
   paidByCustomer: boolean | null
   photoPath: string | null
   assignedTo: {
@@ -46,7 +46,7 @@ export function getColumns(t: Translator): ColumnDef<CarpentryProject>[] {
     accessorKey: "date",
     header: t("carpentry.new.fields.date", "Date"),
     cell: ({ row }) => {
-      const date = row.getValue("date") as Date
+      const date = row.getValue("date") as string
       const id = row.original.id
       return (
         <Link href={`/carpentry/projects/${id}`} className="block">
