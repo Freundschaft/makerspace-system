@@ -179,4 +179,4 @@ Before contributing, check [`AGENTS.md`](./AGENTS.md) for repository conventions
 
 ## License
 
-No license file is currently included in this repository. If you are preparing this project for wider open source adoption or grant review, adding an explicit license should be a next step.
+This project is available under the [MIT License](./LICENSE).
