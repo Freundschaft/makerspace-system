@@ -102,6 +102,7 @@ export function TeamMemberForm({
   const router = useRouter();
   const { t } = useI18n();
   const [loading, setLoading] = useState(false);
+  const [provisioningGoogleUser, setProvisioningGoogleUser] = useState(false);
   const submitLockRef = useRef(false);
   const [formData, setFormData] = useState<Partial<TeamMember>>(() =>
     initialData || {
@@ -182,6 +183,55 @@ export function TeamMemberForm({
     () => getPhotoPreviewSrc(formData.photoPath),
     [formData.photoPath]
   );
+
+  const handleCreateGoogleWorkspaceUser = async () => {
+    if (!initialData?.id || provisioningGoogleUser) {
+      return;
+    }
+
+    try {
+      setProvisioningGoogleUser(true);
+      const response = await fetch(
+        `/api/team/${initialData.id}/google-workspace`,
+        {
+          method: 'POST',
+        }
+      );
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(
+          payload?.error ||
+            t(
+              'team.googleWorkspace.createFailed',
+              'Failed to create Google Workspace user'
+            )
+        );
+      }
+
+      window.alert(
+        t(
+          'team.googleWorkspace.created',
+          'Google Workspace user created successfully.'
+        )
+      );
+      router.refresh();
+    } catch (error) {
+      console.error('Error creating Google Workspace user:', error);
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : t(
+              'team.googleWorkspace.createFailed',
+              'Failed to create Google Workspace user'
+            )
+      );
+    } finally {
+      setProvisioningGoogleUser(false);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 pb-28">
@@ -509,7 +559,25 @@ export function TeamMemberForm({
         </div>
       </section>
 
-      <div className="sticky bottom-0 z-20 -mx-4 flex justify-end gap-4 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="sticky bottom-0 z-20 -mx-4 flex flex-col gap-3 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:flex-row sm:justify-end">
+        {mode === 'edit' && initialData?.id ? (
+          <button
+            type="button"
+            onClick={() => void handleCreateGoogleWorkspaceUser()}
+            disabled={provisioningGoogleUser || loading}
+            className="px-4 py-2 border rounded-md hover:bg-accent/20 disabled:opacity-50"
+          >
+            {provisioningGoogleUser
+              ? t(
+                  'team.googleWorkspace.creating',
+                  'Creating Google Workspace User...'
+                )
+              : t(
+                  'team.googleWorkspace.createAction',
+                  'Create Google Workspace User'
+                )}
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={() => (returnTo ? router.push(returnTo) : router.back())}
