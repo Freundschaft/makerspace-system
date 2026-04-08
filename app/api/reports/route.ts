@@ -9,15 +9,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const period = parseReportPeriod(request.nextUrl.searchParams.get("period"));
+    const requestedPeriod = request.nextUrl.searchParams.get("period");
+    const period = parseReportPeriod(requestedPeriod);
     const generatedAt = new Date();
-    const periods = await getReportCountsByPeriod(generatedAt);
+    const countsByPeriod = await getReportCountsByPeriod(generatedAt);
+
+    if (!requestedPeriod) {
+      return NextResponse.json({
+        generatedAt: generatedAt.toISOString(),
+        periods: countsByPeriod,
+      });
+    }
 
     return NextResponse.json({
       period,
       generatedAt: generatedAt.toISOString(),
-      counts: periods[period],
-      periods,
+      counts: countsByPeriod[period],
     });
   } catch (error) {
     console.error("Error fetching report counts:", error);
