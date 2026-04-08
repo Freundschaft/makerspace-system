@@ -12,14 +12,13 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { startOfMonth, startOfWeek, startOfYear } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth-options";
 import { localizePathname } from "@/lib/i18n/config";
-import { prisma } from "@/lib/prisma";
 import { getServerI18n } from "@/lib/i18n/server";
-import { UserRole, type Prisma } from "@/generated/prisma";
+import { getReportCountsByPeriod, type ReportPeriod } from "@/lib/reports";
+import { UserRole } from "@/generated/prisma";
 
 type MetricStat = {
   label: string;
@@ -27,8 +26,6 @@ type MetricStat = {
   href: string;
   icon: LucideIcon;
 };
-
-type ReportPeriod = "weekly" | "monthly" | "yearly" | "all-time";
 
 function buildStats(
   t: (key: string, fallback: string) => string,
@@ -148,115 +145,13 @@ export default async function ReportsPage({
   const selectedPeriodOption =
     periodOptions.find((option) => option.value === selectedPeriod) ?? periodOptions[1];
   const reportsBasePath = localizePathname("/reports", locale);
-
-  const monthStart = startOfMonth(now);
-  const weekStart = startOfWeek(now, { weekStartsOn: 1 });
-  const yearStart = startOfYear(now);
-
-  const monthTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: monthStart } };
-  const weekTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: weekStart } };
-  const yearTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: yearStart } };
-  const monthBikeRepairWhere: Prisma.BicycleRepairWhereInput = { receivedDate: { gte: monthStart } };
-  const weekBikeRepairWhere: Prisma.BicycleRepairWhereInput = { receivedDate: { gte: weekStart } };
-  const yearBikeRepairWhere: Prisma.BicycleRepairWhereInput = { receivedDate: { gte: yearStart } };
-  const monthRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: monthStart } };
-  const weekRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: weekStart } };
-  const yearRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: yearStart } };
-  const monthElectronicsWhere: Prisma.ElectronicsRepairWhereInput = { createdDate: { gte: monthStart } };
-  const weekElectronicsWhere: Prisma.ElectronicsRepairWhereInput = { createdDate: { gte: weekStart } };
-  const yearElectronicsWhere: Prisma.ElectronicsRepairWhereInput = { createdDate: { gte: yearStart } };
-  const monthCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: monthStart } };
-  const weekCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: weekStart } };
-  const yearCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: yearStart } };
-  const monthHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: monthStart } };
-  const weekHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: weekStart } };
-  const yearHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: yearStart } };
-
-  const [
-    allTeamMembersCount,
-    allBicycleRepairsCount,
-    allBicycleRentalsCount,
-    allElectronicsRepairsCount,
-    allCarpentryProjectsCount,
-    allHouseProjectsCount,
-    monthTeamMembersCount,
-    monthBicycleRepairsCount,
-    monthBicycleRentalsCount,
-    monthElectronicsRepairsCount,
-    monthCarpentryProjectsCount,
-    monthHouseProjectsCount,
-    weekTeamMembersCount,
-    weekBicycleRepairsCount,
-    weekBicycleRentalsCount,
-    weekElectronicsRepairsCount,
-    weekCarpentryProjectsCount,
-    weekHouseProjectsCount,
-    yearTeamMembersCount,
-    yearBicycleRepairsCount,
-    yearBicycleRentalsCount,
-    yearElectronicsRepairsCount,
-    yearCarpentryProjectsCount,
-    yearHouseProjectsCount,
-  ] = await Promise.all([
-    prisma.teamMember.count(),
-    prisma.bicycleRepair.count(),
-    prisma.bicycleRental.count(),
-    prisma.electronicsRepair.count(),
-    prisma.carpentryProject.count(),
-    prisma.houseProject.count(),
-    prisma.teamMember.count({ where: monthTeamWhere }),
-    prisma.bicycleRepair.count({ where: monthBikeRepairWhere }),
-    prisma.bicycleRental.count({ where: monthRentalWhere }),
-    prisma.electronicsRepair.count({ where: monthElectronicsWhere }),
-    prisma.carpentryProject.count({ where: monthCarpentryWhere }),
-    prisma.houseProject.count({ where: monthHouseWhere }),
-    prisma.teamMember.count({ where: weekTeamWhere }),
-    prisma.bicycleRepair.count({ where: weekBikeRepairWhere }),
-    prisma.bicycleRental.count({ where: weekRentalWhere }),
-    prisma.electronicsRepair.count({ where: weekElectronicsWhere }),
-    prisma.carpentryProject.count({ where: weekCarpentryWhere }),
-    prisma.houseProject.count({ where: weekHouseWhere }),
-    prisma.teamMember.count({ where: yearTeamWhere }),
-    prisma.bicycleRepair.count({ where: yearBikeRepairWhere }),
-    prisma.bicycleRental.count({ where: yearRentalWhere }),
-    prisma.electronicsRepair.count({ where: yearElectronicsWhere }),
-    prisma.carpentryProject.count({ where: yearCarpentryWhere }),
-    prisma.houseProject.count({ where: yearHouseWhere }),
-  ]);
+  const countsByPeriod = await getReportCountsByPeriod(now);
 
   const statsByPeriod: Record<ReportPeriod, MetricStat[]> = {
-    "all-time": buildStats(t, isAdmin, {
-      teamMembersCount: allTeamMembersCount,
-      bicycleRepairsCount: allBicycleRepairsCount,
-      bicycleRentalsCount: allBicycleRentalsCount,
-      electronicsRepairsCount: allElectronicsRepairsCount,
-      carpentryProjectsCount: allCarpentryProjectsCount,
-      houseProjectsCount: allHouseProjectsCount,
-    }),
-    monthly: buildStats(t, isAdmin, {
-      teamMembersCount: monthTeamMembersCount,
-      bicycleRepairsCount: monthBicycleRepairsCount,
-      bicycleRentalsCount: monthBicycleRentalsCount,
-      electronicsRepairsCount: monthElectronicsRepairsCount,
-      carpentryProjectsCount: monthCarpentryProjectsCount,
-      houseProjectsCount: monthHouseProjectsCount,
-    }),
-    weekly: buildStats(t, isAdmin, {
-      teamMembersCount: weekTeamMembersCount,
-      bicycleRepairsCount: weekBicycleRepairsCount,
-      bicycleRentalsCount: weekBicycleRentalsCount,
-      electronicsRepairsCount: weekElectronicsRepairsCount,
-      carpentryProjectsCount: weekCarpentryProjectsCount,
-      houseProjectsCount: weekHouseProjectsCount,
-    }),
-    yearly: buildStats(t, isAdmin, {
-      teamMembersCount: yearTeamMembersCount,
-      bicycleRepairsCount: yearBicycleRepairsCount,
-      bicycleRentalsCount: yearBicycleRentalsCount,
-      electronicsRepairsCount: yearElectronicsRepairsCount,
-      carpentryProjectsCount: yearCarpentryProjectsCount,
-      houseProjectsCount: yearHouseProjectsCount,
-    }),
+    "all-time": buildStats(t, isAdmin, countsByPeriod["all-time"]),
+    monthly: buildStats(t, isAdmin, countsByPeriod.monthly),
+    weekly: buildStats(t, isAdmin, countsByPeriod.weekly),
+    yearly: buildStats(t, isAdmin, countsByPeriod.yearly),
   };
   const selectedStats = statsByPeriod[selectedPeriod];
 
