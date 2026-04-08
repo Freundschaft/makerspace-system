@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { requireAuth } from "@/lib/auth";
+import { hasSessionOrApiSecret } from "@/lib/api-secret";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
   try {
-    const token = await requireAuth(request);
-    if (!token) {
+    if (!(await hasSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -29,8 +28,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const token = await requireAuth(request);
-    if (!token) {
+    if (!(await hasSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

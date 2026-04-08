@@ -2,6 +2,8 @@ import { timingSafeEqual } from "node:crypto";
 
 import type { NextRequest } from "next/server";
 
+import { requireAuth } from "@/lib/auth";
+
 function getSecretFromRequest(request: NextRequest) {
   const authorization = request.headers.get("authorization");
   const bearerToken = authorization?.startsWith("Bearer ")
@@ -23,7 +25,7 @@ function safeCompare(left: string, right: string) {
 }
 
 export function hasValidApiSecret(request: NextRequest) {
-  const expectedSecret = process.env.REPORTS_API_SECRET?.trim();
+  const expectedSecret = process.env.API_SECRET?.trim();
   const providedSecret = getSecretFromRequest(request);
 
   if (!expectedSecret || !providedSecret) {
@@ -31,4 +33,13 @@ export function hasValidApiSecret(request: NextRequest) {
   }
 
   return safeCompare(expectedSecret, providedSecret);
+}
+
+export async function hasSessionOrApiSecret(request: NextRequest) {
+  if (hasValidApiSecret(request)) {
+    return true;
+  }
+
+  const token = await requireAuth(request);
+  return Boolean(token);
 }
