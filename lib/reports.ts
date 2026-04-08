@@ -12,6 +12,7 @@ export type ReportCounts = {
   electronicsRepairsCount: number;
   carpentryProjectsCount: number;
   houseProjectsCount: number;
+  projectsCount: number;
 };
 
 export function parseReportPeriod(period: string | null | undefined): ReportPeriod {
@@ -59,6 +60,9 @@ export async function getReportCountsByPeriod(
   const monthHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: monthStart } };
   const weekHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: weekStart } };
   const yearHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: yearStart } };
+  const monthProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: monthStart } };
+  const weekProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: weekStart } };
+  const yearProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: yearStart } };
 
   const [
     allTeamMembersCount,
@@ -67,24 +71,28 @@ export async function getReportCountsByPeriod(
     allElectronicsRepairsCount,
     allCarpentryProjectsCount,
     allHouseProjectsCount,
+    allProjectsCount,
     monthTeamMembersCount,
     monthBicycleRepairsCount,
     monthBicycleRentalsCount,
     monthElectronicsRepairsCount,
     monthCarpentryProjectsCount,
     monthHouseProjectsCount,
+    monthProjectsCount,
     weekTeamMembersCount,
     weekBicycleRepairsCount,
     weekBicycleRentalsCount,
     weekElectronicsRepairsCount,
     weekCarpentryProjectsCount,
     weekHouseProjectsCount,
+    weekProjectsCount,
     yearTeamMembersCount,
     yearBicycleRepairsCount,
     yearBicycleRentalsCount,
     yearElectronicsRepairsCount,
     yearCarpentryProjectsCount,
     yearHouseProjectsCount,
+    yearProjectsCount,
   ] = await Promise.all([
     prisma.teamMember.count(),
     prisma.bicycleRepair.count(),
@@ -92,24 +100,28 @@ export async function getReportCountsByPeriod(
     prisma.electronicsRepair.count(),
     prisma.carpentryProject.count(),
     prisma.houseProject.count(),
+    prisma.project.count(),
     prisma.teamMember.count({ where: monthTeamWhere }),
     prisma.bicycleRepair.count({ where: monthBikeRepairWhere }),
     prisma.bicycleRental.count({ where: monthRentalWhere }),
     prisma.electronicsRepair.count({ where: monthElectronicsWhere }),
     prisma.carpentryProject.count({ where: monthCarpentryWhere }),
     prisma.houseProject.count({ where: monthHouseWhere }),
+    prisma.project.count({ where: monthProjectWhere }),
     prisma.teamMember.count({ where: weekTeamWhere }),
     prisma.bicycleRepair.count({ where: weekBikeRepairWhere }),
     prisma.bicycleRental.count({ where: weekRentalWhere }),
     prisma.electronicsRepair.count({ where: weekElectronicsWhere }),
     prisma.carpentryProject.count({ where: weekCarpentryWhere }),
     prisma.houseProject.count({ where: weekHouseWhere }),
+    prisma.project.count({ where: weekProjectWhere }),
     prisma.teamMember.count({ where: yearTeamWhere }),
     prisma.bicycleRepair.count({ where: yearBikeRepairWhere }),
     prisma.bicycleRental.count({ where: yearRentalWhere }),
     prisma.electronicsRepair.count({ where: yearElectronicsWhere }),
     prisma.carpentryProject.count({ where: yearCarpentryWhere }),
     prisma.houseProject.count({ where: yearHouseWhere }),
+    prisma.project.count({ where: yearProjectWhere }),
   ]);
 
   return {
@@ -120,6 +132,7 @@ export async function getReportCountsByPeriod(
       electronicsRepairsCount: allElectronicsRepairsCount,
       carpentryProjectsCount: allCarpentryProjectsCount,
       houseProjectsCount: allHouseProjectsCount,
+      projectsCount: allProjectsCount,
     },
     monthly: {
       teamMembersCount: monthTeamMembersCount,
@@ -128,6 +141,7 @@ export async function getReportCountsByPeriod(
       electronicsRepairsCount: monthElectronicsRepairsCount,
       carpentryProjectsCount: monthCarpentryProjectsCount,
       houseProjectsCount: monthHouseProjectsCount,
+      projectsCount: monthProjectsCount,
     },
     weekly: {
       teamMembersCount: weekTeamMembersCount,
@@ -136,6 +150,7 @@ export async function getReportCountsByPeriod(
       electronicsRepairsCount: weekElectronicsRepairsCount,
       carpentryProjectsCount: weekCarpentryProjectsCount,
       houseProjectsCount: weekHouseProjectsCount,
+      projectsCount: weekProjectsCount,
     },
     yearly: {
       teamMembersCount: yearTeamMembersCount,
@@ -144,6 +159,7 @@ export async function getReportCountsByPeriod(
       electronicsRepairsCount: yearElectronicsRepairsCount,
       carpentryProjectsCount: yearCarpentryProjectsCount,
       houseProjectsCount: yearHouseProjectsCount,
+      projectsCount: yearProjectsCount,
     },
   };
 }

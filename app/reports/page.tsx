@@ -4,6 +4,7 @@ import {
   Bike,
   CalendarClock,
   ClipboardList,
+  FolderKanban,
   Hammer,
   House,
   Settings,
@@ -37,6 +38,7 @@ function buildStats(
     electronicsRepairsCount: number;
     carpentryProjectsCount: number;
     houseProjectsCount: number;
+    projectsCount: number;
   }
 ): MetricStat[] {
   return [
@@ -79,6 +81,12 @@ function buildStats(
       value: counts.houseProjectsCount,
       href: "/house-projects",
       icon: House,
+    },
+    {
+      label: t("dashboard.stats.projects", "Projects"),
+      value: counts.projectsCount,
+      href: "/projects",
+      icon: FolderKanban,
     },
   ];
 }

@@ -22,7 +22,8 @@ type ModuleName =
   | "electronics"
   | "bicycle-repairs"
   | "rentals"
-  | "carpentry";
+  | "carpentry"
+  | "projects";
 
 type AirtableAttachment = {
   url: string;
@@ -50,6 +51,7 @@ const DEFAULT_MODULES: ModuleName[] = [
   "bicycle-repairs",
   "rentals",
   "carpentry",
+  "projects",
 ];
 
 function parseBaseIds(value: string | undefined, fallback: string[]) {
@@ -80,6 +82,7 @@ const BASE_IDS = {
   ]),
   rentals: process.env.AIRTABLE_RENTALS_BASE_ID || "appMzGKV5q6TEGaxh",
   carpentry: process.env.AIRTABLE_CARPENTRY_BASE_ID || "appILeLHxoWHQxpn4",
+  projects: process.env.AIRTABLE_PROJECTS_BASE_ID || "appOwEJZsw3HTFldf",
 } as const;
 
 function loadDotEnv() {
@@ -685,6 +688,45 @@ function mapCarpentryOrderType(rawValue: string) {
   return null;
 }
 
+function mapProjectStatus(rawValue: string) {
+  const normalized = normalizeKey(rawValue);
+  if (normalized === "done") {
+    return "DONE" as const;
+  }
+  if (normalized === "in progress") {
+    return "IN_PROGRESS" as const;
+  }
+  if (normalized === "off") {
+    return "OFF" as const;
+  }
+  return "TODO" as const;
+}
+
+function collaboratorName(value: unknown) {
+  if (Array.isArray(value)) {
+    const first = value[0] as { name?: unknown; email?: unknown } | undefined;
+    if (typeof first?.name === "string" && first.name.trim()) {
+      return first.name.trim();
+    }
+    if (typeof first?.email === "string" && first.email.trim()) {
+      return first.email.trim();
+    }
+    return null;
+  }
+
+  if (value && typeof value === "object") {
+    const maybeCollaborator = value as { name?: unknown; email?: unknown };
+    if (typeof maybeCollaborator.name === "string" && maybeCollaborator.name.trim()) {
+      return maybeCollaborator.name.trim();
+    }
+    if (typeof maybeCollaborator.email === "string" && maybeCollaborator.email.trim()) {
+      return maybeCollaborator.email.trim();
+    }
+  }
+
+  return null;
+}
+
 async function ensureWritable(
   moduleName: ModuleName,
   write: boolean,
@@ -700,6 +742,7 @@ async function ensureWritable(
     "bicycle-repairs": () => prisma.bicycleRepair.count(),
     rentals: () => prisma.bicycleRental.count(),
     carpentry: () => prisma.carpentryProject.count(),
+    projects: () => prisma.project.count(),
   } as const;
 
   const count = await checks[moduleName]();
@@ -1372,6 +1415,60 @@ async function importCarpentry(write: boolean, allowNonEmpty: boolean) {
   return { created, updated, skipped: 0 };
 }
 
+async function importProjects(write: boolean, allowNonEmpty: boolean) {
+  await ensureWritable("projects", write, allowNonEmpty);
+  logProgress(`projects: starting ${write ? "import" : "dry run"}`);
+
+  const records = await listRecords(BASE_IDS.projects, "Projects");
+  logProgress(`projects: loaded ${records.length} records`);
+  let created = 0;
+  let updated = 0;
+
+  for (const [index, record] of records.entries()) {
+    logModuleProgress("projects", index + 1, records.length, write ? "import" : "dry-run");
+    const name = asString(record.fields.Name) || `Project ${index + 1}`;
+    const startDate = asDate(record.fields["Start Date"]);
+
+    const existing = await prisma.project.findFirst({
+      where: {
+        name,
+        startDate: startDate || undefined,
+      },
+    });
+
+    const data = {
+      name,
+      notes: asOptionalString(record.fields.Notes),
+      assignee: collaboratorName(record.fields.Assignee),
+      status: mapProjectStatus(asString(record.fields.Status)),
+      startDate,
+      endDate: asDate(record.fields["End Date"]),
+      googlePhotosAlbumLink: asOptionalString(record.fields["Google Photos Album Link"]),
+      hashtag: asOptionalString(record.fields.Hashtag),
+      purpose: asOptionalString(record.fields.Purpose),
+      assignedToId: null as string | null,
+    };
+
+    if (!write) {
+      existing ? updated++ : created++;
+      continue;
+    }
+
+    if (existing) {
+      await prisma.project.update({
+        where: { id: existing.id },
+        data,
+      });
+      updated += 1;
+    } else {
+      await prisma.project.create({ data });
+      created += 1;
+    }
+  }
+
+  return { created, updated, skipped: 0 };
+}
+
 async function main() {
   loadDotEnv();
   prisma = createPrismaClient();
@@ -1393,6 +1490,7 @@ async function main() {
     "bicycle-repairs": importBicycleRepairs,
     rentals: importRentals,
     carpentry: importCarpentry,
+    projects: importProjects,
   };
 
   for (const moduleName of modules) {

@@ -303,6 +303,22 @@ exports.Prisma.HouseProjectScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  notes: 'notes',
+  assignee: 'assignee',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  googlePhotosAlbumLink: 'googlePhotosAlbumLink',
+  hashtag: 'hashtag',
+  purpose: 'purpose',
+  assignedToId: 'assignedToId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BudgetScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -448,6 +464,17 @@ exports.Prisma.HouseProjectOrderByRelevanceFieldEnum = {
   assignedToId: 'assignedToId'
 };
 
+exports.Prisma.ProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  notes: 'notes',
+  assignee: 'assignee',
+  googlePhotosAlbumLink: 'googlePhotosAlbumLink',
+  hashtag: 'hashtag',
+  purpose: 'purpose',
+  assignedToId: 'assignedToId'
+};
+
 exports.Prisma.BudgetOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -581,6 +608,13 @@ exports.HouseProjectStatus = exports.$Enums.HouseProjectStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  TODO: 'TODO',
+  IN_PROGRESS: 'IN_PROGRESS',
+  DONE: 'DONE',
+  OFF: 'OFF'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -593,6 +627,7 @@ exports.Prisma.ModelName = {
   ElectronicsRepair: 'ElectronicsRepair',
   CarpentryProject: 'CarpentryProject',
   HouseProject: 'HouseProject',
+  Project: 'Project',
   Budget: 'Budget',
   Expense: 'Expense'
 };
