@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { requireAdmin } from "@/lib/auth";
+import { hasAdminSessionOrApiSecret } from "@/lib/api-secret";
 import { endOfMonth, startOfMonth } from "date-fns";
 
 function toDay(date: Date) {
@@ -9,7 +9,7 @@ function toDay(date: Date) {
 
 export async function GET(request: NextRequest) {
   try {
-    if (!(await requireAdmin(request))) {
+    if (!(await hasAdminSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    if (!(await requireAdmin(request))) {
+    if (!(await hasAdminSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
-import { requireAdmin } from "@/lib/auth";
+import { hasAdminSessionOrApiSecret } from "@/lib/api-secret";
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    if (!(await requireAdmin(request))) {
+    if (!(await hasAdminSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -135,7 +135,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    if (!(await requireAdmin(request))) {
+    if (!(await hasAdminSessionOrApiSecret(request))) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

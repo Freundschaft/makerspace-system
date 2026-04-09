@@ -2,7 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 
 import type { NextRequest } from "next/server";
 
-import { requireAuth } from "@/lib/auth";
+import { requireAdmin, requireAuth } from "@/lib/auth";
 
 function getSecretFromRequest(request: NextRequest) {
   const authorization = request.headers.get("authorization");
@@ -42,4 +42,13 @@ export async function hasSessionOrApiSecret(request: NextRequest) {
 
   const token = await requireAuth(request);
   return Boolean(token);
+}
+
+export async function hasAdminSessionOrApiSecret(request: NextRequest) {
+  if (hasValidApiSecret(request)) {
+    return true;
+  }
+
+  const user = await requireAdmin(request);
+  return Boolean(user);
 }
