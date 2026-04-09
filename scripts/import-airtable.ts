@@ -9,6 +9,7 @@ import {
   CarpentryOrderType,
   ElectronicsCategory,
   ElectronicsRepairStatus,
+  JobStatus,
   PrismaClient,
   RepairStatus,
   RentalStatus,
@@ -23,7 +24,8 @@ type ModuleName =
   | "bicycle-repairs"
   | "rentals"
   | "carpentry"
-  | "projects";
+  | "projects"
+  | "jobs";
 
 type AirtableAttachment = {
   url: string;
@@ -52,6 +54,7 @@ const DEFAULT_MODULES: ModuleName[] = [
   "rentals",
   "carpentry",
   "projects",
+  "jobs",
 ];
 
 function parseBaseIds(value: string | undefined, fallback: string[]) {
@@ -83,6 +86,7 @@ const BASE_IDS = {
   rentals: process.env.AIRTABLE_RENTALS_BASE_ID || "appMzGKV5q6TEGaxh",
   carpentry: process.env.AIRTABLE_CARPENTRY_BASE_ID || "appILeLHxoWHQxpn4",
   projects: process.env.AIRTABLE_PROJECTS_BASE_ID || "appOwEJZsw3HTFldf",
+  jobs: process.env.AIRTABLE_JOBS_BASE_ID || "appjUfr5vrmW9usxd",
 } as const;
 
 function loadDotEnv() {
@@ -702,6 +706,14 @@ function mapProjectStatus(rawValue: string) {
   return "TODO" as const;
 }
 
+function mapJobStatus(rawValue: string) {
+  const normalized = normalizeKey(rawValue);
+  if (normalized === "closed") {
+    return JobStatus.CLOSED;
+  }
+  return JobStatus.OPEN;
+}
+
 function collaboratorName(value: unknown) {
   if (Array.isArray(value)) {
     const first = value[0] as { name?: unknown; email?: unknown } | undefined;
@@ -743,6 +755,7 @@ async function ensureWritable(
     rentals: () => prisma.bicycleRental.count(),
     carpentry: () => prisma.carpentryProject.count(),
     projects: () => prisma.project.count(),
+    jobs: () => prisma.job.count(),
   } as const;
 
   const count = await checks[moduleName]();
@@ -1469,6 +1482,51 @@ async function importProjects(write: boolean, allowNonEmpty: boolean) {
   return { created, updated, skipped: 0 };
 }
 
+async function importJobs(write: boolean, allowNonEmpty: boolean) {
+  await ensureWritable("jobs", write, allowNonEmpty);
+  logProgress(`jobs: starting ${write ? "import" : "dry run"}`);
+
+  const records = await listRecords(BASE_IDS.jobs, "Open Positions");
+  logProgress(`jobs: loaded ${records.length} records`);
+  let created = 0;
+  let updated = 0;
+
+  for (const [index, record] of records.entries()) {
+    logModuleProgress("jobs", index + 1, records.length, write ? "import" : "dry-run");
+    const name = asString(record.fields.Name) || `Job ${index + 1}`;
+    const slug = asOptionalString(record.fields.Slug);
+
+    const existing = await prisma.job.findFirst({
+      where: slug ? { OR: [{ slug }, { name }] } : { name },
+    });
+
+    const data = {
+      name,
+      notes: asOptionalString(record.fields.Notes),
+      status: mapJobStatus(asString(record.fields.Status)),
+      slug,
+    };
+
+    if (!write) {
+      existing ? updated++ : created++;
+      continue;
+    }
+
+    if (existing) {
+      await prisma.job.update({
+        where: { id: existing.id },
+        data,
+      });
+      updated += 1;
+    } else {
+      await prisma.job.create({ data });
+      created += 1;
+    }
+  }
+
+  return { created, updated, skipped: 0 };
+}
+
 async function main() {
   loadDotEnv();
   prisma = createPrismaClient();
@@ -1491,6 +1549,7 @@ async function main() {
     rentals: importRentals,
     carpentry: importCarpentry,
     projects: importProjects,
+    jobs: importJobs,
   };
 
   for (const moduleName of modules) {

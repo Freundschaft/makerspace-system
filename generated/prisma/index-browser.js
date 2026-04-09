@@ -319,6 +319,16 @@ exports.Prisma.ProjectScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.JobScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  notes: 'notes',
+  status: 'status',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BudgetScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -475,6 +485,13 @@ exports.Prisma.ProjectOrderByRelevanceFieldEnum = {
   assignedToId: 'assignedToId'
 };
 
+exports.Prisma.JobOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  notes: 'notes',
+  slug: 'slug'
+};
+
 exports.Prisma.BudgetOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -615,6 +632,11 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   OFF: 'OFF'
 };
 
+exports.JobStatus = exports.$Enums.JobStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -628,6 +650,7 @@ exports.Prisma.ModelName = {
   CarpentryProject: 'CarpentryProject',
   HouseProject: 'HouseProject',
   Project: 'Project',
+  Job: 'Job',
   Budget: 'Budget',
   Expense: 'Expense'
 };

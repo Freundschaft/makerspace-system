@@ -13,6 +13,7 @@ export type ReportCounts = {
   carpentryProjectsCount: number;
   houseProjectsCount: number;
   projectsCount: number;
+  jobsCount: number;
 };
 
 export function parseReportPeriod(period: string | null | undefined): ReportPeriod {
@@ -63,6 +64,9 @@ export async function getReportCountsByPeriod(
   const monthProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: monthStart } };
   const weekProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: weekStart } };
   const yearProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: yearStart } };
+  const monthJobWhere: Prisma.JobWhereInput = { createdAt: { gte: monthStart } };
+  const weekJobWhere: Prisma.JobWhereInput = { createdAt: { gte: weekStart } };
+  const yearJobWhere: Prisma.JobWhereInput = { createdAt: { gte: yearStart } };
 
   const [
     allTeamMembersCount,
@@ -72,6 +76,7 @@ export async function getReportCountsByPeriod(
     allCarpentryProjectsCount,
     allHouseProjectsCount,
     allProjectsCount,
+    allJobsCount,
     monthTeamMembersCount,
     monthBicycleRepairsCount,
     monthBicycleRentalsCount,
@@ -79,6 +84,7 @@ export async function getReportCountsByPeriod(
     monthCarpentryProjectsCount,
     monthHouseProjectsCount,
     monthProjectsCount,
+    monthJobsCount,
     weekTeamMembersCount,
     weekBicycleRepairsCount,
     weekBicycleRentalsCount,
@@ -86,6 +92,7 @@ export async function getReportCountsByPeriod(
     weekCarpentryProjectsCount,
     weekHouseProjectsCount,
     weekProjectsCount,
+    weekJobsCount,
     yearTeamMembersCount,
     yearBicycleRepairsCount,
     yearBicycleRentalsCount,
@@ -93,6 +100,7 @@ export async function getReportCountsByPeriod(
     yearCarpentryProjectsCount,
     yearHouseProjectsCount,
     yearProjectsCount,
+    yearJobsCount,
   ] = await Promise.all([
     prisma.teamMember.count(),
     prisma.bicycleRepair.count(),
@@ -101,6 +109,7 @@ export async function getReportCountsByPeriod(
     prisma.carpentryProject.count(),
     prisma.houseProject.count(),
     prisma.project.count(),
+    prisma.job.count(),
     prisma.teamMember.count({ where: monthTeamWhere }),
     prisma.bicycleRepair.count({ where: monthBikeRepairWhere }),
     prisma.bicycleRental.count({ where: monthRentalWhere }),
@@ -108,6 +117,7 @@ export async function getReportCountsByPeriod(
     prisma.carpentryProject.count({ where: monthCarpentryWhere }),
     prisma.houseProject.count({ where: monthHouseWhere }),
     prisma.project.count({ where: monthProjectWhere }),
+    prisma.job.count({ where: monthJobWhere }),
     prisma.teamMember.count({ where: weekTeamWhere }),
     prisma.bicycleRepair.count({ where: weekBikeRepairWhere }),
     prisma.bicycleRental.count({ where: weekRentalWhere }),
@@ -115,6 +125,7 @@ export async function getReportCountsByPeriod(
     prisma.carpentryProject.count({ where: weekCarpentryWhere }),
     prisma.houseProject.count({ where: weekHouseWhere }),
     prisma.project.count({ where: weekProjectWhere }),
+    prisma.job.count({ where: weekJobWhere }),
     prisma.teamMember.count({ where: yearTeamWhere }),
     prisma.bicycleRepair.count({ where: yearBikeRepairWhere }),
     prisma.bicycleRental.count({ where: yearRentalWhere }),
@@ -122,6 +133,7 @@ export async function getReportCountsByPeriod(
     prisma.carpentryProject.count({ where: yearCarpentryWhere }),
     prisma.houseProject.count({ where: yearHouseWhere }),
     prisma.project.count({ where: yearProjectWhere }),
+    prisma.job.count({ where: yearJobWhere }),
   ]);
 
   return {
@@ -133,6 +145,7 @@ export async function getReportCountsByPeriod(
       carpentryProjectsCount: allCarpentryProjectsCount,
       houseProjectsCount: allHouseProjectsCount,
       projectsCount: allProjectsCount,
+      jobsCount: allJobsCount,
     },
     monthly: {
       teamMembersCount: monthTeamMembersCount,
@@ -142,6 +155,7 @@ export async function getReportCountsByPeriod(
       carpentryProjectsCount: monthCarpentryProjectsCount,
       houseProjectsCount: monthHouseProjectsCount,
       projectsCount: monthProjectsCount,
+      jobsCount: monthJobsCount,
     },
     weekly: {
       teamMembersCount: weekTeamMembersCount,
@@ -151,6 +165,7 @@ export async function getReportCountsByPeriod(
       carpentryProjectsCount: weekCarpentryProjectsCount,
       houseProjectsCount: weekHouseProjectsCount,
       projectsCount: weekProjectsCount,
+      jobsCount: weekJobsCount,
     },
     yearly: {
       teamMembersCount: yearTeamMembersCount,
@@ -160,6 +175,7 @@ export async function getReportCountsByPeriod(
       carpentryProjectsCount: yearCarpentryProjectsCount,
       houseProjectsCount: yearHouseProjectsCount,
       projectsCount: yearProjectsCount,
+      jobsCount: yearJobsCount,
     },
   };
 }

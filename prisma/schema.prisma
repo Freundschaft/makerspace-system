@@ -337,6 +337,11 @@ enum ProjectStatus {
   OFF
 }
 
+enum JobStatus {
+  OPEN
+  CLOSED
+}
+
 model HouseProject {
   id            String             @id @default(uuid())
   date          DateTime
@@ -380,6 +385,19 @@ model Project {
   @@index([status])
   @@index([startDate])
   @@index([assignedToId])
+  @@index([name])
+}
+
+model Job {
+  id        String    @id @default(uuid())
+  name      String
+  notes     String?   @db.Text
+  status    JobStatus @default(OPEN)
+  slug      String?   @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([status])
   @@index([name])
 }
 

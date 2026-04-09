@@ -1,6 +1,7 @@
 import {
   BarChart3,
   Bike,
+  BriefcaseBusiness,
   ClipboardList,
   FolderKanban,
   Hammer,
@@ -70,6 +71,12 @@ export const appNavigation: NavigationItem[] = [
     fallback: "Projects",
     href: "/projects",
     icon: FolderKanban,
+  },
+  {
+    key: "jobs",
+    fallback: "Jobs",
+    href: "/jobs",
+    icon: BriefcaseBusiness,
   },
   {
     key: "finance",

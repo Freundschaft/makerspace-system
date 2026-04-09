@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import {
   Activity,
   Bike,
+  BriefcaseBusiness,
   CalendarClock,
   ClipboardList,
   FolderKanban,
@@ -39,6 +40,7 @@ function buildStats(
     carpentryProjectsCount: number;
     houseProjectsCount: number;
     projectsCount: number;
+    jobsCount: number;
   }
 ): MetricStat[] {
   return [
@@ -87,6 +89,12 @@ function buildStats(
       value: counts.projectsCount,
       href: "/projects",
       icon: FolderKanban,
+    },
+    {
+      label: t("dashboard.stats.jobs", "Jobs"),
+      value: counts.jobsCount,
+      href: "/jobs",
+      icon: BriefcaseBusiness,
     },
   ];
 }
