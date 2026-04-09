@@ -9,7 +9,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const status = request.nextUrl.searchParams.get("status");
+    if (status !== null && status !== "ACTIVE" && status !== "INACTIVE") {
+      return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+    }
+
     const teamMembers = await prisma.teamMember.findMany({
+      where: status
+        ? {
+            status,
+          }
+        : undefined,
       orderBy: [{ familyName: "asc" }, { givenNames: "asc" }],
     });
 
