@@ -47,18 +47,21 @@ export async function requireAppUser(
   const user = await prisma.user.findFirst({
     where: lookupWhere,
     select: {
+      enabled: true,
       id: true,
       email: true,
       role: true,
     },
   });
 
-  if (!user) {
+  if (!user || user.enabled !== true) {
     return null;
   }
 
   return {
-    ...user,
+    email: user.email,
+    id: user.id,
+    role: user.role,
     token,
   };
 }

@@ -12,6 +12,7 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   interface JWT {
+    enabled?: boolean;
     role?: UserRole;
     userId?: string;
   }

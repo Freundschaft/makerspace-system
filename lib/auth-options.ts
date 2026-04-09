@@ -5,6 +5,16 @@ import { prisma } from "@/lib/prisma";
 import { UserRole } from "@/generated/prisma";
 
 const authSecret = process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET;
+const allowedGoogleDomain = process.env.ALLOWED_GOOGLE_DOMAIN?.trim().toLowerCase();
+
+function isAllowedGoogleEmail(email?: string | null) {
+  if (!email || !allowedGoogleDomain) {
+    return false;
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  return normalizedEmail.endsWith(`@${allowedGoogleDomain}`);
+}
 
 async function syncUserRole(params: {
   email?: string | null;
@@ -72,17 +82,43 @@ export const authOptions: NextAuthOptions = {
     },
   },
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
+      const email = user.email?.trim().toLowerCase() ?? null;
+      const emailVerified =
+        profile && "email_verified" in profile
+          ? profile.email_verified === true
+          : false;
+      const hostedDomain =
+        profile && "hd" in profile && typeof profile.hd === "string"
+          ? profile.hd.trim().toLowerCase()
+          : null;
+
+      if (!allowedGoogleDomain) {
+        console.error("ALLOWED_GOOGLE_DOMAIN is not configured");
+        return false;
+      }
+
+      if (!email || !emailVerified || !isAllowedGoogleEmail(email)) {
+        return false;
+      }
+
+      if (hostedDomain && hostedDomain !== allowedGoogleDomain) {
+        return false;
+      }
+
       const dbUser = await syncUserRole({
-        email: user.email,
+        email,
         googleId: account?.providerAccountId,
       });
 
-      return Boolean(dbUser);
+      return Boolean(dbUser?.enabled);
     },
     async jwt({ token, account, user }) {
       const dbUser = await syncUserRole({
-        email: typeof token.email === "string" ? token.email : user?.email,
+        email:
+          typeof token.email === "string"
+            ? token.email.trim().toLowerCase()
+            : user?.email?.trim().toLowerCase(),
         googleId:
           typeof account?.providerAccountId === "string"
             ? account.providerAccountId
@@ -92,13 +128,23 @@ export const authOptions: NextAuthOptions = {
       });
 
       if (dbUser) {
+        token.enabled = dbUser.enabled === true;
         token.role = dbUser.role;
         token.userId = dbUser.id;
+      } else {
+        token.enabled = false;
       }
 
       return token;
     },
     async session({ session, token }) {
+      if (!token.enabled) {
+        return {
+          ...session,
+          user: undefined,
+        };
+      }
+
       if (session.user) {
         session.user.role =
           token.role === UserRole.TEAM_MEMBER

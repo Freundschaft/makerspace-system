@@ -69,15 +69,16 @@ export async function proxy(request: NextRequest) {
   const locale = pathnameLocale;
   const internalPathname = removeLocaleFromPathname(pathname);
   const token = await getToken({ req: request });
+  const hasActiveSession = Boolean(token && token.enabled !== false);
   const isAuthPage = internalPathname.startsWith("/login");
 
   if (isAuthPage) {
-    if (token) {
+    if (hasActiveSession) {
       return NextResponse.redirect(new URL(`/${locale}`, request.url));
     }
   }
 
-  if (!token && !isAuthPage) {
+  if (!hasActiveSession && !isAuthPage) {
     const loginUrl = new URL(`/${locale}/login`, request.url);
     loginUrl.searchParams.set("callbackUrl", request.url);
     return NextResponse.redirect(loginUrl);
