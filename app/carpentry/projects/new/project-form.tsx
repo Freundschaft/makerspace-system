@@ -504,6 +504,7 @@ export function CarpentryProjectForm() {
                   value={field.value}
                   onChange={field.onChange}
                   disabled={isSubmitting}
+                  directory="carpentry-photos"
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">

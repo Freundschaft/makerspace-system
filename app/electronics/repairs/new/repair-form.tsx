@@ -334,6 +334,7 @@ export function ElectronicsRepairForm() {
                   value={field.value}
                   onChange={field.onChange}
                   disabled={isSubmitting}
+                  directory="electronics-photos"
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
