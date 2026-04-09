@@ -76,6 +76,14 @@ export const FileUpload = memo(function FileUpload({
     if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
       return filePath;
     }
+
+    if (filePath.startsWith('data:image/')) {
+      return filePath;
+    }
+
+    if (!filePath.startsWith('/')) {
+      return `data:image/png;base64,${filePath}`;
+    }
     
     // Otherwise, use the file server URL from environment variable
     return `${process.env.NEXT_PUBLIC_FILE_SERVER_URL || 'https://files.system.makerspace-lesvos.org'}${filePath}`;
