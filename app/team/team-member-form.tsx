@@ -6,6 +6,7 @@ import { TeamMember } from './columns';
 import { format } from 'date-fns';
 import { useI18n } from '@/app/components/I18nProvider';
 import Image from 'next/image';
+import { FileUpload } from '@/components/ui/file-upload';
 
 interface TeamMemberFormProps {
   initialData?: TeamMember;
@@ -282,16 +283,21 @@ export function TeamMemberForm({
 
         <div>
           <label htmlFor="photoPath" className="block text-sm font-medium mb-1">
-            {t('team.form.photoUrl', 'Photo URL')}
+            {t('team.form.photo', 'Photo')}
           </label>
-          <input
-            type="text"
-            id="photoPath"
-            name="photoPath"
-            value={formData.photoPath || ''}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
+          <FileUpload
+            value={formData.photoPath || null}
+            onChange={(filePath) =>
+              setFormData((prev) => ({
+                ...prev,
+                photoPath: filePath || '',
+              }))
+            }
+            directory="team-photos"
           />
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t('team.form.photoHelp', 'Upload a new team photo or remove the current one.')}
+          </p>
           {photoPreviewSrc && (
             <TeamPhotoPreview
               src={photoPreviewSrc}
