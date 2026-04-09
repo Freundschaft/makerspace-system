@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
 import { hasAdminSessionOrApiSecret } from "@/lib/api-secret";
+import { toAbsoluteFileUrl } from "@/lib/file-urls";
 
 export async function PUT(
   request: NextRequest,
@@ -120,7 +121,10 @@ export async function PUT(
       console.error("Error updating Google Workspace user:", googleError);
     }
 
-    return NextResponse.json(updatedTeamMember);
+    return NextResponse.json({
+      ...updatedTeamMember,
+      photoPath: toAbsoluteFileUrl(updatedTeamMember.photoPath),
+    });
   } catch (error) {
     console.error("Error updating team member:", error);
     return NextResponse.json(

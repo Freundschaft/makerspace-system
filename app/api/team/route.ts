@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
 import { hasAdminSessionOrApiSecret } from "@/lib/api-secret";
+import { toAbsoluteFileUrl } from "@/lib/file-urls";
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,7 +24,12 @@ export async function GET(request: NextRequest) {
       orderBy: [{ familyName: "asc" }, { givenNames: "asc" }],
     });
 
-    return NextResponse.json(teamMembers);
+    return NextResponse.json(
+      teamMembers.map((teamMember) => ({
+        ...teamMember,
+        photoPath: toAbsoluteFileUrl(teamMember.photoPath),
+      }))
+    );
   } catch (error) {
     console.error("Error fetching team members:", error);
     return NextResponse.json(
@@ -126,7 +132,13 @@ export async function POST(request: NextRequest) {
       throw googleError;
     }
 
-    return NextResponse.json(teamMember, { status: 201 });
+    return NextResponse.json(
+      {
+        ...teamMember,
+        photoPath: toAbsoluteFileUrl(teamMember.photoPath),
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error creating team member:", error);
     return NextResponse.json(
