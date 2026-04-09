@@ -13,6 +13,10 @@ function getSecretFromRequest(request: NextRequest) {
   return bearerToken || request.headers.get("x-api-secret")?.trim() || null;
 }
 
+function isReadOnlyMethod(request: NextRequest) {
+  return request.method === "GET" || request.method === "HEAD";
+}
+
 function safeCompare(left: string, right: string) {
   const leftBuffer = Buffer.from(left);
   const rightBuffer = Buffer.from(right);
@@ -25,6 +29,10 @@ function safeCompare(left: string, right: string) {
 }
 
 export function hasValidApiSecret(request: NextRequest) {
+  if (!isReadOnlyMethod(request)) {
+    return false;
+  }
+
   const expectedSecret = process.env.API_SECRET?.trim();
   const providedSecret = getSecretFromRequest(request);
 
