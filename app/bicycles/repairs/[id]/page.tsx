@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { RepairDetails } from "./repair-details"
 import { BackButton } from "@/components/BackButton"
 import { getServerI18n } from "@/lib/i18n/server"
+import { localizePathname } from "@/lib/i18n/config"
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -10,6 +11,7 @@ interface PageProps {
 
 export default async function RepairDetailsPage({ params }: PageProps) {
   const { locale, t } = await getServerI18n()
+  const repairsHref = localizePathname("/bicycles/repairs", locale)
   const repair = await prisma.bicycleRepair.findUnique({
     where: {
       id: (await params).id
@@ -29,8 +31,8 @@ export default async function RepairDetailsPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto py-4 sm:py-10 px-4 sm:px-6">
-      <div className="flex items-center gap-4 mb-6">
-         <BackButton />
+      <div className="mb-6 space-y-3">
+         <BackButton href={repairsHref} />
          <h1 className="text-2xl font-bold">{t("modules.repairs.detailsTitle", "Repair Details")}</h1>
       </div>
       
@@ -51,6 +53,7 @@ export default async function RepairDetailsPage({ params }: PageProps) {
           repairedDate: t("repairs.details.repairedDate", "Repaired Date"),
           pickupDate: t("repairs.details.pickupDate", "Pickup Date"),
           description: t("common.description", "Description"),
+          repairDetails: t("repairs.form.repairDetails", "Repairs Done"),
           bicyclePhoto: t("repairs.details.bicyclePhoto", "Bicycle Photo"),
           photoAlt: t("common.photo", "Photo"),
           partsUsed: t("repairs.details.partsUsed", "Parts Used"),
@@ -58,6 +61,9 @@ export default async function RepairDetailsPage({ params }: PageProps) {
           quantity: t("repairs.details.quantity", "Quantity"),
           edit: t("common.edit", "Edit"),
           delete: t("common.delete", "Delete"),
+          deleting: t("common.deleting", "Deleting..."),
+          deleteConfirm: t("repairs.details.confirmDelete", "Delete this bicycle repair?"),
+          deleteError: t("repairs.details.deleteFailed", "Failed to delete bicycle repair"),
           statusLabels: {
             [repair.status]: t(`common.statuses.${repair.status}`, repair.status),
           },

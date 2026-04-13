@@ -46,11 +46,12 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
     id: repair.id,
     problemTypes: repair.problemTypes,
     description: repair.description,
+    repairDetails: repair.repairDetails,
     receivedDate: repair.receivedDate,
     repairedDate: repair.repairedDate,
     pickupDate: repair.pickupDate,
     ownerName: repair.ownerName ?? "",
-    ownerIdCardNumber: repair.ownerIdCardNumber ?? "",
+    ownerIdCardNumber: repair.ownerIdCardNumber,
     ownerPhone: repair.ownerPhone,
     status: repair.status,
     photoPath: repair.photoPath,
@@ -70,7 +71,7 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
           <Link href={localizePathname("/bicycles/repairs/new", locale)}>{t("modules.repairs.new", "New Repair")}</Link>
         </Button>
       </div>
-      <RepairsTable data={repairs} />
+      <RepairsTable data={repairs} locale={locale} />
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
           {totalRepairs} {t("modules.repairs.total", "total repairs")}

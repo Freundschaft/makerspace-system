@@ -1,23 +1,25 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Trash } from "lucide-react"
+import { Edit } from "lucide-react"
 import { formatDate } from "@/lib/utils"
 import { RepairStatus, Part, RepairPart } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
 import { Locale, localizePathname } from "@/lib/i18n/config"
+import { BicycleRepairDeleteButton } from "./bicycle-repair-delete-button"
 
 type RepairWithParts = {
   id: string
   problemTypes: string
   description: string | null
+  repairDetails: string | null
   receivedDate: Date
   repairedDate: Date | null
   pickupDate: Date | null
   ownerName: string
-  ownerIdCardNumber: string
-  ownerPhone: string
+  ownerIdCardNumber: string | null
+  ownerPhone: string | null
   status: RepairStatus
   photoPath: string | null
   partsUsed: (RepairPart & {
@@ -42,6 +44,7 @@ interface RepairDetailsProps {
     repairedDate: string
     pickupDate: string
     description: string
+    repairDetails: string
     bicyclePhoto: string
     photoAlt: string
     partsUsed: string
@@ -49,6 +52,9 @@ interface RepairDetailsProps {
     quantity: string
     edit: string
     delete: string
+    deleting: string
+    deleteConfirm: string
+    deleteError: string
     statusLabels: Record<string, string>
     problemTypeLabels: Record<string, string>
   }
@@ -72,10 +78,10 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
               <div>{repair.ownerName}</div>
 
               <div className="font-medium">{labels.ownerIdCardNumber}:</div>
-              <div>{repair.ownerIdCardNumber}</div>
+              <div>{repair.ownerIdCardNumber || "—"}</div>
 
               <div className="font-medium">{labels.phone}:</div>
-              <div>{repair.ownerPhone}</div>
+              <div>{repair.ownerPhone || "—"}</div>
             </div>
           </CardContent>
         </Card>
@@ -136,6 +142,15 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
           </CardContent>
         </Card>
 
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle>{labels.repairDetails}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="whitespace-pre-wrap">{repair.repairDetails || "—"}</p>
+          </CardContent>
+        </Card>
+
         {repair.photoPath && (
           <Card className="md:col-span-2">
             <CardHeader>
@@ -190,10 +205,14 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
             {labels.edit}
           </Link>
         </Button>
-        <Button variant="destructive">
-          <Trash className="mr-2 h-4 w-4" />
-          {labels.delete}
-        </Button>
+        <BicycleRepairDeleteButton
+          repairId={repair.id}
+          locale={locale}
+          label={labels.delete}
+          deletingLabel={labels.deleting}
+          confirmMessage={labels.deleteConfirm}
+          errorMessage={labels.deleteError}
+        />
       </div>
     </div>
   )

@@ -12,6 +12,22 @@ const repairStatuses: RepairStatus[] = [
   "CANCELLED",
 ]
 
+function normalizeOptionalString(value: unknown) {
+  return typeof value === "string" && value.trim().length > 0 ? value.trim() : null
+}
+
+function normalizeSelectedPartIds(value: unknown) {
+  if (!Array.isArray(value)) {
+    return []
+  }
+
+  return Array.from(
+    new Set(
+      value.filter((entry): entry is string => typeof entry === "string" && entry.trim().length > 0)
+    )
+  )
+}
+
 export async function POST(request: NextRequest) {
   try {
     const token = await requireAuth(request)
@@ -26,24 +42,50 @@ export async function POST(request: NextRequest) {
     const {
       problemTypes,
       description,
+      repairDetails,
       ownerName,
       ownerIdCardNumber,
       ownerPhone,
       status,
       receivedDate,
       photoPath,
+      selectedPartIds,
     } = body
+
+    const normalizedPartIds = normalizeSelectedPartIds(selectedPartIds)
+    const normalizedStatus =
+      typeof status === "string" && repairStatuses.includes(status as RepairStatus)
+        ? (status as RepairStatus)
+        : "PENDING"
 
     const repair = await prisma.bicycleRepair.create({
       data: {
         problemTypes: JSON.stringify(problemTypes),
-        description: description || null,
+        description: normalizeOptionalString(description),
+        repairDetails: normalizeOptionalString(repairDetails),
         ownerName,
-        ownerIdCardNumber,
-        ownerPhone,
-        status,
+        ownerIdCardNumber: normalizeOptionalString(ownerIdCardNumber),
+        ownerPhone: normalizeOptionalString(ownerPhone),
+        status: normalizedStatus,
         receivedDate: new Date(receivedDate),
-        photoPath,
+        repairedDate: normalizedStatus === "COMPLETED" ? new Date() : null,
+        pickupDate: normalizedStatus === "PICKED_UP" ? new Date() : null,
+        photoPath: normalizeOptionalString(photoPath),
+        partsUsed: normalizedPartIds.length
+          ? {
+              create: normalizedPartIds.map((partId) => ({
+                partId,
+                quantity: 1,
+              })),
+            }
+          : undefined,
+      },
+      include: {
+        partsUsed: {
+          include: {
+            part: true,
+          },
+        },
       },
     })
 
@@ -84,16 +126,18 @@ export async function PATCH(request: NextRequest) {
     }
 
     const updatedRepairs = await prisma.$transaction(async (tx) => {
-      await tx.bicycleRepair.updateMany({
-        where: {
-          id: { in: ids },
-        },
-        data: {
-          status,
-          repairedDate: status === "COMPLETED" ? new Date() : undefined,
-          pickupDate: status === "PICKED_UP" ? new Date() : undefined,
-        },
-      })
+      await Promise.all(
+        ids.map((id) =>
+          tx.bicycleRepair.update({
+            where: { id },
+            data: {
+              status,
+              repairedDate: status === "COMPLETED" ? new Date() : null,
+              pickupDate: status === "PICKED_UP" ? new Date() : null,
+            },
+          })
+        )
+      )
 
       return tx.bicycleRepair.findMany({
         where: {

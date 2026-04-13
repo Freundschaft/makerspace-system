@@ -11,13 +11,21 @@ export default async function EditRepairPage({ params }: EditRepairPageProps) {
   const { t } = await getServerI18n();
   const { id } = await params;
 
-  const [repair, problemTypes] = await Promise.all([
+  const [repair, problemTypes, parts] = await Promise.all([
     prisma.bicycleRepair.findUnique({
       where: { id },
+      include: {
+        partsUsed: true,
+      },
     }),
     prisma.problemType.findMany({
       orderBy: {
         index: "asc",
+      },
+    }),
+    prisma.part.findMany({
+      orderBy: {
+        name: "asc",
       },
     }),
   ]);
@@ -34,15 +42,18 @@ export default async function EditRepairPage({ params }: EditRepairPageProps) {
       <RepairForm
         repairId={repair.id}
         problemTypes={problemTypes}
+        parts={parts}
         initialData={{
           problemTypes: JSON.parse(repair.problemTypes) as string[],
           description: repair.description,
+          repairDetails: repair.repairDetails,
           receivedDate: repair.receivedDate.toISOString().slice(0, 10),
           ownerName: repair.ownerName,
           ownerIdCardNumber: repair.ownerIdCardNumber,
           ownerPhone: repair.ownerPhone,
           status: repair.status,
           photoPath: repair.photoPath,
+          selectedPartIds: repair.partsUsed.map((part) => part.partId),
         }}
       />
     </div>

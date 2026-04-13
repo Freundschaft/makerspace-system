@@ -46,12 +46,13 @@ model BicycleRepair {
   id                String       @id @default(uuid())
   problemTypes      String       @default("[]") @db.Text
   description       String?      @db.Text
+  repairDetails     String?      @db.Text
   receivedDate      DateTime
   repairedDate      DateTime?
   pickupDate        DateTime?
   ownerName         String
-  ownerIdCardNumber String
-  ownerPhone        String
+  ownerIdCardNumber String?
+  ownerPhone        String?
   status            RepairStatus @default(PENDING)
   photoPath         String?      @db.Text
   partsUsed         RepairPart[]

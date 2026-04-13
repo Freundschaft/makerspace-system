@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { DataTable } from "@/components/ui/data-table";
 import { useI18n } from "@/app/components/I18nProvider";
 import { getColumns, type Repair } from "./columns";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
@@ -15,6 +14,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { localizePathname, type Locale } from "@/lib/i18n/config";
+import { RepairStatusSelect } from "./repair-status-select";
+
 function formatDisplayText(value: string) {
   return value
     .replace(/_/g, " ")
@@ -22,29 +24,14 @@ function formatDisplayText(value: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function getStatusVariant(status: Repair["status"]) {
-  if (status === "COMPLETED" || status === "IN_PROGRESS") {
-    return "default";
-  }
-
-  if (status === "WAITING_FOR_PARTS" || status === "PICKED_UP") {
-    return "secondary";
-  }
-
-  if (status === "CANCELLED") {
-    return "destructive";
-  }
-
-  return "outline";
-}
-
 interface RepairsTableProps {
   data: Repair[];
+  locale: Locale;
 }
 
 type RepairStatusFilter = Repair["status"] | "ALL";
 
-export function RepairsTable({ data }: RepairsTableProps) {
+export function RepairsTable({ data, locale }: RepairsTableProps) {
   const { t } = useI18n();
   const router = useRouter();
   const [repairs, setRepairs] = useState(data);
@@ -53,19 +40,50 @@ export function RepairsTable({ data }: RepairsTableProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [statusFilter, setStatusFilter] = useState<RepairStatusFilter>("ALL");
+
   const filteredData =
     statusFilter === "ALL"
       ? repairs
       : repairs.filter((repair) => repair.status === statusFilter);
+
+  const updateRepairStatus = (repairId: string, status: Repair["status"]) => {
+    setRepairs((current) =>
+      current.map((repair) => {
+        if (repair.id !== repairId) {
+          return repair;
+        }
+
+        const now = new Date();
+        return {
+          ...repair,
+          status,
+          repairedDate:
+            status === "COMPLETED"
+              ? now
+              : repair.repairedDate,
+          pickupDate:
+            status === "PICKED_UP"
+              ? now
+              : repair.pickupDate,
+        };
+      })
+    );
+  };
+
   const columns = useMemo(
     () =>
       getColumns(t, {
-        selectedIds,
-        onSelectedIdsChange: setSelectedIds,
-        visibleIds: filteredData.map((repair) => repair.id),
+        locale,
+        selection: {
+          selectedIds,
+          onSelectedIdsChange: setSelectedIds,
+          visibleIds: filteredData.map((repair) => repair.id),
+        },
+        onStatusUpdated: updateRepairStatus,
       }),
-    [filteredData, selectedIds, t]
+    [filteredData, locale, selectedIds, t]
   );
+
   const statusFilters: RepairStatusFilter[] = [
     "ALL",
     "PENDING",
@@ -103,21 +121,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
         throw new Error("Failed to update repairs");
       }
 
-      setRepairs((current) =>
-        current.map((repair) => {
-          if (!selectedIds.includes(repair.id)) {
-            return repair;
-          }
-
-          const now = new Date();
-          return {
-            ...repair,
-            status: bulkStatus,
-            repairedDate: bulkStatus === "COMPLETED" ? now : repair.repairedDate,
-            pickupDate: bulkStatus === "PICKED_UP" ? now : repair.pickupDate,
-          };
-        })
-      );
+      selectedIds.forEach((id) => updateRepairStatus(id, bulkStatus));
       setSelectedIds([]);
       router.refresh();
     } catch (error) {
@@ -136,6 +140,22 @@ export function RepairsTable({ data }: RepairsTableProps) {
       return;
     }
 
+    const deletingAllVisible =
+      filteredData.length > 0 &&
+      filteredData.every((repair) => selectedIds.includes(repair.id));
+
+    if (
+      deletingAllVisible &&
+      !window.confirm(
+        t(
+          "repairs.list.confirmDeletePageSelection",
+          "This will delete all repairs currently shown on this page. Continue?"
+        )
+      )
+    ) {
+      return;
+    }
+
     try {
       setIsDeleting(true);
       const response = await fetch("/api/bicycles/repairs", {
@@ -150,9 +170,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
         throw new Error("Failed to delete repairs");
       }
 
-      setRepairs((current) =>
-        current.filter((repair) => !selectedIds.includes(repair.id))
-      );
+      setRepairs((current) => current.filter((repair) => !selectedIds.includes(repair.id)));
       setSelectedIds([]);
       router.refresh();
     } catch (error) {
@@ -230,6 +248,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
       <div className="grid gap-3 lg:hidden">
         {filteredData.length ? (
           filteredData.map((repair) => {
+            const href = localizePathname(`/bicycles/repairs/${repair.id}`, locale);
             const problemTypes = JSON.parse(repair.problemTypes) as string[];
             const visibleProblemTypes = problemTypes.slice(0, 3);
             const extraProblemTypes = problemTypes.length - visibleProblemTypes.length;
@@ -238,7 +257,7 @@ export function RepairsTable({ data }: RepairsTableProps) {
               .join(", ");
 
             return (
-              <Link key={repair.id} href={`/bicycles/repairs/${repair.id}`} className="block">
+              <Link key={repair.id} href={href} className="block">
                 <Card className="gap-0 rounded-2xl border-border/70 bg-card/90 py-0 shadow-sm transition-colors hover:bg-accent/10">
                   <div className="flex items-stretch gap-3 p-3">
                     <div
@@ -252,15 +271,11 @@ export function RepairsTable({ data }: RepairsTableProps) {
                         checked={selectedIds.includes(repair.id)}
                         onCheckedChange={(checked) => {
                           if (checked === true) {
-                            setSelectedIds((current) =>
-                              Array.from(new Set([...current, repair.id]))
-                            );
+                            setSelectedIds((current) => Array.from(new Set([...current, repair.id])));
                             return;
                           }
 
-                          setSelectedIds((current) =>
-                            current.filter((id) => id !== repair.id)
-                          );
+                          setSelectedIds((current) => current.filter((id) => id !== repair.id));
                         }}
                         aria-label={t("common.selectRow", "Select row")}
                       />
@@ -283,12 +298,26 @@ export function RepairsTable({ data }: RepairsTableProps) {
 
                     <div className="min-w-0 flex-1 space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <Badge
-                          variant={getStatusVariant(repair.status)}
-                          className="rounded-full px-2.5 py-0.5 text-[10px] tracking-[0.12em]"
+                        <div
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }}
                         >
-                          {formatDisplayText(repair.status)}
-                        </Badge>
+                          <RepairStatusSelect
+                            repairId={repair.id}
+                            value={repair.status}
+                            labels={{
+                              PENDING: t("common.statuses.PENDING", "Pending"),
+                              IN_PROGRESS: t("common.statuses.IN_PROGRESS", "In Progress"),
+                              WAITING_FOR_PARTS: t("common.statuses.WAITING_FOR_PARTS", "Waiting for Parts"),
+                              COMPLETED: t("common.statuses.COMPLETED", "Completed"),
+                              PICKED_UP: t("common.statuses.PICKED_UP", "Picked Up"),
+                              CANCELLED: t("common.statuses.CANCELLED", "Cancelled"),
+                            }}
+                            onUpdated={(status) => updateRepairStatus(repair.id, status)}
+                          />
+                        </div>
                         <span className="shrink-0 text-xs font-medium text-muted-foreground">
                           {format(repair.receivedDate, "MMM d")}
                         </span>
@@ -300,13 +329,19 @@ export function RepairsTable({ data }: RepairsTableProps) {
                         </p>
                       ) : null}
 
+                      {repair.repairDetails ? (
+                        <p className="line-clamp-2 text-xs leading-5 text-muted-foreground">
+                          {repair.repairDetails}
+                        </p>
+                      ) : null}
+
                       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                        <span className="font-medium text-foreground">
-                          {repair.ownerName}
-                        </span>
-                        <span className="rounded-full bg-muted px-2 py-1 font-medium text-foreground">
-                          {repair.ownerPhone}
-                        </span>
+                        <span className="font-medium text-foreground">{repair.ownerName}</span>
+                        {repair.ownerPhone ? (
+                          <span className="rounded-full bg-muted px-2 py-1 font-medium text-foreground">
+                            {repair.ownerPhone}
+                          </span>
+                        ) : null}
                         {partsSummary ? (
                           <span className="truncate">
                             {t("repairs.details.partsUsed", "Parts Used")}: {partsSummary}
@@ -317,27 +352,23 @@ export function RepairsTable({ data }: RepairsTableProps) {
                       {visibleProblemTypes.length ? (
                         <div className="flex flex-wrap gap-1.5">
                           {visibleProblemTypes.map((type) => (
-                            <Badge
+                            <span
                               key={type}
-                              variant="outline"
-                              className="rounded-full border-border/70 px-2 py-0.5 text-[10px]"
+                              className="rounded-full border border-border/70 px-2 py-0.5 text-[10px]"
                             >
                               {t(`bicycles.problemTypes.${type}`, type)}
-                            </Badge>
+                            </span>
                           ))}
                           {extraProblemTypes > 0 ? (
-                            <Badge
-                              variant="outline"
-                              className="rounded-full border-border/70 px-2 py-0.5 text-[10px]"
-                            >
+                            <span className="rounded-full border border-border/70 px-2 py-0.5 text-[10px]">
                               +{extraProblemTypes}
-                            </Badge>
+                            </span>
                           ) : null}
                         </div>
                       ) : null}
 
                       <div className="text-[11px] text-muted-foreground">
-                        {t("repairs.form.ownerIdCardNumber", "ID Card Number")}: {repair.ownerIdCardNumber}
+                        {t("repairs.form.ownerIdCardNumber", "ID Card Number")}: {repair.ownerIdCardNumber || "—"}
                       </div>
                     </div>
                   </div>

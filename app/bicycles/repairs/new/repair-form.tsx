@@ -38,19 +38,28 @@ interface ProblemType {
   image: string
 }
 
+interface PartOption {
+  id: string
+  name: string
+  description: string | null
+}
+
 // Define the form props interface
 interface RepairFormProps {
   problemTypes: ProblemType[]
+  parts: PartOption[]
   repairId?: string
   initialData?: {
     problemTypes: string[]
     description: string | null
+    repairDetails: string | null
     receivedDate: string
     ownerName: string
-    ownerIdCardNumber: string
-    ownerPhone: string
+    ownerIdCardNumber: string | null
+    ownerPhone: string | null
     status: "PENDING" | "IN_PROGRESS" | "WAITING_FOR_PARTS" | "COMPLETED" | "PICKED_UP" | "CANCELLED"
     photoPath: string | null
+    selectedPartIds: string[]
   }
 }
 
@@ -58,12 +67,14 @@ function getDefaultValues(initialData?: RepairFormProps["initialData"]) {
   return {
     problemTypes: initialData?.problemTypes ?? [],
     description: initialData?.description ?? "",
+    repairDetails: initialData?.repairDetails ?? "",
     receivedDate: initialData?.receivedDate ?? new Date().toISOString().slice(0, 10),
     ownerName: initialData?.ownerName ?? "",
     ownerIdCardNumber: initialData?.ownerIdCardNumber ?? "",
     ownerPhone: initialData?.ownerPhone ?? "",
     status: initialData?.status ?? "PENDING",
     photoPath: initialData?.photoPath ?? "",
+    selectedPartIds: initialData?.selectedPartIds ?? [],
   } as const;
 }
 
@@ -72,16 +83,18 @@ const createFormSchema = () => {
   return z.object({
     problemTypes: z.array(z.string()).min(1, "Select at least one problem type"),
     description: z.string().optional(),
+    repairDetails: z.string().optional(),
     receivedDate: z.string().min(1, "Received date is required"),
     ownerName: z.string().min(1, "Owner name is required"),
-    ownerIdCardNumber: z.string().min(1, "ID card number is required"),
-    ownerPhone: z.string().min(1, "Owner phone is required"),
+    ownerIdCardNumber: z.string().optional(),
+    ownerPhone: z.string().optional(),
     status: z.enum(["PENDING", "IN_PROGRESS", "WAITING_FOR_PARTS", "COMPLETED", "PICKED_UP", "CANCELLED"]),
     photoPath: z.string().optional(),
+    selectedPartIds: z.array(z.string()).optional(),
   })
 }
 
-export function RepairForm({ problemTypes, repairId, initialData }: RepairFormProps) {
+export function RepairForm({ problemTypes, parts, repairId, initialData }: RepairFormProps) {
   const router = useRouter()
   const { locale, t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -98,6 +111,14 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
         image: type.image,
       })),
     [problemTypes]
+  )
+  const partOptions = useMemo(
+    () =>
+      parts.map((part) => ({
+        value: part.id,
+        label: part.name,
+      })),
+    [parts]
   )
   const defaultValues = useMemo(() => getDefaultValues(initialData), [initialData])
 
@@ -118,6 +139,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
     try {
       setIsSubmitting(true)
       const normalizedDescription = values.description?.trim() || null
+      const normalizedRepairDetails = values.repairDetails?.trim() || null
       const response = await fetch(
         isEditMode ? `/api/bicycles/repairs/${repairId}` : "/api/bicycles/repairs",
         {
@@ -128,6 +150,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
           body: JSON.stringify({
             ...values,
             description: normalizedDescription,
+            repairDetails: normalizedRepairDetails,
             receivedDate: values.receivedDate,
           }),
         }
@@ -141,11 +164,15 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
         )
       }
 
-      router.push(
+      const targetHref =
         isEditMode
           ? localizePathname(`/bicycles/repairs/${repairId}`, locale)
           : localizePathname("/bicycles/repairs", locale)
-      )
+      if (isEditMode) {
+        router.replace(targetHref)
+      } else {
+        router.push(targetHref)
+      }
       router.refresh()
     } catch (error) {
       console.error(isEditMode ? "Error updating repair:" : "Error creating repair:", error)
@@ -276,6 +303,55 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
 
         <FormField
           control={form.control}
+          name="repairDetails"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm sm:text-base">{t("repairs.form.repairDetails", "Repairs Done")}</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder={t("repairs.form.repairDetailsPlaceholder", "Describe the work completed or planned...")}
+                  className="min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("repairs.form.repairDetailsHelp", "Track what repairs were done or still need to be done.")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="selectedPartIds"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-sm sm:text-base">{t("repairs.form.partsReplaced", "Parts Replaced")}</FormLabel>
+              <FormControl>
+                {partOptions.length ? (
+                  <MultiSelectButtons
+                    options={partOptions}
+                    selectedValues={field.value ?? []}
+                    onChange={field.onChange}
+                    className="md:grid-cols-4 xl:grid-cols-4"
+                  />
+                ) : (
+                  <div className="rounded-lg border border-dashed border-border px-4 py-3 text-sm text-muted-foreground">
+                    {t("repairs.form.noPartsAvailable", "No repair parts are available to select yet.")}
+                  </div>
+                )}
+              </FormControl>
+              <FormDescription className="text-xs sm:text-sm">
+                {t("repairs.form.partsReplacedHelp", "Select the parts that were replaced during this repair.")}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="ownerName"
           render={({ field }) => (
             <FormItem>
@@ -313,7 +389,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                {t("repairs.form.ownerIdCardNumberHelp", "Record the ID card number of the person who brought the bicycle.")}
+                {t("repairs.form.ownerIdCardNumberHelp", "Record the ID card number of the person who brought the bicycle, if available.")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -334,7 +410,7 @@ export function RepairForm({ problemTypes, repairId, initialData }: RepairFormPr
                 />
               </FormControl>
               <FormDescription className="text-xs sm:text-sm">
-                {t("repairs.form.ownerPhoneHelp", "Contact number of the bicycle owner")}
+                {t("repairs.form.ownerPhoneHelp", "Contact number of the bicycle owner, if available.")}
               </FormDescription>
               <FormMessage />
             </FormItem>
