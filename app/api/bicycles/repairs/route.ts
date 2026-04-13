@@ -127,7 +127,7 @@ export async function PATCH(request: NextRequest) {
 
     const updatedRepairs = await prisma.$transaction(async (tx) => {
       await Promise.all(
-        ids.map((id) =>
+        ids.map((id: string) =>
           tx.bicycleRepair.update({
             where: { id },
             data: {
