@@ -2,6 +2,29 @@ import { prisma } from "@/lib/prisma"
 import { requireAuth } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 
+function normalizeOptionalString(value: unknown) {
+  if (typeof value !== "string") {
+    return value ?? null
+  }
+
+  const trimmedValue = value.trim()
+  return trimmedValue.length > 0 ? trimmedValue : null
+}
+
+function normalizeOptionalInteger(value: unknown) {
+  if (typeof value !== "string") {
+    return typeof value === "number" && Number.isFinite(value) ? Math.trunc(value) : null
+  }
+
+  const trimmedValue = value.trim()
+  if (trimmedValue.length === 0) {
+    return null
+  }
+
+  const parsedValue = Number.parseInt(trimmedValue, 10)
+  return Number.isNaN(parsedValue) ? null : parsedValue
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -80,21 +103,21 @@ export async function PATCH(
       where: { id },
       data: {
         date: date ? new Date(date) : undefined,
-        acceptedBy,
-        customerType,
-        organizationName,
-        customerName,
-        phoneNumber,
-        gender,
-        orderType,
-        timeNeeded: timeNeeded ? parseInt(timeNeeded) : null,
-        itemToRepair,
-        problemDescription,
-        projectDescription,
-        materialCosts,
-        paidByCustomer,
-        photoPath,
-        assignedToId
+        acceptedBy: normalizeOptionalString(acceptedBy),
+        customerType: customerType || null,
+        organizationName: normalizeOptionalString(organizationName),
+        customerName: normalizeOptionalString(customerName),
+        phoneNumber: normalizeOptionalString(phoneNumber),
+        gender: gender || null,
+        orderType: orderType || null,
+        timeNeeded: normalizeOptionalInteger(timeNeeded),
+        itemToRepair: normalizeOptionalString(itemToRepair),
+        problemDescription: normalizeOptionalString(problemDescription),
+        projectDescription: normalizeOptionalString(projectDescription),
+        materialCosts: normalizeOptionalString(materialCosts),
+        paidByCustomer: typeof paidByCustomer === "boolean" ? paidByCustomer : null,
+        photoPath: normalizeOptionalString(photoPath),
+        assignedToId: normalizeOptionalString(assignedToId)
       },
       include: {
         assignedTo: true

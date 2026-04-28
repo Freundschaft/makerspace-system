@@ -86,6 +86,7 @@ export function CarpentryProjectForm() {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const submitLockRef = useRef(false)
   const localizedCustomerTypeOptions = useMemo(
     () =>
@@ -123,6 +124,7 @@ export function CarpentryProjectForm() {
     }
     submitLockRef.current = true
     try {
+      setSubmitError(null)
       setIsSubmitting(true)
       const response = await fetch("/api/carpentry/projects", {
         method: "POST",
@@ -133,13 +135,21 @@ export function CarpentryProjectForm() {
       })
 
       if (!response.ok) {
-        throw new Error(t("carpentry.new.errors.createFailed", "Failed to create carpentry project"))
+        const result = await response.json().catch(() => null)
+        throw new Error(
+          result?.error || t("carpentry.new.errors.createFailed", "Failed to create carpentry project")
+        )
       }
 
       router.push("/carpentry/projects")
       router.refresh()
     } catch (error) {
       console.error("Error creating carpentry project:", error)
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : t("carpentry.new.errors.createFailed", "Failed to create carpentry project")
+      )
     } finally {
       submitLockRef.current = false
       setIsSubmitting(false)
@@ -515,13 +525,23 @@ export function CarpentryProjectForm() {
           )}
         />
 
-        <div className="sticky bottom-0 z-20 -mx-4 flex flex-col gap-3 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:-mx-6 sm:flex-row sm:justify-end">
-          <Button type="button" variant="outline" onClick={() => router.back()} className="w-full sm:w-auto">
-            {t("common.cancel", "Cancel")}
-          </Button>
-          <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-            {isSubmitting ? t("common.creating", "Creating...") : t("carpentry.new.actions.create", "Create Project")}
-          </Button>
+        <div className="sticky bottom-0 z-20 -mx-4 flex flex-col gap-3 border-t bg-background/95 px-4 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between">
+          {submitError ? (
+            <p className="text-sm text-destructive" role="alert">
+              {submitError}
+            </p>
+          ) : (
+            <div />
+          )}
+ 
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button type="button" variant="outline" onClick={() => router.back()} className="w-full sm:w-auto">
+              {t("common.cancel", "Cancel")}
+            </Button>
+            <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
+              {isSubmitting ? t("common.creating", "Creating...") : t("carpentry.new.actions.create", "Create Project")}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>
