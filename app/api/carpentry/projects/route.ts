@@ -2,16 +2,16 @@ import { prisma } from "@/lib/prisma"
 import { requireAuth } from "@/lib/auth"
 import { NextRequest, NextResponse } from "next/server"
 
-function normalizeOptionalString(value: unknown) {
+function normalizeOptionalString(value: unknown): string | null {
   if (typeof value !== "string") {
-    return value ?? null
+    return null
   }
 
   const trimmedValue = value.trim()
   return trimmedValue.length > 0 ? trimmedValue : null
 }
 
-function normalizeOptionalInteger(value: unknown) {
+function normalizeOptionalInteger(value: unknown): number | null {
   if (typeof value !== "string") {
     return typeof value === "number" && Number.isFinite(value) ? Math.trunc(value) : null
   }
