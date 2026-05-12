@@ -1,4 +1,11 @@
-import { startOfMonth, startOfWeek, startOfYear } from "date-fns";
+import {
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from "date-fns";
 
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
@@ -32,41 +39,84 @@ export async function getReportCountsByPeriod(
   now: Date = new Date()
 ): Promise<Record<ReportPeriod, ReportCounts>> {
   const monthStart = startOfMonth(now);
+  const monthEnd = endOfMonth(now);
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
+  const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
   const yearStart = startOfYear(now);
+  const yearEnd = endOfYear(now);
 
-  const monthTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: monthStart } };
-  const weekTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: weekStart } };
-  const yearTeamWhere: Prisma.TeamMemberWhereInput = { startDate: { gte: yearStart } };
-  const monthBikeRepairWhere: Prisma.BicycleRepairWhereInput = {
-    receivedDate: { gte: monthStart },
+  const monthTeamWhere: Prisma.TeamMemberWhereInput = {
+    startDate: { gte: monthStart, lte: monthEnd },
   };
-  const weekBikeRepairWhere: Prisma.BicycleRepairWhereInput = { receivedDate: { gte: weekStart } };
-  const yearBikeRepairWhere: Prisma.BicycleRepairWhereInput = { receivedDate: { gte: yearStart } };
-  const monthRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: monthStart } };
-  const weekRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: weekStart } };
-  const yearRentalWhere: Prisma.BicycleRentalWhereInput = { startDate: { gte: yearStart } };
+  const weekTeamWhere: Prisma.TeamMemberWhereInput = {
+    startDate: { gte: weekStart, lte: weekEnd },
+  };
+  const yearTeamWhere: Prisma.TeamMemberWhereInput = {
+    startDate: { gte: yearStart, lte: yearEnd },
+  };
+  const monthBikeRepairWhere: Prisma.BicycleRepairWhereInput = {
+    receivedDate: { gte: monthStart, lte: monthEnd },
+  };
+  const weekBikeRepairWhere: Prisma.BicycleRepairWhereInput = {
+    receivedDate: { gte: weekStart, lte: weekEnd },
+  };
+  const yearBikeRepairWhere: Prisma.BicycleRepairWhereInput = {
+    receivedDate: { gte: yearStart, lte: yearEnd },
+  };
+  const monthRentalWhere: Prisma.BicycleRentalWhereInput = {
+    startDate: { gte: monthStart, lte: monthEnd },
+  };
+  const weekRentalWhere: Prisma.BicycleRentalWhereInput = {
+    startDate: { gte: weekStart, lte: weekEnd },
+  };
+  const yearRentalWhere: Prisma.BicycleRentalWhereInput = {
+    startDate: { gte: yearStart, lte: yearEnd },
+  };
   const monthElectronicsWhere: Prisma.ElectronicsRepairWhereInput = {
-    createdDate: { gte: monthStart },
+    createdDate: { gte: monthStart, lte: monthEnd },
   };
   const weekElectronicsWhere: Prisma.ElectronicsRepairWhereInput = {
-    createdDate: { gte: weekStart },
+    createdDate: { gte: weekStart, lte: weekEnd },
   };
   const yearElectronicsWhere: Prisma.ElectronicsRepairWhereInput = {
-    createdDate: { gte: yearStart },
+    createdDate: { gte: yearStart, lte: yearEnd },
   };
-  const monthCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: monthStart } };
-  const weekCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: weekStart } };
-  const yearCarpentryWhere: Prisma.CarpentryProjectWhereInput = { date: { gte: yearStart } };
-  const monthHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: monthStart } };
-  const weekHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: weekStart } };
-  const yearHouseWhere: Prisma.HouseProjectWhereInput = { date: { gte: yearStart } };
-  const monthProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: monthStart } };
-  const weekProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: weekStart } };
-  const yearProjectWhere: Prisma.ProjectWhereInput = { createdAt: { gte: yearStart } };
-  const monthJobWhere: Prisma.JobWhereInput = { createdAt: { gte: monthStart } };
-  const weekJobWhere: Prisma.JobWhereInput = { createdAt: { gte: weekStart } };
-  const yearJobWhere: Prisma.JobWhereInput = { createdAt: { gte: yearStart } };
+  const monthCarpentryWhere: Prisma.CarpentryProjectWhereInput = {
+    date: { gte: monthStart, lte: monthEnd },
+  };
+  const weekCarpentryWhere: Prisma.CarpentryProjectWhereInput = {
+    date: { gte: weekStart, lte: weekEnd },
+  };
+  const yearCarpentryWhere: Prisma.CarpentryProjectWhereInput = {
+    date: { gte: yearStart, lte: yearEnd },
+  };
+  const monthHouseWhere: Prisma.HouseProjectWhereInput = {
+    date: { gte: monthStart, lte: monthEnd },
+  };
+  const weekHouseWhere: Prisma.HouseProjectWhereInput = {
+    date: { gte: weekStart, lte: weekEnd },
+  };
+  const yearHouseWhere: Prisma.HouseProjectWhereInput = {
+    date: { gte: yearStart, lte: yearEnd },
+  };
+  const monthProjectWhere: Prisma.ProjectWhereInput = {
+    createdAt: { gte: monthStart, lte: monthEnd },
+  };
+  const weekProjectWhere: Prisma.ProjectWhereInput = {
+    createdAt: { gte: weekStart, lte: weekEnd },
+  };
+  const yearProjectWhere: Prisma.ProjectWhereInput = {
+    createdAt: { gte: yearStart, lte: yearEnd },
+  };
+  const monthJobWhere: Prisma.JobWhereInput = {
+    createdAt: { gte: monthStart, lte: monthEnd },
+  };
+  const weekJobWhere: Prisma.JobWhereInput = {
+    createdAt: { gte: weekStart, lte: weekEnd },
+  };
+  const yearJobWhere: Prisma.JobWhereInput = {
+    createdAt: { gte: yearStart, lte: yearEnd },
+  };
 
   const [
     allTeamMembersCount,

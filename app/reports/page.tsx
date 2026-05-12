@@ -1,9 +1,23 @@
 import { getServerSession } from "next-auth";
 import {
+  addMonths,
+  addWeeks,
+  addYears,
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  format,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from "date-fns";
+import {
   Activity,
   Bike,
   BriefcaseBusiness,
   CalendarClock,
+  ChevronLeft,
+  ChevronRight,
   ClipboardList,
   FolderKanban,
   Hammer,
@@ -28,6 +42,55 @@ type MetricStat = {
   href: string;
   icon: LucideIcon;
 };
+
+function parseReportDate(date: string | undefined, fallback: Date) {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return fallback;
+  }
+
+  const parsed = new Date(`${date}T00:00:00`);
+  return Number.isNaN(parsed.getTime()) ? fallback : parsed;
+}
+
+function getPeriodStart(period: ReportPeriod, date: Date) {
+  switch (period) {
+    case "weekly":
+      return startOfWeek(date, { weekStartsOn: 1 });
+    case "yearly":
+      return startOfYear(date);
+    case "monthly":
+    case "all-time":
+      return startOfMonth(date);
+  }
+}
+
+function getPeriodEnd(period: ReportPeriod, date: Date) {
+  switch (period) {
+    case "weekly":
+      return endOfWeek(date, { weekStartsOn: 1 });
+    case "yearly":
+      return endOfYear(date);
+    case "monthly":
+    case "all-time":
+      return endOfMonth(date);
+  }
+}
+
+function shiftPeriod(period: ReportPeriod, date: Date, offset: number) {
+  switch (period) {
+    case "weekly":
+      return addWeeks(date, offset);
+    case "yearly":
+      return addYears(date, offset);
+    case "monthly":
+    case "all-time":
+      return addMonths(date, offset);
+  }
+}
+
+function formatReportDate(date: Date) {
+  return format(date, "yyyy-MM-dd");
+}
 
 function buildStats(
   t: (key: string, fallback: string) => string,
@@ -102,7 +165,7 @@ function buildStats(
 export default async function ReportsPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ period?: string }>;
+  searchParams?: Promise<{ period?: string; date?: string }>;
 }) {
   const session = await getServerSession(authOptions);
   const { t, locale } = await getServerI18n();
@@ -161,7 +224,52 @@ export default async function ReportsPage({
   const selectedPeriodOption =
     periodOptions.find((option) => option.value === selectedPeriod) ?? periodOptions[1];
   const reportsBasePath = localizePathname("/reports", locale);
-  const countsByPeriod = await getReportCountsByPeriod(now);
+  const selectedDate = parseReportDate(resolvedSearchParams.date, now);
+  const selectedPeriodStart = getPeriodStart(selectedPeriod, selectedDate);
+  const selectedPeriodEnd = getPeriodEnd(selectedPeriod, selectedDate);
+  const currentPeriodStart = getPeriodStart(selectedPeriod, now);
+  const reportAnchorDate =
+    selectedPeriod === "all-time" ? now : selectedPeriodStart;
+  const countsByPeriod = await getReportCountsByPeriod(reportAnchorDate);
+  const isCurrentPeriod =
+    selectedPeriod === "all-time" ||
+    formatReportDate(selectedPeriodStart) === formatReportDate(currentPeriodStart);
+
+  const getReportsHref = (period: ReportPeriod, date?: Date) => {
+    if (period === "all-time") {
+      return `${reportsBasePath}?period=all-time`;
+    }
+
+    const params = new URLSearchParams();
+    if (period !== "monthly") {
+      params.set("period", period);
+    }
+
+    if (date) {
+      const periodStart = getPeriodStart(period, date);
+      const currentStart = getPeriodStart(period, now);
+      if (formatReportDate(periodStart) !== formatReportDate(currentStart)) {
+        params.set("date", formatReportDate(periodStart));
+      }
+    }
+
+    const query = params.toString();
+    return query ? `${reportsBasePath}?${query}` : reportsBasePath;
+  };
+
+  const periodLabel =
+    selectedPeriod === "weekly"
+      ? `${selectedPeriodStart.toLocaleDateString()} - ${selectedPeriodEnd.toLocaleDateString()}`
+      : selectedPeriod === "monthly"
+        ? selectedPeriodStart.toLocaleDateString(undefined, {
+            month: "long",
+            year: "numeric",
+          })
+        : selectedPeriod === "yearly"
+          ? selectedPeriodStart.toLocaleDateString(undefined, {
+              year: "numeric",
+            })
+          : t("reports.periods.allTime", "All-Time");
 
   const statsByPeriod: Record<ReportPeriod, MetricStat[]> = {
     "all-time": buildStats(t, isAdmin, countsByPeriod["all-time"]),
@@ -196,20 +304,20 @@ export default async function ReportsPage({
                 {t("reports.periods.badge", "Reporting Period")}
               </p>
               <h2 className="text-2xl font-semibold tracking-tight">
-                {selectedPeriodOption.title}
+                {isCurrentPeriod ? selectedPeriodOption.title : periodLabel}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {selectedPeriodOption.description}
+                {isCurrentPeriod
+                  ? selectedPeriodOption.description
+                  : t(
+                      "reports.periods.selectedRangeDescription",
+                      "Records created or received during the selected reporting range."
+                    )}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
               {periodOptions.map((option) => {
-                const href =
-                  option.value === "monthly"
-                    ? reportsBasePath
-                    : `${reportsBasePath}?period=${option.value}`;
-
                 return (
                   <Button
                     key={option.value}
@@ -217,12 +325,48 @@ export default async function ReportsPage({
                     variant={selectedPeriod === option.value ? "default" : "outline"}
                     size="sm"
                   >
-                    <Link href={href}>{option.label}</Link>
+                    <Link href={getReportsHref(option.value, selectedDate)}>
+                      {option.label}
+                    </Link>
                   </Button>
                 );
               })}
             </div>
           </div>
+
+          {selectedPeriod !== "all-time" ? (
+            <div className="flex flex-col gap-3 rounded-2xl border border-border/70 bg-background/70 p-3 sm:flex-row sm:items-center sm:justify-between">
+              <Button asChild variant="outline" size="sm">
+                <Link href={getReportsHref(selectedPeriod, shiftPeriod(selectedPeriod, selectedPeriodStart, -1))}>
+                  <ChevronLeft className="h-4 w-4" />
+                  <span>{t("common.previous", "Previous")}</span>
+                </Link>
+              </Button>
+
+              <div className="text-center">
+                <p className="text-sm font-semibold">{periodLabel}</p>
+                <p className="text-xs text-muted-foreground">
+                  {t("reports.periods.selectedRange", "Selected reporting range")}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-2 sm:justify-end">
+                {!isCurrentPeriod ? (
+                  <Button asChild variant="ghost" size="sm">
+                    <Link href={getReportsHref(selectedPeriod)}>
+                      {t("common.current", "Current")}
+                    </Link>
+                  </Button>
+                ) : null}
+                <Button asChild variant="outline" size="sm">
+                  <Link href={getReportsHref(selectedPeriod, shiftPeriod(selectedPeriod, selectedPeriodStart, 1))}>
+                    <span>{t("common.next", "Next")}</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          ) : null}
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-5">
             {selectedStats.map((stat) => (
