@@ -48,6 +48,8 @@ export default async function BicycleRentalDetailsPage({ params }: PageProps) {
           actualReturnDate: t("rentals.details.actualReturnDate", "Actual Return Date"),
           notReturned: t("rentals.details.notReturned", "Not returned yet"),
           notes: t("common.notes", "Notes"),
+          bicyclePhoto: t("rentals.details.bicyclePhoto", "Bicycle Photo"),
+          bicyclePhotoAlt: t("rentals.details.bicyclePhotoAlt", "Rented bicycle"),
           signature: t("rentals.details.signature", "Signature"),
           signatureAlt: t("rentals.details.signatureAlt", "Rental signature"),
           edit: t("common.edit", "Edit"),

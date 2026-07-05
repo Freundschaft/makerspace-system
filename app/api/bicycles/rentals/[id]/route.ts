@@ -26,6 +26,7 @@ function normalizeRentalPayload(body: Record<string, unknown>) {
         ? actualReturnDate
         : null,
     notes: body.notes ? String(body.notes) : null,
+    photoPath: body.photoPath ? String(body.photoPath) : null,
     signature: body.signature ? String(body.signature) : null,
   };
 }

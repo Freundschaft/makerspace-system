@@ -267,6 +267,8 @@
         "renterPhone": "Phone Number",
         "renterEmail": "Email (Optional)",
         "bicycleId": "Bicycle ID",
+        "bicyclePhoto": "Bicycle Photo",
+        "bicyclePhotoHelp": "Upload a photo of the rented bicycle (optional)",
         "startDate": "Start Date",
         "endDate": "End Date",
         "notes": "Notes (Optional)",

@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import SignatureCanvas from "react-signature-canvas";
 import type { BicycleRental, RentalStatus } from "@/generated/prisma";
 import Image from "next/image";
+import { FileUpload } from "@/components/ui/file-upload";
 
 interface RentalFormProps {
   initialData?: BicycleRental;
@@ -32,6 +33,7 @@ type RentalFormState = {
   status: RentalStatus;
   actualReturnDate: Date | null;
   notes: string;
+  photoPath: string | null;
   signature: string | null;
 };
 
@@ -47,6 +49,7 @@ function getInitialState(initialData?: BicycleRental): RentalFormState {
       status: "ACTIVE",
       actualReturnDate: null,
       notes: "",
+      photoPath: null,
       signature: null,
     };
   }
@@ -61,6 +64,7 @@ function getInitialState(initialData?: BicycleRental): RentalFormState {
     status: initialData.status,
     actualReturnDate: initialData.actualReturnDate ? new Date(initialData.actualReturnDate) : null,
     notes: initialData.notes ?? "",
+    photoPath: initialData.photoPath ?? null,
     signature: initialData.signature ?? null,
   };
 }
@@ -256,6 +260,19 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
             <div className="space-y-2">
               <Label htmlFor="bicycleId">{t("rentals.new.fields.bicycleId", "Bicycle ID")} *</Label>
               <Input id="bicycleId" name="bicycleId" value={formData.bicycleId} onChange={handleChange} required />
+            </div>
+
+            <div className="space-y-2">
+              <Label>{t("rentals.new.fields.bicyclePhoto", "Bicycle Photo")}</Label>
+              <FileUpload
+                value={formData.photoPath}
+                onChange={(photoPath) => setFormData((prev) => ({ ...prev, photoPath }))}
+                disabled={isSubmitting}
+                directory="bicycle-photos"
+              />
+              <p className="text-xs text-muted-foreground">
+                {t("rentals.new.fields.bicyclePhotoHelp", "Upload a photo of the rented bicycle (optional)")}
+              </p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

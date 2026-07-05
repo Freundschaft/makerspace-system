@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RentalReturnActions } from "./RentalReturnActions";
+import { toAbsoluteFileUrl } from "@/lib/file-urls";
 
 interface RentalDetailsProps {
   rental: BicycleRental;
@@ -28,6 +29,8 @@ interface RentalDetailsProps {
     actualReturnDate: string;
     notReturned: string;
     notes: string;
+    bicyclePhoto: string;
+    bicyclePhotoAlt: string;
     signature: string;
     signatureAlt: string;
     edit: string;
@@ -51,10 +54,29 @@ function getStatusVariant(status: BicycleRental["status"]) {
 export async function RentalDetails({ rental, locale, labels }: RentalDetailsProps) {
   const editHref = localizePathname(`/bicycles/rentals/${rental.id}/edit`, locale);
   const canReturnBike = rental.status !== "RETURNED" && rental.status !== "CANCELLED";
+  const photoUrl = toAbsoluteFileUrl(rental.photoPath);
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {photoUrl ? (
+          <Card className="md:col-span-2">
+            <CardHeader>
+              <CardTitle>{labels.bicyclePhoto}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border bg-muted sm:max-w-2xl">
+                <Image
+                  src={photoUrl}
+                  alt={labels.bicyclePhotoAlt}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        ) : null}
+
         <Card>
           <CardHeader>
             <CardTitle>{labels.renterInfo}</CardTitle>

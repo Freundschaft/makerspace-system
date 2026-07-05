@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { getToken } from "next-auth/jwt"
-import { RentalStatus } from "@/generated/prisma"
+import type { BicycleRental, RentalStatus } from "@/generated/prisma"
 
 const rentalStatuses: RentalStatus[] = ["ACTIVE", "RETURNED", "OVERDUE", "CANCELLED"]
 
@@ -55,27 +55,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Create the rental using raw SQL
-    const result = await prisma.$executeRaw`
+    await prisma.$executeRaw`
       INSERT INTO BicycleRental (
         id, renterName, renterPhone, renterEmail, bicycleId, 
-        startDate, endDate, notes, signature, status, createdAt, updatedAt
+        startDate, endDate, notes, photoPath, signature, status, createdAt, updatedAt
       )
       VALUES (
         UUID(), ${body.renterName}, ${body.renterPhone}, ${body.renterEmail || null}, ${body.bicycleId},
-        ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, ${body.signature || null}, 'ACTIVE',
+        ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, ${body.photoPath || null}, ${body.signature || null}, 'ACTIVE',
         NOW(), NOW()
       )
     `
 
     // Get the newly created rental
-    const newRental = await prisma.$queryRaw`
+    const newRental = await prisma.$queryRaw<BicycleRental[]>`
       SELECT * FROM BicycleRental
       WHERE renterName = ${body.renterName}
       AND bicycleId = ${body.bicycleId}
       AND startDate = ${new Date(body.startDate)}
       ORDER BY createdAt DESC
       LIMIT 1
-    ` as any[]
+    `
 
     return NextResponse.json(newRental[0], { status: 201 })
   } catch (error) {

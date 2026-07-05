@@ -1314,6 +1314,7 @@ async function importRentals(write: boolean, allowNonEmpty: boolean) {
       actualReturnDate: asString(record.fields.RETURN) ? endDate : null,
       status: mapRentalStatus(asString(record.fields.RETURN)),
       notes: asOptionalString(record.fields.Notes) || asOptionalString(record.fields["Notes 2"]),
+      photoPath: null as string | null,
       signature: null as string | null,
     };
 
