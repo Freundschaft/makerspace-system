@@ -184,6 +184,7 @@ exports.Prisma.BicycleRentalScalarFieldEnum = {
   actualReturnDate: 'actualReturnDate',
   status: 'status',
   notes: 'notes',
+  photoPath: 'photoPath',
   signature: 'signature',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -330,6 +331,23 @@ exports.Prisma.JobScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.InKindDonationScalarFieldEnum = {
+  id: 'id',
+  direction: 'direction',
+  status: 'status',
+  date: 'date',
+  item: 'item',
+  quantity: 'quantity',
+  unit: 'unit',
+  contactName: 'contactName',
+  location: 'location',
+  estimatedValue: 'estimatedValue',
+  notes: 'notes',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.BudgetScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -409,6 +427,7 @@ exports.Prisma.BicycleRentalOrderByRelevanceFieldEnum = {
   renterEmail: 'renterEmail',
   bicycleId: 'bicycleId',
   notes: 'notes',
+  photoPath: 'photoPath',
   signature: 'signature'
 };
 
@@ -492,6 +511,16 @@ exports.Prisma.JobOrderByRelevanceFieldEnum = {
   name: 'name',
   notes: 'notes',
   slug: 'slug'
+};
+
+exports.Prisma.InKindDonationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  item: 'item',
+  unit: 'unit',
+  contactName: 'contactName',
+  location: 'location',
+  notes: 'notes',
+  createdById: 'createdById'
 };
 
 exports.Prisma.BudgetOrderByRelevanceFieldEnum = {
@@ -639,6 +668,18 @@ exports.JobStatus = exports.$Enums.JobStatus = {
   CLOSED: 'CLOSED'
 };
 
+exports.InKindDonationDirection = exports.$Enums.InKindDonationDirection = {
+  INCOMING: 'INCOMING',
+  OUTGOING: 'OUTGOING'
+};
+
+exports.InKindDonationStatus = exports.$Enums.InKindDonationStatus = {
+  PLANNED: 'PLANNED',
+  RECEIVED: 'RECEIVED',
+  DISTRIBUTED: 'DISTRIBUTED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   ProblemType: 'ProblemType',
@@ -653,6 +694,7 @@ exports.Prisma.ModelName = {
   HouseProject: 'HouseProject',
   Project: 'Project',
   Job: 'Job',
+  InKindDonation: 'InKindDonation',
   Budget: 'Budget',
   Expense: 'Expense'
 };

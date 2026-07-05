@@ -5,6 +5,7 @@ import {
   ClipboardList,
   FolderKanban,
   Hammer,
+  HandHeart,
   House,
   LayoutDashboard,
   Settings,
@@ -77,6 +78,12 @@ export const appNavigation: NavigationItem[] = [
     fallback: "Jobs",
     href: "/jobs",
     icon: BriefcaseBusiness,
+  },
+  {
+    key: "inKindDonations",
+    fallback: "In-kind Donations",
+    href: "/in-kind-donations",
+    icon: HandHeart,
   },
   {
     key: "finance",

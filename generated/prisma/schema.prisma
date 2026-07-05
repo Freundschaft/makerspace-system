@@ -25,6 +25,7 @@ model User {
   houseProjects      HouseProject[]
   projects           Project[]
   expenses           Expense[]
+  donations          InKindDonation[]
 }
 
 enum UserRole {
@@ -113,6 +114,7 @@ model BicycleRental {
   actualReturnDate DateTime?
   status           RentalStatus @default(ACTIVE)
   notes            String?      @db.Text
+  photoPath        String?      @db.Text
   signature        String?      @db.Text
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
@@ -343,6 +345,18 @@ enum JobStatus {
   CLOSED
 }
 
+enum InKindDonationDirection {
+  INCOMING
+  OUTGOING
+}
+
+enum InKindDonationStatus {
+  PLANNED
+  RECEIVED
+  DISTRIBUTED
+  CANCELLED
+}
+
 model HouseProject {
   id            String             @id @default(uuid())
   date          DateTime
@@ -400,6 +414,29 @@ model Job {
 
   @@index([status])
   @@index([name])
+}
+
+model InKindDonation {
+  id             String                  @id @default(uuid())
+  direction      InKindDonationDirection
+  status         InKindDonationStatus    @default(PLANNED)
+  date           DateTime
+  item           String
+  quantity       Decimal?                @db.Decimal(10, 2)
+  unit           String?
+  contactName    String?
+  location       String?                 @db.Text
+  estimatedValue Decimal?                @db.Decimal(10, 2)
+  notes          String?                 @db.Text
+  createdById    String?
+  createdBy      User?                   @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  @@index([direction, date])
+  @@index([status, date])
+  @@index([createdById])
+  @@index([item])
 }
 
 model Budget {

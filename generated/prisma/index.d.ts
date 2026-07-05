@@ -79,6 +79,11 @@ export type Project = $Result.DefaultSelection<Prisma.$ProjectPayload>
  */
 export type Job = $Result.DefaultSelection<Prisma.$JobPayload>
 /**
+ * Model InKindDonation
+ * 
+ */
+export type InKindDonation = $Result.DefaultSelection<Prisma.$InKindDonationPayload>
+/**
  * Model Budget
  * 
  */
@@ -255,6 +260,24 @@ export const JobStatus: {
 
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
 
+
+export const InKindDonationDirection: {
+  INCOMING: 'INCOMING',
+  OUTGOING: 'OUTGOING'
+};
+
+export type InKindDonationDirection = (typeof InKindDonationDirection)[keyof typeof InKindDonationDirection]
+
+
+export const InKindDonationStatus: {
+  PLANNED: 'PLANNED',
+  RECEIVED: 'RECEIVED',
+  DISTRIBUTED: 'DISTRIBUTED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type InKindDonationStatus = (typeof InKindDonationStatus)[keyof typeof InKindDonationStatus]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -304,6 +327,14 @@ export const ProjectStatus: typeof $Enums.ProjectStatus
 export type JobStatus = $Enums.JobStatus
 
 export const JobStatus: typeof $Enums.JobStatus
+
+export type InKindDonationDirection = $Enums.InKindDonationDirection
+
+export const InKindDonationDirection: typeof $Enums.InKindDonationDirection
+
+export type InKindDonationStatus = $Enums.InKindDonationStatus
+
+export const InKindDonationStatus: typeof $Enums.InKindDonationStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -555,6 +586,16 @@ export class PrismaClient<
     * ```
     */
   get job(): Prisma.JobDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inKindDonation`: Exposes CRUD operations for the **InKindDonation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InKindDonations
+    * const inKindDonations = await prisma.inKindDonation.findMany()
+    * ```
+    */
+  get inKindDonation(): Prisma.InKindDonationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.budget`: Exposes CRUD operations for the **Budget** model.
@@ -1022,6 +1063,7 @@ export namespace Prisma {
     HouseProject: 'HouseProject',
     Project: 'Project',
     Job: 'Job',
+    InKindDonation: 'InKindDonation',
     Budget: 'Budget',
     Expense: 'Expense'
   };
@@ -1039,7 +1081,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "teamMemberPresence" | "electronicsRepair" | "carpentryProject" | "houseProject" | "project" | "job" | "budget" | "expense"
+      modelProps: "user" | "problemType" | "bicycleRepair" | "part" | "repairPart" | "bicycleRental" | "teamMember" | "teamMemberPresence" | "electronicsRepair" | "carpentryProject" | "houseProject" | "project" | "job" | "inKindDonation" | "budget" | "expense"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1901,6 +1943,72 @@ export namespace Prisma {
           }
         }
       }
+      InKindDonation: {
+        payload: Prisma.$InKindDonationPayload<ExtArgs>
+        fields: Prisma.InKindDonationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InKindDonationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InKindDonationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          findFirst: {
+            args: Prisma.InKindDonationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InKindDonationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          findMany: {
+            args: Prisma.InKindDonationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>[]
+          }
+          create: {
+            args: Prisma.InKindDonationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          createMany: {
+            args: Prisma.InKindDonationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.InKindDonationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          update: {
+            args: Prisma.InKindDonationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          deleteMany: {
+            args: Prisma.InKindDonationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InKindDonationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.InKindDonationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InKindDonationPayload>
+          }
+          aggregate: {
+            args: Prisma.InKindDonationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInKindDonation>
+          }
+          groupBy: {
+            args: Prisma.InKindDonationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InKindDonationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InKindDonationCountArgs<ExtArgs>
+            result: $Utils.Optional<InKindDonationCountAggregateOutputType> | number
+          }
+        }
+      }
       Budget: {
         payload: Prisma.$BudgetPayload<ExtArgs>
         fields: Prisma.BudgetFieldRefs
@@ -2154,6 +2262,7 @@ export namespace Prisma {
     houseProject?: HouseProjectOmit
     project?: ProjectOmit
     job?: JobOmit
+    inKindDonation?: InKindDonationOmit
     budget?: BudgetOmit
     expense?: ExpenseOmit
   }
@@ -2241,6 +2350,7 @@ export namespace Prisma {
     houseProjects: number
     projects: number
     expenses: number
+    donations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2249,6 +2359,7 @@ export namespace Prisma {
     houseProjects?: boolean | UserCountOutputTypeCountHouseProjectsArgs
     projects?: boolean | UserCountOutputTypeCountProjectsArgs
     expenses?: boolean | UserCountOutputTypeCountExpensesArgs
+    donations?: boolean | UserCountOutputTypeCountDonationsArgs
   }
 
   // Custom InputTypes
@@ -2295,6 +2406,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ExpenseWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDonationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InKindDonationWhereInput
   }
 
 
@@ -2657,6 +2775,7 @@ export namespace Prisma {
     houseProjects?: boolean | User$houseProjectsArgs<ExtArgs>
     projects?: boolean | User$projectsArgs<ExtArgs>
     expenses?: boolean | User$expensesArgs<ExtArgs>
+    donations?: boolean | User$donationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2677,6 +2796,7 @@ export namespace Prisma {
     houseProjects?: boolean | User$houseProjectsArgs<ExtArgs>
     projects?: boolean | User$projectsArgs<ExtArgs>
     expenses?: boolean | User$expensesArgs<ExtArgs>
+    donations?: boolean | User$donationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2688,6 +2808,7 @@ export namespace Prisma {
       houseProjects: Prisma.$HouseProjectPayload<ExtArgs>[]
       projects: Prisma.$ProjectPayload<ExtArgs>[]
       expenses: Prisma.$ExpensePayload<ExtArgs>[]
+      donations: Prisma.$InKindDonationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3040,6 +3161,7 @@ export namespace Prisma {
     houseProjects<T extends User$houseProjectsArgs<ExtArgs> = {}>(args?: Subset<T, User$houseProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HouseProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     projects<T extends User$projectsArgs<ExtArgs> = {}>(args?: Subset<T, User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expenses<T extends User$expensesArgs<ExtArgs> = {}>(args?: Subset<T, User$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donations<T extends User$donationsArgs<ExtArgs> = {}>(args?: Subset<T, User$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3539,6 +3661,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ExpenseScalarFieldEnum | ExpenseScalarFieldEnum[]
+  }
+
+  /**
+   * User.donations
+   */
+  export type User$donationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    where?: InKindDonationWhereInput
+    orderBy?: InKindDonationOrderByWithRelationInput | InKindDonationOrderByWithRelationInput[]
+    cursor?: InKindDonationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InKindDonationScalarFieldEnum | InKindDonationScalarFieldEnum[]
   }
 
   /**
@@ -7571,6 +7717,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus | null
     notes: string | null
+    photoPath: string | null
     signature: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7587,6 +7734,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus | null
     notes: string | null
+    photoPath: string | null
     signature: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7603,6 +7751,7 @@ export namespace Prisma {
     actualReturnDate: number
     status: number
     notes: number
+    photoPath: number
     signature: number
     createdAt: number
     updatedAt: number
@@ -7621,6 +7770,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    photoPath?: true
     signature?: true
     createdAt?: true
     updatedAt?: true
@@ -7637,6 +7787,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    photoPath?: true
     signature?: true
     createdAt?: true
     updatedAt?: true
@@ -7653,6 +7804,7 @@ export namespace Prisma {
     actualReturnDate?: true
     status?: true
     notes?: true
+    photoPath?: true
     signature?: true
     createdAt?: true
     updatedAt?: true
@@ -7742,6 +7894,7 @@ export namespace Prisma {
     actualReturnDate: Date | null
     status: $Enums.RentalStatus
     notes: string | null
+    photoPath: string | null
     signature: string | null
     createdAt: Date
     updatedAt: Date
@@ -7775,6 +7928,7 @@ export namespace Prisma {
     actualReturnDate?: boolean
     status?: boolean
     notes?: boolean
+    photoPath?: boolean
     signature?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -7793,12 +7947,13 @@ export namespace Prisma {
     actualReturnDate?: boolean
     status?: boolean
     notes?: boolean
+    photoPath?: boolean
     signature?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "signature" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
+  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "photoPath" | "signature" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
 
   export type $BicycleRentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BicycleRental"
@@ -7814,6 +7969,7 @@ export namespace Prisma {
       actualReturnDate: Date | null
       status: $Enums.RentalStatus
       notes: string | null
+      photoPath: string | null
       signature: string | null
       createdAt: Date
       updatedAt: Date
@@ -8196,6 +8352,7 @@ export namespace Prisma {
     readonly actualReturnDate: FieldRef<"BicycleRental", 'DateTime'>
     readonly status: FieldRef<"BicycleRental", 'RentalStatus'>
     readonly notes: FieldRef<"BicycleRental", 'String'>
+    readonly photoPath: FieldRef<"BicycleRental", 'String'>
     readonly signature: FieldRef<"BicycleRental", 'String'>
     readonly createdAt: FieldRef<"BicycleRental", 'DateTime'>
     readonly updatedAt: FieldRef<"BicycleRental", 'DateTime'>
@@ -16224,6 +16381,1096 @@ export namespace Prisma {
 
 
   /**
+   * Model InKindDonation
+   */
+
+  export type AggregateInKindDonation = {
+    _count: InKindDonationCountAggregateOutputType | null
+    _avg: InKindDonationAvgAggregateOutputType | null
+    _sum: InKindDonationSumAggregateOutputType | null
+    _min: InKindDonationMinAggregateOutputType | null
+    _max: InKindDonationMaxAggregateOutputType | null
+  }
+
+  export type InKindDonationAvgAggregateOutputType = {
+    quantity: Decimal | null
+    estimatedValue: Decimal | null
+  }
+
+  export type InKindDonationSumAggregateOutputType = {
+    quantity: Decimal | null
+    estimatedValue: Decimal | null
+  }
+
+  export type InKindDonationMinAggregateOutputType = {
+    id: string | null
+    direction: $Enums.InKindDonationDirection | null
+    status: $Enums.InKindDonationStatus | null
+    date: Date | null
+    item: string | null
+    quantity: Decimal | null
+    unit: string | null
+    contactName: string | null
+    location: string | null
+    estimatedValue: Decimal | null
+    notes: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InKindDonationMaxAggregateOutputType = {
+    id: string | null
+    direction: $Enums.InKindDonationDirection | null
+    status: $Enums.InKindDonationStatus | null
+    date: Date | null
+    item: string | null
+    quantity: Decimal | null
+    unit: string | null
+    contactName: string | null
+    location: string | null
+    estimatedValue: Decimal | null
+    notes: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InKindDonationCountAggregateOutputType = {
+    id: number
+    direction: number
+    status: number
+    date: number
+    item: number
+    quantity: number
+    unit: number
+    contactName: number
+    location: number
+    estimatedValue: number
+    notes: number
+    createdById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InKindDonationAvgAggregateInputType = {
+    quantity?: true
+    estimatedValue?: true
+  }
+
+  export type InKindDonationSumAggregateInputType = {
+    quantity?: true
+    estimatedValue?: true
+  }
+
+  export type InKindDonationMinAggregateInputType = {
+    id?: true
+    direction?: true
+    status?: true
+    date?: true
+    item?: true
+    quantity?: true
+    unit?: true
+    contactName?: true
+    location?: true
+    estimatedValue?: true
+    notes?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InKindDonationMaxAggregateInputType = {
+    id?: true
+    direction?: true
+    status?: true
+    date?: true
+    item?: true
+    quantity?: true
+    unit?: true
+    contactName?: true
+    location?: true
+    estimatedValue?: true
+    notes?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InKindDonationCountAggregateInputType = {
+    id?: true
+    direction?: true
+    status?: true
+    date?: true
+    item?: true
+    quantity?: true
+    unit?: true
+    contactName?: true
+    location?: true
+    estimatedValue?: true
+    notes?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InKindDonationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InKindDonation to aggregate.
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InKindDonations to fetch.
+     */
+    orderBy?: InKindDonationOrderByWithRelationInput | InKindDonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InKindDonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InKindDonations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InKindDonations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InKindDonations
+    **/
+    _count?: true | InKindDonationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InKindDonationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InKindDonationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InKindDonationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InKindDonationMaxAggregateInputType
+  }
+
+  export type GetInKindDonationAggregateType<T extends InKindDonationAggregateArgs> = {
+        [P in keyof T & keyof AggregateInKindDonation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInKindDonation[P]>
+      : GetScalarType<T[P], AggregateInKindDonation[P]>
+  }
+
+
+
+
+  export type InKindDonationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InKindDonationWhereInput
+    orderBy?: InKindDonationOrderByWithAggregationInput | InKindDonationOrderByWithAggregationInput[]
+    by: InKindDonationScalarFieldEnum[] | InKindDonationScalarFieldEnum
+    having?: InKindDonationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InKindDonationCountAggregateInputType | true
+    _avg?: InKindDonationAvgAggregateInputType
+    _sum?: InKindDonationSumAggregateInputType
+    _min?: InKindDonationMinAggregateInputType
+    _max?: InKindDonationMaxAggregateInputType
+  }
+
+  export type InKindDonationGroupByOutputType = {
+    id: string
+    direction: $Enums.InKindDonationDirection
+    status: $Enums.InKindDonationStatus
+    date: Date
+    item: string
+    quantity: Decimal | null
+    unit: string | null
+    contactName: string | null
+    location: string | null
+    estimatedValue: Decimal | null
+    notes: string | null
+    createdById: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: InKindDonationCountAggregateOutputType | null
+    _avg: InKindDonationAvgAggregateOutputType | null
+    _sum: InKindDonationSumAggregateOutputType | null
+    _min: InKindDonationMinAggregateOutputType | null
+    _max: InKindDonationMaxAggregateOutputType | null
+  }
+
+  type GetInKindDonationGroupByPayload<T extends InKindDonationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InKindDonationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InKindDonationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InKindDonationGroupByOutputType[P]>
+            : GetScalarType<T[P], InKindDonationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InKindDonationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    direction?: boolean
+    status?: boolean
+    date?: boolean
+    item?: boolean
+    quantity?: boolean
+    unit?: boolean
+    contactName?: boolean
+    location?: boolean
+    estimatedValue?: boolean
+    notes?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | InKindDonation$createdByArgs<ExtArgs>
+  }, ExtArgs["result"]["inKindDonation"]>
+
+
+
+  export type InKindDonationSelectScalar = {
+    id?: boolean
+    direction?: boolean
+    status?: boolean
+    date?: boolean
+    item?: boolean
+    quantity?: boolean
+    unit?: boolean
+    contactName?: boolean
+    location?: boolean
+    estimatedValue?: boolean
+    notes?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InKindDonationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "direction" | "status" | "date" | "item" | "quantity" | "unit" | "contactName" | "location" | "estimatedValue" | "notes" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["inKindDonation"]>
+  export type InKindDonationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | InKindDonation$createdByArgs<ExtArgs>
+  }
+
+  export type $InKindDonationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InKindDonation"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      direction: $Enums.InKindDonationDirection
+      status: $Enums.InKindDonationStatus
+      date: Date
+      item: string
+      quantity: Prisma.Decimal | null
+      unit: string | null
+      contactName: string | null
+      location: string | null
+      estimatedValue: Prisma.Decimal | null
+      notes: string | null
+      createdById: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["inKindDonation"]>
+    composites: {}
+  }
+
+  type InKindDonationGetPayload<S extends boolean | null | undefined | InKindDonationDefaultArgs> = $Result.GetResult<Prisma.$InKindDonationPayload, S>
+
+  type InKindDonationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InKindDonationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InKindDonationCountAggregateInputType | true
+    }
+
+  export interface InKindDonationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InKindDonation'], meta: { name: 'InKindDonation' } }
+    /**
+     * Find zero or one InKindDonation that matches the filter.
+     * @param {InKindDonationFindUniqueArgs} args - Arguments to find a InKindDonation
+     * @example
+     * // Get one InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InKindDonationFindUniqueArgs>(args: SelectSubset<T, InKindDonationFindUniqueArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InKindDonation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InKindDonationFindUniqueOrThrowArgs} args - Arguments to find a InKindDonation
+     * @example
+     * // Get one InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InKindDonationFindUniqueOrThrowArgs>(args: SelectSubset<T, InKindDonationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InKindDonation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationFindFirstArgs} args - Arguments to find a InKindDonation
+     * @example
+     * // Get one InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InKindDonationFindFirstArgs>(args?: SelectSubset<T, InKindDonationFindFirstArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InKindDonation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationFindFirstOrThrowArgs} args - Arguments to find a InKindDonation
+     * @example
+     * // Get one InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InKindDonationFindFirstOrThrowArgs>(args?: SelectSubset<T, InKindDonationFindFirstOrThrowArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InKindDonations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InKindDonations
+     * const inKindDonations = await prisma.inKindDonation.findMany()
+     * 
+     * // Get first 10 InKindDonations
+     * const inKindDonations = await prisma.inKindDonation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inKindDonationWithIdOnly = await prisma.inKindDonation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InKindDonationFindManyArgs>(args?: SelectSubset<T, InKindDonationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InKindDonation.
+     * @param {InKindDonationCreateArgs} args - Arguments to create a InKindDonation.
+     * @example
+     * // Create one InKindDonation
+     * const InKindDonation = await prisma.inKindDonation.create({
+     *   data: {
+     *     // ... data to create a InKindDonation
+     *   }
+     * })
+     * 
+     */
+    create<T extends InKindDonationCreateArgs>(args: SelectSubset<T, InKindDonationCreateArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InKindDonations.
+     * @param {InKindDonationCreateManyArgs} args - Arguments to create many InKindDonations.
+     * @example
+     * // Create many InKindDonations
+     * const inKindDonation = await prisma.inKindDonation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InKindDonationCreateManyArgs>(args?: SelectSubset<T, InKindDonationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a InKindDonation.
+     * @param {InKindDonationDeleteArgs} args - Arguments to delete one InKindDonation.
+     * @example
+     * // Delete one InKindDonation
+     * const InKindDonation = await prisma.inKindDonation.delete({
+     *   where: {
+     *     // ... filter to delete one InKindDonation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InKindDonationDeleteArgs>(args: SelectSubset<T, InKindDonationDeleteArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InKindDonation.
+     * @param {InKindDonationUpdateArgs} args - Arguments to update one InKindDonation.
+     * @example
+     * // Update one InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InKindDonationUpdateArgs>(args: SelectSubset<T, InKindDonationUpdateArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InKindDonations.
+     * @param {InKindDonationDeleteManyArgs} args - Arguments to filter InKindDonations to delete.
+     * @example
+     * // Delete a few InKindDonations
+     * const { count } = await prisma.inKindDonation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InKindDonationDeleteManyArgs>(args?: SelectSubset<T, InKindDonationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InKindDonations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InKindDonations
+     * const inKindDonation = await prisma.inKindDonation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InKindDonationUpdateManyArgs>(args: SelectSubset<T, InKindDonationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one InKindDonation.
+     * @param {InKindDonationUpsertArgs} args - Arguments to update or create a InKindDonation.
+     * @example
+     * // Update or create a InKindDonation
+     * const inKindDonation = await prisma.inKindDonation.upsert({
+     *   create: {
+     *     // ... data to create a InKindDonation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InKindDonation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InKindDonationUpsertArgs>(args: SelectSubset<T, InKindDonationUpsertArgs<ExtArgs>>): Prisma__InKindDonationClient<$Result.GetResult<Prisma.$InKindDonationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InKindDonations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationCountArgs} args - Arguments to filter InKindDonations to count.
+     * @example
+     * // Count the number of InKindDonations
+     * const count = await prisma.inKindDonation.count({
+     *   where: {
+     *     // ... the filter for the InKindDonations we want to count
+     *   }
+     * })
+    **/
+    count<T extends InKindDonationCountArgs>(
+      args?: Subset<T, InKindDonationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InKindDonationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InKindDonation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InKindDonationAggregateArgs>(args: Subset<T, InKindDonationAggregateArgs>): Prisma.PrismaPromise<GetInKindDonationAggregateType<T>>
+
+    /**
+     * Group by InKindDonation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InKindDonationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InKindDonationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InKindDonationGroupByArgs['orderBy'] }
+        : { orderBy?: InKindDonationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InKindDonationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInKindDonationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InKindDonation model
+   */
+  readonly fields: InKindDonationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InKindDonation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InKindDonationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends InKindDonation$createdByArgs<ExtArgs> = {}>(args?: Subset<T, InKindDonation$createdByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InKindDonation model
+   */
+  interface InKindDonationFieldRefs {
+    readonly id: FieldRef<"InKindDonation", 'String'>
+    readonly direction: FieldRef<"InKindDonation", 'InKindDonationDirection'>
+    readonly status: FieldRef<"InKindDonation", 'InKindDonationStatus'>
+    readonly date: FieldRef<"InKindDonation", 'DateTime'>
+    readonly item: FieldRef<"InKindDonation", 'String'>
+    readonly quantity: FieldRef<"InKindDonation", 'Decimal'>
+    readonly unit: FieldRef<"InKindDonation", 'String'>
+    readonly contactName: FieldRef<"InKindDonation", 'String'>
+    readonly location: FieldRef<"InKindDonation", 'String'>
+    readonly estimatedValue: FieldRef<"InKindDonation", 'Decimal'>
+    readonly notes: FieldRef<"InKindDonation", 'String'>
+    readonly createdById: FieldRef<"InKindDonation", 'String'>
+    readonly createdAt: FieldRef<"InKindDonation", 'DateTime'>
+    readonly updatedAt: FieldRef<"InKindDonation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InKindDonation findUnique
+   */
+  export type InKindDonationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter, which InKindDonation to fetch.
+     */
+    where: InKindDonationWhereUniqueInput
+  }
+
+  /**
+   * InKindDonation findUniqueOrThrow
+   */
+  export type InKindDonationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter, which InKindDonation to fetch.
+     */
+    where: InKindDonationWhereUniqueInput
+  }
+
+  /**
+   * InKindDonation findFirst
+   */
+  export type InKindDonationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter, which InKindDonation to fetch.
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InKindDonations to fetch.
+     */
+    orderBy?: InKindDonationOrderByWithRelationInput | InKindDonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InKindDonations.
+     */
+    cursor?: InKindDonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InKindDonations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InKindDonations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InKindDonations.
+     */
+    distinct?: InKindDonationScalarFieldEnum | InKindDonationScalarFieldEnum[]
+  }
+
+  /**
+   * InKindDonation findFirstOrThrow
+   */
+  export type InKindDonationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter, which InKindDonation to fetch.
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InKindDonations to fetch.
+     */
+    orderBy?: InKindDonationOrderByWithRelationInput | InKindDonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InKindDonations.
+     */
+    cursor?: InKindDonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InKindDonations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InKindDonations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InKindDonations.
+     */
+    distinct?: InKindDonationScalarFieldEnum | InKindDonationScalarFieldEnum[]
+  }
+
+  /**
+   * InKindDonation findMany
+   */
+  export type InKindDonationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter, which InKindDonations to fetch.
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InKindDonations to fetch.
+     */
+    orderBy?: InKindDonationOrderByWithRelationInput | InKindDonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InKindDonations.
+     */
+    cursor?: InKindDonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InKindDonations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InKindDonations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InKindDonations.
+     */
+    distinct?: InKindDonationScalarFieldEnum | InKindDonationScalarFieldEnum[]
+  }
+
+  /**
+   * InKindDonation create
+   */
+  export type InKindDonationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InKindDonation.
+     */
+    data: XOR<InKindDonationCreateInput, InKindDonationUncheckedCreateInput>
+  }
+
+  /**
+   * InKindDonation createMany
+   */
+  export type InKindDonationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InKindDonations.
+     */
+    data: InKindDonationCreateManyInput | InKindDonationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InKindDonation update
+   */
+  export type InKindDonationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InKindDonation.
+     */
+    data: XOR<InKindDonationUpdateInput, InKindDonationUncheckedUpdateInput>
+    /**
+     * Choose, which InKindDonation to update.
+     */
+    where: InKindDonationWhereUniqueInput
+  }
+
+  /**
+   * InKindDonation updateMany
+   */
+  export type InKindDonationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InKindDonations.
+     */
+    data: XOR<InKindDonationUpdateManyMutationInput, InKindDonationUncheckedUpdateManyInput>
+    /**
+     * Filter which InKindDonations to update
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * Limit how many InKindDonations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InKindDonation upsert
+   */
+  export type InKindDonationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InKindDonation to update in case it exists.
+     */
+    where: InKindDonationWhereUniqueInput
+    /**
+     * In case the InKindDonation found by the `where` argument doesn't exist, create a new InKindDonation with this data.
+     */
+    create: XOR<InKindDonationCreateInput, InKindDonationUncheckedCreateInput>
+    /**
+     * In case the InKindDonation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InKindDonationUpdateInput, InKindDonationUncheckedUpdateInput>
+  }
+
+  /**
+   * InKindDonation delete
+   */
+  export type InKindDonationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+    /**
+     * Filter which InKindDonation to delete.
+     */
+    where: InKindDonationWhereUniqueInput
+  }
+
+  /**
+   * InKindDonation deleteMany
+   */
+  export type InKindDonationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InKindDonations to delete
+     */
+    where?: InKindDonationWhereInput
+    /**
+     * Limit how many InKindDonations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InKindDonation.createdBy
+   */
+  export type InKindDonation$createdByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * InKindDonation without action
+   */
+  export type InKindDonationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InKindDonation
+     */
+    select?: InKindDonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InKindDonation
+     */
+    omit?: InKindDonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InKindDonationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Budget
    */
 
@@ -18476,6 +19723,7 @@ export namespace Prisma {
     actualReturnDate: 'actualReturnDate',
     status: 'status',
     notes: 'notes',
+    photoPath: 'photoPath',
     signature: 'signature',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -18646,6 +19894,26 @@ export namespace Prisma {
   export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
+  export const InKindDonationScalarFieldEnum: {
+    id: 'id',
+    direction: 'direction',
+    status: 'status',
+    date: 'date',
+    item: 'item',
+    quantity: 'quantity',
+    unit: 'unit',
+    contactName: 'contactName',
+    location: 'location',
+    estimatedValue: 'estimatedValue',
+    notes: 'notes',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InKindDonationScalarFieldEnum = (typeof InKindDonationScalarFieldEnum)[keyof typeof InKindDonationScalarFieldEnum]
+
+
   export const BudgetScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -18752,6 +20020,7 @@ export namespace Prisma {
     renterEmail: 'renterEmail',
     bicycleId: 'bicycleId',
     notes: 'notes',
+    photoPath: 'photoPath',
     signature: 'signature'
   };
 
@@ -18859,6 +20128,19 @@ export namespace Prisma {
   };
 
   export type JobOrderByRelevanceFieldEnum = (typeof JobOrderByRelevanceFieldEnum)[keyof typeof JobOrderByRelevanceFieldEnum]
+
+
+  export const InKindDonationOrderByRelevanceFieldEnum: {
+    id: 'id',
+    item: 'item',
+    unit: 'unit',
+    contactName: 'contactName',
+    location: 'location',
+    notes: 'notes',
+    createdById: 'createdById'
+  };
+
+  export type InKindDonationOrderByRelevanceFieldEnum = (typeof InKindDonationOrderByRelevanceFieldEnum)[keyof typeof InKindDonationOrderByRelevanceFieldEnum]
 
 
   export const BudgetOrderByRelevanceFieldEnum: {
@@ -19011,6 +20293,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'InKindDonationDirection'
+   */
+  export type EnumInKindDonationDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InKindDonationDirection'>
+    
+
+
+  /**
+   * Reference to a field of type 'InKindDonationStatus'
+   */
+  export type EnumInKindDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InKindDonationStatus'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -19034,6 +20330,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectListRelationFilter
     projects?: ProjectListRelationFilter
     expenses?: ExpenseListRelationFilter
+    donations?: InKindDonationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19047,6 +20344,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectOrderByRelationAggregateInput
     projects?: ProjectOrderByRelationAggregateInput
     expenses?: ExpenseOrderByRelationAggregateInput
+    donations?: InKindDonationOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
 
@@ -19064,6 +20362,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectListRelationFilter
     projects?: ProjectListRelationFilter
     expenses?: ExpenseListRelationFilter
+    donations?: InKindDonationListRelationFilter
   }, "id" | "googleId">
 
   export type UserOrderByWithAggregationInput = {
@@ -19398,6 +20697,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableFilter<"BicycleRental"> | string | null
+    photoPath?: StringNullableFilter<"BicycleRental"> | string | null
     signature?: StringNullableFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
@@ -19414,6 +20714,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrderInput | SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
     signature?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -19434,6 +20735,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableFilter<"BicycleRental"> | string | null
+    photoPath?: StringNullableFilter<"BicycleRental"> | string | null
     signature?: StringNullableFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeFilter<"BicycleRental"> | Date | string
@@ -19450,6 +20752,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrderInput | SortOrder
     status?: SortOrder
     notes?: SortOrderInput | SortOrder
+    photoPath?: SortOrderInput | SortOrder
     signature?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -19472,6 +20775,7 @@ export namespace Prisma {
     actualReturnDate?: DateTimeNullableWithAggregatesFilter<"BicycleRental"> | Date | string | null
     status?: EnumRentalStatusWithAggregatesFilter<"BicycleRental"> | $Enums.RentalStatus
     notes?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
+    photoPath?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
     signature?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
@@ -20304,6 +21608,109 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Job"> | Date | string
   }
 
+  export type InKindDonationWhereInput = {
+    AND?: InKindDonationWhereInput | InKindDonationWhereInput[]
+    OR?: InKindDonationWhereInput[]
+    NOT?: InKindDonationWhereInput | InKindDonationWhereInput[]
+    id?: StringFilter<"InKindDonation"> | string
+    direction?: EnumInKindDonationDirectionFilter<"InKindDonation"> | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFilter<"InKindDonation"> | $Enums.InKindDonationStatus
+    date?: DateTimeFilter<"InKindDonation"> | Date | string
+    item?: StringFilter<"InKindDonation"> | string
+    quantity?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    unit?: StringNullableFilter<"InKindDonation"> | string | null
+    contactName?: StringNullableFilter<"InKindDonation"> | string | null
+    location?: StringNullableFilter<"InKindDonation"> | string | null
+    estimatedValue?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"InKindDonation"> | string | null
+    createdById?: StringNullableFilter<"InKindDonation"> | string | null
+    createdAt?: DateTimeFilter<"InKindDonation"> | Date | string
+    updatedAt?: DateTimeFilter<"InKindDonation"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type InKindDonationOrderByWithRelationInput = {
+    id?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    date?: SortOrder
+    item?: SortOrder
+    quantity?: SortOrderInput | SortOrder
+    unit?: SortOrderInput | SortOrder
+    contactName?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    estimatedValue?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    _relevance?: InKindDonationOrderByRelevanceInput
+  }
+
+  export type InKindDonationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InKindDonationWhereInput | InKindDonationWhereInput[]
+    OR?: InKindDonationWhereInput[]
+    NOT?: InKindDonationWhereInput | InKindDonationWhereInput[]
+    direction?: EnumInKindDonationDirectionFilter<"InKindDonation"> | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFilter<"InKindDonation"> | $Enums.InKindDonationStatus
+    date?: DateTimeFilter<"InKindDonation"> | Date | string
+    item?: StringFilter<"InKindDonation"> | string
+    quantity?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    unit?: StringNullableFilter<"InKindDonation"> | string | null
+    contactName?: StringNullableFilter<"InKindDonation"> | string | null
+    location?: StringNullableFilter<"InKindDonation"> | string | null
+    estimatedValue?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"InKindDonation"> | string | null
+    createdById?: StringNullableFilter<"InKindDonation"> | string | null
+    createdAt?: DateTimeFilter<"InKindDonation"> | Date | string
+    updatedAt?: DateTimeFilter<"InKindDonation"> | Date | string
+    createdBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type InKindDonationOrderByWithAggregationInput = {
+    id?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    date?: SortOrder
+    item?: SortOrder
+    quantity?: SortOrderInput | SortOrder
+    unit?: SortOrderInput | SortOrder
+    contactName?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    estimatedValue?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InKindDonationCountOrderByAggregateInput
+    _avg?: InKindDonationAvgOrderByAggregateInput
+    _max?: InKindDonationMaxOrderByAggregateInput
+    _min?: InKindDonationMinOrderByAggregateInput
+    _sum?: InKindDonationSumOrderByAggregateInput
+  }
+
+  export type InKindDonationScalarWhereWithAggregatesInput = {
+    AND?: InKindDonationScalarWhereWithAggregatesInput | InKindDonationScalarWhereWithAggregatesInput[]
+    OR?: InKindDonationScalarWhereWithAggregatesInput[]
+    NOT?: InKindDonationScalarWhereWithAggregatesInput | InKindDonationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InKindDonation"> | string
+    direction?: EnumInKindDonationDirectionWithAggregatesFilter<"InKindDonation"> | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusWithAggregatesFilter<"InKindDonation"> | $Enums.InKindDonationStatus
+    date?: DateTimeWithAggregatesFilter<"InKindDonation"> | Date | string
+    item?: StringWithAggregatesFilter<"InKindDonation"> | string
+    quantity?: DecimalNullableWithAggregatesFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    unit?: StringNullableWithAggregatesFilter<"InKindDonation"> | string | null
+    contactName?: StringNullableWithAggregatesFilter<"InKindDonation"> | string | null
+    location?: StringNullableWithAggregatesFilter<"InKindDonation"> | string | null
+    estimatedValue?: DecimalNullableWithAggregatesFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableWithAggregatesFilter<"InKindDonation"> | string | null
+    createdById?: StringNullableWithAggregatesFilter<"InKindDonation"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"InKindDonation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"InKindDonation"> | Date | string
+  }
+
   export type BudgetWhereInput = {
     AND?: BudgetWhereInput | BudgetWhereInput[]
     OR?: BudgetWhereInput[]
@@ -20490,6 +21897,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
     projects?: ProjectCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20503,6 +21911,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
     projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -20516,6 +21925,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20529,6 +21939,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -20887,6 +22298,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    photoPath?: string | null
     signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20903,6 +22315,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    photoPath?: string | null
     signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20919,6 +22332,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20935,6 +22349,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20951,6 +22366,7 @@ export namespace Prisma {
     actualReturnDate?: Date | string | null
     status?: $Enums.RentalStatus
     notes?: string | null
+    photoPath?: string | null
     signature?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20967,6 +22383,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20983,6 +22400,7 @@ export namespace Prisma {
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: EnumRentalStatusFieldUpdateOperationsInput | $Enums.RentalStatus
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    photoPath?: NullableStringFieldUpdateOperationsInput | string | null
     signature?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21980,6 +23398,124 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type InKindDonationCreateInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy?: UserCreateNestedOneWithoutDonationsInput
+  }
+
+  export type InKindDonationUncheckedCreateInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InKindDonationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneWithoutDonationsNestedInput
+  }
+
+  export type InKindDonationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InKindDonationCreateManyInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    createdById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InKindDonationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InKindDonationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type BudgetCreateInput = {
     id?: string
     name: string
@@ -22234,6 +23770,12 @@ export namespace Prisma {
     none?: ExpenseWhereInput
   }
 
+  export type InKindDonationListRelationFilter = {
+    every?: InKindDonationWhereInput
+    some?: InKindDonationWhereInput
+    none?: InKindDonationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -22256,6 +23798,10 @@ export namespace Prisma {
   }
 
   export type ExpenseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InKindDonationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22669,6 +24215,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    photoPath?: SortOrder
     signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22685,6 +24232,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    photoPath?: SortOrder
     signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -22701,6 +24249,7 @@ export namespace Prisma {
     actualReturnDate?: SortOrder
     status?: SortOrder
     notes?: SortOrder
+    photoPath?: SortOrder
     signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -23454,6 +25003,107 @@ export namespace Prisma {
     _max?: NestedEnumJobStatusFilter<$PrismaModel>
   }
 
+  export type EnumInKindDonationDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationDirection | EnumInKindDonationDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationDirection[]
+    notIn?: $Enums.InKindDonationDirection[]
+    not?: NestedEnumInKindDonationDirectionFilter<$PrismaModel> | $Enums.InKindDonationDirection
+  }
+
+  export type EnumInKindDonationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationStatus | EnumInKindDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationStatus[]
+    notIn?: $Enums.InKindDonationStatus[]
+    not?: NestedEnumInKindDonationStatusFilter<$PrismaModel> | $Enums.InKindDonationStatus
+  }
+
+  export type InKindDonationOrderByRelevanceInput = {
+    fields: InKindDonationOrderByRelevanceFieldEnum | InKindDonationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type InKindDonationCountOrderByAggregateInput = {
+    id?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    date?: SortOrder
+    item?: SortOrder
+    quantity?: SortOrder
+    unit?: SortOrder
+    contactName?: SortOrder
+    location?: SortOrder
+    estimatedValue?: SortOrder
+    notes?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InKindDonationAvgOrderByAggregateInput = {
+    quantity?: SortOrder
+    estimatedValue?: SortOrder
+  }
+
+  export type InKindDonationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    date?: SortOrder
+    item?: SortOrder
+    quantity?: SortOrder
+    unit?: SortOrder
+    contactName?: SortOrder
+    location?: SortOrder
+    estimatedValue?: SortOrder
+    notes?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InKindDonationMinOrderByAggregateInput = {
+    id?: SortOrder
+    direction?: SortOrder
+    status?: SortOrder
+    date?: SortOrder
+    item?: SortOrder
+    quantity?: SortOrder
+    unit?: SortOrder
+    contactName?: SortOrder
+    location?: SortOrder
+    estimatedValue?: SortOrder
+    notes?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InKindDonationSumOrderByAggregateInput = {
+    quantity?: SortOrder
+    estimatedValue?: SortOrder
+  }
+
+  export type EnumInKindDonationDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationDirection | EnumInKindDonationDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationDirection[]
+    notIn?: $Enums.InKindDonationDirection[]
+    not?: NestedEnumInKindDonationDirectionWithAggregatesFilter<$PrismaModel> | $Enums.InKindDonationDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInKindDonationDirectionFilter<$PrismaModel>
+    _max?: NestedEnumInKindDonationDirectionFilter<$PrismaModel>
+  }
+
+  export type EnumInKindDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationStatus | EnumInKindDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationStatus[]
+    notIn?: $Enums.InKindDonationStatus[]
+    not?: NestedEnumInKindDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.InKindDonationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInKindDonationStatusFilter<$PrismaModel>
+    _max?: NestedEnumInKindDonationStatusFilter<$PrismaModel>
+  }
+
   export type DecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -23637,6 +25287,13 @@ export namespace Prisma {
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
   }
 
+  export type InKindDonationCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput> | InKindDonationCreateWithoutCreatedByInput[] | InKindDonationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: InKindDonationCreateOrConnectWithoutCreatedByInput | InKindDonationCreateOrConnectWithoutCreatedByInput[]
+    createMany?: InKindDonationCreateManyCreatedByInputEnvelope
+    connect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+  }
+
   export type ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -23670,6 +25327,13 @@ export namespace Prisma {
     connectOrCreate?: ExpenseCreateOrConnectWithoutCreatedByInput | ExpenseCreateOrConnectWithoutCreatedByInput[]
     createMany?: ExpenseCreateManyCreatedByInputEnvelope
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
+  }
+
+  export type InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput> | InKindDonationCreateWithoutCreatedByInput[] | InKindDonationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: InKindDonationCreateOrConnectWithoutCreatedByInput | InKindDonationCreateOrConnectWithoutCreatedByInput[]
+    createMany?: InKindDonationCreateManyCreatedByInputEnvelope
+    connect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -23758,6 +25422,20 @@ export namespace Prisma {
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
   }
 
+  export type InKindDonationUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput> | InKindDonationCreateWithoutCreatedByInput[] | InKindDonationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: InKindDonationCreateOrConnectWithoutCreatedByInput | InKindDonationCreateOrConnectWithoutCreatedByInput[]
+    upsert?: InKindDonationUpsertWithWhereUniqueWithoutCreatedByInput | InKindDonationUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: InKindDonationCreateManyCreatedByInputEnvelope
+    set?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    disconnect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    delete?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    connect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    update?: InKindDonationUpdateWithWhereUniqueWithoutCreatedByInput | InKindDonationUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: InKindDonationUpdateManyWithWhereWithoutCreatedByInput | InKindDonationUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: InKindDonationScalarWhereInput | InKindDonationScalarWhereInput[]
+  }
+
   export type ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput = {
     create?: XOR<ElectronicsRepairCreateWithoutRepairerInput, ElectronicsRepairUncheckedCreateWithoutRepairerInput> | ElectronicsRepairCreateWithoutRepairerInput[] | ElectronicsRepairUncheckedCreateWithoutRepairerInput[]
     connectOrCreate?: ElectronicsRepairCreateOrConnectWithoutRepairerInput | ElectronicsRepairCreateOrConnectWithoutRepairerInput[]
@@ -23826,6 +25504,20 @@ export namespace Prisma {
     update?: ExpenseUpdateWithWhereUniqueWithoutCreatedByInput | ExpenseUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: ExpenseUpdateManyWithWhereWithoutCreatedByInput | ExpenseUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: ExpenseScalarWhereInput | ExpenseScalarWhereInput[]
+  }
+
+  export type InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput> | InKindDonationCreateWithoutCreatedByInput[] | InKindDonationUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: InKindDonationCreateOrConnectWithoutCreatedByInput | InKindDonationCreateOrConnectWithoutCreatedByInput[]
+    upsert?: InKindDonationUpsertWithWhereUniqueWithoutCreatedByInput | InKindDonationUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: InKindDonationCreateManyCreatedByInputEnvelope
+    set?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    disconnect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    delete?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    connect?: InKindDonationWhereUniqueInput | InKindDonationWhereUniqueInput[]
+    update?: InKindDonationUpdateWithWhereUniqueWithoutCreatedByInput | InKindDonationUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: InKindDonationUpdateManyWithWhereWithoutCreatedByInput | InKindDonationUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: InKindDonationScalarWhereInput | InKindDonationScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -24222,6 +25914,30 @@ export namespace Prisma {
 
   export type EnumJobStatusFieldUpdateOperationsInput = {
     set?: $Enums.JobStatus
+  }
+
+  export type UserCreateNestedOneWithoutDonationsInput = {
+    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumInKindDonationDirectionFieldUpdateOperationsInput = {
+    set?: $Enums.InKindDonationDirection
+  }
+
+  export type EnumInKindDonationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.InKindDonationStatus
+  }
+
+  export type UserUpdateOneWithoutDonationsNestedInput = {
+    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput
+    upsert?: UserUpsertWithoutDonationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDonationsInput, UserUpdateWithoutDonationsInput>, UserUncheckedUpdateWithoutDonationsInput>
   }
 
   export type ExpenseCreateNestedManyWithoutBudgetInput = {
@@ -24787,6 +26503,40 @@ export namespace Prisma {
     _max?: NestedEnumJobStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumInKindDonationDirectionFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationDirection | EnumInKindDonationDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationDirection[]
+    notIn?: $Enums.InKindDonationDirection[]
+    not?: NestedEnumInKindDonationDirectionFilter<$PrismaModel> | $Enums.InKindDonationDirection
+  }
+
+  export type NestedEnumInKindDonationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationStatus | EnumInKindDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationStatus[]
+    notIn?: $Enums.InKindDonationStatus[]
+    not?: NestedEnumInKindDonationStatusFilter<$PrismaModel> | $Enums.InKindDonationStatus
+  }
+
+  export type NestedEnumInKindDonationDirectionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationDirection | EnumInKindDonationDirectionFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationDirection[]
+    notIn?: $Enums.InKindDonationDirection[]
+    not?: NestedEnumInKindDonationDirectionWithAggregatesFilter<$PrismaModel> | $Enums.InKindDonationDirection
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInKindDonationDirectionFilter<$PrismaModel>
+    _max?: NestedEnumInKindDonationDirectionFilter<$PrismaModel>
+  }
+
+  export type NestedEnumInKindDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InKindDonationStatus | EnumInKindDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InKindDonationStatus[]
+    notIn?: $Enums.InKindDonationStatus[]
+    not?: NestedEnumInKindDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.InKindDonationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInKindDonationStatusFilter<$PrismaModel>
+    _max?: NestedEnumInKindDonationStatusFilter<$PrismaModel>
+  }
+
   export type NestedDecimalFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -25038,6 +26788,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InKindDonationCreateWithoutCreatedByInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InKindDonationUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InKindDonationCreateOrConnectWithoutCreatedByInput = {
+    where: InKindDonationWhereUniqueInput
+    create: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type InKindDonationCreateManyCreatedByInputEnvelope = {
+    data: InKindDonationCreateManyCreatedByInput | InKindDonationCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ElectronicsRepairUpsertWithWhereUniqueWithoutRepairerInput = {
     where: ElectronicsRepairWhereUniqueInput
     update: XOR<ElectronicsRepairUpdateWithoutRepairerInput, ElectronicsRepairUncheckedUpdateWithoutRepairerInput>
@@ -25221,6 +27013,42 @@ export namespace Prisma {
     houseProjectId?: StringNullableFilter<"Expense"> | string | null
     createdAt?: DateTimeFilter<"Expense"> | Date | string
     updatedAt?: DateTimeFilter<"Expense"> | Date | string
+  }
+
+  export type InKindDonationUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: InKindDonationWhereUniqueInput
+    update: XOR<InKindDonationUpdateWithoutCreatedByInput, InKindDonationUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<InKindDonationCreateWithoutCreatedByInput, InKindDonationUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type InKindDonationUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: InKindDonationWhereUniqueInput
+    data: XOR<InKindDonationUpdateWithoutCreatedByInput, InKindDonationUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type InKindDonationUpdateManyWithWhereWithoutCreatedByInput = {
+    where: InKindDonationScalarWhereInput
+    data: XOR<InKindDonationUpdateManyMutationInput, InKindDonationUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type InKindDonationScalarWhereInput = {
+    AND?: InKindDonationScalarWhereInput | InKindDonationScalarWhereInput[]
+    OR?: InKindDonationScalarWhereInput[]
+    NOT?: InKindDonationScalarWhereInput | InKindDonationScalarWhereInput[]
+    id?: StringFilter<"InKindDonation"> | string
+    direction?: EnumInKindDonationDirectionFilter<"InKindDonation"> | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFilter<"InKindDonation"> | $Enums.InKindDonationStatus
+    date?: DateTimeFilter<"InKindDonation"> | Date | string
+    item?: StringFilter<"InKindDonation"> | string
+    quantity?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    unit?: StringNullableFilter<"InKindDonation"> | string | null
+    contactName?: StringNullableFilter<"InKindDonation"> | string | null
+    location?: StringNullableFilter<"InKindDonation"> | string | null
+    estimatedValue?: DecimalNullableFilter<"InKindDonation"> | Decimal | DecimalJsLike | number | string | null
+    notes?: StringNullableFilter<"InKindDonation"> | string | null
+    createdById?: StringNullableFilter<"InKindDonation"> | string | null
+    createdAt?: DateTimeFilter<"InKindDonation"> | Date | string
+    updatedAt?: DateTimeFilter<"InKindDonation"> | Date | string
   }
 
   export type RepairPartCreateWithoutRepairInput = {
@@ -25728,6 +27556,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
     projects?: ProjectCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutElectronicsRepairsInput = {
@@ -25740,6 +27569,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
     projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutElectronicsRepairsInput = {
@@ -25768,6 +27598,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutElectronicsRepairsInput = {
@@ -25780,6 +27611,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCarpentryProjectsInput = {
@@ -25792,6 +27624,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
     projects?: ProjectCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCarpentryProjectsInput = {
@@ -25804,6 +27637,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
     projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCarpentryProjectsInput = {
@@ -25872,6 +27706,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCarpentryProjectsInput = {
@@ -25884,6 +27719,7 @@ export namespace Prisma {
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ExpenseUpsertWithWhereUniqueWithoutCarpentryProjectInput = {
@@ -25912,6 +27748,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
     projects?: ProjectCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutHouseProjectsInput = {
@@ -25924,6 +27761,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
     projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutHouseProjectsInput = {
@@ -25992,6 +27830,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutHouseProjectsInput = {
@@ -26004,6 +27843,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ExpenseUpsertWithWhereUniqueWithoutHouseProjectInput = {
@@ -26032,6 +27872,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutProjectsInput = {
@@ -26044,6 +27885,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutProjectsInput = {
@@ -26072,6 +27914,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -26083,6 +27926,75 @@ export namespace Prisma {
     electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutDonationsInput = {
+    id?: string
+    email?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
+    projects?: ProjectCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutDonationsInput = {
+    id?: string
+    email?: string | null
+    googleId?: string | null
+    role?: $Enums.UserRole
+    enabled?: boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedCreateNestedManyWithoutRepairerInput
+    carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutDonationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+  }
+
+  export type UserUpsertWithoutDonationsInput = {
+    update: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
+    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDonationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type UserUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
+    projects?: ProjectUpdateManyWithoutAssignedToNestedInput
+    expenses?: ExpenseUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    googleId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    enabled?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    electronicsRepairs?: ElectronicsRepairUncheckedUpdateManyWithoutRepairerNestedInput
+    carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -26177,6 +28089,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectCreateNestedManyWithoutAssignedToInput
     projects?: ProjectCreateNestedManyWithoutAssignedToInput
+    donations?: InKindDonationCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutExpensesInput = {
@@ -26189,6 +28102,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUncheckedCreateNestedManyWithoutAssignedToInput
     houseProjects?: HouseProjectUncheckedCreateNestedManyWithoutAssignedToInput
     projects?: ProjectUncheckedCreateNestedManyWithoutAssignedToInput
+    donations?: InKindDonationUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutExpensesInput = {
@@ -26336,6 +28250,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUpdateManyWithoutAssignedToNestedInput
+    donations?: InKindDonationUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutExpensesInput = {
@@ -26348,6 +28263,7 @@ export namespace Prisma {
     carpentryProjects?: CarpentryProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     houseProjects?: HouseProjectUncheckedUpdateManyWithoutAssignedToNestedInput
     projects?: ProjectUncheckedUpdateManyWithoutAssignedToNestedInput
+    donations?: InKindDonationUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type CarpentryProjectUpsertWithoutExpensesInput = {
@@ -26531,6 +28447,22 @@ export namespace Prisma {
     budgetId?: string | null
     carpentryProjectId?: string | null
     houseProjectId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InKindDonationCreateManyCreatedByInput = {
+    id?: string
+    direction: $Enums.InKindDonationDirection
+    status?: $Enums.InKindDonationStatus
+    date: Date | string
+    item: string
+    quantity?: Decimal | DecimalJsLike | number | string | null
+    unit?: string | null
+    contactName?: string | null
+    location?: string | null
+    estimatedValue?: Decimal | DecimalJsLike | number | string | null
+    notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26789,6 +28721,54 @@ export namespace Prisma {
     budgetId?: NullableStringFieldUpdateOperationsInput | string | null
     carpentryProjectId?: NullableStringFieldUpdateOperationsInput | string | null
     houseProjectId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InKindDonationUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InKindDonationUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InKindDonationUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    direction?: EnumInKindDonationDirectionFieldUpdateOperationsInput | $Enums.InKindDonationDirection
+    status?: EnumInKindDonationStatusFieldUpdateOperationsInput | $Enums.InKindDonationStatus
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: StringFieldUpdateOperationsInput | string
+    quantity?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    estimatedValue?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

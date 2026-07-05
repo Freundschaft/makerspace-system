@@ -14,6 +14,9 @@
       "electronics": "Electronics",
       "carpentry": "Carpentry",
       "houseProjects": "House Projects",
+      "projects": "Projects",
+      "jobs": "Jobs",
+      "inKindDonations": "In-kind Donations",
       "finance": "Finance",
       "settings": "Settings"
     }
@@ -172,6 +175,10 @@
     "carpentry": {
       "title": "Carpentry Projects",
       "new": "New Project"
+    },
+    "inKindDonations": {
+      "title": "In-kind Donations",
+      "new": "New Donation"
     }
   },
   "dashboard": {
@@ -193,6 +200,9 @@
       "electronics": "Open electronics repairs",
       "carpentry": "Open carpentry projects",
       "houseProjects": "Open house projects",
+      "projects": "Open projects",
+      "jobs": "Open jobs",
+      "inKindDonations": "Open in-kind donations",
       "finance": "Open finance",
       "settings": "Open settings"
     },
@@ -203,6 +213,9 @@
       "electronics": "Electronics",
       "carpentry": "Carpentry",
       "houseProjects": "House Projects",
+      "projects": "Projects",
+      "jobs": "Jobs",
+      "inKindDonations": "In-kind Donations",
       "viewDetails": "View details"
     },
     "cards": {
@@ -214,6 +227,67 @@
       "quickAccess": "Quick Access",
       "quickAccessTitle": "Navigate to active work queues",
       "quickAccessHint": "Use the sidebar to jump to each module."
+    }
+  },
+  "inKindDonations": {
+    "description": "Track goods received by the makerspace and items distributed to people or partner teams.",
+    "summary": {
+      "incoming": "Incoming",
+      "outgoing": "Outgoing",
+      "planned": "Planned"
+    },
+    "fields": {
+      "direction": "Direction",
+      "status": "Status",
+      "date": "Date",
+      "item": "Item",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "contactName": "Donor / Recipient",
+      "location": "Location",
+      "estimatedValue": "Estimated Value",
+      "createdBy": "Created By"
+    },
+    "directions": {
+      "INCOMING": "Incoming",
+      "OUTGOING": "Outgoing"
+    },
+    "statuses": {
+      "PLANNED": "Planned",
+      "RECEIVED": "Received",
+      "DISTRIBUTED": "Distributed",
+      "CANCELLED": "Cancelled"
+    },
+    "placeholders": {
+      "direction": "Select direction",
+      "item": "Blankets, tools, laptops...",
+      "unit": "pcs, boxes, kg",
+      "contactName": "Person, team, or organization",
+      "location": "Storage, camp, partner site",
+      "notes": "Condition, purpose, transport notes, or handover details"
+    },
+    "help": {
+      "estimatedValue": "Optional EUR estimate for reporting"
+    },
+    "actions": {
+      "create": "Create Donation"
+    },
+    "new": {
+      "pageTitle": "New In-kind Donation",
+      "errors": {
+        "createFailed": "Failed to create in-kind donation"
+      }
+    },
+    "edit": {
+      "pageTitle": "Edit In-kind Donation",
+      "errors": {
+        "updateFailed": "Failed to update in-kind donation",
+        "deleteFailed": "Failed to delete in-kind donation"
+      }
+    },
+    "details": {
+      "pageTitle": "In-kind Donation Details",
+      "donationInfo": "Donation Information"
     }
   },
   "reports": {
