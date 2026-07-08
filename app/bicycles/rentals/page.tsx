@@ -56,6 +56,7 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
         renterPhone: true,
         renterEmail: true,
         bicycleId: true,
+        depositAmount: true,
         startDate: true,
         endDate: true,
         actualReturnDate: true,

@@ -233,6 +233,7 @@
         "renterPhone": "Phone Number",
         "renterEmail": "Email (Optional)",
         "bicycleId": "Bicycle ID",
+        "depositAmount": "Deposit Amount (€)",
         "startDate": "Start Date",
         "endDate": "End Date",
         "notes": "Notes (Optional)",

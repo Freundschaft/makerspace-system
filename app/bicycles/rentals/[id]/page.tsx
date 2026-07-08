@@ -42,6 +42,7 @@ export default async function BicycleRentalDetailsPage({ params }: PageProps) {
           rentalInfo: t("rentals.details.rentalInfo", "Rental Information"),
           rentalInfoDesc: t("rentals.details.rentalInfoDesc", "Dates, bicycle, and return status"),
           bicycleId: t("rentals.new.fields.bicycleId", "Bicycle ID"),
+          depositAmount: t("rentals.new.fields.depositAmount", "Deposit Amount (€)"),
           status: t("common.status", "Status"),
           startDate: t("rentals.new.fields.startDate", "Start Date"),
           endDate: t("rentals.new.fields.endDate", "End Date"),

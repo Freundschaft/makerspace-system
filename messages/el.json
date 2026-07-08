@@ -233,6 +233,7 @@
         "renterPhone": "Τηλέφωνο",
         "renterEmail": "Email (προαιρετικό)",
         "bicycleId": "ID ποδηλάτου",
+        "depositAmount": "Ποσό εγγύησης (€)",
         "startDate": "Ημερομηνία έναρξης",
         "endDate": "Ημερομηνία λήξης",
         "notes": "Σημειώσεις (προαιρετικό)",

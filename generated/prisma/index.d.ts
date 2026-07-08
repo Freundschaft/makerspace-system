@@ -7702,8 +7702,18 @@ export namespace Prisma {
 
   export type AggregateBicycleRental = {
     _count: BicycleRentalCountAggregateOutputType | null
+    _avg: BicycleRentalAvgAggregateOutputType | null
+    _sum: BicycleRentalSumAggregateOutputType | null
     _min: BicycleRentalMinAggregateOutputType | null
     _max: BicycleRentalMaxAggregateOutputType | null
+  }
+
+  export type BicycleRentalAvgAggregateOutputType = {
+    depositAmount: number | null
+  }
+
+  export type BicycleRentalSumAggregateOutputType = {
+    depositAmount: number | null
   }
 
   export type BicycleRentalMinAggregateOutputType = {
@@ -7712,6 +7722,7 @@ export namespace Prisma {
     renterPhone: string | null
     renterEmail: string | null
     bicycleId: string | null
+    depositAmount: number | null
     startDate: Date | null
     endDate: Date | null
     actualReturnDate: Date | null
@@ -7729,6 +7740,7 @@ export namespace Prisma {
     renterPhone: string | null
     renterEmail: string | null
     bicycleId: string | null
+    depositAmount: number | null
     startDate: Date | null
     endDate: Date | null
     actualReturnDate: Date | null
@@ -7746,6 +7758,7 @@ export namespace Prisma {
     renterPhone: number
     renterEmail: number
     bicycleId: number
+    depositAmount: number
     startDate: number
     endDate: number
     actualReturnDate: number
@@ -7759,12 +7772,21 @@ export namespace Prisma {
   }
 
 
+  export type BicycleRentalAvgAggregateInputType = {
+    depositAmount?: true
+  }
+
+  export type BicycleRentalSumAggregateInputType = {
+    depositAmount?: true
+  }
+
   export type BicycleRentalMinAggregateInputType = {
     id?: true
     renterName?: true
     renterPhone?: true
     renterEmail?: true
     bicycleId?: true
+    depositAmount?: true
     startDate?: true
     endDate?: true
     actualReturnDate?: true
@@ -7782,6 +7804,7 @@ export namespace Prisma {
     renterPhone?: true
     renterEmail?: true
     bicycleId?: true
+    depositAmount?: true
     startDate?: true
     endDate?: true
     actualReturnDate?: true
@@ -7799,6 +7822,7 @@ export namespace Prisma {
     renterPhone?: true
     renterEmail?: true
     bicycleId?: true
+    depositAmount?: true
     startDate?: true
     endDate?: true
     actualReturnDate?: true
@@ -7849,6 +7873,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: BicycleRentalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BicycleRentalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: BicycleRentalMinAggregateInputType
@@ -7879,6 +7915,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: BicycleRentalCountAggregateInputType | true
+    _avg?: BicycleRentalAvgAggregateInputType
+    _sum?: BicycleRentalSumAggregateInputType
     _min?: BicycleRentalMinAggregateInputType
     _max?: BicycleRentalMaxAggregateInputType
   }
@@ -7889,6 +7927,7 @@ export namespace Prisma {
     renterPhone: string
     renterEmail: string | null
     bicycleId: string
+    depositAmount: number
     startDate: Date
     endDate: Date
     actualReturnDate: Date | null
@@ -7899,6 +7938,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: BicycleRentalCountAggregateOutputType | null
+    _avg: BicycleRentalAvgAggregateOutputType | null
+    _sum: BicycleRentalSumAggregateOutputType | null
     _min: BicycleRentalMinAggregateOutputType | null
     _max: BicycleRentalMaxAggregateOutputType | null
   }
@@ -7923,6 +7964,7 @@ export namespace Prisma {
     renterPhone?: boolean
     renterEmail?: boolean
     bicycleId?: boolean
+    depositAmount?: boolean
     startDate?: boolean
     endDate?: boolean
     actualReturnDate?: boolean
@@ -7942,6 +7984,7 @@ export namespace Prisma {
     renterPhone?: boolean
     renterEmail?: boolean
     bicycleId?: boolean
+    depositAmount?: boolean
     startDate?: boolean
     endDate?: boolean
     actualReturnDate?: boolean
@@ -7953,7 +7996,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "photoPath" | "signature" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
+  export type BicycleRentalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "renterName" | "renterPhone" | "renterEmail" | "bicycleId" | "depositAmount" | "startDate" | "endDate" | "actualReturnDate" | "status" | "notes" | "photoPath" | "signature" | "createdAt" | "updatedAt", ExtArgs["result"]["bicycleRental"]>
 
   export type $BicycleRentalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "BicycleRental"
@@ -7964,6 +8007,7 @@ export namespace Prisma {
       renterPhone: string
       renterEmail: string | null
       bicycleId: string
+      depositAmount: number
       startDate: Date
       endDate: Date
       actualReturnDate: Date | null
@@ -8347,6 +8391,7 @@ export namespace Prisma {
     readonly renterPhone: FieldRef<"BicycleRental", 'String'>
     readonly renterEmail: FieldRef<"BicycleRental", 'String'>
     readonly bicycleId: FieldRef<"BicycleRental", 'String'>
+    readonly depositAmount: FieldRef<"BicycleRental", 'Int'>
     readonly startDate: FieldRef<"BicycleRental", 'DateTime'>
     readonly endDate: FieldRef<"BicycleRental", 'DateTime'>
     readonly actualReturnDate: FieldRef<"BicycleRental", 'DateTime'>
@@ -19718,6 +19763,7 @@ export namespace Prisma {
     renterPhone: 'renterPhone',
     renterEmail: 'renterEmail',
     bicycleId: 'bicycleId',
+    depositAmount: 'depositAmount',
     startDate: 'startDate',
     endDate: 'endDate',
     actualReturnDate: 'actualReturnDate',
@@ -20692,6 +20738,7 @@ export namespace Prisma {
     renterPhone?: StringFilter<"BicycleRental"> | string
     renterEmail?: StringNullableFilter<"BicycleRental"> | string | null
     bicycleId?: StringFilter<"BicycleRental"> | string
+    depositAmount?: IntFilter<"BicycleRental"> | number
     startDate?: DateTimeFilter<"BicycleRental"> | Date | string
     endDate?: DateTimeFilter<"BicycleRental"> | Date | string
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
@@ -20709,6 +20756,7 @@ export namespace Prisma {
     renterPhone?: SortOrder
     renterEmail?: SortOrderInput | SortOrder
     bicycleId?: SortOrder
+    depositAmount?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     actualReturnDate?: SortOrderInput | SortOrder
@@ -20730,6 +20778,7 @@ export namespace Prisma {
     renterPhone?: StringFilter<"BicycleRental"> | string
     renterEmail?: StringNullableFilter<"BicycleRental"> | string | null
     bicycleId?: StringFilter<"BicycleRental"> | string
+    depositAmount?: IntFilter<"BicycleRental"> | number
     startDate?: DateTimeFilter<"BicycleRental"> | Date | string
     endDate?: DateTimeFilter<"BicycleRental"> | Date | string
     actualReturnDate?: DateTimeNullableFilter<"BicycleRental"> | Date | string | null
@@ -20747,6 +20796,7 @@ export namespace Prisma {
     renterPhone?: SortOrder
     renterEmail?: SortOrderInput | SortOrder
     bicycleId?: SortOrder
+    depositAmount?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     actualReturnDate?: SortOrderInput | SortOrder
@@ -20757,8 +20807,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BicycleRentalCountOrderByAggregateInput
+    _avg?: BicycleRentalAvgOrderByAggregateInput
     _max?: BicycleRentalMaxOrderByAggregateInput
     _min?: BicycleRentalMinOrderByAggregateInput
+    _sum?: BicycleRentalSumOrderByAggregateInput
   }
 
   export type BicycleRentalScalarWhereWithAggregatesInput = {
@@ -20770,6 +20822,7 @@ export namespace Prisma {
     renterPhone?: StringWithAggregatesFilter<"BicycleRental"> | string
     renterEmail?: StringNullableWithAggregatesFilter<"BicycleRental"> | string | null
     bicycleId?: StringWithAggregatesFilter<"BicycleRental"> | string
+    depositAmount?: IntWithAggregatesFilter<"BicycleRental"> | number
     startDate?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"BicycleRental"> | Date | string
     actualReturnDate?: DateTimeNullableWithAggregatesFilter<"BicycleRental"> | Date | string | null
@@ -22293,6 +22346,7 @@ export namespace Prisma {
     renterPhone: string
     renterEmail?: string | null
     bicycleId: string
+    depositAmount?: number
     startDate: Date | string
     endDate: Date | string
     actualReturnDate?: Date | string | null
@@ -22310,6 +22364,7 @@ export namespace Prisma {
     renterPhone: string
     renterEmail?: string | null
     bicycleId: string
+    depositAmount?: number
     startDate: Date | string
     endDate: Date | string
     actualReturnDate?: Date | string | null
@@ -22327,6 +22382,7 @@ export namespace Prisma {
     renterPhone?: StringFieldUpdateOperationsInput | string
     renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
     bicycleId?: StringFieldUpdateOperationsInput | string
+    depositAmount?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22344,6 +22400,7 @@ export namespace Prisma {
     renterPhone?: StringFieldUpdateOperationsInput | string
     renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
     bicycleId?: StringFieldUpdateOperationsInput | string
+    depositAmount?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22361,6 +22418,7 @@ export namespace Prisma {
     renterPhone: string
     renterEmail?: string | null
     bicycleId: string
+    depositAmount?: number
     startDate: Date | string
     endDate: Date | string
     actualReturnDate?: Date | string | null
@@ -22378,6 +22436,7 @@ export namespace Prisma {
     renterPhone?: StringFieldUpdateOperationsInput | string
     renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
     bicycleId?: StringFieldUpdateOperationsInput | string
+    depositAmount?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22395,6 +22454,7 @@ export namespace Prisma {
     renterPhone?: StringFieldUpdateOperationsInput | string
     renterEmail?: NullableStringFieldUpdateOperationsInput | string | null
     bicycleId?: StringFieldUpdateOperationsInput | string
+    depositAmount?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     actualReturnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -24210,6 +24270,7 @@ export namespace Prisma {
     renterPhone?: SortOrder
     renterEmail?: SortOrder
     bicycleId?: SortOrder
+    depositAmount?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     actualReturnDate?: SortOrder
@@ -24221,12 +24282,17 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type BicycleRentalAvgOrderByAggregateInput = {
+    depositAmount?: SortOrder
+  }
+
   export type BicycleRentalMaxOrderByAggregateInput = {
     id?: SortOrder
     renterName?: SortOrder
     renterPhone?: SortOrder
     renterEmail?: SortOrder
     bicycleId?: SortOrder
+    depositAmount?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     actualReturnDate?: SortOrder
@@ -24244,6 +24310,7 @@ export namespace Prisma {
     renterPhone?: SortOrder
     renterEmail?: SortOrder
     bicycleId?: SortOrder
+    depositAmount?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
     actualReturnDate?: SortOrder
@@ -24253,6 +24320,10 @@ export namespace Prisma {
     signature?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BicycleRentalSumOrderByAggregateInput = {
+    depositAmount?: SortOrder
   }
 
   export type EnumRentalStatusWithAggregatesFilter<$PrismaModel = never> = {

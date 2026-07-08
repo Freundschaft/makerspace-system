@@ -179,6 +179,7 @@ exports.Prisma.BicycleRentalScalarFieldEnum = {
   renterPhone: 'renterPhone',
   renterEmail: 'renterEmail',
   bicycleId: 'bicycleId',
+  depositAmount: 'depositAmount',
   startDate: 'startDate',
   endDate: 'endDate',
   actualReturnDate: 'actualReturnDate',

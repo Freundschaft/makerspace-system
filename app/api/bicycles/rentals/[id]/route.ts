@@ -5,6 +5,11 @@ import type { RentalStatus } from "@/generated/prisma";
 
 const rentalStatuses: RentalStatus[] = ["ACTIVE", "RETURNED", "OVERDUE", "CANCELLED"];
 
+function normalizeDepositAmount(value: unknown) {
+  const amount = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(amount) && amount >= 0 ? Math.trunc(amount) : null;
+}
+
 function normalizeRentalPayload(body: Record<string, unknown>) {
   const status = typeof body.status === "string" && rentalStatuses.includes(body.status as RentalStatus)
     ? (body.status as RentalStatus)
@@ -18,6 +23,7 @@ function normalizeRentalPayload(body: Record<string, unknown>) {
     renterPhone: String(body.renterPhone ?? ""),
     renterEmail: body.renterEmail ? String(body.renterEmail) : null,
     bicycleId: String(body.bicycleId ?? ""),
+    depositAmount: normalizeDepositAmount(body.depositAmount) ?? 150,
     startDate: new Date(String(body.startDate ?? "")),
     endDate: new Date(String(body.endDate ?? "")),
     status,

@@ -341,6 +341,7 @@
         "renterPhone": "Phone Number",
         "renterEmail": "Email (Optional)",
         "bicycleId": "Bicycle ID",
+        "depositAmount": "Deposit Amount (€)",
         "bicyclePhoto": "Bicycle Photo",
         "bicyclePhotoHelp": "Upload a photo of the rented bicycle (optional)",
         "startDate": "Start Date",

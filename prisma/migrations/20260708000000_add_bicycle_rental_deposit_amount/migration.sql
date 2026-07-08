@@ -1,0 +1,2 @@
+ALTER TABLE `BicycleRental`
+  ADD COLUMN `depositAmount` INTEGER NOT NULL DEFAULT 150;

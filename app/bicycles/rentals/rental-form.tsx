@@ -28,6 +28,7 @@ type RentalFormState = {
   renterPhone: string;
   renterEmail: string;
   bicycleId: string;
+  depositAmount: number;
   startDate: Date;
   endDate: Date;
   status: RentalStatus;
@@ -44,6 +45,7 @@ function getInitialState(initialData?: BicycleRental): RentalFormState {
       renterPhone: "",
       renterEmail: "",
       bicycleId: "",
+      depositAmount: 150,
       startDate: new Date(),
       endDate: new Date(new Date().setDate(new Date().getDate() + 7)),
       status: "ACTIVE",
@@ -59,6 +61,7 @@ function getInitialState(initialData?: BicycleRental): RentalFormState {
     renterPhone: initialData.renterPhone,
     renterEmail: initialData.renterEmail ?? "",
     bicycleId: initialData.bicycleId,
+    depositAmount: initialData.depositAmount,
     startDate: new Date(initialData.startDate),
     endDate: new Date(initialData.endDate),
     status: initialData.status,
@@ -136,7 +139,10 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "depositAmount" ? Number(value) : value,
+    }));
   };
 
   const handleDateChange = (
@@ -260,6 +266,20 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
             <div className="space-y-2">
               <Label htmlFor="bicycleId">{t("rentals.new.fields.bicycleId", "Bicycle ID")} *</Label>
               <Input id="bicycleId" name="bicycleId" value={formData.bicycleId} onChange={handleChange} required />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="depositAmount">{t("rentals.new.fields.depositAmount", "Deposit Amount (€)")} *</Label>
+              <Input
+                id="depositAmount"
+                name="depositAmount"
+                type="number"
+                min="0"
+                step="1"
+                value={formData.depositAmount}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="space-y-2">

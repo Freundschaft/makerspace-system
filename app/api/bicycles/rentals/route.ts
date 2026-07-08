@@ -5,6 +5,11 @@ import type { BicycleRental, RentalStatus } from "@/generated/prisma"
 
 const rentalStatuses: RentalStatus[] = ["ACTIVE", "RETURNED", "OVERDUE", "CANCELLED"]
 
+function normalizeDepositAmount(value: unknown) {
+  const amount = typeof value === "number" ? value : Number(value)
+  return Number.isFinite(amount) && amount >= 0 ? Math.trunc(amount) : null
+}
+
 // GET /api/bicycles/rentals - Get all rentals
 export async function GET(request: NextRequest) {
   try {
@@ -53,16 +58,17 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+    const depositAmount = normalizeDepositAmount(body.depositAmount) ?? 150
 
     // Create the rental using raw SQL
     await prisma.$executeRaw`
       INSERT INTO BicycleRental (
         id, renterName, renterPhone, renterEmail, bicycleId, 
-        startDate, endDate, notes, photoPath, signature, status, createdAt, updatedAt
+        depositAmount, startDate, endDate, notes, photoPath, signature, status, createdAt, updatedAt
       )
       VALUES (
         UUID(), ${body.renterName}, ${body.renterPhone}, ${body.renterEmail || null}, ${body.bicycleId},
-        ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, ${body.photoPath || null}, ${body.signature || null}, 'ACTIVE',
+        ${depositAmount}, ${new Date(body.startDate)}, ${new Date(body.endDate)}, ${body.notes || null}, ${body.photoPath || null}, ${body.signature || null}, 'ACTIVE',
         NOW(), NOW()
       )
     `

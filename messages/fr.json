@@ -233,6 +233,7 @@
         "renterPhone": "Numéro de téléphone",
         "renterEmail": "Email (optionnel)",
         "bicycleId": "ID du vélo",
+        "depositAmount": "Montant de la caution (€)",
         "startDate": "Date de début",
         "endDate": "Date de fin",
         "notes": "Notes (optionnel)",

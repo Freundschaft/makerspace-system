@@ -23,6 +23,7 @@ interface RentalDetailsProps {
     rentalInfo: string;
     rentalInfoDesc: string;
     bicycleId: string;
+    depositAmount: string;
     status: string;
     startDate: string;
     endDate: string;
@@ -109,6 +110,9 @@ export async function RentalDetails({ rental, locale, labels }: RentalDetailsPro
             <div className="grid grid-cols-2 gap-2">
               <div className="font-medium">{labels.bicycleId}:</div>
               <div>{rental.bicycleId}</div>
+
+              <div className="font-medium">{labels.depositAmount}:</div>
+              <div>€{rental.depositAmount}</div>
 
               <div className="font-medium">{labels.status}:</div>
               <div>

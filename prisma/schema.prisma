@@ -109,6 +109,7 @@ model BicycleRental {
   renterPhone   String
   renterEmail   String?
   bicycleId     String
+  depositAmount Int          @default(150)
   startDate     DateTime
   endDate       DateTime
   actualReturnDate DateTime?

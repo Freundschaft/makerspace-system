@@ -13,6 +13,7 @@ export type Rental = {
   renterPhone: string
   renterEmail: string | null
   bicycleId: string
+  depositAmount: number
   startDate: Date
   endDate: Date
   actualReturnDate: Date | null
@@ -121,6 +122,19 @@ export function getColumns(
       return (
         <Link href={href} className="block">
           {row.getValue("bicycleId")}
+        </Link>
+      )
+    },
+  },
+  {
+    accessorKey: "depositAmount",
+    header: t("rentals.new.fields.depositAmount", "Deposit Amount (€)"),
+    cell: ({ row }) => {
+      const id = row.original.id
+      const href = localizePathname(`/bicycles/rentals/${id}`, locale)
+      return (
+        <Link href={href} className="block">
+          €{row.original.depositAmount}
         </Link>
       )
     },
