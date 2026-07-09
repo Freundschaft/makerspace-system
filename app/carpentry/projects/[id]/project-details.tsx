@@ -6,8 +6,8 @@ import { formatDate } from "@/lib/utils"
 import { CarpentryProject, User } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
+import { WhatsAppLink } from "@/components/WhatsAppLink"
 import { Locale, localizePathname } from "@/lib/i18n/config"
-import { getWhatsAppHref } from "@/lib/whatsapp"
 
 type ProjectWithAssignedTo = CarpentryProject & {
   assignedTo: User | null
@@ -71,7 +71,6 @@ const genderLabels: Record<string, string> = {
 
 export async function ProjectDetails({ project, locale, labels }: ProjectDetailsProps) {
   const editHref = localizePathname(`/carpentry/projects/${project.id}/edit`, locale)
-  const phoneHref = getWhatsAppHref(project.phoneNumber)
   const financeHref = localizePathname(
     `/finance/new-expense?carpentryProjectId=${project.id}&contextLabel=${encodeURIComponent(labels.financeContextLabel)}&title=${encodeURIComponent(labels.financeTitle)}`,
     locale,
@@ -119,18 +118,7 @@ export async function ProjectDetails({ project, locale, labels }: ProjectDetails
                 <>
                   <div className="font-medium">{labels.phone}:</div>
                   <div>
-                    {phoneHref ? (
-                      <a
-                        href={phoneHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-primary underline-offset-4 hover:underline"
-                      >
-                        {project.phoneNumber}
-                      </a>
-                    ) : (
-                      project.phoneNumber
-                    )}
+                    <WhatsAppLink value={project.phoneNumber} fallback={project.phoneNumber} />
                   </div>
                 </>
               )}

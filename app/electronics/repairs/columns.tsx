@@ -4,8 +4,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { format } from "date-fns"
 import Link from "next/link"
 import Image from "next/image"
+import { WhatsAppLink } from "@/components/WhatsAppLink"
 import { localizePathname, type Locale } from "@/lib/i18n/config"
-import { getWhatsAppHref } from "@/lib/whatsapp"
 import {
   electronicsCategoryLabels,
   getElectronicsCategoryImage,
@@ -222,26 +222,15 @@ export function getColumns(
     header: t("electronics.new.fields.whatsapp", "WhatsApp"),
     cell: ({ row }) => {
       const whatsapp = row.getValue("whatsapp") as string | null
-      const whatsappHref = getWhatsAppHref(whatsapp)
       const id = row.original.id
       const href = localizePathname(`/electronics/repairs/${id}`, locale)
-      if (whatsapp && whatsappHref) {
-        return (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            className="block text-primary underline-offset-4 hover:underline"
-          >
-            {whatsapp}
-          </a>
-        )
-      }
-
       return (
-        <Link href={href} className="block">
-          {whatsapp || "—"}
-        </Link>
+        <WhatsAppLink
+          value={whatsapp}
+          fallbackHref={href}
+          className="block"
+          fallbackClassName="block"
+        />
       )
     },
   },

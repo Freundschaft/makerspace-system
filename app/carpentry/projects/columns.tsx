@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Link from "next/link"
 import Image from "next/image"
-import { getWhatsAppHref } from "@/lib/whatsapp"
+import { WhatsAppLink } from "@/components/WhatsAppLink"
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
@@ -115,26 +115,16 @@ export function getColumns(t: Translator): ColumnDef<CarpentryProject>[] {
     header: t("common.phone", "Phone"),
     cell: ({ row }) => {
       const phoneNumber = row.getValue("phoneNumber") as string | null
-      const whatsappHref = getWhatsAppHref(phoneNumber)
       const id = row.original.id
-
-      if (phoneNumber && whatsappHref) {
-        return (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            className="block text-primary underline-offset-4 hover:underline"
-          >
-            {phoneNumber}
-          </a>
-        )
-      }
+      const href = `/carpentry/projects/${id}`
 
       return (
-        <Link href={`/carpentry/projects/${id}`} className="block">
-          {phoneNumber || "—"}
-        </Link>
+        <WhatsAppLink
+          value={phoneNumber}
+          fallbackHref={href}
+          className="block"
+          fallbackClassName="block"
+        />
       )
     },
   },

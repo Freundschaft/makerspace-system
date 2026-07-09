@@ -5,8 +5,8 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { localizePathname, type Locale } from "@/lib/i18n/config";
-import { getWhatsAppHref } from "@/lib/whatsapp";
 import { RepairStatusSelect } from "./repair-status-select";
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string;
@@ -160,23 +160,16 @@ export function getColumns(
       header: t("repairs.form.ownerPhone", "Owner Phone"),
       cell: ({ row }) => {
         const ownerPhone = row.getValue("ownerPhone") as string | null;
-        const whatsappHref = getWhatsAppHref(ownerPhone);
         const href = localizePathname(`/bicycles/repairs/${row.original.id}`, locale);
 
-        if (ownerPhone && whatsappHref) {
-          return (
-            <a
-              href={whatsappHref}
-              target="_blank"
-              rel="noreferrer"
-              className="block text-primary underline-offset-4 hover:underline"
-            >
-              {ownerPhone}
-            </a>
-          );
-        }
-
-        return <Link href={href} className="block">{ownerPhone || "—"}</Link>;
+        return (
+          <WhatsAppLink
+            value={ownerPhone}
+            fallbackHref={href}
+            className="block"
+            fallbackClassName="block"
+          />
+        );
       },
     },
     {

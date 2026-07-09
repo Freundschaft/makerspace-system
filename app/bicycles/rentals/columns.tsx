@@ -3,8 +3,8 @@ import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { format } from "date-fns"
 import Link from "next/link"
+import { WhatsAppLink } from "@/components/WhatsAppLink"
 import { localizePathname, type Locale } from "@/lib/i18n/config"
-import { getWhatsAppHref } from "@/lib/whatsapp"
 
 type Translator = (key: string, fallback: string, params?: Record<string, string | number>) => string
 
@@ -106,26 +106,16 @@ export function getColumns(
     header: t("common.phone", "Phone"),
     cell: ({ row }) => {
       const renterPhone = row.getValue("renterPhone") as string
-      const whatsappHref = getWhatsAppHref(renterPhone)
       const id = row.original.id
       const href = localizePathname(`/bicycles/rentals/${id}`, locale)
-      if (whatsappHref) {
-        return (
-          <a
-            href={whatsappHref}
-            target="_blank"
-            rel="noreferrer"
-            className="block text-primary underline-offset-4 hover:underline"
-          >
-            {renterPhone}
-          </a>
-        )
-      }
-
       return (
-        <Link href={href} className="block">
-          {renterPhone}
-        </Link>
+        <WhatsAppLink
+          value={renterPhone}
+          fallback={renterPhone}
+          fallbackHref={href}
+          className="block"
+          fallbackClassName="block"
+        />
       )
     },
   },

@@ -6,8 +6,8 @@ import { formatDate } from "@/lib/utils"
 import { ElectronicsRepairStatus, ElectronicsCategory, User } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
+import { WhatsAppLink } from "@/components/WhatsAppLink"
 import { Locale, localizePathname } from "@/lib/i18n/config"
-import { getWhatsAppHref } from "@/lib/whatsapp"
 import {
   electronicsCategoryLabels,
   getElectronicsCategoryImage,
@@ -75,7 +75,6 @@ const statusLabels: Record<string, string> = {
 
 export async function RepairDetails({ repair, locale, labels }: RepairDetailsProps) {
   const editHref = localizePathname(`/electronics/repairs/${repair.id}/edit`, locale)
-  const whatsappHref = getWhatsAppHref(repair.whatsapp)
 
   return (
     <div className="space-y-6">
@@ -100,18 +99,7 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
                 <>
                   <div className="font-medium">{labels.whatsapp}:</div>
                   <div>
-                    {whatsappHref ? (
-                      <a
-                        href={whatsappHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-primary underline-offset-4 hover:underline"
-                      >
-                        {repair.whatsapp}
-                      </a>
-                    ) : (
-                      repair.whatsapp
-                    )}
+                    <WhatsAppLink value={repair.whatsapp} fallback={repair.whatsapp} />
                   </div>
                 </>
               )}

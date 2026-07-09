@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserRole } from "@/generated/prisma";
 import { format } from "date-fns";
@@ -23,7 +24,6 @@ import {
 import { useI18n } from "@/app/components/I18nProvider";
 import { Loader2, MoreHorizontal } from "lucide-react";
 import { TeamMemberWithRole } from "@/app/team/team-types";
-import { getWhatsAppHref } from "@/lib/whatsapp";
 
 interface TeamMemberDataTableProps {
   data: TeamMemberWithRole[];
@@ -164,19 +164,11 @@ export function TeamMemberDataTable({
               <TableCell className="hidden xl:table-cell">{member.department}</TableCell>
               <TableCell className="max-w-[10rem] truncate lg:max-w-[12rem] xl:max-w-none">{member.email}</TableCell>
               <TableCell className="hidden xl:table-cell">
-                {getWhatsAppHref(member.phone) ? (
-                  <a
-                    href={getWhatsAppHref(member.phone) ?? undefined}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary underline-offset-4 hover:underline"
-                    onClick={(event) => event.stopPropagation()}
-                  >
-                    {member.phone}
-                  </a>
-                ) : (
-                  member.phone
-                )}
+                <WhatsAppLink
+                  value={member.phone}
+                  fallback={member.phone}
+                  onClick={(event) => event.stopPropagation()}
+                />
               </TableCell>
               <TableCell>
                 <Badge

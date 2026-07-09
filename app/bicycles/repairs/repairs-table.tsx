@@ -14,8 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { localizePathname, type Locale } from "@/lib/i18n/config";
-import { getWhatsAppHref } from "@/lib/whatsapp";
 import { RepairStatusSelect } from "./repair-status-select";
 
 function formatDisplayText(value: string) {
@@ -250,7 +250,6 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
         {filteredData.length ? (
           filteredData.map((repair) => {
             const href = localizePathname(`/bicycles/repairs/${repair.id}`, locale);
-            const ownerPhoneHref = getWhatsAppHref(repair.ownerPhone);
             const problemTypes = JSON.parse(repair.problemTypes) as string[];
             const visibleProblemTypes = problemTypes.slice(0, 3);
             const extraProblemTypes = problemTypes.length - visibleProblemTypes.length;
@@ -339,20 +338,14 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
 
                       <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                         <span className="font-medium text-foreground">{repair.ownerName}</span>
-                        {repair.ownerPhone && ownerPhoneHref ? (
-                          <a
-                            href={ownerPhoneHref}
-                            target="_blank"
-                            rel="noreferrer"
+                        {repair.ownerPhone ? (
+                          <WhatsAppLink
+                            value={repair.ownerPhone}
+                            fallback={repair.ownerPhone}
                             onClick={(event) => event.stopPropagation()}
                             className="rounded-full bg-muted px-2 py-1 font-medium text-foreground underline-offset-4 hover:underline"
-                          >
-                            {repair.ownerPhone}
-                          </a>
-                        ) : repair.ownerPhone ? (
-                          <span className="rounded-full bg-muted px-2 py-1 font-medium text-foreground">
-                            {repair.ownerPhone}
-                          </span>
+                            fallbackClassName="rounded-full bg-muted px-2 py-1 font-medium text-foreground"
+                          />
                         ) : null}
                         {partsSummary ? (
                           <span className="truncate">

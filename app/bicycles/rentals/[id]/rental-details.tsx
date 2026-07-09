@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Edit } from "lucide-react";
+import { WhatsAppLink } from "@/components/WhatsAppLink";
 import { BicycleRental } from "@/generated/prisma";
 import { Locale, localizePathname } from "@/lib/i18n/config";
 import { formatDate } from "@/lib/utils";
-import { getWhatsAppHref } from "@/lib/whatsapp";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -55,7 +55,6 @@ function getStatusVariant(status: BicycleRental["status"]) {
 
 export async function RentalDetails({ rental, locale, labels }: RentalDetailsProps) {
   const editHref = localizePathname(`/bicycles/rentals/${rental.id}/edit`, locale);
-  const renterPhoneHref = getWhatsAppHref(rental.renterPhone);
   const canReturnBike = rental.status !== "RETURNED" && rental.status !== "CANCELLED";
   const photoUrl = toAbsoluteFileUrl(rental.photoPath);
 
@@ -94,18 +93,7 @@ export async function RentalDetails({ rental, locale, labels }: RentalDetailsPro
 
               <div className="font-medium">{labels.phone}:</div>
               <div>
-                {renterPhoneHref ? (
-                  <a
-                    href={renterPhoneHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary underline-offset-4 hover:underline"
-                  >
-                    {rental.renterPhone}
-                  </a>
-                ) : (
-                  rental.renterPhone
-                )}
+                <WhatsAppLink value={rental.renterPhone} fallback={rental.renterPhone} />
               </div>
 
               <div className="font-medium">{labels.email}:</div>
