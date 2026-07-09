@@ -62,7 +62,15 @@ const statusOptions = [
   "NO_WAY_TO_FIX",
 ] as const
 
-const defaultValues: Omit<z.infer<typeof formSchema>, "category"> = {
+type ElectronicsRepairFormValues = z.infer<typeof formSchema>
+
+interface ElectronicsRepairFormProps {
+  mode?: "create" | "edit"
+  repairId?: string
+  initialData?: ElectronicsRepairFormValues
+}
+
+const defaultValues: Omit<ElectronicsRepairFormValues, "category"> = {
   createdDate: new Date().toISOString().slice(0, 10),
   customerName: "",
   customerIdCardNumber: "",
@@ -75,11 +83,20 @@ const defaultValues: Omit<z.infer<typeof formSchema>, "category"> = {
   photoPath: "",
 }
 
-export function ElectronicsRepairForm() {
+function getDefaultValues(initialData?: ElectronicsRepairFormProps["initialData"]) {
+  return initialData ?? defaultValues
+}
+
+export function ElectronicsRepairForm({
+  mode = "create",
+  repairId,
+  initialData,
+}: ElectronicsRepairFormProps) {
   const router = useRouter()
   const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const submitLockRef = useRef(false)
+  const formDefaultValues = useMemo(() => getDefaultValues(initialData), [initialData])
   const localizedCategoryOptions = useMemo(
     () => electronicsCategories.map((value) => ({
       value,
@@ -100,20 +117,25 @@ export function ElectronicsRepairForm() {
     [t]
   )
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ElectronicsRepairFormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: formDefaultValues,
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: ElectronicsRepairFormValues) {
     if (submitLockRef.current) {
       return
+    }
+    if (mode === "edit" && !repairId) {
+      throw new Error("Missing electronics repair id")
     }
     submitLockRef.current = true
     try {
       setIsSubmitting(true)
-      const response = await fetch("/api/electronics/repairs", {
-        method: "POST",
+      const endpoint =
+        mode === "create" ? "/api/electronics/repairs" : `/api/electronics/repairs/${repairId}`
+      const response = await fetch(endpoint, {
+        method: mode === "create" ? "POST" : "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -124,13 +146,17 @@ export function ElectronicsRepairForm() {
       })
 
       if (!response.ok) {
-        throw new Error(t("electronics.new.errors.createFailed", "Failed to create electronics repair"))
+        throw new Error(
+          mode === "create"
+            ? t("electronics.new.errors.createFailed", "Failed to create electronics repair")
+            : t("electronics.new.errors.updateFailed", "Failed to update electronics repair")
+        )
       }
 
-      router.push("/electronics/repairs")
+      router.push(mode === "create" ? "/electronics/repairs" : `/electronics/repairs/${repairId}`)
       router.refresh()
     } catch (error) {
-      console.error("Error creating electronics repair:", error)
+      console.error("Error saving electronics repair:", error)
     } finally {
       submitLockRef.current = false
       setIsSubmitting(false)
@@ -422,7 +448,13 @@ export function ElectronicsRepairForm() {
             {t("common.cancel", "Cancel")}
           </Button>
           <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-            {isSubmitting ? t("common.creating", "Creating...") : t("electronics.new.actions.create", "Create Repair")}
+            {isSubmitting
+              ? mode === "create"
+                ? t("common.creating", "Creating...")
+                : t("common.saving", "Saving...")
+              : mode === "create"
+                ? t("electronics.new.actions.create", "Create Repair")
+                : t("common.save", "Save")}
           </Button>
         </div>
       </form>
