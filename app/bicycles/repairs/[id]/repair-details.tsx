@@ -7,6 +7,7 @@ import { RepairStatus, Part, RepairPart } from '@/generated/prisma'
 import Image from "next/image"
 import Link from "next/link"
 import { Locale, localizePathname } from "@/lib/i18n/config"
+import { getWhatsAppHref } from "@/lib/whatsapp"
 import { BicycleRepairDeleteButton } from "./bicycle-repair-delete-button"
 
 type RepairWithParts = {
@@ -63,6 +64,7 @@ interface RepairDetailsProps {
 export async function RepairDetails({ repair, locale, labels }: RepairDetailsProps) {
   const problemTypes = JSON.parse(repair.problemTypes)
   const editHref = localizePathname(`/bicycles/repairs/${repair.id}/edit`, locale)
+  const ownerPhoneHref = getWhatsAppHref(repair.ownerPhone)
 
   return (
     <div className="space-y-6">      
@@ -81,7 +83,20 @@ export async function RepairDetails({ repair, locale, labels }: RepairDetailsPro
               <div>{repair.ownerIdCardNumber || "—"}</div>
 
               <div className="font-medium">{labels.phone}:</div>
-              <div>{repair.ownerPhone || "—"}</div>
+              <div>
+                {repair.ownerPhone && ownerPhoneHref ? (
+                  <a
+                    href={ownerPhoneHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary underline-offset-4 hover:underline"
+                  >
+                    {repair.ownerPhone}
+                  </a>
+                ) : (
+                  repair.ownerPhone || "—"
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>
