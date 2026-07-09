@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { TeamMemberStatus, UserRole } from "@/generated/prisma";
 import { TeamMemberDataTable } from "../components/team/TeamMemberDataTable";
+import { TeamMemberCardGrid } from "../components/team/TeamMemberCardGrid";
 import { useI18n } from "@/app/components/I18nProvider";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ChevronLeft, ChevronRight, LayoutGrid, Loader2, Search, Table2, X } from "lucide-react";
 import { TeamMemberWithRole, TeamPresenceEntry } from "./team-types";
 import { localizePathname, type Locale } from "@/lib/i18n/config";
 import { addMonths, format } from "date-fns";
@@ -23,10 +25,12 @@ interface TeamPageClientProps {
   totalMembers: number;
   statusFilter: StatusFilter;
   month: string;
+  searchQuery: string;
 }
 
 type StatusFilter = "ACTIVE" | "INACTIVE" | "ALL";
 type TeamView = "members" | "presence";
+type MemberDisplayMode = "table" | "cards";
 
 export function TeamPageClient({
   initialTeamMembers,
@@ -38,6 +42,7 @@ export function TeamPageClient({
   totalMembers,
   statusFilter,
   month,
+  searchQuery,
 }: TeamPageClientProps) {
   const router = useRouter();
   const { t } = useI18n();
@@ -50,6 +55,8 @@ export function TeamPageClient({
     null
   );
   const [activeView, setActiveView] = useState<TeamView>("members");
+  const [memberDisplayMode, setMemberDisplayMode] = useState<MemberDisplayMode>("table");
+  const [searchInput, setSearchInput] = useState(searchQuery);
   const basePath = localizePathname("/team", locale);
   const monthDate = new Date(`${month}-01T00:00:00`);
   const monthLabel = format(monthDate, "MMMM yyyy");
@@ -64,14 +71,23 @@ export function TeamPageClient({
     setPresenceEntries(initialPresenceEntries);
   }, [initialPresenceEntries]);
 
+  useEffect(() => {
+    setSearchInput(searchQuery);
+  }, [searchQuery]);
+
   const getListingHref = (
     nextStatus: StatusFilter = statusFilter,
     nextPage: number = currentPage,
-    nextMonth: string = month
+    nextMonth: string = month,
+    nextSearch: string = searchQuery
   ) => {
     const params = new URLSearchParams();
+    const trimmedSearch = nextSearch.trim();
     if (nextStatus !== "ACTIVE") {
       params.set("status", nextStatus);
+    }
+    if (trimmedSearch) {
+      params.set("q", trimmedSearch);
     }
     if (nextPage > 1) {
       params.set("page", String(nextPage));
@@ -87,9 +103,10 @@ export function TeamPageClient({
   const navigateToListing = (
     nextStatus: StatusFilter,
     nextPage: number,
-    nextMonth: string = month
+    nextMonth: string = month,
+    nextSearch: string = searchQuery
   ) => {
-    router.push(getListingHref(nextStatus, nextPage, nextMonth));
+    router.push(getListingHref(nextStatus, nextPage, nextMonth, nextSearch));
   };
 
   const handleMonthChange = (offset: number) => {
@@ -99,6 +116,16 @@ export function TeamPageClient({
       1,
       `${nextMonth.getFullYear()}-${String(nextMonth.getMonth() + 1).padStart(2, "0")}`
     );
+  };
+
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    navigateToListing(statusFilter, 1, month, searchInput);
+  };
+
+  const handleSearchClear = () => {
+    setSearchInput("");
+    navigateToListing(statusFilter, 1, month, "");
   };
 
   const handleEdit = (member: TeamMemberWithRole) => {
@@ -383,7 +410,53 @@ export function TeamPageClient({
       {activeView === "members" ? (
         <>
           <div className="mb-6 flex flex-wrap items-center gap-2">
+            <form
+              onSubmit={handleSearchSubmit}
+              className="flex min-w-full items-center gap-2 sm:min-w-80 sm:flex-1"
+            >
+              <div className="relative min-w-0 flex-1">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={searchInput}
+                  onChange={(event) => setSearchInput(event.target.value)}
+                  placeholder={t("team.search.placeholder", "Search team members")}
+                  className="h-9 pl-9 pr-9"
+                  aria-label={t("team.search.label", "Search team members")}
+                />
+                {searchInput ? (
+                  <button
+                    type="button"
+                    onClick={handleSearchClear}
+                    className="absolute right-2 top-1/2 rounded-sm p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                    aria-label={t("team.search.clear", "Clear search")}
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                ) : null}
+              </div>
+              <Button type="submit" size="sm">
+                {t("common.search", "Search")}
+              </Button>
+            </form>
             {renderStatusFilters()}
+            <div className="inline-flex rounded-lg border bg-muted/30 p-1">
+              <Button
+                variant={memberDisplayMode === "table" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setMemberDisplayMode("table")}
+              >
+                <Table2 className="mr-2 h-4 w-4" />
+                {t("team.view.table", "Table")}
+              </Button>
+              <Button
+                variant={memberDisplayMode === "cards" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setMemberDisplayMode("cards")}
+              >
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                {t("team.view.cards", "Cards")}
+              </Button>
+            </div>
             {selectedIds.length > 0 && (
               <>
                 <Button
@@ -424,16 +497,29 @@ export function TeamPageClient({
               </>
             )}
           </div>
-          <TeamMemberDataTable
-            data={teamMembers}
-            currentUserEmail={currentUserEmail}
-            selectedIds={selectedIds}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onRoleChange={handleRoleChange}
-            onSelectedIdsChange={handleSelectedIdsChange}
-            updatingRoleId={updatingRoleId}
-          />
+          {memberDisplayMode === "table" ? (
+            <TeamMemberDataTable
+              data={teamMembers}
+              currentUserEmail={currentUserEmail}
+              selectedIds={selectedIds}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onRoleChange={handleRoleChange}
+              onSelectedIdsChange={handleSelectedIdsChange}
+              updatingRoleId={updatingRoleId}
+            />
+          ) : (
+            <TeamMemberCardGrid
+              data={teamMembers}
+              currentUserEmail={currentUserEmail}
+              selectedIds={selectedIds}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onRoleChange={handleRoleChange}
+              onSelectedIdsChange={handleSelectedIdsChange}
+              updatingRoleId={updatingRoleId}
+            />
+          )}
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
               {totalMembers} {t("team.list.title", "Team Members")}
@@ -456,6 +542,7 @@ export function TeamPageClient({
                   totalPages={totalPages}
                   preservedParams={{
                     status: statusFilter !== "ACTIVE" ? statusFilter : undefined,
+                    q: searchQuery || undefined,
                     month: month !== currentMonthKey ? month : undefined,
                   }}
                   inputLabel={t("tables.pagination.page", "Page")}

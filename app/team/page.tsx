@@ -6,12 +6,14 @@ import { TeamMemberStatus, UserRole } from "@/generated/prisma";
 import { authOptions } from "@/lib/auth-options";
 import { getServerI18n } from "@/lib/i18n/server";
 import { endOfMonth, startOfMonth } from "date-fns";
+import type { Prisma } from "@/generated/prisma";
 
 interface PageProps {
   searchParams: Promise<{
     page?: string;
     status?: string;
     month?: string;
+    q?: string;
   }>;
 }
 
@@ -27,6 +29,7 @@ export default async function TeamPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const requestedPage = Number(params.page ?? "1");
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
+  const searchQuery = typeof params.q === "string" ? params.q.trim() : "";
   const parsedMonth =
     typeof params.month === "string" && /^\d{4}-\d{2}$/.test(params.month)
       ? new Date(`${params.month}-01T00:00:00`)
@@ -40,24 +43,38 @@ export default async function TeamPage({ searchParams }: PageProps) {
       ? params.status
       : TeamMemberStatus.ACTIVE;
 
-  const where =
-    statusFilter === "ALL"
-      ? undefined
-      : {
-          status: statusFilter,
-        };
+  const filters: Prisma.TeamMemberWhereInput[] = [];
 
-  const [totalMembers, teamMembers] = await Promise.all([
-    prisma.teamMember.count({ where }),
-    prisma.teamMember.findMany({
-      where,
-      orderBy: [{ familyName: "asc" }, { givenNames: "asc" }],
-      skip: (page - 1) * PAGE_SIZE,
-      take: PAGE_SIZE,
-    }),
-  ]);
+  if (statusFilter !== "ALL") {
+    filters.push({ status: statusFilter });
+  }
+
+  if (searchQuery) {
+    filters.push({
+      OR: [
+        { familyName: { contains: searchQuery } },
+        { givenNames: { contains: searchQuery } },
+        { department: { contains: searchQuery } },
+        { email: { contains: searchQuery } },
+        { secondaryEmail: { contains: searchQuery } },
+        { phone: { contains: searchQuery } },
+        { cardNumber: { contains: searchQuery } },
+      ],
+    });
+  }
+
+  const where: Prisma.TeamMemberWhereInput | undefined =
+    filters.length > 0 ? { AND: filters } : undefined;
+
+  const totalMembers = await prisma.teamMember.count({ where });
   const totalPages = Math.max(1, Math.ceil(totalMembers / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
+  const teamMembers = await prisma.teamMember.findMany({
+    where,
+    orderBy: [{ familyName: "asc" }, { givenNames: "asc" }],
+    skip: (currentPage - 1) * PAGE_SIZE,
+    take: PAGE_SIZE,
+  });
   const users = await prisma.user.findMany({
     where: {
       email: {
@@ -109,6 +126,7 @@ export default async function TeamPage({ searchParams }: PageProps) {
       totalMembers={totalMembers}
       statusFilter={statusFilter}
       month={monthKey}
+      searchQuery={searchQuery}
     />
   );
 }

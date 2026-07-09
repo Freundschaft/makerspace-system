@@ -24,6 +24,7 @@ import {
 import { useI18n } from "@/app/components/I18nProvider";
 import { Loader2, MoreHorizontal } from "lucide-react";
 import { TeamMemberWithRole } from "@/app/team/team-types";
+import { getTeamMemberPhotoSrc } from "@/lib/team-photo";
 
 interface TeamMemberDataTableProps {
   data: TeamMemberWithRole[];
@@ -34,26 +35,6 @@ interface TeamMemberDataTableProps {
   onRoleChange: (member: TeamMemberWithRole, role: UserRole) => void;
   onSelectedIdsChange: (ids: string[]) => void;
   updatingRoleId: string | null;
-}
-
-function getPhotoSrc(value?: string | null) {
-  if (!value) return undefined;
-  const trimmed = value.trim();
-  if (!trimmed) return undefined;
-
-  if (trimmed.startsWith("/")) {
-    return `${process.env.NEXT_PUBLIC_FILE_SERVER_URL || "https://files.system.makerspace-lesvos.org"}${trimmed}`;
-  }
-
-  if (
-    trimmed.startsWith("data:image/") ||
-    trimmed.startsWith("http://") ||
-    trimmed.startsWith("https://")
-  ) {
-    return trimmed;
-  }
-
-  return `data:image/png;base64,${trimmed}`;
 }
 
 export function TeamMemberDataTable({
@@ -151,7 +132,7 @@ export function TeamMemberDataTable({
               </TableCell>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src={getPhotoSrc(member.photoPath)} />
+                  <AvatarImage src={getTeamMemberPhotoSrc(member.photoPath)} />
                   <AvatarFallback>
                     {member.givenNames[0]}
                     {member.familyName[0]}
