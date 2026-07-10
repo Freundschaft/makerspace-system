@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2 } from "lucide-react";
+import { LayoutGrid, Loader2, Table2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { WhatsAppLink } from "@/components/WhatsAppLink";
@@ -41,6 +41,7 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [statusFilter, setStatusFilter] = useState<RepairStatusFilter>("ALL");
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
 
   const filteredData =
     statusFilter === "ALL"
@@ -196,6 +197,24 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
               : t(`common.statuses.${filterValue}`, formatDisplayText(filterValue))}
           </Button>
         ))}
+        <div className="inline-flex rounded-lg border bg-muted/30 p-1">
+          <Button
+            variant={viewMode === "table" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("table")}
+          >
+            <Table2 className="mr-2 h-4 w-4" />
+            {t("team.view.table", "Table")}
+          </Button>
+          <Button
+            variant={viewMode === "cards" ? "default" : "ghost"}
+            size="sm"
+            onClick={() => setViewMode("cards")}
+          >
+            <LayoutGrid className="mr-2 h-4 w-4" />
+            {t("team.view.cards", "Cards")}
+          </Button>
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -246,7 +265,7 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
         ) : null}
       </div>
 
-      <div className="grid gap-3 lg:hidden">
+      <div className={viewMode === "cards" ? "grid gap-3 lg:grid-cols-2 2xl:grid-cols-3" : "grid gap-3 lg:hidden"}>
         {filteredData.length ? (
           filteredData.map((repair) => {
             const href = localizePathname(`/bicycles/repairs/${repair.id}`, locale);
@@ -386,8 +405,14 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
         )}
       </div>
 
-      <div className="hidden lg:block">
-        <DataTable columns={columns} data={filteredData} showPagination={false} />
+      <div className={viewMode === "table" ? "hidden lg:block" : "hidden"}>
+        <DataTable
+          columns={columns}
+          data={filteredData}
+          showPagination={false}
+          enableSearch={false}
+          enableViewToggle={false}
+        />
       </div>
     </div>
   );

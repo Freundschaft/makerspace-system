@@ -7,10 +7,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { getServerI18n } from "@/lib/i18n/server"
 import { localizePathname } from "@/lib/i18n/config"
 import { PageJump } from "@/components/ui/page-jump"
+import { Input } from "@/components/ui/input"
+import { Prisma } from "@/generated/prisma"
 
 interface PageProps {
   searchParams: Promise<{
     page?: string
+    q?: string
   }>
 }
 
@@ -21,10 +24,25 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
   const params = await searchParams
   const requestedPage = Number(params.page ?? "1")
   const page = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1
+  const searchQuery = params.q?.trim() ?? ""
 
-  const [totalRepairs, repairsResult] = await Promise.all([
-    prisma.bicycleRepair.count(),
-    prisma.bicycleRepair.findMany({
+  const where: Prisma.BicycleRepairWhereInput = searchQuery
+    ? {
+        OR: [
+          { ownerName: { contains: searchQuery } },
+          { ownerIdCardNumber: { contains: searchQuery } },
+          { ownerPhone: { contains: searchQuery } },
+          { description: { contains: searchQuery } },
+          { repairDetails: { contains: searchQuery } },
+        ],
+      }
+    : {}
+
+  const totalRepairs = await prisma.bicycleRepair.count({ where })
+  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
+  const currentPage = Math.min(page, totalPages)
+  const repairsResult = await prisma.bicycleRepair.findMany({
+      where,
       include: {
         partsUsed: {
           include: {
@@ -35,12 +53,9 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
       orderBy: {
         receivedDate: "desc",
       },
-      skip: (page - 1) * PAGE_SIZE,
+      skip: (currentPage - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
-    }),
-  ])
-  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
-  const currentPage = Math.min(page, totalPages)
+    })
 
   const repairs: Repair[] = repairsResult.map((repair) => ({
     id: repair.id,
@@ -60,8 +75,19 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
 
   const hasPreviousPage = currentPage > 1
   const hasNextPage = currentPage < totalPages
-  const previousPageHref = `${localizePathname("/bicycles/repairs", locale)}?page=${currentPage - 1}`
-  const nextPageHref = `${localizePathname("/bicycles/repairs", locale)}?page=${currentPage + 1}`
+  const buildPageHref = (nextPage: number) => {
+    const params = new URLSearchParams()
+    if (searchQuery) {
+      params.set("q", searchQuery)
+    }
+    if (nextPage > 1) {
+      params.set("page", String(nextPage))
+    }
+
+    const query = params.toString()
+    const basePath = localizePathname("/bicycles/repairs", locale)
+    return query ? `${basePath}?${query}` : basePath
+  }
 
   return (
     <div className="container mx-auto px-4 py-2 sm:px-6 sm:py-6">
@@ -71,6 +97,26 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
           <Link href={localizePathname("/bicycles/repairs/new", locale)}>{t("modules.repairs.new", "New Repair")}</Link>
         </Button>
       </div>
+      <form className="mb-6 flex flex-col gap-3 sm:flex-row" action={localizePathname("/bicycles/repairs", locale)}>
+        <Input
+          name="q"
+          defaultValue={searchQuery}
+          placeholder={t("tables.search", "Search...")}
+          className="sm:max-w-sm"
+        />
+        <div className="flex gap-2">
+          <Button type="submit" variant="outline">
+            {t("common.search", "Search")}
+          </Button>
+          {searchQuery ? (
+            <Button asChild type="button" variant="ghost">
+              <Link href={localizePathname("/bicycles/repairs", locale)}>
+                {t("common.reset", "Reset")}
+              </Link>
+            </Button>
+          ) : null}
+        </div>
+      </form>
       <RepairsTable data={repairs} locale={locale} />
       <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
@@ -79,7 +125,7 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
         <div className="flex flex-wrap items-center gap-2 sm:justify-end">
           <Button asChild variant="outline" size="sm" disabled={!hasPreviousPage}>
             <Link
-              href={hasPreviousPage ? previousPageHref : "#"}
+              href={hasPreviousPage ? buildPageHref(currentPage - 1) : "#"}
               aria-disabled={!hasPreviousPage}
               tabIndex={hasPreviousPage ? 0 : -1}
             >
@@ -93,6 +139,9 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
               basePath={localizePathname("/bicycles/repairs", locale)}
               currentPage={currentPage}
               totalPages={totalPages}
+              preservedParams={{
+                q: searchQuery || undefined,
+              }}
               inputLabel={t("tables.pagination.page", "Page")}
             />
             <span>
@@ -101,7 +150,7 @@ export default async function BicycleRepairsPage({ searchParams }: PageProps) {
           </div>
           <Button asChild variant="outline" size="sm" disabled={!hasNextPage}>
             <Link
-              href={hasNextPage ? nextPageHref : "#"}
+              href={hasNextPage ? buildPageHref(currentPage + 1) : "#"}
               aria-disabled={!hasNextPage}
               tabIndex={hasNextPage ? 0 : -1}
             >

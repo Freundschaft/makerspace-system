@@ -165,7 +165,7 @@ export function RepairsTable({ data, locale }: RepairsTableProps) {
           </>
         ) : null}
       </div>
-      <DataTable columns={columns} data={repairs} showPagination={false} />
+      <DataTable columns={columns} data={repairs} showPagination={false} enableSearch={false} />
     </div>
   );
 }

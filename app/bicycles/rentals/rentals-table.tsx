@@ -1,6 +1,6 @@
 "use client";
 
-import { RentalsDataTable } from "@/components/ui/rentals-data-table";
+import { DataTable } from "@/components/ui/data-table";
 import { useI18n } from "@/app/components/I18nProvider";
 import { type Locale } from "@/lib/i18n/config";
 import { getColumns, type Rental } from "./columns";
@@ -164,7 +164,7 @@ export function RentalsTable({ data, locale }: RentalsTableProps) {
           </>
         ) : null}
       </div>
-      <RentalsDataTable columns={columns} data={rentals} />
+      <DataTable columns={columns} data={rentals} showPagination={false} enableSearch={false} />
     </div>
   );
 }

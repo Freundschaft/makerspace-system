@@ -46,9 +46,10 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
       : {}),
   }
 
-  const [totalRentals, rentals] = await Promise.all([
-    prisma.bicycleRental.count({ where }),
-    prisma.bicycleRental.findMany({
+  const totalRentals = await prisma.bicycleRental.count({ where })
+  const totalPages = Math.max(1, Math.ceil(totalRentals / PAGE_SIZE))
+  const currentPage = Math.min(page, totalPages)
+  const rentals = await prisma.bicycleRental.findMany({
       where,
       select: {
         id: true,
@@ -66,13 +67,9 @@ export default async function BicycleRentalsPage({ searchParams }: PageProps) {
       orderBy: {
         startDate: "desc",
       },
-      skip: (page - 1) * PAGE_SIZE,
+      skip: (currentPage - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
-    }),
-  ])
-
-  const totalPages = Math.max(1, Math.ceil(totalRentals / PAGE_SIZE))
-  const currentPage = Math.min(page, totalPages)
+    })
   const buildPageHref = (nextPage: number) => {
     const params = new URLSearchParams()
 

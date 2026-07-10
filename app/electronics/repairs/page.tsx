@@ -51,9 +51,10 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
       : {}),
   }
 
-  const [totalRepairs, repairsResult] = await Promise.all([
-    prisma.electronicsRepair.count({ where }),
-    prisma.electronicsRepair.findMany({
+  const totalRepairs = await prisma.electronicsRepair.count({ where })
+  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
+  const currentPage = Math.min(page, totalPages)
+  const repairsResult = await prisma.electronicsRepair.findMany({
       where,
       select: {
         id: true,
@@ -78,13 +79,9 @@ export default async function ElectronicsRepairsPage({ searchParams }: PageProps
       orderBy: {
         createdDate: 'desc'
       },
-      skip: (page - 1) * PAGE_SIZE,
+      skip: (currentPage - 1) * PAGE_SIZE,
       take: PAGE_SIZE,
-    }),
-  ])
-
-  const totalPages = Math.max(1, Math.ceil(totalRepairs / PAGE_SIZE))
-  const currentPage = Math.min(page, totalPages)
+    })
 
   const repairs: ElectronicsRepair[] = repairsResult.map((repair) => ({
     id: repair.id,

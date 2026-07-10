@@ -10,6 +10,8 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  Cell,
+  Row,
 } from "@tanstack/react-table"
 
 import {
@@ -22,17 +24,21 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import Image from "next/image"
 import { useI18n } from "@/app/components/I18nProvider"
+import { LayoutGrid, Search, Table2, X } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   showPagination?: boolean
+  searchPlaceholder?: string
+  enableSearch?: boolean
+  enableViewToggle?: boolean
 }
 
 function formatDisplayText(value: string) {
@@ -46,11 +52,38 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   showPagination = true,
+  searchPlaceholder,
+  enableSearch = true,
+  enableViewToggle = true,
 }: DataTableProps<TData, TValue>) {
   const { t } = useI18n()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table")
+
+  const filteredData = useMemo(() => {
+    const query = enableSearch ? searchQuery.trim().toLowerCase() : ""
+    if (!query) {
+      return data
+    }
+
+    const collectText = (value: unknown): string => {
+      if (value === null || value === undefined) {
+        return ""
+      }
+      if (value instanceof Date) {
+        return value.toISOString()
+      }
+      if (typeof value === "object") {
+        return Object.values(value as Record<string, unknown>).map(collectText).join(" ")
+      }
+      return String(value)
+    }
+
+    return data.filter((row) => collectText(row).toLowerCase().includes(query))
+  }, [data, enableSearch, searchQuery])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)")
@@ -67,7 +100,7 @@ export function DataTable<TData, TValue>({
   }, [])
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -81,27 +114,33 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: showPagination ? 10 : Math.max(data.length, 1),
+        pageSize: showPagination ? 10 : Math.max(filteredData.length, 1),
       },
     },
   })
 
+  useEffect(() => {
+    table.setPageIndex(0)
+  }, [searchQuery, table])
+
   // Check if problemTypes column exists
   const hasProblemTypesColumn = columns.some(
-    (col: any) => col.accessorKey === "problemTypes"
+    (col) => "accessorKey" in col && col.accessorKey === "problemTypes"
   )
 
   // Function to render a card for mobile view
-  const renderMobileCard = (row: any) => {
+  const renderMobileCard = (row: Row<TData>) => {
     const cells = row.getVisibleCells()
     
     // Find the status cell to get the status value
-    const statusCell = cells.find((cell: any) => cell.column.id === "status")
+    const statusCell = cells.find((cell) => cell.column.id === "status")
     const status = statusCell ? statusCell.getValue() : null
     
     // Find the photoPath cell
-    const photoPathCell = cells.find((cell: any) => cell.column.id === "photoPath")
-    const photoPath = photoPathCell ? photoPathCell.getValue() : null
+    const photoPathCell = cells.find((cell) => cell.column.id === "photoPath")
+    const photoPathValue = photoPathCell ? photoPathCell.getValue() : null
+    const photoPath = typeof photoPathValue === "string" ? photoPathValue : null
+    const receivedDate = cells.find((cell) => cell.column.id === "receivedDate")?.getValue()
     
     return (
       <Card key={row.id} className="mb-4 overflow-hidden rounded-[1.75rem] border-border/80 bg-card/90 shadow-sm">
@@ -122,8 +161,8 @@ export function DataTable<TData, TValue>({
               ) : null}
             </CardTitle>
             <div className="text-sm font-medium text-muted-foreground">
-              {cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue() ? 
-                format(new Date(cells.find((cell: any) => cell.column.id === "receivedDate")?.getValue()), "MMM d, yyyy") : 
+              {receivedDate ?
+                format(new Date(receivedDate as string | number | Date), "MMM d, yyyy") :
                 null}
             </div>
           </div>
@@ -141,7 +180,7 @@ export function DataTable<TData, TValue>({
             </div>
           )}
           <div className="space-y-3">
-            {cells.map((cell: any) => {
+            {cells.map((cell: Cell<TData, unknown>) => {
               // Skip status, receivedDate, and photoPath as they're already handled
               if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
                 return null
@@ -177,7 +216,7 @@ export function DataTable<TData, TValue>({
 
               if (value instanceof Date || cell.column.id.toLowerCase().includes('date')) {
                 try {
-                  displayValue = format(new Date(value), "MMM d, yyyy")
+                  displayValue = format(new Date(value as string | number | Date), "MMM d, yyyy")
                 } catch {
                   displayValue = String(value)
                 }
@@ -204,7 +243,52 @@ export function DataTable<TData, TValue>({
   }
 
   return (
-    <div>
+    <div className="space-y-4">
+      {enableSearch || enableViewToggle ? (
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          {enableSearch ? (
+            <div className="relative w-full sm:max-w-sm">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder={searchPlaceholder ?? t("tables.search", "Search...")}
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="h-9 pl-9 pr-9"
+              />
+              {searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-2 top-1/2 rounded-sm p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                  aria-label={t("common.clear", "Clear")}
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+          {enableViewToggle ? (
+            <div className="inline-flex w-fit rounded-lg border bg-muted/30 p-1">
+              <Button
+                variant={viewMode === "table" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("table")}
+              >
+                <Table2 className="mr-2 h-4 w-4" />
+                {t("team.view.table", "Table")}
+              </Button>
+              <Button
+                variant={viewMode === "cards" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("cards")}
+              >
+                <LayoutGrid className="mr-2 h-4 w-4" />
+                {t("team.view.cards", "Cards")}
+              </Button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
       {hasProblemTypesColumn && (
         <div className="flex items-center py-4">
           <Input
@@ -218,7 +302,7 @@ export function DataTable<TData, TValue>({
         </div>
       )}
       
-      {isDesktop === null ? null : isDesktop ? (
+      {isDesktop === null ? null : isDesktop && viewMode === "table" ? (
         <div className="rounded-2xl border bg-card/70 shadow-sm">
           <div className="overflow-x-auto">
             <Table>
