@@ -301,6 +301,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
+                      type="button"
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
@@ -314,9 +315,10 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
+                      defaultMonth={formData.startDate}
                       selected={formData.startDate}
                       onSelect={(date: Date | undefined) => handleDateChange("startDate", date)}
-                      initialFocus
+                      autoFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -327,6 +329,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
+                      type="button"
                       variant="outline"
                       className={cn(
                         "w-full justify-start text-left font-normal",
@@ -340,9 +343,10 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                   <PopoverContent className="w-auto p-0">
                     <Calendar
                       mode="single"
+                      defaultMonth={formData.endDate}
                       selected={formData.endDate}
                       onSelect={(date: Date | undefined) => handleDateChange("endDate", date)}
-                      initialFocus
+                      autoFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -377,6 +381,7 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
+                        type="button"
                         variant="outline"
                         className={cn(
                           "w-full justify-start text-left font-normal",
@@ -392,9 +397,10 @@ export function RentalForm({ initialData, mode }: RentalFormProps) {
                     <PopoverContent className="w-auto p-0">
                       <Calendar
                         mode="single"
+                        defaultMonth={formData.actualReturnDate ?? undefined}
                         selected={formData.actualReturnDate ?? undefined}
                         onSelect={(date: Date | undefined) => handleDateChange("actualReturnDate", date)}
-                        initialFocus
+                        autoFocus
                       />
                     </PopoverContent>
                   </Popover>
