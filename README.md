@@ -119,6 +119,7 @@ Open sourcing this system makes it easier for similar organizations to:
    NEXTAUTH_SECRET="generate-a-long-random-secret"
    GOOGLE_CLIENT_ID="...apps.googleusercontent.com"
    GOOGLE_CLIENT_SECRET="..."
+   API_SECRET="generate-a-separate-long-random-secret"
    ```
 
 3. Apply database migrations and seed baseline data:
@@ -146,6 +147,36 @@ Open sourcing this system makes it easier for similar organizations to:
 - `npm run prisma:seed` seed baseline lookup data
 - `npm run import:airtable -- --modules=team,electronics,rentals,carpentry,bicycle-repairs` dry-run Airtable imports
 - `npm run db:clear-imported -- --write` clear imported operational data while keeping admin accounts
+
+## Website API access
+
+Read-only website integrations authenticate with a dedicated `API_SECRET` sent
+as a Bearer token. Keep this token server-side and separate from user session and
+OAuth secrets.
+
+`GET /api/team/public` returns privacy-safe team profiles. It accepts optional,
+exact-match `status` and `department` query parameters and returns records sorted
+by given name and then family name:
+
+```http
+GET /api/team/public?status=ACTIVE&department=Board
+Authorization: Bearer <api-secret>
+```
+
+```json
+[
+  {
+    "id": "member-id",
+    "givenNames": "Example",
+    "familyName": "Member",
+    "department": "Board",
+    "photoPath": "/team-photos/example.jpg"
+  }
+]
+```
+
+No other team-member fields are selected or returned. The existing `/api/team`
+endpoint remains the authenticated administrative API.
 
 ## Data migration
 
