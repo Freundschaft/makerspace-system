@@ -170,7 +170,8 @@ Authorization: Bearer <api-secret>
     "givenNames": "Example",
     "familyName": "Member",
     "department": "Board",
-    "photoPath": "/team-photos/example.jpg"
+    "photoPath": "/team-photos/example.jpg",
+    "publicBio": "Helps coordinate community projects."
   }
 ]
 ```

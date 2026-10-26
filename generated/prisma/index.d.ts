@@ -8771,6 +8771,7 @@ export namespace Prisma {
     givenNames: string | null
     nationality: string | null
     photoPath: string | null
+    publicBio: string | null
     status: $Enums.TeamMemberStatus | null
     googleAccountActive: boolean | null
     startDate: Date | null
@@ -8820,6 +8821,7 @@ export namespace Prisma {
     givenNames: string | null
     nationality: string | null
     photoPath: string | null
+    publicBio: string | null
     status: $Enums.TeamMemberStatus | null
     googleAccountActive: boolean | null
     startDate: Date | null
@@ -8869,6 +8871,7 @@ export namespace Prisma {
     givenNames: number
     nationality: number
     photoPath: number
+    publicBio: number
     status: number
     googleAccountActive: number
     startDate: number
@@ -8920,6 +8923,7 @@ export namespace Prisma {
     givenNames?: true
     nationality?: true
     photoPath?: true
+    publicBio?: true
     status?: true
     googleAccountActive?: true
     startDate?: true
@@ -8969,6 +8973,7 @@ export namespace Prisma {
     givenNames?: true
     nationality?: true
     photoPath?: true
+    publicBio?: true
     status?: true
     googleAccountActive?: true
     startDate?: true
@@ -9018,6 +9023,7 @@ export namespace Prisma {
     givenNames?: true
     nationality?: true
     photoPath?: true
+    publicBio?: true
     status?: true
     googleAccountActive?: true
     startDate?: true
@@ -9140,6 +9146,7 @@ export namespace Prisma {
     givenNames: string
     nationality: string | null
     photoPath: string | null
+    publicBio: string | null
     status: $Enums.TeamMemberStatus
     googleAccountActive: boolean
     startDate: Date
@@ -9206,6 +9213,7 @@ export namespace Prisma {
     givenNames?: boolean
     nationality?: boolean
     photoPath?: boolean
+    publicBio?: boolean
     status?: boolean
     googleAccountActive?: boolean
     startDate?: boolean
@@ -9259,6 +9267,7 @@ export namespace Prisma {
     givenNames?: boolean
     nationality?: boolean
     photoPath?: boolean
+    publicBio?: boolean
     status?: boolean
     googleAccountActive?: boolean
     startDate?: boolean
@@ -9302,7 +9311,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "status" | "googleAccountActive" | "startDate" | "endDate" | "department" | "email" | "secondaryEmail" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "vaccinationCertificate" | "liabilityInsurance" | "accidentInsurance" | "testCertificate" | "livesInCamp" | "legalSupportStatus" | "legalSupportComment" | "powerToolClearanceWood" | "powerToolClearanceMetal" | "weldingClearance" | "handToolsClearance" | "toolLiabilityWaiverSigned" | "vaccinationComment" | "driversLicenseCar" | "registeredForMakerspaceVan" | "registeredForOhfVan" | "codeOfConductSigned" | "safeguardingPolicySigned" | "codeOfConductSignedAttachment" | "codeOfConductSigningDate" | "safeguardingPolicySigningDate" | "keys" | "fireSafetyTraining" | "firstAidTraining" | "safetyTraining" | "cardNumber" | "toolLiabilityWaiverSignedAttachment" | "toolLiabilityWaiverSigningDate" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
+  export type TeamMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "familyName" | "givenNames" | "nationality" | "photoPath" | "publicBio" | "status" | "googleAccountActive" | "startDate" | "endDate" | "department" | "email" | "secondaryEmail" | "phone" | "homeAddress" | "dateOfBirth" | "legalStatus" | "vaccinationCertificate" | "liabilityInsurance" | "accidentInsurance" | "testCertificate" | "livesInCamp" | "legalSupportStatus" | "legalSupportComment" | "powerToolClearanceWood" | "powerToolClearanceMetal" | "weldingClearance" | "handToolsClearance" | "toolLiabilityWaiverSigned" | "vaccinationComment" | "driversLicenseCar" | "registeredForMakerspaceVan" | "registeredForOhfVan" | "codeOfConductSigned" | "safeguardingPolicySigned" | "codeOfConductSignedAttachment" | "codeOfConductSigningDate" | "safeguardingPolicySigningDate" | "keys" | "fireSafetyTraining" | "firstAidTraining" | "safetyTraining" | "cardNumber" | "toolLiabilityWaiverSignedAttachment" | "toolLiabilityWaiverSigningDate" | "createdAt" | "updatedAt", ExtArgs["result"]["teamMember"]>
   export type TeamMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     presences?: boolean | TeamMember$presencesArgs<ExtArgs>
     _count?: boolean | TeamMemberCountOutputTypeDefaultArgs<ExtArgs>
@@ -9319,6 +9328,7 @@ export namespace Prisma {
       givenNames: string
       nationality: string | null
       photoPath: string | null
+      publicBio: string | null
       status: $Enums.TeamMemberStatus
       googleAccountActive: boolean
       startDate: Date
@@ -9735,6 +9745,7 @@ export namespace Prisma {
     readonly givenNames: FieldRef<"TeamMember", 'String'>
     readonly nationality: FieldRef<"TeamMember", 'String'>
     readonly photoPath: FieldRef<"TeamMember", 'String'>
+    readonly publicBio: FieldRef<"TeamMember", 'String'>
     readonly status: FieldRef<"TeamMember", 'TeamMemberStatus'>
     readonly googleAccountActive: FieldRef<"TeamMember", 'Boolean'>
     readonly startDate: FieldRef<"TeamMember", 'DateTime'>
@@ -19812,6 +19823,7 @@ export namespace Prisma {
     givenNames: 'givenNames',
     nationality: 'nationality',
     photoPath: 'photoPath',
+    publicBio: 'publicBio',
     status: 'status',
     googleAccountActive: 'googleAccountActive',
     startDate: 'startDate',
@@ -20107,6 +20119,7 @@ export namespace Prisma {
     givenNames: 'givenNames',
     nationality: 'nationality',
     photoPath: 'photoPath',
+    publicBio: 'publicBio',
     department: 'department',
     email: 'email',
     secondaryEmail: 'secondaryEmail',
@@ -20871,6 +20884,7 @@ export namespace Prisma {
     givenNames?: StringFilter<"TeamMember"> | string
     nationality?: StringNullableFilter<"TeamMember"> | string | null
     photoPath?: StringNullableFilter<"TeamMember"> | string | null
+    publicBio?: StringNullableFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusFilter<"TeamMember"> | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFilter<"TeamMember"> | boolean
     startDate?: DateTimeFilter<"TeamMember"> | Date | string
@@ -20921,6 +20935,7 @@ export namespace Prisma {
     givenNames?: SortOrder
     nationality?: SortOrderInput | SortOrder
     photoPath?: SortOrderInput | SortOrder
+    publicBio?: SortOrderInput | SortOrder
     status?: SortOrder
     googleAccountActive?: SortOrder
     startDate?: SortOrder
@@ -20976,6 +20991,7 @@ export namespace Prisma {
     givenNames?: StringFilter<"TeamMember"> | string
     nationality?: StringNullableFilter<"TeamMember"> | string | null
     photoPath?: StringNullableFilter<"TeamMember"> | string | null
+    publicBio?: StringNullableFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusFilter<"TeamMember"> | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFilter<"TeamMember"> | boolean
     startDate?: DateTimeFilter<"TeamMember"> | Date | string
@@ -21025,6 +21041,7 @@ export namespace Prisma {
     givenNames?: SortOrder
     nationality?: SortOrderInput | SortOrder
     photoPath?: SortOrderInput | SortOrder
+    publicBio?: SortOrderInput | SortOrder
     status?: SortOrder
     googleAccountActive?: SortOrder
     startDate?: SortOrder
@@ -21080,6 +21097,7 @@ export namespace Prisma {
     givenNames?: StringWithAggregatesFilter<"TeamMember"> | string
     nationality?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     photoPath?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
+    publicBio?: StringNullableWithAggregatesFilter<"TeamMember"> | string | null
     status?: EnumTeamMemberStatusWithAggregatesFilter<"TeamMember"> | $Enums.TeamMemberStatus
     googleAccountActive?: BoolWithAggregatesFilter<"TeamMember"> | boolean
     startDate?: DateTimeWithAggregatesFilter<"TeamMember"> | Date | string
@@ -22500,6 +22518,7 @@ export namespace Prisma {
     givenNames: string
     nationality?: string | null
     photoPath?: string | null
+    publicBio?: string | null
     status?: $Enums.TeamMemberStatus
     googleAccountActive?: boolean
     startDate: Date | string
@@ -22550,6 +22569,7 @@ export namespace Prisma {
     givenNames: string
     nationality?: string | null
     photoPath?: string | null
+    publicBio?: string | null
     status?: $Enums.TeamMemberStatus
     googleAccountActive?: boolean
     startDate: Date | string
@@ -22600,6 +22620,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22650,6 +22671,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22700,6 +22722,7 @@ export namespace Prisma {
     givenNames: string
     nationality?: string | null
     photoPath?: string | null
+    publicBio?: string | null
     status?: $Enums.TeamMemberStatus
     googleAccountActive?: boolean
     startDate: Date | string
@@ -22749,6 +22772,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22798,6 +22822,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -24398,6 +24423,7 @@ export namespace Prisma {
     givenNames?: SortOrder
     nationality?: SortOrder
     photoPath?: SortOrder
+    publicBio?: SortOrder
     status?: SortOrder
     googleAccountActive?: SortOrder
     startDate?: SortOrder
@@ -24447,6 +24473,7 @@ export namespace Prisma {
     givenNames?: SortOrder
     nationality?: SortOrder
     photoPath?: SortOrder
+    publicBio?: SortOrder
     status?: SortOrder
     googleAccountActive?: SortOrder
     startDate?: SortOrder
@@ -24496,6 +24523,7 @@ export namespace Prisma {
     givenNames?: SortOrder
     nationality?: SortOrder
     photoPath?: SortOrder
+    publicBio?: SortOrder
     status?: SortOrder
     googleAccountActive?: SortOrder
     startDate?: SortOrder
@@ -27439,6 +27467,7 @@ export namespace Prisma {
     givenNames: string
     nationality?: string | null
     photoPath?: string | null
+    publicBio?: string | null
     status?: $Enums.TeamMemberStatus
     googleAccountActive?: boolean
     startDate: Date | string
@@ -27488,6 +27517,7 @@ export namespace Prisma {
     givenNames: string
     nationality?: string | null
     photoPath?: string | null
+    publicBio?: string | null
     status?: $Enums.TeamMemberStatus
     googleAccountActive?: boolean
     startDate: Date | string
@@ -27553,6 +27583,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -27602,6 +27633,7 @@ export namespace Prisma {
     givenNames?: StringFieldUpdateOperationsInput | string
     nationality?: NullableStringFieldUpdateOperationsInput | string | null
     photoPath?: NullableStringFieldUpdateOperationsInput | string | null
+    publicBio?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumTeamMemberStatusFieldUpdateOperationsInput | $Enums.TeamMemberStatus
     googleAccountActive?: BoolFieldUpdateOperationsInput | boolean
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string

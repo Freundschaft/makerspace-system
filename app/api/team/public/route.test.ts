@@ -58,6 +58,7 @@ const activeWorkshopMember: TestTeamMember = {
   familyName: "Example",
   department: "Workshop",
   photoPath: "/team-photos/active-workshop-member.jpg",
+  publicBio: "Keeps the workshop running.",
   status: "ACTIVE",
 };
 
@@ -67,6 +68,7 @@ const activeBoardMember: TestTeamMember = {
   familyName: "Example",
   department: "Board",
   photoPath: "/team-photos/active-board-member.jpg",
+  publicBio: "Supports the Makerspace board.",
   status: "ACTIVE",
 };
 
@@ -76,6 +78,7 @@ const inactiveBoardMember: TestTeamMember = {
   familyName: "Example",
   department: "Board",
   photoPath: null,
+  publicBio: null,
   status: "INACTIVE",
 };
 
@@ -142,7 +145,7 @@ describe("GET /api/team/public", () => {
     assert.equal(queries.length, 0);
   });
 
-  it("returns exactly the five allowed fields when sensitive data is populated", async () => {
+  it("returns exactly the six allowed fields when sensitive data is populated", async () => {
     const sensitiveMember: TestTeamMember = {
       ...activeBoardMember,
       email: "private@example.invalid",
@@ -163,13 +166,16 @@ describe("GET /api/team/public", () => {
       "givenNames",
       "id",
       "photoPath",
+      "publicBio",
     ]);
+    assert.equal(profile.publicBio, activeBoardMember.publicBio);
     assert.deepEqual(queries[0].select, {
       id: true,
       givenNames: true,
       familyName: true,
       department: true,
       photoPath: true,
+      publicBio: true,
     });
     assert.deepEqual(queries[0].orderBy, [
       { givenNames: "asc" },

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { GoogleWorkspaceService } from "@/app/services/google-workspace";
 import { hasAdminSessionOrApiSecret } from "@/lib/api-secret";
 import { toAbsoluteFileUrl } from "@/lib/file-urls";
+import { publicBioSchema } from "@/lib/team-member-public-bio";
 
 export async function GET(request: NextRequest) {
   try {
@@ -47,6 +48,14 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    const publicBio = publicBioSchema.safeParse(body.publicBio);
+    if (!publicBio.success) {
+      return NextResponse.json(
+        { error: "Public bio must be 2,000 characters or fewer" },
+        { status: 400 }
+      );
+    }
+
     if (
       !body.familyName ||
       !body.givenNames ||
@@ -69,6 +78,7 @@ export async function POST(request: NextRequest) {
         givenNames: body.givenNames,
         nationality: body.nationality || null,
         photoPath: body.photoPath || null,
+        publicBio: publicBio.data ?? null,
         status: body.status || "ACTIVE",
         googleAccountActive: body.googleAccountActive ?? true,
         startDate: new Date(body.startDate),

@@ -9,6 +9,7 @@ export interface PublicTeamProfile {
   familyName: string;
   department: string;
   photoPath: string | null;
+  publicBio: string | null;
 }
 
 export interface PublicTeamFindManyArgs {
@@ -22,6 +23,7 @@ export interface PublicTeamFindManyArgs {
     familyName: true;
     department: true;
     photoPath: true;
+    publicBio: true;
   };
   orderBy: Array<{ givenNames: "asc" } | { familyName: "asc" }>;
 }
@@ -77,6 +79,7 @@ export function createPublicTeamGetHandler({
           familyName: true,
           department: true,
           photoPath: true,
+          publicBio: true,
         },
         orderBy: [{ givenNames: "asc" }, { familyName: "asc" }],
       });
@@ -88,6 +91,7 @@ export function createPublicTeamGetHandler({
           familyName: teamMember.familyName,
           department: teamMember.department,
           photoPath: teamMember.photoPath,
+          publicBio: teamMember.publicBio,
         }))
       );
     } catch (error) {

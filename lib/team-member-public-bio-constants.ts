@@ -1,0 +1,1 @@
+export const MAX_PUBLIC_BIO_LENGTH = 2000;

@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import { useI18n } from '@/app/components/I18nProvider';
 import Image from 'next/image';
 import { FileUpload } from '@/components/ui/file-upload';
+import { Textarea } from '@/components/ui/textarea';
+import { MAX_PUBLIC_BIO_LENGTH } from '@/lib/team-member-public-bio-constants';
 
 interface TeamMemberFormProps {
   initialData?: TeamMember;
@@ -393,6 +395,31 @@ export function TeamMemberForm({
             required
             className="w-full p-2 border rounded-md"
           />
+        </div>
+
+        <div className="md:col-span-2">
+          <label htmlFor="publicBio" className="block text-sm font-medium mb-1">
+            {t('team.form.publicBio', 'Public bio')}
+          </label>
+          <Textarea
+            id="publicBio"
+            name="publicBio"
+            value={formData.publicBio || ''}
+            onChange={(event) =>
+              setFormData((previous) => ({
+                ...previous,
+                publicBio: event.target.value,
+              }))
+            }
+            maxLength={MAX_PUBLIC_BIO_LENGTH}
+            rows={5}
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            {t(
+              'team.form.publicBioHelp',
+              'Public information shown on the website. Do not include private or administrative details.'
+            )}
+          </p>
         </div>
 
         <div>

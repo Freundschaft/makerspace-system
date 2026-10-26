@@ -135,6 +135,7 @@ model TeamMember {
   givenNames                          String
   nationality                         String?
   photoPath                           String?              @db.Text
+  publicBio                           String?              @db.Text
   status                              TeamMemberStatus     @default(ACTIVE)
   googleAccountActive                 Boolean              @default(true)
   startDate                           DateTime

@@ -4,6 +4,7 @@ export type TeamMember = {
   givenNames: string
   nationality: string | null
   photoPath: string | null
+  publicBio: string | null
   status: "ACTIVE" | "INACTIVE"
   googleAccountActive: boolean
   startDate: Date
