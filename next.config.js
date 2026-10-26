@@ -4,6 +4,9 @@ const fileServerHost = (process.env.FILE_SERVER_URL || "https://files.system.mak
   .replace(/\/.*$/, "");
 
 const nextConfig = {
+  experimental: {
+    useTypeScriptCli: false,
+  },
   images: {
     remotePatterns: [
       {
