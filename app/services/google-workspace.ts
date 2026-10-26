@@ -47,7 +47,7 @@ export class GoogleWorkspaceService {
   private getBaseOrgUnitPath() {
     const configuredPath = process.env.GOOGLE_WORKSPACE_TEAM_OU_PATH?.trim();
     if (!configuredPath) {
-      return '/Team Members';
+      return '/';
     }
 
     if (configuredPath === '/') {
@@ -55,24 +55,6 @@ export class GoogleWorkspaceService {
     }
 
     return configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
-  }
-
-  private buildOrgUnitPath(department?: string | null) {
-    const basePath = this.getBaseOrgUnitPath();
-    const normalizedDepartment = department?.trim();
-
-    if (
-      !normalizedDepartment ||
-      normalizedDepartment.toLowerCase() === 'unassigned'
-    ) {
-      return basePath;
-    }
-
-    if (basePath === '/') {
-      return `/${normalizedDepartment}`;
-    }
-
-    return `${basePath}/${normalizedDepartment}`;
   }
 
   private isInvalidOrgUnitError(error: unknown) {
@@ -112,7 +94,7 @@ export class GoogleWorkspaceService {
       },
       password: Math.random().toString(36).slice(-8),
       changePasswordAtNextLogin: true,
-      orgUnitPath: this.buildOrgUnitPath(teamMember.department),
+      orgUnitPath: this.getBaseOrgUnitPath(),
       phones: [
         {
           value: teamMember.phone,
@@ -159,7 +141,7 @@ export class GoogleWorkspaceService {
         familyName: teamMember.familyName,
         givenName: teamMember.givenNames,
       },
-      orgUnitPath: this.buildOrgUnitPath(teamMember.department),
+      orgUnitPath: this.getBaseOrgUnitPath(),
       phones: [
         {
           value: teamMember.phone,
