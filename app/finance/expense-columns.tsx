@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -16,7 +17,7 @@ export type ExpenseRow = {
   houseProject: { id: string } | null;
 };
 
-export function getExpenseColumns(t: Translator): ColumnDef<ExpenseRow>[] {
+export function getExpenseColumns(t: Translator): ColumnDef<AppTableFeatures, ExpenseRow>[] {
   return [
     {
       accessorKey: "date",

@@ -247,7 +247,7 @@ export function ProjectForm({ mode, projectId, initialData }: ProjectFormProps) 
                       mode="single"
                       selected={field.value ?? undefined}
                       onSelect={(date) => field.onChange(date ?? null)}
-                      initialFocus
+                      autoFocus
                     />
                   </PopoverContent>
                 </Popover>
@@ -286,7 +286,7 @@ export function ProjectForm({ mode, projectId, initialData }: ProjectFormProps) 
                       mode="single"
                       selected={field.value ?? undefined}
                       onSelect={(date) => field.onChange(date ?? null)}
-                      initialFocus
+                      autoFocus
                     />
                   </PopoverContent>
                 </Popover>

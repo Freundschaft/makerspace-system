@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -53,7 +54,7 @@ function formatQuantity(row: InKindDonationRow) {
   return row.unit ? `${quantity} ${row.unit}` : quantity;
 }
 
-export function getColumns(t: Translator): ColumnDef<InKindDonationRow>[] {
+export function getColumns(t: Translator): ColumnDef<AppTableFeatures, InKindDonationRow>[] {
   return [
     {
       accessorKey: "date",

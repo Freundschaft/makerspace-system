@@ -4,7 +4,8 @@ import {
   ChevronsLeftIcon,
   ChevronsRightIcon,
 } from "lucide-react"
-import { Table } from "@tanstack/react-table"
+import type { ReactTable, RowData } from "@tanstack/react-table"
+import type { AppTableFeatures } from "@/components/ui/table-features"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,11 +17,11 @@ import {
 } from "@/components/ui/select"
 import { useI18n } from "@/app/components/I18nProvider"
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>
+interface DataTablePaginationProps<TData extends RowData> {
+  table: ReactTable<AppTableFeatures, TData>
 }
 
-export function DataTablePagination<TData>({
+export function DataTablePagination<TData extends RowData>({
   table,
 }: DataTablePaginationProps<TData>) {
   const { t } = useI18n()
@@ -34,13 +35,13 @@ export function DataTablePagination<TData>({
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">{t("tables.pagination.rowsPerPage", "Rows per page")}</p>
           <Select
-            value={`${table.getState().pagination.pageSize}`}
+            value={`${table.state.pagination.pageSize}`}
             onValueChange={(value) => {
               table.setPageSize(Number(value))
             }}
           >
             <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
+              <SelectValue placeholder={table.state.pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
               {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -52,7 +53,7 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          {t("tables.pagination.page", "Page")} {table.getState().pagination.pageIndex + 1} {t("tables.pagination.of", "of")}{" "}
+          {t("tables.pagination.page", "Page")} {table.state.pagination.pageIndex + 1} {t("tables.pagination.of", "of")}{" "}
           {table.getPageCount()}
         </div>
         <div className="flex items-center space-x-2">

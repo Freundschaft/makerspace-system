@@ -1,5 +1,6 @@
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
-import { Table } from "@tanstack/react-table"
+import type { ReactTable, RowData } from "@tanstack/react-table"
+import type { AppTableFeatures } from "@/components/ui/table-features"
 import { Settings2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -12,11 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useI18n } from "@/app/components/I18nProvider"
 
-interface DataTableViewOptionsProps<TData> {
-  table: Table<TData>
+interface DataTableViewOptionsProps<TData extends RowData> {
+  table: ReactTable<AppTableFeatures, TData>
 }
 
-export function DataTableViewOptions<TData>({
+export function DataTableViewOptions<TData extends RowData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
   const { t } = useI18n()

@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table"
+import type { ColumnDef } from "@tanstack/react-table"
+import type { AppTableFeatures } from "@/components/ui/table-features"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { format } from "date-fns"
@@ -32,8 +33,8 @@ export function getColumns(
   t: Translator,
   locale: Locale,
   selection?: RentalSelectionConfig
-): ColumnDef<Rental>[] {
-  const selectionColumn: ColumnDef<Rental>[] = selection
+): ColumnDef<AppTableFeatures, Rental>[] {
+  const selectionColumn: ColumnDef<AppTableFeatures, Rental>[] = selection
     ? [
         {
           id: "select",

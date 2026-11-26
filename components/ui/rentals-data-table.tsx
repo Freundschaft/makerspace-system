@@ -2,14 +2,33 @@
 
 import * as React from "react"
 import {
-  ColumnDef,
-  SortingState,
-  VisibilityState,
   flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
+  useTable,
+  type ColumnDef,
+  type ColumnVisibilityState,
+  type RowData,
+  type SortingState,
 } from "@tanstack/react-table"
+import {
+  columnVisibilityFeature,
+  createSortedRowModel,
+  rowSelectionFeature,
+  rowSortingFeature,
+  tableFeatures,
+} from "@tanstack/react-table"
+import { appTableFeatures } from "@/components/ui/table-features"
+
+// Sorting + visibility only (no pagination/filtering), with the app-wide sort
+// function registry so `sortFn: "auto"` keeps working.
+const rentalsTableFeatures = tableFeatures({
+  rowSortingFeature,
+  rowSelectionFeature,
+  columnVisibilityFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns: appTableFeatures.sortFns,
+})
+
+export type RentalsTableFeatures = typeof rentalsTableFeatures
 
 import {
   Table,
@@ -21,21 +40,22 @@ import {
 } from "@/components/ui/table"
 import { useI18n } from "@/app/components/I18nProvider"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<RentalsTableFeatures, TData>[]
   data: TData[]
 }
 
-export function RentalsDataTable<TData, TValue>({
+export function RentalsDataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const { t } = useI18n()
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<ColumnVisibilityState>({})
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  const table = useReactTable({
+  const table = useTable({
+    features: rentalsTableFeatures,
     data,
     columns,
     state: {
@@ -44,8 +64,6 @@ export function RentalsDataTable<TData, TValue>({
     },
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
   })
 
   return (

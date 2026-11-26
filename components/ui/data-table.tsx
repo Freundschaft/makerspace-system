@@ -1,18 +1,16 @@
 "use client"
 
 import {
-  ColumnDef,
   flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getPaginationRowModel,
-  SortingState,
-  getSortedRowModel,
-  ColumnFiltersState,
-  getFilteredRowModel,
-  Cell,
-  Row,
+  useTable,
+  type Cell,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type Row,
+  type RowData,
+  type SortingState,
 } from "@tanstack/react-table"
+import { appTableFeatures, type AppTableFeatures } from "@/components/ui/table-features"
 
 import {
   Table,
@@ -32,8 +30,8 @@ import Image from "next/image"
 import { useI18n } from "@/app/components/I18nProvider"
 import { LayoutGrid, Search, Table2, X } from "lucide-react"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<AppTableFeatures, TData>[]
   data: TData[]
   showPagination?: boolean
   searchPlaceholder?: string
@@ -48,14 +46,14 @@ function formatDisplayText(value: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
   showPagination = true,
   searchPlaceholder,
   enableSearch = true,
   enableViewToggle = true,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const { t } = useI18n()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -99,29 +97,31 @@ export function DataTable<TData, TValue>({
     }
   }, [])
 
-  const table = useReactTable({
+  const table = useTable({
+    features: appTableFeatures,
     data: filteredData,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
       columnFilters,
     },
     initialState: {
       pagination: {
+        pageIndex: 0,
         pageSize: showPagination ? 10 : Math.max(filteredData.length, 1),
       },
     },
   })
 
-  useEffect(() => {
+  // Reset to the first page whenever the search query changes. Done in the
+  // handler rather than an effect: in TanStack Table v9 the `table` object from
+  // useTable() is not referentially stable across renders.
+  const updateSearchQuery = (value: string) => {
+    setSearchQuery(value)
     table.setPageIndex(0)
-  }, [searchQuery, table])
+  }
 
   // Check if problemTypes column exists
   const hasProblemTypesColumn = columns.some(
@@ -129,7 +129,7 @@ export function DataTable<TData, TValue>({
   )
 
   // Function to render a card for mobile view
-  const renderMobileCard = (row: Row<TData>) => {
+  const renderMobileCard = (row: Row<AppTableFeatures, TData>) => {
     const cells = row.getVisibleCells()
     
     // Find the status cell to get the status value
@@ -180,7 +180,7 @@ export function DataTable<TData, TValue>({
             </div>
           )}
           <div className="space-y-3">
-            {cells.map((cell: Cell<TData, unknown>) => {
+            {cells.map((cell: Cell<AppTableFeatures, TData, unknown>) => {
               // Skip status, receivedDate, and photoPath as they're already handled
               if (cell.column.id === "status" || cell.column.id === "receivedDate" || cell.column.id === "photoPath") {
                 return null
@@ -252,13 +252,13 @@ export function DataTable<TData, TValue>({
               <Input
                 placeholder={searchPlaceholder ?? t("tables.search", "Search...")}
                 value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
+                onChange={(event) => updateSearchQuery(event.target.value)}
                 className="h-9 pl-9 pr-9"
               />
               {searchQuery ? (
                 <button
                   type="button"
-                  onClick={() => setSearchQuery("")}
+                  onClick={() => updateSearchQuery("")}
                   className="absolute right-2 top-1/2 rounded-sm p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
                   aria-label={t("common.clear", "Clear")}
                 >

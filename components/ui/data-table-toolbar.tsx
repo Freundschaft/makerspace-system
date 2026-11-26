@@ -1,5 +1,6 @@
 import { Cross2Icon } from "@radix-ui/react-icons"
-import { Table } from "@tanstack/react-table"
+import type { ReactTable, RowData } from "@tanstack/react-table"
+import type { AppTableFeatures } from "@/components/ui/table-features"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -9,15 +10,15 @@ import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filte
 import { statuses } from "@/data/data"
 import { useI18n } from "@/app/components/I18nProvider"
 
-interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+interface DataTableToolbarProps<TData extends RowData> {
+  table: ReactTable<AppTableFeatures, TData>
 }
 
-export function DataTableToolbar<TData>({
+export function DataTableToolbar<TData extends RowData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const { t } = useI18n()
-  const isFiltered = table.getState().columnFilters.length > 0
+  const isFiltered = table.state.columnFilters.length > 0
 
   return (
     <div className="flex items-center justify-between">

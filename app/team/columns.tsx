@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format } from "date-fns";
@@ -49,7 +50,7 @@ function getPhotoSrc(value?: string | null) {
   return `data:image/png;base64,${trimmed}`;
 }
 
-export function getColumns(t: Translator): ColumnDef<TeamMember>[] {
+export function getColumns(t: Translator): ColumnDef<AppTableFeatures, TeamMember>[] {
   return [
     {
       accessorKey: "photoPath",

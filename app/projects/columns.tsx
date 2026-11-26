@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -41,7 +42,7 @@ function getStatusVariant(status: ProjectRow["status"]) {
   }
 }
 
-export function getColumns(t: Translator): ColumnDef<ProjectRow>[] {
+export function getColumns(t: Translator): ColumnDef<AppTableFeatures, ProjectRow>[] {
   return [
     {
       accessorKey: "name",

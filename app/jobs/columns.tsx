@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
@@ -26,7 +27,7 @@ function getStatusVariant(status: JobRow["status"]) {
   }
 }
 
-export function getColumns(t: Translator): ColumnDef<JobRow>[] {
+export function getColumns(t: Translator): ColumnDef<AppTableFeatures, JobRow>[] {
   return [
     {
       accessorKey: "name",

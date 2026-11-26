@@ -1,6 +1,7 @@
 import * as React from "react"
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
-import { Column } from "@tanstack/react-table"
+import type { Column, RowData } from "@tanstack/react-table"
+import type { AppTableFeatures } from "@/components/ui/table-features"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -22,8 +23,8 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { useI18n } from "@/app/components/I18nProvider"
 
-interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>
+interface DataTableFacetedFilterProps<TData extends RowData, TValue> {
+  column?: Column<AppTableFeatures, TData, TValue>
   title?: string
   options: {
     label: string
@@ -32,7 +33,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   }[]
 }
 
-export function DataTableFacetedFilter<TData, TValue>({
+export function DataTableFacetedFilter<TData extends RowData, TValue>({
   column,
   title,
   options,

@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { format } from "date-fns";
@@ -47,8 +48,8 @@ interface RepairColumnOptions {
 export function getColumns(
   t: Translator,
   { locale, selection, onStatusUpdated }: RepairColumnOptions
-): ColumnDef<Repair>[] {
-  const selectionColumn: ColumnDef<Repair>[] = selection
+): ColumnDef<AppTableFeatures, Repair>[] {
+  const selectionColumn: ColumnDef<AppTableFeatures, Repair>[] = selection
     ? [
         {
           id: "select",

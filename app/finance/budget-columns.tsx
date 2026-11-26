@@ -1,4 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { AppTableFeatures } from "@/components/ui/table-features";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -14,7 +15,7 @@ export type BudgetRow = {
   createdAt: Date;
 };
 
-export function getBudgetColumns(t: Translator): ColumnDef<BudgetRow>[] {
+export function getBudgetColumns(t: Translator): ColumnDef<AppTableFeatures, BudgetRow>[] {
   return [
     {
       accessorKey: "name",
