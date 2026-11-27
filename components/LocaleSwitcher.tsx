@@ -28,6 +28,10 @@ const localeMeta: Record<
   fa: { code: "FA", label: "Farsi", nativeLabel: "فارسی" },
 };
 
+function setLocaleCookie(locale: Locale) {
+  document.cookie = `NEXT_LOCALE=${locale}; path=/; samesite=lax`;
+}
+
 export function LocaleSwitcher() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -39,7 +43,7 @@ export function LocaleSwitcher() {
   const switchLocale = (locale: Locale) => {
     const targetPath = localizePathname(pathname, locale);
     const target = search ? `${targetPath}?${search}` : targetPath;
-    document.cookie = `NEXT_LOCALE=${locale}; path=/; samesite=lax`;
+    setLocaleCookie(locale);
     router.push(target);
     router.refresh();
   };

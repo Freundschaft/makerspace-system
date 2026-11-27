@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { TeamMemberWithRole, TeamPresenceEntry } from "./team-types";
 import {
   eachDayOfInterval,
@@ -131,17 +131,7 @@ export function TeamPresenceCalendar({
   };
   const previewKeys = getPreviewKeys();
 
-  useEffect(() => {
-    if (!teamMembers.length) {
-      setSelectedMemberId(null);
-      return;
-    }
-
-    if (!selectedMemberId || !teamMembers.some((member) => member.id === selectedMemberId)) {
-      setSelectedMemberId(teamMembers[0].id);
-    }
-  }, [selectedMemberId, teamMembers]);
-
+  // Falls back to the first member when nothing (or a removed member) is selected.
   const selectedMember =
     teamMembers.find((member) => member.id === selectedMemberId) ?? teamMembers[0] ?? null;
   const selectedMemberPresenceDates = selectedMember

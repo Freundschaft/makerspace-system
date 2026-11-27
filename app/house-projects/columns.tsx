@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { AppTableFeatures } from "@/components/ui/table-features";
+import type { Prisma } from "@/generated/prisma";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -22,7 +23,7 @@ export type HouseProject = {
   description: string;
   status: "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
   timeNeeded: number | null;
-  materialCosts: any | null;
+  materialCosts: Prisma.Decimal | number | string | null;
   notes: string | null;
   photoPath: string | null;
   assignedTo: {

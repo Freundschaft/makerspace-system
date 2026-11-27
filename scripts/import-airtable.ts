@@ -784,7 +784,7 @@ async function importTeam(write: boolean, allowNonEmpty: boolean) {
 
   let created = 0;
   let updated = 0;
-  let skipped = 0;
+  const skipped = 0;
   const existingMembers = await prisma.teamMember.findMany({
     select: {
       id: true,

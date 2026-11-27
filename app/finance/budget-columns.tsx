@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { AppTableFeatures } from "@/components/ui/table-features";
+import type { Prisma } from "@/generated/prisma";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -8,7 +9,7 @@ type Translator = (key: string, fallback: string, params?: Record<string, string
 export type BudgetRow = {
   id: string;
   name: string;
-  allocatedAmount: any;
+  allocatedAmount: Prisma.Decimal | number | string;
   spentAmount: number;
   remainingAmount: number;
   periodLabel: string | null;
