@@ -78,5 +78,12 @@
     "mysql2": "^3.24.0",
     "effect": "^3.22.5",
     "eslint-plugin-react-hooks": "7.0.1"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "prisma": true,
+    "@prisma/engines": true,
+    "unrs-resolver": true,
+    "tesseract.js": false
   }
 }
