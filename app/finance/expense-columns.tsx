@@ -1,5 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { AppTableFeatures } from "@/components/ui/table-features";
+import type { Prisma } from "@/generated/prisma";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -10,7 +11,7 @@ export type ExpenseRow = {
   date: Date;
   title: string;
   vendor: string | null;
-  amount: any;
+  amount: Prisma.Decimal | number | string;
   budget: { name: string } | null;
   createdBy: { email: string | null } | null;
   carpentryProject: { id: string } | null;

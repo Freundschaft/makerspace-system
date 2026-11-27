@@ -106,12 +106,15 @@ export function DataTable<TData extends RowData>({
     state: {
       sorting,
       columnFilters,
+      // Without pagination controls, keep the page size in sync with the data
+      // on every render so rows added later (refresh, cleared filter, next
+      // server page) are never cut off by a stale page size.
+      ...(showPagination
+        ? {}
+        : { pagination: { pageIndex: 0, pageSize: Math.max(filteredData.length, 1) } }),
     },
     initialState: {
-      pagination: {
-        pageIndex: 0,
-        pageSize: showPagination ? 10 : Math.max(filteredData.length, 1),
-      },
+      pagination: { pageIndex: 0, pageSize: 10 },
     },
   })
 

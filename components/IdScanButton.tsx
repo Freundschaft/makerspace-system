@@ -1,13 +1,14 @@
 "use client";
 
 import type { ChangeEvent } from "react";
+import type { Worker } from "tesseract.js";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Camera, ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { parseIdScanText } from "@/lib/id-ocr";
 
-let workerPromise: Promise<any> | null = null;
+let workerPromise: Promise<Worker> | null = null;
 
 async function getWorker() {
   if (!workerPromise) {

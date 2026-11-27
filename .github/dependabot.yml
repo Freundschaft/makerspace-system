@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      # One PR per week for all minor/patch bumps; majors get their own PRs.
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Held back on purpose; see the "update dependencies" commit (e93a9cd).
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+      - dependency-name: eslint-plugin-react-hooks
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
